@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Báo cáo bảo mật</title>
+<style>
+  :root { --bg: #f6f7f9; --card: #fff; --text: #1d2330; --muted: #5d6679; --line: #e2e5eb; --accent: #2457c5; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #12151c; --card: #1b2029; --text: #e6e9ef; --muted: #98a2b3; --line: #2b3240; --accent: #8ab4ff; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 32px 16px 48px; background: var(--bg); color: var(--text);
+    font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 720px; margin: 0 auto; }
+  h1 { font-size: 26px; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 24px; }
+  ul { list-style: none; margin: 0; padding: 0; background: var(--card); border: 1px solid var(--line); border-radius: 8px; }
+  li { border-bottom: 1px solid var(--line); }
+  li:last-child { border-bottom: 0; }
+  a { display: flex; justify-content: space-between; gap: 12px; padding: 14px 16px; color: var(--accent); text-decoration: none; font-weight: 600; }
+  a:hover { text-decoration: underline; }
+  a span { color: var(--muted); font-weight: 400; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Báo cáo bảo mật</h1>
+  <p class="sub">Tổng hợp lỗ hổng theo tháng: AWS, GCP · NodeJS, PHP, Java, .NET, JavaScript · Next.js, Nuxt, Quasar, Laravel, Spring Boot.</p>
+  <ul>
+    <!-- Thêm báo cáo mới ở đầu danh sách -->
+    <li><a href="monthly/2026-10.html">Tháng 10/2026 <span>cập nhật đến 2026-10-23</span></a></li>
+  </ul>
+</main>
+</body>
+</html>

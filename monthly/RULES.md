@@ -1,6 +1,6 @@
 # RULES
 
-- Tạo file md theo tháng (YYYY-mm-dd)
+- Tạo file html dạng YYYY-mm
 - Nội dung dạng bảng, tóm tắt thật dễ hiểu
 - Có cột mức độ nghiêm trọng, ảnh hưởng tới những hệ thống nào
 - Tập trung vào các thành phần sau:
