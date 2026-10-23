@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Báo cáo bảo mật tháng 9/2026</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --card: #fff; --text: #1d2330; --muted: #5d6679; --line: #e2e5eb;
+    --crit: #b4232a; --crit-bg: #fde8e9;
+    --high: #b25400; --high-bg: #fff0dc;
+    --med: #8a6d00; --med-bg: #fff8d6;
+    --low: #1f7a3d; --low-bg: #e3f6e9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12151c; --card: #1b2029; --text: #e6e9ef; --muted: #98a2b3; --line: #2b3240;
+      --crit: #ff8a8f; --crit-bg: #3a1a1d;
+      --high: #ffb066; --high-bg: #3a2a14;
+      --med: #f2d56b; --med-bg: #36300f;
+      --low: #7fd69a; --low-bg: #16301f;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px 16px 48px; background: var(--bg); color: var(--text);
+    font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 1200px; margin: 0 auto; }
+  h1 { font-size: 26px; margin: 0 0 4px; }
+  h2 { font-size: 19px; margin: 32px 0 10px; }
+  .sub { color: var(--muted); margin: 0 0 16px; }
+  .note { background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+    padding: 10px 14px; margin: 0 0 8px; color: var(--muted); font-size: 14px; }
+  .wrap { overflow-x: auto; background: var(--card); border: 1px solid var(--line); border-radius: 8px; }
+  table { border-collapse: collapse; width: 100%; min-width: 860px; }
+  th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  th { font-size: 13px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); background: var(--bg); }
+  tr:last-child td { border-bottom: 0; }
+  td:first-child { font-weight: 600; white-space: nowrap; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+  .crit { color: var(--crit); background: var(--crit-bg); }
+  .high { color: var(--high); background: var(--high-bg); }
+  .med { color: var(--med); background: var(--med-bg); }
+  .low { color: var(--low); background: var(--low-bg); }
+  code { font-size: 13px; background: var(--bg); padding: 1px 5px; border-radius: 4px; }
+  a { color: inherit; }
+  ul { margin: 6px 0; padding-left: 20px; }
+  li { margin: 3px 0; }
+  .col-lv { width: 110px; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Báo cáo bảo mật tháng 9/2026</h1>
+<p class="sub">Tháng đã kết thúc. Báo cáo này bổ sung sau, tính đến <strong>2026-10-23</strong>.</p>
+<p class="note">Mức độ: <span class="badge crit">Nghiêm trọng</span> <span class="badge high">Cao</span> <span class="badge med">Trung bình</span> <span class="badge low">Thấp</span> · Phạm vi: AWS, GCP · NodeJS, PHP, Java, .NET, JavaScript · Next.js, Nuxt, Quasar, Laravel, Spring Boot. Các lỗi tháng 9 có thể đã có bản vá mới hơn, xem thêm <a href="2026-10.html">báo cáo tháng 10</a>.</p>
+
+<h2>1. Việc cần làm</h2>
+<div class="wrap"><table>
+<thead><tr><th>#</th><th>Việc cần làm</th><th class="col-lv">Mức độ</th><th>Hạn đề xuất</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Nâng cấp <strong>Next.js</strong> (RCE qua <code>next/og</code>, và 7 lỗi cache/SSRF ngày 09-30)</td><td><span class="badge crit">Nghiêm trọng</span></td><td>Ngay</td></tr>
+<tr><td>2</td><td>Cập nhật <strong>Chrome</strong> lên 153.x (zero-day V8 đang bị khai thác)</td><td><span class="badge high">Cao</span></td><td>Ngay</td></tr>
+<tr><td>3</td><td>Nâng <strong>Tomcat / Netty / Jackson</strong> đi kèm Spring Boot</td><td><span class="badge high">Cao</span></td><td>Trong tuần</td></tr>
+<tr><td>4</td><td>Nâng <strong>PHP</strong> lên bản có vá 11 advisory (nay lên thẳng bản tháng 10)</td><td><span class="badge high">Cao</span></td><td>Trong tuần</td></tr>
+<tr><td>5</td><td>Cập nhật <strong>.NET</strong> 8.0.31 / 9.0.20 / 10.0.12; kiểm tra <strong>SSM Agent</strong> và <strong>EKS Network Policy Agent</strong></td><td><span class="badge high">Cao</span></td><td>Trong tuần</td></tr>
+</tbody></table></div>
+
+<h2>2. Ngôn ngữ</h2>
+<div class="wrap"><table>
+<thead><tr><th>Thành phần</th><th>Tóm tắt lỗ hổng</th><th class="col-lv">Mức độ</th><th>Ảnh hưởng tới hệ thống nào</th><th>Cách xử lý</th></tr></thead>
+<tbody>
+<tr><td>PHP</td><td>Bản 8.5.11 và 8.4.26 (09-24) vá 11 advisory. Đáng chú ý: tràn bộ nhớ heap ở OpenSSL khi gặp chứng chỉ wildcard đặc biệt (CVE-2026-91767), kiểm tra tên miền chứng chỉ sai (CVE-2026-91769), lộ thông tin đăng nhập khi chuyển hướng HTTP (CVE-2026-91766), bỏ qua ACL IPv6 của PHP-FPM (CVE-2026-91768), lỗi Phar, SOAP, MySQLnd. Không thấy báo cáo khai thác.</td><td><span class="badge high">Cao</span></td><td>Ứng dụng PHP dùng OpenSSL/HTTP stream/SOAP/Phar, PHP-FPM giới hạn client bằng <code>listen.allowed_clients</code>.</td><td>Nâng lên 8.5.11 / 8.4.26 trở lên (nay nên lên bản tháng 10, xem báo cáo 10/2026). Chưa xác nhận lỗi nào đã vá cho nhánh 8.3, 8.2.</td></tr>
+<tr><td>Node.js</td><td>Không có bản vá bảo mật trong tháng 9 (đợt trước 07-29, đợt sau 10-21).</td><td><span class="badge low">Thấp</span></td><td>Không có.</td><td>Không cần làm gì riêng cho tháng 9.</td></tr>
+<tr><td>Java</td><td>Không có CPU quý trong tháng 9. Oracle ra bản vá nhỏ ngày 09-15, có 3 bản vá cho Java SE (khai thác từ xa, không cần đăng nhập), chưa rõ CVE và điểm. Các lỗi điểm 10.0 trong đợt này thuộc sản phẩm khác (WebLogic, Access Manager, Forms...), không phải Java SE.</td><td><span class="badge med">Trung bình</span></td><td>Oracle JDK/JRE. WebLogic và các sản phẩm Oracle Fusion Middleware nếu có dùng.</td><td>Theo dõi Oracle CPU tháng 10 (xem báo cáo 10/2026).</td></tr>
+<tr><td>.NET (gồm ASP.NET Core)</td><td>Patch Tuesday 09-08. <strong>.NET:</strong> vá ở 8.0.31 / 9.0.20 / 10.0.12; có 3 lỗi 8.8 liên quan xử lý file PDB (CVE-2026-69439, -71328, -69522) và lỗi từ chối dịch vụ ASP.NET Core (CVE-2026-69304). Chưa thấy khai thác. <strong>Windows (ngoài phạm vi, chỉ để biết):</strong> 2 lỗi leo thang đặc quyền đang bị khai thác (CVE-2026-81963, -85880) và nhiều lỗi chạy mã từ xa.</td><td><span class="badge high">Cao</span></td><td>Ứng dụng .NET 8/9/10 và công cụ build dùng DiaSymReader; máy chủ Windows.</td><td>Cập nhật runtime/SDK lên 8.0.31 / 9.0.20 / 10.0.12 trở lên, build lại image container.</td></tr>
+<tr><td>JavaScript (trình duyệt + npm)</td><td><strong>Chrome:</strong> CVE-2026-87491, lỗi ghi ngoài vùng nhớ ở V8, <strong>đang bị khai thác</strong> (zero-day thứ 7 của 2026), vá ở Chrome 153.0.8010.36 (09-09). Cùng bản có 230 bản vá bảo mật. Các nguồn không thống nhất mức độ (High hay Medium). <strong>npm:</strong> chiến dịch MALFEX, 8 gói độc hại phát tán RAT và mã đánh cắp dữ liệu trên Windows (một nguồn duy nhất).</td><td><span class="badge high">Cao</span></td><td>Người dùng Chrome, Edge, Brave; ứng dụng Electron/WebView; máy dev và CI cài gói npm.</td><td>Cập nhật trình duyệt và Electron. Dùng lockfile, <code>npm ci</code>, kiểm tra gói mới thêm.</td></tr>
+</tbody></table></div>
+
+<h2>3. Framework</h2>
+<div class="wrap"><table>
+<thead><tr><th>Thành phần</th><th>Tóm tắt lỗ hổng</th><th class="col-lv">Mức độ</th><th>Ảnh hưởng tới hệ thống nào</th><th>Cách xử lý</th></tr></thead>
+<tbody>
+<tr><td>Next.js</td><td><strong>CVE-2026-94545</strong> (09-22, CVSS 9.5): chiếm quyền server từ xa qua <code>ImageResponse</code> của <code>next/og</code> khi dữ liệu người dùng đi vào nội dung SVG. Ngày 09-30 có thêm 7 advisory: SSRF qua Image Optimization (CVE-2026-94483, 8.3), lẫn cache <code>use cache</code> (CVE-2026-103004, -94544), ghi đè/nhiễm cache ISR/SSG (CVE-2026-94543, -94484), lộ dữ liệu qua MCP endpoint của <code>next dev</code> (CVE-2026-94486).</td><td><span class="badge crit">Nghiêm trọng</span></td><td>Next.js 16.2.0 đến trước 16.3.6 dùng <code>next/og</code> trên Node.js (không phải Edge). Các lỗi cache/SSRF ảnh hưởng 15.x và 16.x, chủ yếu tự host.</td><td>Nâng lên 16.3.6 trở lên cho lỗi RCE. Các lỗi 09-30 cần 16.3.8 / 15.5.27 (một số số hiệu chưa xác nhận); nên lên thẳng bản tháng 10 (16.4.1 / 15.5.28).</td></tr>
+<tr><td>Spring Boot (Tomcat, Netty, Jackson đi kèm)</td><td>Không có CVE mới của Spring Boot/Framework trong tháng 9. Phụ thuộc đi kèm: <strong>Tomcat</strong> CVE-2026-76183 (bỏ qua ràng buộc bảo mật WebSocket, CVSS 9.8) và CVE-2026-86350 (lộ header HTTP/2 giữa các request, 9.1); <strong>Netty</strong> 23 advisory vá ở 4.1.138.Final (HTTP/2, request smuggling); <strong>Jackson</strong> 4 lỗi từ chối dịch vụ (vá ở 2.18.11 / 2.21.7).</td><td><span class="badge high">Cao</span></td><td>Ứng dụng Spring Boot (kể cả bản hết hỗ trợ) dùng Tomcat nhúng, WebSocket, HTTP/2 hoặc Netty (WebFlux).</td><td>Nâng Tomcat lên 10.1.60 / 9.0.122, Netty lên 4.1.138.Final, Jackson lên 2.18.11 / 2.21.7. Scanner (OSV/GHSA) có thể thiếu phạm vi phiên bản của Netty.</td></tr>
+<tr><td>Laravel</td><td>CVE-2026-102279 (09-10, CVSS 3.1): XSS ở trang debug khi bật <code>APP_DEBUG</code>, kích hoạt khi rê chuột vào tooltip.</td><td><span class="badge low">Thấp</span></td><td>Ứng dụng Laravel bật debug (thường là môi trường dev/staging).</td><td>Nâng lên 13.30.0 / 12.69.0, tắt <code>APP_DEBUG</code> ở production.</td></tr>
+<tr><td>Quasar</td><td>CVE-2026-106101 (09-11, CVSS 3.1): <code>openURL()</code> bị phần tử HTML chèn vào làm hỏng trên iOS (từ chối dịch vụ phía client).</td><td><span class="badge low">Thấp</span></td><td>Ứng dụng Quasar trên iOS (Cordova/Capacitor) hiển thị nội dung người dùng nhập.</td><td>Nâng <code>quasar</code> lên 2.32.2 trở lên.</td></tr>
+<tr><td>Nuxt</td><td>Không tìm thấy advisory tháng 9 (chỉ xem 2 trang đầu danh sách, chưa chắc là không có).</td><td><span class="badge low">Thấp</span></td><td>Không có.</td><td>Xem báo cáo 10/2026 cho các advisory mới hơn.</td></tr>
+</tbody></table></div>
+
+<h2>4. Hạ tầng</h2>
+<div class="wrap"><table>
+<thead><tr><th>Nhà cung cấp</th><th>Bản tin / Tóm tắt</th><th class="col-lv">Mức độ</th><th>Ảnh hưởng tới hệ thống nào</th><th>Cần làm gì</th></tr></thead>
+<tbody>
+<tr><td>GCP</td><td>GCP-2026-058 (09-02): thiếu kiểm tra quyền project trong API cluster GKE Multi-Cloud. Google xếp Critical, chưa có CVE; chưa đọc chi tiết bản tin.</td><td><span class="badge crit">Nghiêm trọng</span></td><td>GKE Multi-Cloud (cluster attached, AWS, Azure)</td><td>Đọc bản tin GKE để biết có cần hành động.</td></tr>
+<tr><td>GCP</td><td>GCP-2026-063 (09-16, CVE-2026-15587): nâng quyền qua header xác thực nội bộ. GCP-2026-064 (09-28, CVE-2026-19759) và -065 (CVE-2026-81867, thực thi mã qua JavaScript Task): lỗi ở Application Integration.</td><td><span class="badge crit">Nghiêm trọng</span></td><td>Google SecOps SOAR; Application Integration</td><td>Không cần làm gì, Google đã vá (SOAR tự nâng cấp lên 6.3.85+; Application Integration vá từ tháng 6).</td></tr>
+<tr><td>GCP</td><td>GCP-2026-060 và -062 (09-04, 09-11): nhiều lỗi Slurm (CVE-2026-65107...). GCP-2026-066 (09-28, CVE-2026-81375): đọc file nội bộ qua Email Task (đã vá 06-30). GCP-2026-059 (09-04): thiếu kiểm tra quyền ở HTTP Connector (đã vá từ 12/2025).</td><td><span class="badge high">Cao</span></td><td>Cluster Toolkit, Cluster Director; Application Integration; Integration Connectors</td><td>Cluster Toolkit: xem bản tin sản phẩm. Còn lại không cần làm gì.</td></tr>
+<tr><td>GCP</td><td>GCP-2026-061 (09-09): lỗi containerd khi khôi phục container từ checkpoint không tin cậy.</td><td><span class="badge med">Trung bình</span></td><td>GKE có cài thêm <code>criu</code> trên node (cluster mặc định không bị)</td><td>Cluster mặc định không cần làm gì.</td></tr>
+<tr><td>AWS</td><td>2026-107-AWS (09-10, CVE-2026-89049): SSM Agent cho phép port forwarding tới endpoint metadata và lấy credentials IAM của instance. 2026-112 (09-14, CVE-2026-86830): TEAM for IAM Identity Center cấp quyền cao ngoài ý muốn.</td><td><span class="badge high">Cao</span></td><td>EC2/máy dùng SSM Agent dưới 3.3.4851.0; TEAM dưới 1.5.1</td><td>Nâng SSM Agent / TEAM; giới hạn <code>ssm:StartSession</code> trong lúc chờ.</td></tr>
+<tr><td>AWS</td><td>2026-113-AWS (09-16, CVE-2026-86831): EKS Network Policy Agent trộn lẫn pod trùng tên giữa namespace, có thể lách NetworkPolicy.</td><td><span class="badge high">Cao</span></td><td>EKS dùng Network Policy Agent dưới 1.4.0 / VPC CNI từ 1.14.0 đến dưới 1.22.3</td><td>Nâng agent lên 1.4.0 và VPC CNI add-on lên 1.22.4.</td></tr>
+<tr><td>AWS</td><td>Lỗi ở SDK/thư viện: 2026-114 (IoT SDK for Python, không kiểm tra hostname chứng chỉ); 2026-115 (Amazon Connect Salesforce Lambda, thiếu kiểm tra quyền); 2026-106 (Deep Java Library); 2026-119 (GluonTS chạy lệnh từ model); 2026-117 (Kiro IDE); 2026-104 và -101 (postgres-mcp-server); 2026-118 (pgcollection, tự build).</td><td><span class="badge high">Cao</span></td><td>Dự án dùng các SDK/công cụ tương ứng. RDS/Aurora không bị ảnh hưởng bởi 2026-118.</td><td>Cập nhật từng thư viện theo bản tin.</td></tr>
+<tr><td>AWS</td><td>Các bản tin còn lại (2026-099 đến 2026-119, gồm EFS CSI driver, ion-java, OpenSearch Dashboards, Go SDK v2, projen, JDBC Wrapper, s2n-quic...). AWS không nêu mức độ nên cột này là đánh giá tạm.</td><td><span class="badge med">Trung bình</span></td><td>Người dùng thành phần tương ứng</td><td>Cập nhật nếu đang dùng.</td></tr>
+</tbody></table></div>
+
+<h2>5. Ghi chú về độ tin cậy</h2>
+<div class="note"><ul>
+  <li><strong>Đã đọc trực tiếp nguồn chính thức:</strong> PHP ChangeLog (php.net), nodejs.org, advisory GitHub của Next.js, Laravel, Quasar, trang bản tin AWS 2026-099 đến 119, trang danh sách bản tin GCP.</li>
+  <li><strong>PHP:</strong> chưa mở từng advisory nên chưa có CVSS và phạm vi phiên bản; chỉ xem phần 8.5 và 8.4 của changelog.</li>
+  <li><strong>Next.js:</strong> các số hiệu bản vá ghi "16.3.?" trên trang advisory chưa được xác nhận. Chỉ xem trang 1 của danh sách advisory.</li>
+  <li><strong>Nuxt:</strong> chỉ xem 2 trang đầu của danh sách, nên "không có advisory tháng 9" chưa chắc chắn.</li>
+  <li><strong>Spring Boot:</strong> Tomcat, Netty, Jackson lấy từ một bài tổng hợp (HeroDevs), chưa đối chiếu với Apache/Netty/Jackson. spring.io không có mục tháng 9 (chưa kiểm tra nút "Load more").</li>
+  <li><strong>Java:</strong> bản vá 09-15 của Oracle chỉ có từ một trang tổng hợp (aicybr.com), chưa đọc oracle.com.</li>
+  <li><strong>.NET và Windows:</strong> chưa đọc MSRC; số liệu từ Help Net Security, Tenable và aicybr.com. Số CVE tổng khác nhau giữa các nguồn (964 đến 974). Mô tả CVE-2026-69439 chưa thống nhất giữa các nguồn.</li>
+  <li><strong>Chrome:</strong> CVE-2026-87491 từ BleepingComputer; bản 09-09 không thấy trong danh sách Chrome Releases, nên ngày và số bản cần xác minh. Không đọc được nội dung các bản 09-22 và 09-29. MALFEX chỉ có một nguồn.</li>
+  <li><strong>GCP:</strong> chỉ đọc trang danh sách, chưa mở từng bản tin; GCP-2026-058 chưa rõ cần làm gì.</li>
+  <li><strong>AWS:</strong> bản tin không nêu mức độ, nên cột mức độ là đánh giá tạm. Chưa kiểm tra bản tin 2026-098 trở xuống (có thể rơi vào 09-01 đến 09-03).</li>
+  <li><strong>Chuyển từ tháng 8:</strong> GCP-2026-055 (08-25, mức cao) là lỗi RCE ở Next.js và libheif, vá ở Next.js 16.3.3 / 15.5.24 trở lên và cần build lại image với libheif đã vá.</li>
+</ul></div>
+
+<h2>6. Nguồn</h2>
+<div class="note"><ul>
+  <li>PHP: <a href="https://www.php.net/ChangeLog-8.php">ChangeLog 8.x</a></li>
+  <li>Node.js: <a href="https://nodejs.org/en/blog/vulnerability">Vulnerability index</a></li>
+  <li>Next.js: <a href="https://github.com/vercel/next.js/security/advisories">GitHub advisories</a>, <a href="https://nextjs.org/blog/upcoming-nextjs-security-release-september-2026">Thông báo trước ngày 09-23</a></li>
+  <li>Laravel: <a href="https://github.com/laravel/framework/security/advisories/GHSA-jh5r-qr3c-85q8">CVE-2026-102279</a> · Quasar: <a href="https://github.com/quasarframework/quasar/security/advisories/GHSA-89vp-x45c-52cq">CVE-2026-106101</a> · Nuxt: <a href="https://github.com/nuxt/nuxt/security/advisories">GitHub advisories</a></li>
+  <li>Spring: <a href="https://spring.io/security">spring.io/security</a>, <a href="https://www.herodevs.com/blog-posts/spring-boot-managed-dependencies-still-get-cves-after-eol-september-2026-patch-round-up">HeroDevs: round-up tháng 9</a></li>
+  <li>Java: <a href="https://aicybr.com/blog/oracle-september-2026-critical-security-patch-update">Oracle CSPU 09/2026 (aicybr)</a></li>
+  <li>.NET/Windows: <a href="https://www.helpnetsecurity.com/2026/09/09/september-2026-patch-tuesday-zero-days-sigred-successor/">Help Net Security</a>, <a href="https://ar.tenable.com/blog/microsofts-september-2026-patch-tuesday-addresses-964-cves-cve-2026-81963-cve-2026-85880">Tenable</a>, <a href="https://aicybr.com/blog/dotnet-september-2026-security-update">aicybr: .NET</a></li>
+  <li>Chrome/npm: <a href="https://www.bleepingcomputer.com/news/security/google-patches-seventh-chrome-zero-day-exploited-in-attacks-this-year">BleepingComputer</a>, <a href="https://chromereleases.googleblog.com/2026/09/">Chrome Releases 09/2026</a>, <a href="https://safeguard.sh/resources/blog/malfex-npm-campaign-imgdecode-native-loader">MALFEX</a></li>
+  <li>Hạ tầng: <a href="https://aws.amazon.com/security/security-bulletins/">AWS Security Bulletins</a>, <a href="https://docs.cloud.google.com/support/bulletins">Google Cloud Security Bulletins</a></li>
+</ul></div>
+
+</main>
+</body>
+</html>
