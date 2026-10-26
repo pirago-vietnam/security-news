@@ -32,12 +32,12 @@
   <!-- Thêm báo cáo mới ở đầu danh sách; mỗi lỗi nghiêm trọng một dòng -->
   <section class="card">
     <h2>Tháng 10/2026</h2>
-    <p class="date">Cập nhật đến 2026-10-23</p>
+    <p class="date">Cập nhật đến 2026-10-26</p>
     <ul>
-      <li><span class="badge">PHP</span>CVE-2026-109618/-109619: chiếm quyền server từ xa không cần đăng nhập, đã có người khai thác. Nâng lên 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35.</li>
+      <li><span class="badge">PHP</span>CVE-2026-109618/-109619 ("PHP2Shell"): chiếm quyền server từ xa. Nâng lên 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 và tạm đặt <code>session.upload_progress.enabled=0</code> (phòng ngừa thêm CVE-2026-115560).</li>
       <li><span class="badge">Next.js</span>2 lỗi chiếm quyền server từ xa (<code>use cache</code>, Image Optimization). Nâng lên 16.4.1 / 15.5.28.</li>
-      <li><span class="badge">Laravel</span>CVE-2026-114509: giả danh người dùng không cần token (MySQL/MariaDB). Nâng lên 13.29.0 / 12.68.0.</li>
-      <li><span class="badge">AWS/GCP</span>Hai nhà cung cấp đều ra bản tin về lỗi PHP trên; workload PHP phải tự nâng cấp và triển khai lại.</li>
+      <li><span class="badge">Laravel</span>CVE-2026-114509: giả danh người dùng không cần token (MySQL/MariaDB). Nâng lên 13.38.0 / 12.70.1.</li>
+      <li><span class="badge">AWS/GCP</span>Rò rỉ khóa intermediate CA eMudhra (CVE-2026-111943): cập nhật trust bundle (<code>yum update ca-certificates</code>, botocore ≥ 1.43.117) và thay thế chứng chỉ liên quan trước <strong>28-10-2026</strong>.</li>
     </ul>
     <a href="monthly/2026-10.html">Xem báo cáo đầy đủ →</a>
   </section>

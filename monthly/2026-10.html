@@ -52,7 +52,7 @@
 <main>
 
 <h1>Báo cáo bảo mật tháng 10/2026</h1>
-<p class="sub">Số liệu tính đến <strong>2026-10-23</strong>. Tháng chưa kết thúc, cần cập nhật lại cuối tháng.</p>
+<p class="sub">Số liệu tính đến <strong>2026-10-26</strong>. Tháng chưa kết thúc, cần cập nhật lại cuối tháng.</p>
 <p class="note">Mức độ:
   <span class="badge crit">Nghiêm trọng</span>
   <span class="badge high">Cao</span>
@@ -65,14 +65,15 @@
 <div class="wrap"><table>
 <thead><tr><th>#</th><th>Việc cần làm</th><th class="col-lv">Mức độ</th><th>Hạn đề xuất</th></tr></thead>
 <tbody>
-<tr><td>1</td><td>Nâng cấp <strong>PHP</strong> lên 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 (hacker chiếm quyền server từ xa, đã có người thử khai thác)</td><td><span class="badge crit">Nghiêm trọng</span></td><td>Ngay</td></tr>
-<tr><td>2</td><td>Nâng cấp <strong>Next.js</strong> lên 16.4.1 / 15.5.28 (2 lỗi chiếm quyền server từ xa)</td><td><span class="badge crit">Nghiêm trọng</span></td><td>Ngay</td></tr>
-<tr><td>3</td><td>Nâng cấp <strong>Laravel</strong> lên 13.29.0 / 12.68.0 (đăng nhập giả mạo không cần token)</td><td><span class="badge crit">Nghiêm trọng</span></td><td>Ngay nếu dùng token API với MySQL/MariaDB</td></tr>
-<tr><td>4</td><td>Nâng cấp <strong>Node.js</strong> lên 26.12.1 / 24.22.1 / 22.23.4 (4 lỗi mức cao, có 1 lỗi chiếm quyền)</td><td><span class="badge high">Cao</span></td><td>Trong tuần</td></tr>
-<tr><td>5</td><td>Cập nhật <strong>Java</strong> (Oracle CPU 10-20) và <strong>.NET / ASP.NET Core</strong> (Patch Tuesday 10-13)</td><td><span class="badge high">Cao</span></td><td>Trong tuần</td></tr>
-<tr><td>6</td><td>Cập nhật <strong>Chrome/Chromium</strong> lên bản 155.x mới nhất</td><td><span class="badge high">Cao</span></td><td>Trong tuần</td></tr>
-<tr><td>7</td><td>Nâng cấp <strong>Nuxt</strong> lên 4.5.1 / 3.21.10 hoặc mới hơn</td><td><span class="badge med">Trung bình</span></td><td>Trong tháng</td></tr>
-<tr><td>8</td><td>Rà soát <strong>npm</strong> (gói độc hại) và cập nhật <strong>Quasar</strong></td><td><span class="badge med">Trung bình</span></td><td>Trong tháng</td></tr>
+<tr><td>1</td><td>Nâng cấp <strong>PHP</strong> lên 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 và tạm đặt <code>session.upload_progress.enabled=0</code> (phòng ngừa PHP2Shell và CVE-2026-115560)</td><td><span class="badge crit">Nghiêm trọng</span></td><td>Ngay</td></tr>
+<tr><td>2</td><td>Nâng cấp <strong>Next.js</strong> lên 16.4.1 / 15.5.28 (2 lỗi chiếm quyền server từ xa qua <code>use cache</code> và Image Optimization)</td><td><span class="badge crit">Nghiêm trọng</span></td><td>Ngay</td></tr>
+<tr><td>3</td><td>Nâng cấp <strong>Laravel</strong> lên 13.38.0 / 12.70.1 (tối thiểu 13.29.0 / 12.68.0, lỗi đăng nhập giả mạo không cần token và xóa dữ liệu)</td><td><span class="badge crit">Nghiêm trọng</span></td><td>Ngay nếu dùng token API với MySQL/MariaDB</td></tr>
+<tr><td>4</td><td>Cập nhật chứng chỉ CA và trust bundle trên <strong>AWS & GCP</strong> do sự cố rò rỉ khóa CA eMudhra (CVE-2026-111943); thay thế chứng chỉ trước hạn</td><td><span class="badge high">Cao</span></td><td>Trước 28-10-2026</td></tr>
+<tr><td>5</td><td>Nâng cấp <strong>Node.js</strong> lên 26.12.1 / 24.22.1 / 22.23.4 (4 lỗi mức cao, có 1 lỗi chiếm quyền qua Brotli)</td><td><span class="badge high">Cao</span></td><td>Trong tuần</td></tr>
+<tr><td>6</td><td>Nâng cấp <strong>Nuxt</strong> lên 4.6.2 (vá 5 advisory ngày 16-10; Nuxt 3 đã EOL không có bản vá, cần kế hoạch lên Nuxt 4)</td><td><span class="badge high">Cao</span></td><td>Trong tuần</td></tr>
+<tr><td>7</td><td>Cập nhật <strong>Java</strong> (Oracle CPU 10-20, Corretto) và <strong>.NET / ASP.NET Core</strong> (Patch Tuesday 10-13)</td><td><span class="badge high">Cao</span></td><td>Trong tuần</td></tr>
+<tr><td>8</td><td>Cập nhật <strong>Chrome/Chromium</strong> lên bản 155.x mới nhất</td><td><span class="badge high">Cao</span></td><td>Trong tuần</td></tr>
+<tr><td>9</td><td>Cập nhật <strong>Quasar</strong> lên 2.35.2 / @quasar/app-vite 3.10.3 và rà soát gói phụ thuộc <strong>npm</strong></td><td><span class="badge med">Trung bình</span></td><td>Trong tháng</td></tr>
 </tbody></table></div>
 
 <h2>2. Ngôn ngữ</h2>
@@ -80,27 +81,27 @@
 <thead><tr><th>Thành phần</th><th>Tóm tắt lỗ hổng</th><th class="col-lv">Mức độ</th><th>Ảnh hưởng tới hệ thống nào</th><th>Cách xử lý</th></tr></thead>
 <tbody>
 <tr><td>PHP</td>
-<td>CVE-2026-109618, -109619 ("PHP2Shell"). Chỉ cần gửi một request đặc biệt là chiếm được server, không cần đăng nhập (CVSS 9.2). Có báo cáo bị khai thác từ 10-17.</td>
+<td>CVE-2026-109618, -109619 ("PHP2Shell", CVSS 9.2, chiếm server từ xa không cần đăng nhập). Ngày 10-23 công bố thêm thông báo CVE-2026-115560: nguy cơ RCE nếu đổi serialize handler sang <code>php</code> ở runtime trong khi bật upload progress.</td>
 <td><span class="badge crit">Nghiêm trọng</span></td>
-<td>Mọi ứng dụng PHP, kể cả Laravel (PHP-FPM, mod_php, FrankenPHP, LiteSpeed). Nhánh 8.1 trở xuống không có bản chính thức. Cập nhật code ứng dụng không giúp được.</td>
-<td>Nâng PHP lên 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 rồi restart. Bản cũ: dùng bản backport của distro hoặc nâng nhánh. <a href="../php-cve-2026-109618-109619/01-tong-quan.md">Chi tiết</a></td></tr>
+<td>Mọi ứng dụng PHP (PHP-FPM, mod_php, FrankenPHP, LiteSpeed), kể cả Laravel, Drupal. Nhánh 8.1 trở xuống đã EOL không có bản vá chính thức.</td>
+<td>Nâng PHP lên 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35. Đặt thêm <code>session.upload_progress.enabled = 0</code> trong <code>php.ini</code> để phòng ngừa CVE-2026-115560. <a href="../php-cve-2026-109618-109619/01-tong-quan.md">Chi tiết</a></td></tr>
 <tr><td>Node.js</td>
 <td>Bản phát hành 10-21: lỗi Brotli ghi ngoài vùng nhớ (có thể chiếm quyền, CVE-2026-111497); 2 lỗi bỏ qua kiểm tra tên miền của chứng chỉ TLS (CVE-2026-105483, -106069); lỗi <code>dns.resolve</code> (CVE-2026-105482). Thêm 6 lỗi nhẹ hơn.</td>
 <td><span class="badge high">Cao</span></td>
 <td>Dịch vụ chạy Node.js 22.x, 24.x, 26.x (API, SSR, worker, Next.js, Nuxt). Client gọi HTTPS bằng Node có nguy cơ bị nghe lén.</td>
 <td>Nâng lên 26.12.1 / 24.22.1 / 22.23.4. Bản đã hết hỗ trợ (EOL) luôn bị ảnh hưởng, cần chuyển bản.</td></tr>
 <tr><td>Java</td>
-<td>Oracle CPU 10-20: 55 bản vá cho Java SE, 49 lỗi khai thác từ xa không cần đăng nhập. Không có lỗi nghiêm trọng (điểm cao nhất khoảng 7.5).</td>
+<td>Oracle CPU 10-20: 55 bản vá cho Java SE, 49 lỗi khai thác từ xa không cần đăng nhập (điểm cao nhất khoảng 7.5). AWS Corretto phát hành bản vá cập nhật trust bundle cho sự cố eMudhra CA.</td>
 <td><span class="badge high">Cao</span></td>
-<td>Oracle JDK/JRE và OpenJDK cùng nhánh, gồm ứng dụng Spring Boot. Nặng hơn với ứng dụng chạy mã không tin cậy.</td>
-<td>Nâng lên 27.0.1 / 25.0.5 / 21.0.13 / 17.0.21 / 11.0.33 / 8u511. Đợt tiếp theo: 11-17.</td></tr>
+<td>Oracle JDK/JRE, OpenJDK và Amazon Corretto cùng nhánh, gồm ứng dụng Spring Boot. Nặng hơn với ứng dụng chạy mã không tin cậy.</td>
+<td>Nâng lên 27.0.1 / 25.0.5 / 21.0.13 / 17.0.21 / 11.0.33 / 8u511 hoặc Corretto tương ứng. Đợt tiếp theo: 11-17.</td></tr>
 <tr><td>.NET (gồm ASP.NET Core)</td>
 <td>Patch Tuesday 10-13: hơn 30 CVE cho .NET, 13 CVE cho ASP.NET Core. Đáng chú ý: 5 lỗi chạy mã từ xa (CVSS 8.8), CVE-2026-88092 (can thiệp request, 9.4), CVE-2026-70188 (bỏ qua bảo mật, 9.1). Microsoft xếp tất cả mức Important, chưa thấy bị khai thác.</td>
 <td><span class="badge high">Cao</span></td>
 <td>Ứng dụng .NET 8/9/10 và .NET Framework (Windows, Linux, container); web/API ASP.NET Core, nhất là sau reverse proxy.</td>
 <td>Cập nhật runtime/SDK bản tháng 10, build lại image container.</td></tr>
 <tr><td>JavaScript (trình duyệt + npm)</td>
-<td><strong>Trình duyệt:</strong> Chrome 155 (10-06) sửa 247 lỗi, 4 lỗi Critical (có lỗi thoát khỏi sandbox), 53 lỗi High; các bản vá 10-13 và 10-15 sửa thêm lỗi Critical và lỗi ở V8. Chưa thấy bị khai thác trong tháng này. <strong>npm:</strong> chiến dịch gói độc hại giả "Apex Web3" (10-13) phát tán mã đánh cắp dữ liệu, nhắm cả AI coding agent.</td>
+<td><strong>Trình duyệt:</strong> Chrome 155 (10-06) sửa 247 lỗi, 4 lỗi Critical; các bản cập nhật 10-13, 10-15 và bản cập nhật desktop ngày 10-20 tiếp tục vá bổ sung. <strong>npm:</strong> chiến dịch gói độc hại giả "Apex Web3" (10-13) phát tán mã đánh cắp dữ liệu, nhắm cả AI coding agent.</td>
 <td><span class="badge high">Cao</span></td>
 <td>Người dùng Chrome, Edge, Brave; ứng dụng Electron/WebView; máy dev và pipeline CI cài gói npm.</td>
 <td>Cập nhật trình duyệt và Electron. Dùng lockfile, <code>npm ci</code>, tắt install script khi không cần, kiểm tra gói mới thêm.</td></tr>
@@ -111,27 +112,27 @@
 <thead><tr><th>Thành phần</th><th>Tóm tắt lỗ hổng</th><th class="col-lv">Mức độ</th><th>Ảnh hưởng tới hệ thống nào</th><th>Cách xử lý</th></tr></thead>
 <tbody>
 <tr><td>Next.js</td>
-<td>Bản vá 10-14: (1) chiếm quyền server từ xa khi <code>use cache</code> trả về typed array, không có cách né tạm; (2) chiếm quyền qua Image Optimization với file SVG (CVE-2026-96889); (3) làm sập server qua Server Actions.</td>
+<td>Bản vá 10-14: (1) chiếm quyền server từ xa khi <code>use cache</code> trả về typed array (GHSA-673q-mjm6-r5xr), không có cách né tạm; (2) chiếm quyền qua Image Optimization với file SVG (CVE-2026-96889, GHSA-2464-fhr4-w9xw); (3) làm sập server qua Server Actions (GHSA-p3m5-59mp-jv5r).</td>
 <td><span class="badge crit">Nghiêm trọng</span></td>
 <td>Ứng dụng Next.js 15.x và 16.x dùng App Router. Lỗi Image Optimization đến từ thư viện <code>sharp</code>, chạy trên Linux glibc.</td>
 <td>Nâng lên 16.4.1 / 15.5.28. Riêng CVE-2026-96889 có thể tạm dùng <code>sharp</code> ≥ 0.35.5.</td></tr>
 <tr><td>Laravel</td>
-<td>Advisory 10-19: CVE-2026-114509 (CVSS 9.2) giả danh người dùng mà không cần token, chỉ khi dùng MySQL/MariaDB. CVE-2026-114508 (6.5): request đọc có thể kích hoạt xóa dữ liệu bảng liên quan. Cả hai không có cách né tạm.</td>
+<td>Advisory 10-19: CVE-2026-114509 (CVSS 9.2, GHSA-f9x3-7vq9-cph6) giả danh người dùng mà không cần token khi dùng MySQL/MariaDB. CVE-2026-114508 (6.5, GHSA-5wcm-3v2w-8362): request đọc có thể kích hoạt xóa dữ liệu bảng liên quan.</td>
 <td><span class="badge crit">Nghiêm trọng</span></td>
-<td>Ứng dụng Laravel dùng guard token API (<code>TokenGuard</code>) trên MySQL/MariaDB; ứng dụng nạp quan hệ trên endpoint chỉ đọc (12.45.0 đến trước 13.27.0). Vẫn cần vá PHP.</td>
-<td>Nâng lên 13.29.0 / 12.68.0. Luôn tắt <code>APP_DEBUG</code> ở production.</td></tr>
-<tr><td>Quasar</td>
-<td>Không có advisory mới trong tháng, nhưng nhiều CVE được công bố 10-06/07 cho advisory tháng 7: prototype pollution ở <code>extend()</code>, treo server SSR do regex User-Agent, XSS ở meta tag SSR, ghi file ngoài dự án qua <code>icongenie</code>, khóa TLS dev quyền rộng, DOM clobbering ở <code>openURL()</code>.</td>
-<td><span class="badge high">Cao</span></td>
-<td>Ứng dụng Quasar dùng SSR/SSG; máy dev dùng <code>icongenie</code>, <code>@quasar/cli</code>, <code>@quasar/app-vite</code>.</td>
-<td>Nâng Quasar ≥ 2.32.2 và các gói <code>@quasar/*</code> lên bản mới nhất. Tắt trang lỗi SSR dev ở môi trường dùng chung.</td></tr>
+<td>Ứng dụng Laravel dùng guard token API (<code>TokenGuard</code>) trên MySQL/MariaDB; ứng dụng nạp quan hệ trên endpoint chỉ đọc. Vẫn cần vá PHP phía dưới.</td>
+<td>Nâng lên bản mới nhất 13.38.0 / 12.70.1 (tối thiểu 13.29.0 / 12.68.0). Luôn tắt <code>APP_DEBUG</code> ở production.</td></tr>
 <tr><td>Nuxt</td>
-<td>Không có CVE mới. Có 5 advisory ngày 10-16 (Moderate/Low): bỏ qua middleware và route rules khi đường dẫn mã hóa % hoặc khác chữ hoa/thường, <code>useHeadSafe</code> chưa lọc đầu vào, <code>&lt;NuxtLink&gt;</code> còn chạy URL <code>javascript:</code>. Còn hiệu lực: CVE-2026-71316 (lộ dữ liệu SSR của người khác qua cache <code>_payload.json</code>, 8.7, bản 4.4.0 đến 4.5.1).</td>
+<td>5 advisory ngày 10-16: bỏ qua route rules/middleware khi đường dẫn khác chữ hoa/thường (GHSA-vjh5-4x84-xrqp) hoặc mã hóa % (GHSA-6gq8-jgmh-3ffp); <code>useHeadSafe</code> render dữ liệu chưa khử khuẩn ở Server Islands (GHSA-xfq5-w38q-pc2x); lỗi URL <code>javascript:</code> ở <code>&lt;NuxtLink&gt;</code> (GHSA-jjm6-p2m9-9w4x); lỗi <code>getRouterParam</code> với <code>%3F</code> (GHSA-w7gw-66vg-99gq). Còn hiệu lực: CVE-2026-71316 (lộ dữ liệu SSR cache).</td>
+<td><span class="badge high">Cao</span></td>
+<td>Ứng dụng Nuxt 3/4 dùng route rules, middleware, server island, hoặc cache SSR. <strong>Lưu ý:</strong> Nuxt 3 đã kết thúc vòng đời (EOL 31-07-2026) và không được nhận bản vá cho các lỗi này.</td>
+<td>Nâng Nuxt lên <strong>≥ 4.6.2</strong> (hoặc bản phụ 4.4.4 / 4.5.2). Với dự án Nuxt 3, cần lên kế hoạch nâng cấp lên Nuxt 4 do nhánh 3.x không còn được hỗ trợ.</td></tr>
+<tr><td>Quasar</td>
+<td>Các advisory bảo mật (prototype pollution ở <code>extend()</code> - GHSA-qgrf-j65m-5hh8; treo server SSR do regex User-Agent - GHSA-68jq-fhch-4xq4; rò rỉ env trang lỗi dev SSR - GHSA-r5mf-4r5x-q78f; ghi file qua icongenie - GHSA-wmpw-j6qv-mw88) đều đã được khắc phục hoàn toàn trên các bản hiện tại.</td>
 <td><span class="badge med">Trung bình</span></td>
-<td>Ứng dụng Nuxt 3/4 dùng route rules hoặc middleware phân quyền, server island, hoặc cache SSR.</td>
-<td>Nâng lên bản mới nhất của nhánh (từ 4.5.1 / 3.21.10 trở lên). Chưa rõ số hiệu bản vá của advisory 10-16, cần kiểm tra.</td></tr>
+<td>Ứng dụng Quasar dùng SSR/SSG; máy dev dùng <code>icongenie</code>, <code>@quasar/cli</code>, <code>@quasar/app-vite</code>.</td>
+<td>Nâng Quasar lên bản mới nhất <strong>≥ 2.35.2</strong> và <code>@quasar/app-vite</code> <strong>≥ 3.10.3</strong>. Tắt trang lỗi SSR dev ở môi trường dùng chung.</td></tr>
 <tr><td>Spring Boot</td>
-<td>Không có advisory mới trong tháng 10. Còn hiệu lực: CVE-2026-40976 (CVSS 9.1) cấu hình bảo mật web mặc định không có tác dụng, mở mọi endpoint (4.0.0 đến 4.0.5). Tháng 9 có hơn 50 CVE từ Tomcat, Netty.</td>
+<td>Không có advisory mới trong tháng 10 (advisory gần nhất từ tháng 8). Còn hiệu lực: CVE-2026-40976 (CVSS 9.1) cấu hình bảo mật web mặc định không có tác dụng, mở mọi endpoint (4.0.0 đến 4.0.5). Tháng 9 có hơn 50 CVE từ Tomcat, Netty.</td>
 <td><span class="badge med">Trung bình</span></td>
 <td>Spring Boot 4.0.0 đến 4.0.5 không tự cấu hình Spring Security; ứng dụng dùng Tomcat/Netty cũ.</td>
 <td>Dùng Spring Boot ≥ 4.0.6 / 3.5.14, cập nhật Tomcat/Netty, quét phụ thuộc kỹ.</td></tr>
@@ -141,43 +142,41 @@
 <div class="wrap"><table>
 <thead><tr><th>Nhà cung cấp</th><th>Bản tin / Tóm tắt</th><th class="col-lv">Mức độ</th><th>Ảnh hưởng tới hệ thống nào</th><th>Cần làm gì</th></tr></thead>
 <tbody>
-<tr><td>GCP</td><td>GCP-2026-070 (10-21): lỗi PHP RCE. Google Cloud không bị lỗi, nhưng ứng dụng PHP chạy trên đó thì có.</td><td><span class="badge crit">Nghiêm trọng</span></td><td>App Engine, Cloud Run, GKE, Compute Engine chạy PHP</td><td>Triển khai lại với PHP đã vá. App Engine Standard và Cloud Run có thể tự vá nếu bật tự động cập nhật.</td></tr>
-<tr><td>GCP</td><td>GCP-2026-068 (10-14): sai phân quyền ở Application Integration (CVE-2026-85298), có thể nâng quyền và mạo danh service account.</td><td><span class="badge crit">Nghiêm trọng</span></td><td>Application Integration</td><td>Không cần làm gì, Google đã vá từ 08-27.</td></tr>
-<tr><td>GCP</td><td>GCP-2026-069 (10-19): lỗi Istio và Envoy.</td><td><span class="badge high">Cao</span></td><td>Cloud Service Mesh, GKE dùng Istio/Envoy</td><td>Làm theo bản tin Cloud Service Mesh.</td></tr>
-<tr><td>AWS</td><td>2026-143-AWS (10-21): lỗi PHP RCE. Nhánh 5.4 đến 8.1 chưa có bản sửa cho CVE-2026-109618.</td><td><span class="badge crit">Nghiêm trọng</span></td><td>EC2, ECS/EKS, Lambda (custom runtime), Elastic Beanstalk chạy PHP</td><td>Nâng PHP trong image/AMI, theo dõi bản vá AWS bổ sung.</td></tr>
-<tr><td>AWS</td><td>2026-144-AWS (10-22): kiểm tra phân quyền sai khi xử lý truy vấn ở Athena engine v3 (CVE-2026-115416).</td><td><span class="badge high">Cao</span></td><td>Amazon Athena</td><td>Đọc bản tin để xem có cần hành động.</td></tr>
-<tr><td>AWS</td><td>2026-145-AWS (10-22): chèn lệnh hệ điều hành ở Terraform hook của SAM CLI (CVE-2026-115414).</td><td><span class="badge high">Cao</span></td><td>Máy dev/CI dùng SAM CLI</td><td>Cập nhật SAM CLI.</td></tr>
-<tr><td>AWS</td><td>2026-142-AWS (SageMaker Python SDK, CVE-2026-112408, không xác minh chủ sở hữu bucket); 2026-141-AWS (CICD-toolchain-for-serverless-applications, CVE-2026-112407, gán sai đặc quyền).</td><td><span class="badge high">Cao</span></td><td>Dự án dùng SageMaker SDK hoặc toolchain CI/CD serverless</td><td>Cập nhật SDK/toolchain.</td></tr>
-<tr><td>AWS</td><td>Các bản tin còn lại: 2026-147 (aws-c-mqtt), 2026-146 (Strands Agents SDK), 2026-140 (Kiro Crew WhatsApp), 2026-139 (FreeRTOS-Plus-TCP).</td><td><span class="badge med">Trung bình</span></td><td>Người dùng các SDK/thư viện tương ứng</td><td>Cập nhật nếu đang dùng.</td></tr>
+<tr><td>AWS</td><td>2026-150-AWS (10-24): Rò rỉ khóa private intermediate CA của eMudhra/emSign (CVE-2026-111943) do lỗi sinh số ngẫu nhiên yếu trên P-384. Khóa đã bị thu hồi 18/19-10.</td><td><span class="badge high">Cao</span></td><td>Trust stores outbound TLS, CloudFront, ALB (OIDC/JWT), Amazon Linux 2/2023, Corretto JDK, Bottlerocket (≤ 1.67.0), SDK Python (botocore), EMR</td><td>Chạy <code>sudo yum update ca-certificates</code> trên AL2/AL2023; nâng botocore ≥ 1.43.117; cập nhật Corretto JDK. <strong>Đặc biệt:</strong> Thay thế chứng chỉ nếu chuỗi cấp từ emSign trước <strong>28-10-2026</strong>.</td></tr>
+<tr><td>AWS</td><td>2026-148-AWS (10-23): Lỗ hổng ở Amazon Web Services Multi Model Server (MMS ≤ 1.1.11, CVE-2026-115812 ghi file tùy ý/RCE qua giải nén, CVE-2026-115813 SSRF).</td><td><span class="badge high">Cao</span></td><td>Triển khai MMS ≤ 1.1.11 (sản phẩm đã EOL)</td><td>MMS đã hết vòng đời; cần chuyển sang công cụ serving khác. Tạm thời cô lập cổng admin chỉ nghe loopback và hạn chế URL tải model.</td></tr>
+<tr><td>AWS</td><td>2026-149-AWS (10-23): Bỏ sót kiểm tra đầu vào ở sandbox Python <code>run_script</code> trong AWS MCP Server (CVE-2026-115845).</td><td><span class="badge low">Thấp</span></td><td>AWS MCP Server</td><td>AWS đã tự khắc phục trên toàn bộ hạ tầng; khách hàng không cần làm gì.</td></tr>
+<tr><td>AWS</td><td>2026-143-AWS (10-21): Lỗi PHP RCE (CVE-2026-109618, CVE-2026-109619). Nhánh 5.4 đến 8.1 chưa có bản vá từ upstream.</td><td><span class="badge crit">Nghiêm trọng</span></td><td>EC2, ECS/EKS, Lambda (custom runtime), Elastic Beanstalk chạy PHP</td><td>Nâng PHP trong image/AMI lên bản mới, tắt upload progress.</td></tr>
+<tr><td>AWS</td><td>2026-144, 145-AWS (10-22): Kiểm tra quyền sai ở Athena v3 (CVE-2026-115416); chèn lệnh hệ điều hành ở SAM CLI Terraform hook (CVE-2026-115414). Các bản tin 2026-141, 142 (SageMaker SDK, CI/CD serverless), 2026-146, 147.</td><td><span class="badge med">Trung bình</span></td><td>Athena, SAM CLI dev/CI, SageMaker SDK, aws-c-mqtt</td><td>Cập nhật SAM CLI, SageMaker Python SDK và các thư viện liên quan.</td></tr>
+<tr><td>GCP</td><td>GCP-2026-072 (10-24): Lỗi PHP RCE (CVE-2026-109618, CVE-2026-109619) ảnh hưởng đến Apigee Developer Portal do khách hàng tự triển khai chạy trên nền Drupal.</td><td><span class="badge crit">Nghiêm trọng</span></td><td>Apigee Developer Portal tự triển khai (Drupal-based)</td><td>Cập nhật runtime PHP và Drupal theo khuyến cáo của GCP.</td></tr>
+<tr><td>GCP</td><td>GCP-2026-071 (10-23): Lỗ hổng khóa riêng tư intermediate CA eMudhra (CVE-2026-111943) do weak entropy.</td><td><span class="badge med">Trung bình</span></td><td>Base OS images của GCP, Google Cloud CLI, các dịch vụ nền tảng</td><td>Cập nhật Google Cloud CLI và cập nhật các gói root CA / hệ điều hành trên VM/GKE.</td></tr>
+<tr><td>GCP</td><td>GCP-2026-070 (10-21): Lỗi PHP RCE. Hạ tầng Google Cloud không bị ảnh hưởng, nhưng workload PHP khách hàng thì có.</td><td><span class="badge crit">Nghiêm trọng</span></td><td>App Engine, Cloud Run, GKE, Compute Engine chạy PHP</td><td>Triển khai lại với PHP đã vá.</td></tr>
+<tr><td>GCP</td><td>GCP-2026-068 (10-14, sửa phân quyền Application Integration - CVE-2026-85298); GCP-2026-069 (10-19, Istio & Envoy).</td><td><span class="badge high">Cao</span></td><td>Application Integration (đã vá sẵn), Cloud Service Mesh, GKE dùng Istio/Envoy</td><td>GCP-2026-068 không cần làm gì. Với Istio/Envoy, theo dõi bản tin Cloud Service Mesh.</td></tr>
 </tbody></table></div>
 
 <h2>5. Ghi chú về độ tin cậy</h2>
 <div class="note">
 <ul>
-  <li><strong>Đã đọc trực tiếp nguồn chính thức:</strong> Node.js, Next.js, advisory Laravel, advisory Nuxt, spring.io/security, GCP bulletins, AWS bulletins, danh sách CVE Microsoft qua SANS ISC.</li>
-  <li><strong>Chỉ qua bài tổng hợp:</strong> Oracle CPU (trang trả về 403, chưa có danh sách CVE của Java SE); Nuxt tháng 7 và CVE-2026-71316; CVE-2026-48019 (Laravel) và CVE-2026-40976 (Spring Boot).</li>
-  <li><strong>Quasar:</strong> điểm số và số hiệu bản vá lấy từ trang tổng hợp, các nguồn mâu thuẫn nhau (ví dụ CVE-2026-106102). Cần đối chiếu trước khi dùng làm căn cứ.</li>
-  <li><strong>JavaScript:</strong> số lỗi Chrome ngày 10-13 và 10-15 chưa đối chiếu với Chrome Releases blog; chiến dịch "Apex" chỉ có một nguồn thứ cấp.</li>
-  <li><strong>Nuxt:</strong> chưa mở từng advisory ngày 10-16 nên chưa biết số hiệu bản vá chính xác. <strong>Laravel:</strong> CVE-2026-102279 (XSS trang debug) vá ở 13.30.0 / 12.69.0, xem <a href="2026-09.html">báo cáo tháng 9</a>.</li>
-  <li><strong>AWS:</strong> bản tin không hiển thị mức độ, nên cột mức độ là đánh giá tạm. <strong>.NET:</strong> mức độ theo CVSS và loại lỗi (Microsoft xếp tất cả Important).</li>
-  <li><strong>Spring Boot:</strong> "không có advisory tháng 10" dựa trên một trang spring.io chỉ hiện mục mới nhất; chưa kiểm tra GitHub advisory từng dự án.</li>
+  <li><strong>Đã đối chiếu trực tiếp nguồn chính thức:</strong> Node.js, Next.js, advisory Laravel (GitHub Advisories), advisory Nuxt (GitHub Advisories - xác nhận vá tại 4.6.2, Nuxt 3 EOL), Quasar (GitHub Advisories & Releases - xác nhận vá triệt để tại bản 2.35.2 / app-vite 3.10.3), php.net (thông báo cập nhật CVE-2026-115560 ngày 10-23), toàn bộ bản tin AWS (đến 2026-150-AWS ngày 10-24), toàn bộ bản tin Google Cloud (đến GCP-2026-072 ngày 10-24), danh sách CVE Microsoft qua SANS ISC.</li>
+  <li><strong>Chỉ qua bài tổng hợp:</strong> Oracle CPU (trang trả về 403, chưa có danh sách đầy đủ từng CVE của Java SE); CVE-2026-48019 (Laravel) và CVE-2026-40976 (Spring Boot).</li>
+  <li><strong>AWS:</strong> Bản tin AWS không phân loại mức độ đồng nhất (hầu hết gắn Important hoặc không ghi), cột mức độ trong bảng là đánh giá phân loại rủi ro kỹ thuật. <strong>.NET:</strong> mức độ theo CVSS và loại lỗi (Microsoft xếp tất cả Important).</li>
+  <li><strong>Sự cố eMudhra CA (CVE-2026-111943):</strong> Đã được cả AWS (2026-150-AWS) và GCP (GCP-2026-071) xác nhận; chú ý hạn chót thay thế chứng chỉ trên AWS là 28-10-2026.</li>
 </ul>
 </div>
 
 <h2>6. Nguồn</h2>
 <div class="note">
 <ul>
-  <li>PHP: <a href="../php-cve-2026-109618-109619/01-tong-quan.md">tổng quan nội bộ</a>, <a href="https://aws.amazon.com/security/security-bulletins/2026-143-aws/">AWS 2026-143</a>, <a href="https://www.php.net/archive/2026.php">php.net</a></li>
+  <li>PHP: <a href="../php-cve-2026-109618-109619/01-tong-quan.md">tổng quan nội bộ</a>, <a href="https://aws.amazon.com/security/security-bulletins/2026-143-aws/">AWS 2026-143</a>, <a href="https://www.php.net/archive/2026.php">php.net (2026 releases & CVE-2026-115560)</a></li>
   <li>Node.js: <a href="https://nodejs.org/en/blog/vulnerability/october-2026-security-releases">Security Releases 2026-10-21</a></li>
-  <li>Next.js: <a href="https://nextjs.org/blog/nextjs-security-update-october-14-2026">Security Update 2026-10-14</a></li>
-  <li>Laravel: <a href="https://github.com/laravel/framework/security/advisories/GHSA-f9x3-7vq9-cph6">CVE-2026-114509</a>, <a href="https://github.com/laravel/framework/security/advisories/GHSA-5wcm-3v2w-8362">CVE-2026-114508</a></li>
-  <li>Nuxt: <a href="https://github.com/nuxt/nuxt/security/advisories">GitHub advisories</a>, <a href="https://vercel.com/changelog/nuxt-july-2026-security-advisory">Vercel: Nuxt July 2026</a></li>
-  <li>Quasar: <a href="https://github.com/quasarframework/quasar/security/advisories">GitHub advisories</a>, <a href="https://vulert.com/vuln-db/CVE-2026-106102">CVE-2026-106102 (Vulert)</a>, <a href="https://advisories.gitlab.com/npm/@quasar/cli/CVE-2026-106105/">CVE-2026-106105 (GitLab)</a></li>
-  <li>Chrome/npm: <a href="https://www.malwarebytes.com/blog/bugs/2026/10/update-chrome-and-chromeos-to-fix-critical-security-issues">Malwarebytes: Chrome 155</a>, <a href="https://www.securityweek.com/google-patches-6th-chrome-zero-day-of-2026/">SecurityWeek: zero-day CVE-2026-85046</a>, <a href="https://securityonline.info/tag/malicious-npm-packages/">securityonline: gói npm độc hại</a></li>
+  <li>Next.js: <a href="https://nextjs.org/blog/nextjs-security-update-october-14-2026">Security Update 2026-10-14</a>, <a href="https://github.com/vercel/next.js/security/advisories">GitHub Advisories</a></li>
+  <li>Laravel: <a href="https://github.com/laravel/framework/security/advisories/GHSA-f9x3-7vq9-cph6">CVE-2026-114509</a>, <a href="https://github.com/laravel/framework/security/advisories/GHSA-5wcm-3v2w-8362">CVE-2026-114508</a>, <a href="https://github.com/laravel/framework/releases">Laravel Releases</a></li>
+  <li>Nuxt: <a href="https://github.com/nuxt/nuxt/security/advisories/GHSA-vjh5-4x84-xrqp">GHSA-vjh5-4x84-xrqp</a>, <a href="https://github.com/nuxt/nuxt/security/advisories/GHSA-xfq5-w38q-pc2x">GHSA-xfq5-w38q-pc2x</a>, <a href="https://github.com/nuxt/nuxt/security/advisories/GHSA-6gq8-jgmh-3ffp">GHSA-6gq8-jgmh-3ffp</a></li>
+  <li>Quasar: <a href="https://github.com/quasarframework/quasar/releases">Quasar Releases (v2.35.2)</a>, <a href="https://github.com/quasarframework/quasar/security/advisories">GitHub Advisories</a></li>
+  <li>Chrome/npm: <a href="https://chromereleases.googleblog.com/search/label/Stable%20updates">Chrome Releases</a>, <a href="https://www.malwarebytes.com/blog/bugs/2026/10/update-chrome-and-chromeos-to-fix-critical-security-issues">Malwarebytes: Chrome 155</a>, <a href="https://securityonline.info/tag/malicious-npm-packages/">securityonline: gói npm độc hại</a></li>
   <li>Spring: <a href="https://spring.io/security">spring.io/security</a>, <a href="https://www.herodevs.com/blog-posts/spring-boot-managed-dependencies-still-get-cves-after-eol-september-2026-patch-round-up">HeroDevs: round-up tháng 9</a></li>
-  <li>Java: <a href="https://www.oracle.com/security-alerts/cpuoct2026.html">Oracle CPU 10/2026</a>, <a href="https://docs.oracle.com/en-us/iaas/releasenotes/java-management/jdk-cpu-october-2026.htm">Java release notes</a>, <a href="https://www.securityweek.com/oracle-patches-over-1200-vulnerabilities-with-october-2026-cpu/">SecurityWeek</a></li>
+  <li>Java: <a href="https://www.oracle.com/security-alerts/cpuoct2026.html">Oracle CPU 10/2026</a>, <a href="https://docs.oracle.com/en-us/iaas/releasenotes/java-management/jdk-cpu-october-2026.htm">Java release notes</a></li>
   <li>.NET: <a href="https://isc.sans.edu/diary/33422">SANS ISC: Patch Tuesday 10/2026</a>, <a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-october-2026-patch-tuesday-fixes-1-411-flaws-3-zero-days/">BleepingComputer</a></li>
-  <li>Hạ tầng: <a href="https://aws.amazon.com/security/security-bulletins/">AWS Security Bulletins</a>, <a href="https://docs.cloud.google.com/support/bulletins">Google Cloud Security Bulletins</a></li>
+  <li>Hạ tầng: <a href="https://aws.amazon.com/security/security-bulletins/2026-150-aws/">AWS 2026-150</a>, <a href="https://aws.amazon.com/security/security-bulletins/2026-148-aws/">AWS 2026-148</a>, <a href="https://aws.amazon.com/security/security-bulletins/">AWS Security Bulletins</a>, <a href="https://docs.cloud.google.com/support/bulletins">Google Cloud Security Bulletins (GCP-2026-071, -072)</a></li>
 </ul>
 </div>
 
