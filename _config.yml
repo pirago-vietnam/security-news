@@ -14,3 +14,6 @@ exclude:
   - _templates
   - Gemfile
   - Gemfile.lock
+
+plugins:
+  - jekyll-redirect-from
