@@ -210,19 +210,6 @@ redirect_from:
       border-color: var(--primary);
     }
 
-    .theme-toggle-btn {
-      background: var(--bg-surface-elevated);
-      border: 1px solid var(--border);
-      color: var(--text-main);
-      padding: 6px 12px;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
 
     /* Hero Banner */
     .hero {
@@ -765,9 +752,6 @@ redirect_from:
       <a href="#guidance" class="nav-btn">Chỉ Dẫn Bảo Vệ</a>
     </nav>
 
-    <button id="themeToggle" class="theme-toggle-btn" aria-label="Đổi giao diện">
-      <span id="themeIcon">🌓</span> Theme
-    </button>
   </header>
 
   <!-- Hero Section -->
@@ -1560,14 +1544,4 @@ redirect_from:
     card.classList.toggle('open');
   }
 
-  // Sync GMO in-page theme button with main Pirago theme switcher
-  const gmoThemeBtn = document.getElementById('themeToggle');
-  if (gmoThemeBtn) {
-    gmoThemeBtn.addEventListener('click', () => {
-      const mainThemeBtn = document.getElementById('themeToggleBtn');
-      if (mainThemeBtn) {
-        mainThemeBtn.click();
-      }
-    });
-  }
 </script>

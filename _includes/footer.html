@@ -6,16 +6,16 @@
         <a href="https://pirago.vn" class="footer-brand" target="_blank" rel="noopener noreferrer">
           <img src="{{ '/assets/images/logo_footer.webp' | relative_url }}" alt="PiraGo Logo" width="124" height="33" class="footer-logo">
         </a>
-        <p class="footer-slogan">Turn ideas Into Reality, <span class="highlight-red">Together!</span></p>
+        <p class="footer-slogan">Turn ideas Into Reality, <span class="highlight-red">{{ t.footer_slogan_suffix }}</span></p>
 
         <div class="office-box">
           <div class="office-title">
-            <img src="{{ '/assets/images/vi_flag.webp' | relative_url }}" alt="Việt Nam" width="18" height="18" class="flag-icon">
+            <img src="{{ '/assets/images/vi_flag.webp' | relative_url }}" alt="{{ t.vn_name }}" width="18" height="18" class="flag-icon">
             <strong>PiraGo Việt Nam</strong>
           </div>
-          <p class="office-desc">Tầng 3, Toà nhà Comatce, số 61 phố Nguỵ Như Kon Tum, Thanh Xuân, Hà Nội, Việt Nam</p>
+          <p class="office-desc">{{ t.vn_address }}</p>
           <p class="office-contact">
-            <span class="label">Điện thoại:</span>
+            <span class="label">{{ t.phone }}</span>
             <a href="tel:+842466643938">+84 24 6664 3938</a>
           </p>
         </div>
@@ -25,9 +25,9 @@
             <img src="{{ '/assets/images/ja_flag.webp' | relative_url }}" alt="Japan" width="18" height="18" class="flag-icon">
             <strong>PiraGo Japan</strong>
           </div>
-          <p class="office-desc">Tokyo, Shibuya, Tomigaya 1-14-14, tầng 3, Toà nhà Stanford Annex</p>
+          <p class="office-desc">{{ t.jp_address }}</p>
           <p class="office-contact">
-            <span class="label">Điện thoại:</span>
+            <span class="label">{{ t.phone }}</span>
             <a href="tel:+818077022197">+81 80 7702 2197</a>
           </p>
         </div>
@@ -35,37 +35,38 @@
 
       <!-- Cột 2: Báo cáo an ninh mạng -->
       <div class="footer-col footer-col-links">
-        <h4 class="footer-heading">Báo Cáo An Ninh</h4>
+        <h4 class="footer-heading">{{ t.col_reports }}</h4>
         <ul class="footer-links">
-          <li><a href="{{ '/' | relative_url }}">Trang chủ Báo cáo</a></li>
-          <li><a href="{{ '/monthly/2026-10/' | relative_url }}">Báo cáo tháng 10/2026 <span class="badge-mini">Mới</span></a></li>
-          <li><a href="{{ '/monthly/2026-09/' | relative_url }}">Báo cáo tháng 09/2026</a></li>
-          <li><a href="{{ '/gmo/gmo_onamae_security_incident_report/' | relative_url }}">Sự cố GMO Onamae Desktop Cloud</a></li>
-          <li><a href="{{ '/php-cve-2026-109618-109619/php2shell-runbook/' | relative_url }}">Runbook PHP CVE-2026-109618</a></li>
-          <li><a href="https://github.com/pirago-vietnam/security-news/blob/main/monthly/RULES.md" target="_blank" rel="noopener noreferrer">Quy chuẩn báo cáo (RULES.md)</a></li>
+          <li><a href="{{ home_url | relative_url }}">{{ t.reports_home }}</a></li>
+          {%- for m in site.data.monthly reversed %}
+          <li><a href="{{ home_url | append: 'monthly/' | append: m[0] | append: '/' | relative_url }}">{{ m[1].footer_label[lang] }}{% if forloop.first %} <span class="badge-mini">{{ t.new }}</span>{% endif %}</a></li>
+          {%- endfor %}
+          <li><a href="{{ home_url | append: 'gmo/gmo_onamae_security_incident_report/' | relative_url }}">{{ t.gmo_footer }}</a></li>
+          <li><a href="{{ home_url | append: 'php-cve-2026-109618-109619/php2shell-runbook/' | relative_url }}">{{ t.php_runbook }}</a></li>
+          <li><a href="https://github.com/pirago-vietnam/security-news/blob/main/monthly/RULES.md" target="_blank" rel="noopener noreferrer">{{ t.rules }}</a></li>
         </ul>
       </div>
 
       <!-- Cột 3: Dịch vụ & Công nghệ PiraGo -->
       <div class="footer-col footer-col-links">
-        <h4 class="footer-heading">Dịch Vụ PiraGo</h4>
+        <h4 class="footer-heading">{{ t.col_services }}</h4>
         <ul class="footer-links">
-          <li><a href="https://pirago.vn/vn/service" target="_blank" rel="noopener noreferrer">Phát triển Offshore chất lượng cao</a></li>
-          <li><a href="https://pirago.vn/vn/service-labo" target="_blank" rel="noopener noreferrer">Giải pháp nhân sự CNTT</a></li>
-          <li><a href="https://pirago.vn/vn/service-consultant" target="_blank" rel="noopener noreferrer">Tư vấn kiến trúc Cloud & Bảo mật</a></li>
-          <li><a href="https://pirago.vn/vn/company" target="_blank" rel="noopener noreferrer">Về chúng tôi & Năng lực</a></li>
-          <li><a href="https://pirago.vn/vn/contact/spelling-verification" target="_blank" rel="noopener noreferrer">Liên hệ hợp tác</a></li>
+          <li><a href="https://pirago.vn/vn/service" target="_blank" rel="noopener noreferrer">{{ t.svc_1 }}</a></li>
+          <li><a href="https://pirago.vn/vn/service-labo" target="_blank" rel="noopener noreferrer">{{ t.svc_2 }}</a></li>
+          <li><a href="https://pirago.vn/vn/service-consultant" target="_blank" rel="noopener noreferrer">{{ t.svc_3 }}</a></li>
+          <li><a href="https://pirago.vn/vn/company" target="_blank" rel="noopener noreferrer">{{ t.svc_4 }}</a></li>
+          <li><a href="https://pirago.vn/vn/contact/spelling-verification" target="_blank" rel="noopener noreferrer">{{ t.svc_5 }}</a></li>
         </ul>
       </div>
 
       <!-- Cột 4: Tiêu chuẩn & Chứng nhận -->
       <div class="footer-col footer-col-badges">
-        <h4 class="footer-heading">Cam Kết & Tiêu Chuẩn</h4>
-        <p class="footer-subtext">Đội ngũ kỹ sư PiraGo tuân thủ các quy trình phát triển an toàn và bảo mật thông tin theo tiêu chuẩn quốc tế.</p>
+        <h4 class="footer-heading">{{ t.col_commit }}</h4>
+        <p class="footer-subtext">{{ t.commit_text }}</p>
         <div class="cert-tags">
           <span class="cert-tag">ISO 27001 (ISMS)</span>
           <span class="cert-tag">ISO 9001</span>
-          <span class="cert-tag">Sao Khuê 2023 - 2024</span>
+          <span class="cert-tag">{{ t.sao_khue }}</span>
           <span class="cert-tag">AWS Cloud Specialist</span>
         </div>
       </div>
@@ -74,10 +75,10 @@
     <!-- Dòng bản quyền dưới cùng -->
     <div class="pirago-footer-bottom">
       <div class="footer-copy">
-        © 2026 <strong>Công ty TNHH PiraGo Việt Nam</strong> (PiraGo Co., Ltd). Bản quyền thuộc về PiraGo.
+        {{ t.copyright }}
       </div>
       <div class="footer-meta-links">
-        <a href="{{ '/' | relative_url }}">security-news.pirago.vn</a>
+        <a href="{{ home_url | relative_url }}">security-news.pirago.vn</a>
         <span class="sep">•</span>
         <a href="https://pirago.vn" target="_blank" rel="noopener noreferrer">pirago.vn</a>
       </div>

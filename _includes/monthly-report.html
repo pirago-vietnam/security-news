@@ -1,0 +1,57 @@
+{%- comment -%}
+  Dựng trang báo cáo tháng từ _data/monthly/<page.monthly>.yml.
+  Mỗi trường văn bản là một chuỗi dùng chung hoặc map {vi, ja}. Token @home@ trong nội dung được thay bằng URL trang chủ của ngôn ngữ hiện tại.
+{%- endcomment -%}
+{%- assign lang = page.lang | default: "vi" -%}
+{%- assign t = site.data.i18n[lang] -%}
+{%- assign r = site.data.monthly[page.monthly] -%}
+{%- if lang == 'ja' -%}{%- assign home = '/ja/' | relative_url -%}{%- else -%}{%- assign home = '/' | relative_url -%}{%- endif -%}
+
+<div class="report-header">
+  <h1>{{ r.h1[lang] }}</h1>
+  <p class="sub">{{ r.sub[lang] | replace: '@home@', home }}</p>
+</div>
+
+<div class="table-filter-bar">
+  <input type="text" id="tableFilterInput" class="table-filter-input" placeholder="{{ r.placeholder[lang] }}" aria-label="{{ t.filter_label }}">
+  <div class="filter-legend">
+    <span class="badge crit">{{ t.sev.crit }}</span>
+    <span class="badge high">{{ t.sev.high }}</span>
+    <span class="badge med">{{ t.sev.med }}</span>
+    <span class="badge low">{{ t.sev.low }}</span>
+  </div>
+</div>
+
+<p class="note">
+  {{ r.scope[lang] | replace: '@home@', home }}
+</p>
+{% for s in r.sections %}
+<h2>{{ s.title[lang] }}</h2>
+{%- if s.type == 'list' %}
+<div class="note"><ul>
+{%- for li in s.items %}
+  <li>{{ li[lang] | replace: '@home@', home }}</li>
+{%- endfor %}
+</ul></div>
+{%- else %}
+<div class="wrap"><table>
+<thead><tr>
+{%- for c in t.cols[s.type] -%}
+<th{% if forloop.index == 3 %} class="col-lv"{% endif %}>{{ c }}</th>
+{%- endfor -%}
+</tr></thead>
+<tbody>
+{%- for row in s.rows %}
+{%- if s.type == 'actions' %}
+<tr><td>{{ forloop.index }}</td><td>{{ row.task[lang] | replace: '@home@', home }}</td><td><span class="badge {{ row.sev }}">{{ t.sev[row.sev] }}</span></td><td>{{ row.due[lang] }}</td></tr>
+{%- else %}
+<tr><td>{{ row.name[lang] | default: row.name }}</td>
+<td>{{ row.summary[lang] | replace: '@home@', home }}</td>
+<td><span class="badge {{ row.sev }}">{{ t.sev[row.sev] }}</span></td>
+<td>{{ row.impact[lang] | replace: '@home@', home }}</td>
+<td>{{ row.fix[lang] | replace: '@home@', home }}</td></tr>
+{%- endif %}
+{%- endfor %}
+</tbody></table></div>
+{%- endif %}
+{% endfor -%}

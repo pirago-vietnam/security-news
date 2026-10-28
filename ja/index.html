@@ -1,0 +1,73 @@
+---
+layout: default
+title: "サイバーセキュリティレポートと技術的脆弱性"
+description: "月次のセキュリティインシデントおよび脆弱性レポートの総まとめ: AWS, GCP · NodeJS, PHP, Java, .NET · Next.js, Nuxt, Quasar, Laravel, Spring Boot - PiraGo"
+---
+{% assign lang = page.lang | default: "vi" %}{% assign t = site.data.i18n[lang] %}{% if lang == 'ja' %}{% assign home_url = '/ja/' %}{% else %}{% assign home_url = '/' %}{% endif %}
+
+<div class="hero-section" style="margin-bottom: 32px;">
+  <h1>セキュリティレポート</h1>
+  <p class="sub">
+    サイバーセキュリティインシデントおよび技術的脆弱性に関する定期レポートの総まとめ:
+    <strong>インフラ</strong> (AWS, GCP) ·
+    <strong>言語</strong> (NodeJS, PHP, Java, .NET, JavaScript) ·
+    <strong>フレームワーク</strong> (Next.js, Nuxt, Quasar, Laravel, Spring Boot)。
+  </p>
+  <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px;">
+    <span class="badge crit">緊急対応</span>
+    <span class="badge high">AWS / GCP インフラ</span>
+    <span class="badge med">定期アップデート</span>
+    <span class="badge low">Zero-Day Intel</span>
+  </div>
+</div>
+
+<!-- レポート一覧 - 最新のレポートを上に表示 -->
+<div class="reports-list">
+  <!-- GMOインシデントレポート -->
+  <section class="card" style="border-left: 4px solid var(--pirago-red);">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+      <h2>🚨 セキュリティインシデント: GMO お名前.com デスクトップクラウド</h2>
+      <span class="badge crit">CRITICAL INCIDENT</span>
+    </div>
+    <p class="date">2026年10月28日 時点 · 13件の公式発表 &amp; IRレポートに基づく危機対応 (GMOインターネットグループ)</p>
+    <ul>
+      <li><span class="badge crit">インフラ</span> Windows VPSサーバー26,739台が乗っ取られ、MT4/MT5のログイン情報が漏えい。70以上の証券・FX会社に影響。</li>
+      <li><span class="badge high">恐喝</span> ハッカーが身代金5,000万米ドルを要求。GMOは断固として拒否し、犯人逮捕に向けた懸賞金として100万米ドルのバウンティ基金を設立。</li>
+      <li><span class="badge med">防御</span> 漏えいしたドメインを15.5時間でテイクダウン。日本の内閣官房に対し、アクティブサイバーディフェンス法の発動を提言。</li>
+      <li><span class="badge low">補償</span> 不正注文による実際の取引損失を100%補償するとともに、お客様1名あたり最大3,000,000 JPYの特別見舞金を支給。</li>
+    </ul>
+    <a href="{{ '/ja/gmo/gmo_onamae_security_incident_report/' | relative_url }}" class="card-link-btn">インシデント詳細レポートを見る →</a>
+  </section>
+
+  <!-- Báo cáo tháng: lặp theo _data/monthly, mới nhất xếp trên -->
+  {%- for m in site.data.monthly reversed %}
+  {%- assign d = m[1] %}
+  <section class="card">
+    {%- if forloop.first %}
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: gap; gap: 8px;">
+      <h2>📅 {{ d.card.title[lang] }}</h2>
+      <span class="badge-new">{{ t.latest }}</span>
+    </div>
+    {%- else %}
+    <h2>📅 {{ d.card.title[lang] }}</h2>
+    {%- endif %}
+    <p class="date">{{ d.card.date[lang] }}</p>
+    <ul>
+      {%- for it in d.card.items %}
+      <li><span class="badge {{ it.sev }}">{{ it.label }}</span> {{ it.text[lang] }}</li>
+      {%- endfor %}
+    </ul>
+    <a href="{{ home_url | append: 'monthly/' | append: m[0] | append: '/' | relative_url }}" class="card-link-btn">{{ t.view_full }}</a>
+  </section>
+  {%- endfor %}
+
+  <!-- ランブック & セキュリティ基準 -->
+  <section class="card" id="runbooks" style="background: var(--bg-subtle);">
+    <h2>📘 ランブック &amp; 緊急対応ドキュメント</h2>
+    <p class="date">PiraGoのエンジニア向け社内技術ハンドブック集</p>
+    <ul>
+      <li><a href="{{ '/ja/php-cve-2026-109618-109619/php2shell-runbook/' | relative_url }}"><strong>PHP CVE-2026-109618 / 109619 (PHP2Shell):</strong> 対応ランブック7本、侵害検知、通知チェックリスト、Docker PHP-FPM のアップグレードを1ページに集約</a></li>
+      <li><a href="https://github.com/pirago-vietnam/security-news/blob/main/monthly/RULES.md" target="_blank" rel="noopener noreferrer"><strong>RULES.md:</strong> PiraGoの定期サイバーセキュリティレポート作成基準</a></li>
+    </ul>
+  </section>
+</div>

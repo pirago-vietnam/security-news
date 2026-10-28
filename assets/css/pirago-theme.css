@@ -1,16 +1,16 @@
 /**
  * PiraGo Security News - Unified Theme & Design System
- * Brand colors: Navy (#283172), Red Accent (#e23d3d)
+ * Brand colors: Navy (#2b2f7f), Sky Blue (#5ab0e8), Black - from the PiraGo logo
  */
 
 :root {
   /* Brand Tokens */
-  --pirago-navy: #283172;
-  --pirago-navy-dark: #1b2252;
-  --pirago-navy-light: #3a4592;
-  --pirago-red: #e23d3d;
-  --pirago-red-hover: #c92f2f;
-  --pirago-blue: #2563eb;
+  --pirago-navy: #2b2f7f;
+  --pirago-navy-dark: #1d2060;
+  --pirago-navy-light: #3d429a;
+  --pirago-red: #2a8fd9;
+  --pirago-red-hover: #1f78bb;
+  --pirago-blue: #2a8fd9;
 
   /* Theme Defaults (Light Mode) */
   --bg: #f8fafc;
@@ -40,7 +40,7 @@
   /* Header & Footer */
   --header-bg: rgba(255, 255, 255, 0.92);
   --header-border: #e2e8f0;
-  --footer-bg: #1a224a;
+  --footer-bg: #1d2060;
   --footer-text: #cbd5e1;
   --footer-heading: #ffffff;
   --footer-line: rgba(255, 255, 255, 0.12);
@@ -61,15 +61,15 @@
 
 /* Dark Mode Overrides */
 html[data-theme="dark"] {
-  --bg: #0b0f19;
-  --bg-subtle: #131a29;
-  --card: #151d30;
-  --card-hover: #19233a;
+  --bg: #0a0b1c;
+  --bg-subtle: #11132b;
+  --card: #161939;
+  --card-hover: #1c2048;
   --text: #f1f5f9;
   --text-muted: #94a3b8;
   --text-subtle: #64748b;
-  --line: #222f4c;
-  --line-strong: #334366;
+  --line: #272c5c;
+  --line-strong: #3a4081;
 
   /* Badges in Dark Mode */
   --crit: #f87171;
@@ -88,7 +88,7 @@ html[data-theme="dark"] {
   /* Header & Footer */
   --header-bg: rgba(15, 23, 42, 0.9);
   --header-border: #1e293b;
-  --footer-bg: #090d16;
+  --footer-bg: #070816;
   --footer-text: #94a3b8;
   --footer-heading: #f1f5f9;
   --footer-line: rgba(255, 255, 255, 0.08);
@@ -256,7 +256,7 @@ html[data-theme="dark"] .pirago-brand-badge {
 }
 
 html[data-theme="dark"] .pirago-nav-link.active {
-  color: #60a5fa;
+  color: #5ab0e8;
 }
 
 /* Dropdown */
@@ -505,7 +505,7 @@ p.sub, .page-desc {
 }
 
 html[data-theme="dark"] .card-link-btn {
-  color: #60a5fa;
+  color: #5ab0e8;
 }
 
 /* Badges */
@@ -614,7 +614,7 @@ td:first-child {
 
 html[data-theme="dark"] .note,
 html[data-theme="dark"] .callout {
-  border-left-color: #60a5fa;
+  border-left-color: #5ab0e8;
 }
 
 .note ul, .callout ul {
@@ -656,7 +656,7 @@ html[data-theme="dark"] .callout {
 }
 
 html[data-theme="dark"] .table-filter-input:focus {
-  border-color: #60a5fa;
+  border-color: #5ab0e8;
 }
 
 /* ==========================================================================
@@ -736,7 +736,7 @@ html[data-theme="dark"] .table-filter-input:focus {
 }
 
 .office-contact a {
-  color: #93c5fd;
+  color: #8cc8f0;
   text-decoration: none;
   font-weight: 600;
 }
@@ -905,4 +905,33 @@ html[data-theme="dark"] .table-filter-input:focus {
   h2 {
     font-size: 18px;
   }
+}
+
+/* Language switcher & Japanese typography */
+.lang-switch-btn {
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.lang-switch-btn:hover {
+  background: var(--card);
+  border-color: var(--pirago-blue);
+  text-decoration: none;
+}
+
+html[lang="ja"] body {
+  font-family: 'Plus Jakarta Sans', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, system-ui, sans-serif;
+  line-break: strict;
+  overflow-wrap: anywhere;
 }

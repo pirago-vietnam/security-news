@@ -1,19 +1,27 @@
 <!DOCTYPE html>
-<html lang="vi" data-theme="auto">
+{% assign lang = page.lang | default: "vi" %}
+{% assign t = site.data.i18n[lang] %}
+{% if lang == 'ja' %}{% assign home_url = '/ja/' %}{% else %}{% assign home_url = '/' %}{% endif %}
+{% assign page_title = page.title %}{% assign page_desc = page.description %}{% assign page_category = page.category %}
+{% if page.monthly %}{% assign report = site.data.monthly[page.monthly] %}{% assign page_title = report.title[lang] %}{% assign page_desc = report.description[lang] %}{% assign page_category = t.category_monthly %}{% endif %}
+<html lang="{{ lang }}" data-theme="auto">
 <head>
   {% include google-tag.html %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
-  {% if page.description %}
-  <meta name="description" content="{{ page.description }}">
+  <title>{% if page_title %}{{ page_title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  {% if page_desc %}
+  <meta name="description" content="{{ page_desc }}">
   {% else %}
-  <meta name="description" content="{{ site.description }}">
+  <meta name="description" content="{{ t.site_description }}">
   {% endif %}
+  {% if lang == 'ja' %}{% assign vi_url = page.url | remove_first: '/ja' %}{% if vi_url == '' %}{% assign vi_url = '/' %}{% endif %}{% assign ja_url = page.url %}{% else %}{% assign vi_url = page.url %}{% assign ja_url = page.url | prepend: '/ja' %}{% endif %}
+  <link rel="alternate" hreflang="vi" href="{{ vi_url | absolute_url }}">
+  <link rel="alternate" hreflang="ja" href="{{ ja_url | absolute_url }}">
   <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/images/favicon.png' | relative_url }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ '/assets/css/pirago-theme.css' | relative_url }}">
 
   <!-- Script phòng ngừa chớp màu (FOUC) khi tải trang -->
@@ -35,17 +43,17 @@
 <body class="{{ page.body_class }}">
   {% include header.html %}
 
-  {% if page.url != '/' and page.url != '/index.html' %}
+  {% if page.url != '/' and page.url != '/index.html' and page.url != '/ja/' %}
   <div class="pirago-breadcrumb-bar">
     <div class="pirago-container">
       <nav class="pirago-breadcrumbs" aria-label="Breadcrumb">
-        <a href="{{ '/' | relative_url }}">Trang chủ</a>
+        <a href="{{ home_url | relative_url }}">{{ t.home }}</a>
         <span class="breadcrumb-sep">/</span>
-        {% if page.category %}
-        <span class="breadcrumb-category">{{ page.category }}</span>
+        {% if page_category %}
+        <span class="breadcrumb-category">{{ page_category }}</span>
         <span class="breadcrumb-sep">/</span>
         {% endif %}
-        <span class="breadcrumb-current" aria-current="page">{{ page.title | default: "Báo cáo" }}</span>
+        <span class="breadcrumb-current" aria-current="page">{{ page_title | default: t.default_title }}</span>
       </nav>
     </div>
   </div>

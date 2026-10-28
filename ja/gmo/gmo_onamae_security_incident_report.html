@@ -1,0 +1,1545 @@
+---
+layout: default
+title: "セキュリティインシデントレポート:GMO お名前.com デスクトップクラウド"
+description: "お名前.com デスクトップクラウド VPS 26,739台への攻撃(GMOインターネットグループ)と能動的サイバー防御による反撃に関する、インテリジェンス資料および詳細な技術分析"
+category: "セキュリティインシデント"
+---
+
+<style>
+    :root {
+      --bg: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #f1f5f9;
+      --bg-surface-subtle: #f8fafc;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      --primary: #1e3a8a;
+      --primary-hover: #172554;
+      --primary-light: #eff6ff;
+      --danger: #dc2626;
+      --danger-light: #fef2f2;
+      --danger-border: #fecaca;
+      --warning: #d97706;
+      --warning-light: #fffbeb;
+      --success: #16a34a;
+      --success-light: #f0fdf4;
+      --badge-bg: #e2e8f0;
+      --badge-text: #334155;
+      --accent: #2563eb;
+      --accent-glow: rgba(37, 99, 235, 0.15);
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-jp: 'Noto Sans JP', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #090d16;
+        --bg-surface: #111827;
+        --bg-surface-elevated: #1f2937;
+        --bg-surface-subtle: #162032;
+        --border: #1f293d;
+        --border-strong: #374151;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --text-subtle: #64748b;
+        --primary: #3b82f6;
+        --primary-hover: #60a5fa;
+        --primary-light: rgba(59, 130, 246, 0.12);
+        --danger: #ef4444;
+        --danger-light: rgba(239, 68, 68, 0.12);
+        --danger-border: rgba(239, 68, 68, 0.3);
+        --warning: #f59e0b;
+        --warning-light: rgba(245, 158, 11, 0.12);
+        --success: #10b981;
+        --success-light: rgba(16, 185, 129, 0.12);
+        --badge-bg: #1e293b;
+        --badge-text: #cbd5e1;
+        --accent: #38bdf8;
+        --accent-glow: rgba(56, 189, 248, 0.15);
+        --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+        --card-shadow-hover: 0 10px 20px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+        color-scheme: dark;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #090d16;
+      --bg-surface: #111827;
+      --bg-surface-elevated: #1f2937;
+      --bg-surface-subtle: #162032;
+      --border: #1f293d;
+      --border-strong: #374151;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --primary-light: rgba(59, 130, 246, 0.12);
+      --danger: #ef4444;
+      --danger-light: rgba(239, 68, 68, 0.12);
+      --danger-border: rgba(239, 68, 68, 0.3);
+      --warning: #f59e0b;
+      --warning-light: rgba(245, 158, 11, 0.12);
+      --success: #10b981;
+      --success-light: rgba(16, 185, 129, 0.12);
+      --badge-bg: #1e293b;
+      --badge-text: #cbd5e1;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+      --card-shadow-hover: 0 10px 20px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+      color-scheme: dark;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.65;
+      font-size: 15px;
+      padding-top: max(16px, env(safe-area-inset-top, 0px));
+      padding-bottom: max(32px, env(safe-area-inset-bottom, 0px));
+      padding-left: max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      min-width: 0;
+    }
+
+    /* Top Sticky Sub-Header for GMO Incident Sections */
+    .header-bar {
+      position: sticky;
+      top: 72px;
+      z-index: 90;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px 20px;
+      margin-bottom: 24px;
+      backdrop-filter: blur(12px);
+      box-shadow: var(--card-shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .header-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--danger-light);
+      color: var(--danger);
+      border: 1px solid var(--danger-border);
+    }
+
+    .badge-status::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 8px currentColor;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      max-width: 100%;
+      padding-bottom: 2px;
+    }
+
+    .nav-btn {
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--text-muted);
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-btn:hover {
+      color: var(--text-main);
+      background: var(--primary-light);
+      border-color: var(--primary);
+    }
+
+
+    /* Hero Banner */
+    .hero {
+      background: linear-gradient(135deg, rgba(30, 58, 138, 0.08) 0%, rgba(220, 38, 38, 0.05) 100%), var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      margin-bottom: 24px;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--danger), var(--primary));
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .hero-meta span {
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+    }
+
+    .hero h1 {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
+
+    .hero-sub {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      max-width: 900px;
+    }
+
+    .hero-entities {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .tag.primary {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: rgba(37, 99, 235, 0.2);
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--card-shadow-hover);
+    }
+
+    .kpi-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+
+    .kpi-value {
+      font-size: 24px;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: var(--text-main);
+      margin-bottom: 4px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .kpi-value.danger { color: var(--danger); }
+    .kpi-value.primary { color: var(--primary); }
+    .kpi-value.warning { color: var(--warning); }
+    .kpi-value.success { color: var(--success); }
+
+    .kpi-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Section Component */
+    .section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      margin-bottom: 28px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-main);
+    }
+
+    .section-badge {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      background: var(--badge-bg);
+      color: var(--badge-text);
+    }
+
+    /* Timeline Styles */
+    .timeline {
+      position: relative;
+      margin-top: 20px;
+      padding-left: 24px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      bottom: 6px;
+      left: 7px;
+      width: 2px;
+      background: var(--border-strong);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 22px;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -24px;
+      top: 4px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      border: 3px solid var(--primary);
+      z-index: 2;
+    }
+
+    .timeline-item.critical .timeline-dot {
+      border-color: var(--danger);
+      background: var(--danger-light);
+    }
+
+    .timeline-item.warning .timeline-dot {
+      border-color: var(--warning);
+    }
+
+    .timeline-item.success .timeline-dot {
+      border-color: var(--success);
+    }
+
+    .timeline-card {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      transition: all 0.2s;
+    }
+
+    .timeline-card:hover {
+      border-color: var(--border-strong);
+      background: var(--bg-surface-subtle);
+    }
+
+    .timeline-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .timeline-date {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .timeline-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .timeline-body {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .quote-box {
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--bg-surface);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 13px;
+      font-family: var(--font-jp);
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* Reports Accordion Grid */
+    .reports-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .report-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--bg-surface-elevated);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .report-card.highlight {
+      border-left: 4px solid var(--danger);
+    }
+
+    .report-header {
+      padding: 14px 18px;
+      background: var(--bg-surface);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      user-select: none;
+    }
+
+    .report-header:hover {
+      background: var(--bg-surface-subtle);
+    }
+
+    .report-title-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .report-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .report-tag.danger {
+      background: var(--danger-light);
+      color: var(--danger);
+    }
+
+    .report-date {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-subtle);
+    }
+
+    .report-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .report-chevron {
+      font-size: 18px;
+      color: var(--text-subtle);
+      transition: transform 0.2s;
+    }
+
+    .report-card.open .report-chevron {
+      transform: rotate(180deg);
+    }
+
+    .report-content {
+      padding: 18px;
+      border-top: 1px solid var(--border);
+      display: none;
+      background: var(--bg-surface-elevated);
+      font-size: 14px;
+    }
+
+    .report-card.open .report-content {
+      display: block;
+    }
+
+    /* Technical Grid */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .tech-box {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+    }
+
+    .tech-box h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-main);
+    }
+
+    .tech-box ul {
+      padding-left: 20px;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .tech-box li {
+      margin-bottom: 8px;
+    }
+
+    /* Tables */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-top: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      text-align: left;
+    }
+
+    th {
+      background: var(--bg-surface-elevated);
+      color: var(--text-muted);
+      font-weight: 700;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-main);
+      vertical-align: top;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: var(--bg-surface-subtle);
+    }
+
+    .amount-highlight {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--danger);
+    }
+
+    /* Code & logs */
+    .code-block {
+      background: #0f172a;
+      color: #e2e8f0;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      margin-top: 12px;
+      border: 1px solid #1e293b;
+      line-height: 1.5;
+    }
+
+    /* Action Checklist */
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: 10px;
+      background: var(--bg-surface-elevated);
+    }
+
+    .check-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .check-content h4 {
+      font-size: 14.5px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--text-main);
+    }
+
+    .check-content p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 32px 0 16px;
+      color: var(--text-subtle);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+      margin-top: 32px;
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+
+<div class="gmo-incident-wrapper">
+
+  <!-- Header Bar -->
+  <header class="header-bar">
+    <div class="header-title-group">
+      <span class="badge-status">CRITICAL INCIDENT</span>
+      <strong style="font-size: 15px;">GMO Internet Group</strong>
+    </div>
+
+    <nav class="header-nav">
+      <a href="#summary" class="nav-btn">概要</a>
+      <a href="#timeline" class="nav-btn">タイムライン</a>
+      <a href="#reports" class="nav-btn">13の続報とIR</a>
+      <a href="#technical" class="nav-btn">技術分析</a>
+      <a href="#compensation" class="nav-btn">補償とIR</a>
+      <a href="#governance" class="nav-btn">ガバナンスと戦略</a>
+      <a href="#guidance" class="nav-btn">防御ガイダンス</a>
+    </nav>
+
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="summary">
+    <div class="hero-meta">
+      <span>更新日: 2026/10/28</span>
+      <span>•</span>
+      <span>対象: お名前.com デスクトップクラウド (Onamae Desktop Cloud)</span>
+      <span>•</span>
+      <span>第1号案件 - ACTIVE CYBER DEFENSE</span>
+    </div>
+    <h1>お名前.com デスクトップクラウド(GMOインターネットグループ)への攻撃に関する包括的サイバーセキュリティレポート</h1>
+    <p class="hero-sub">
+      GMOインターネットグループ(9449)および子会社GMOインターネット(4784)による、緊急続報13件と適時開示( 適時開示 )に関するインテリジェンス資料および詳細な技術分析です。VPS 26,739台への侵入、MT4/MT5アカウント情報の窃取、5,000万米ドルの脅迫、そして15.5時間後に行われた攻撃者ドメインのテイクダウン(反撃)作戦を扱います。
+    </p>
+
+    <div class="hero-entities">
+      <span class="tag primary">東証プライム: 9449</span>
+      <span class="tag primary">東証プライム: 4784</span>
+      <span class="tag">26,739台の仮想サーバー</span>
+      <span class="tag">70社以上の証券会社・FX業者</span>
+      <span class="tag">テイクダウン作戦 15.5時間</span>
+      <span class="tag">報奨金基金: $1,000,000 USD</span>
+      <span class="tag">能動的サイバー防御 (能動的サイバー防御)</span>
+    </div>
+  </section>
+
+  <!-- KPI Grid -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">侵入されたインフラ</div>
+      <div class="kpi-value danger">26,739</div>
+      <div class="kpi-desc">Windows Desktop Cloud の VPS 全台を、10月21日4:00から緊急停止。</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">影響を受けた取引所・業者</div>
+      <div class="kpi-value warning">70社以上</div>
+      <div class="kpi-desc">証券・FX・暗号資産の各社で、攻撃者が不正に発注し残高を破壊。</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">拒否した身代金</div>
+      <div class="kpi-value danger">$50M USD</div>
+      <div class="kpi-desc">約80億円。GMOは犯罪を助長しないよう、支払いを断固拒否。</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">犯人逮捕への懸賞基金</div>
+      <div class="kpi-value success">$1M USD</div>
+      <div class="kpi-desc">親会社が、3言語の国際ポータルを通じてGMOサイバー犯罪報奨金基金を拠出。</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">流出サイト排除までの時間</div>
+      <div class="kpi-value primary">15.5時間</div>
+      <div class="kpi-desc">10月28日午前4:00に、流出ドメインとミラーサイトをすべてテイクダウン。</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">不正発注による損失の補償</div>
+      <div class="kpi-value success">実損100%</div>
+      <div class="kpi-desc">不正発注による実損を100%補償し、さらに見舞金を最大300万円支給すると約束。</div>
+    </div>
+  </div>
+
+  <!-- Detailed Timeline Section -->
+  <section class="section" id="timeline">
+    <div class="section-header">
+      <h2 class="section-title">
+        <span>⏱️</span> インシデント全体のタイムライン (2026/10/19 - 2026/10/28)
+      </h2>
+      <span class="section-badge">危機の10日間</span>
+    </div>
+
+    <div class="timeline">
+
+      <!-- Day 19 -->
+      <div class="timeline-item warning">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span class="timeline-date">2026/10/19</span>
+            <span class="tag">調査開始</span>
+          </div>
+          <div class="timeline-title">お客様から最初の異常の報告</div>
+          <div class="timeline-body">
+            お客様から、Windows Desktop Cloud の仮想マシンの運用中に異常が発生しているとの報告がありました。GMOの技術チームは情報を受け付け、社内のセキュリティ調査を開始しました。
+          </div>
+          <div class="quote-box">
+            「10月19日:お客様からのお問い合わせを受け、調査を開始」
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 20 -->
+      <div class="timeline-item critical">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span class="timeline-date">2026/10/20</span>
+            <span class="tag danger">マルウェア検知</span>
+          </div>
+          <div class="timeline-title">不正プログラムの確認と管理ポータルの閉鎖</div>
+          <div class="timeline-body">
+            GMOは、一部のお客様のサーバー環境に不正なプログラム(マルウェア)が設置されていることを確認しました。即時の封じ込め措置として、新規申込みをすべて停止し、コントロールパネルのインターフェースを遮断しました。
+          </div>
+          <div class="quote-box">
+            「10月20日:不正なプログラムの設置を確認。新規お申し込みおよびコントロールパネルを停止」
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 21 -->
+      <div class="timeline-item critical">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span class="timeline-date">2026/10/21 (04:00 & 11:57 JST)</span>
+            <span class="tag danger">26,739台を停止 & 脅迫メール</span>
+          </div>
+          <div class="timeline-title">全サービスを緊急停止、第1報を公表、5,000万米ドルの最後通告を受領</div>
+          <div class="timeline-body">
+            <strong>04:00 JST:</strong> 被害拡大を防ぐため、GMOは全プランの仮想サーバー26,739台を順次電源停止し、第1報(第1報)を公表しました。<br>
+            <strong>11:57 JST:</strong> 攻撃者が5,000万米ドル(約80億円)を要求する脅迫メールを送付し、70社以上の口座の破壊、お客様のPCへのランサムウェア配布、社内設計情報の流出をほのめかしました。<br>
+            <strong>同日:</strong> お客様から、金融取引口座で身に覚えのない発注が行われているとの報告が出始めました。
+          </div>
+          <div class="quote-box">
+            「10月21日 4:00:被害拡大防止のため、全プランのサーバーを順次停止。第1報を掲載。10月21日以降:お客様より、お取引口座における身に覚えのない操作等のご報告を受付」
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 22 -->
+      <div class="timeline-item critical">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span class="timeline-date">2026/10/22 (16:59 JST)</span>
+            <span class="tag danger">警察への届出 & 第2報</span>
+          </div>
+          <div class="timeline-title">警察に相談、取引用ログイン情報の漏えいを認める</div>
+          <div class="timeline-body">
+            GMOは警察当局に正式に相談し、情報を共有しました。第2報(第2報)を公表し、VPS上に保存されていた取引所のログイン情報が窃取されたことを認め、お客様に対し、別の端末からパスワードを変更し、すべての接続セッションを切断するよう緊急に呼びかけました。
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 23 -->
+      <div class="timeline-item warning">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span class="timeline-date">2026/10/23 (16:10 JST)</span>
+            <span class="tag">第3報 & IR-895</span>
+          </div>
+          <div class="timeline-title">MT4/MT5のセッション維持の脆弱性に関する警告と、最初のIR開示</div>
+          <div class="timeline-body">
+            第3報(第3報)および適時開示IR第895号を公表しました。詳細な技術的警告として、FX業者のアーキテクチャ上の特性により、パスワードを変更しても開いているセッションは自動的に破棄されないことが示され、お客様は業者に対してセッションの強制切断(Force Session Kill)を依頼する必要があるとされました。ホットラインは24時間365日体制に拡充されました。
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 24 -->
+      <div class="timeline-item critical">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span class="timeline-date">2026/10/24 (11:50 & 15:00 JST)</span>
+            <span class="tag danger">脅迫の拒否、補償パッケージ & 政府への提言</span>
+          </div>
+          <div class="timeline-title">第4報、第5報、IR-896、および能動的サイバー防御法の発動提言</div>
+          <div class="timeline-body">
+            <strong>第4報 & IR-896:</strong> 管理層のアーキテクチャ上の欠陥を認め、攻撃者が5,000万米ドルを脅迫した事実を公表し、GMOは身代金の支払いを断固拒否すると宣言しました。旧プラットフォームの完全廃止、お客様1名あたり5,000円の補償、新インフラの6か月無償提供、不正取引による実損の100%補償を公表しました。<br>
+            <strong>政府への提言:</strong> 内閣官房に緊急で意見具申を行い、本件を能動的サイバー防御法(Active Cyber Defense)発動の「第1号案件」とするよう求めました。<br>
+            <strong>第5報 (15:00):</strong> マルウェアが個人PCに拡散しないよう、メールフィルターの整理とブラウザー同期の切断を緊急に指示しました。
+          </div>
+          <div class="quote-box">
+            「当社は、攻撃者からの要求には応じません。警察庁サイバー特別捜査部等と連携し、断固とした対応をとってまいります」
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 25 -->
+      <div class="timeline-item critical">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span class="timeline-date">2026/10/25</span>
+            <span class="tag danger">熊谷CEOの声明</span>
+          </div>
+          <div class="timeline-title">熊谷正寿CEOが論説を発表:システム上の過失を認め、国民全体に防御を呼びかけ</div>
+          <div class="timeline-body">
+            熊谷CEOは、衝撃的な論説<em>「官民連携で日本を守る - 能動的サイバー防御の発動を具申した理由」</em>を公表しました。事案前に社内のホワイトハッカー(Ierae/Flatt)が脆弱性を警告していたものの、運用チームがFX自動売買ボット向けの可用性(Availability)を優先したため、根本的なパッチ適用が先送りになったという事実を明らかにしました。また、「AIによるネットワーク飽和攻撃」や、兵器化されたARTEXツールの脅威にも警鐘を鳴らしました。
+          </div>
+          <div class="quote-box">
+            「今こそ官民連携で日本を守ろう――能動的サイバー防御を具申した理由。ホワイトハッカー部隊が事前に問題を認識し指摘していたにもかかわらず、現場の判断が保守的・段階的で、後手に回ってしまった。最高経営責任者である私の経営責任」
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 26 -->
+      <div class="timeline-item warning">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span class="timeline-date">2026/10/26 (21:00 & 23:10 JST)</span>
+            <span class="tag">第6報 & 第7報</span>
+          </div>
+          <div class="timeline-title">全国のお客様宅でPCを回収、Trend Microとの連携</div>
+          <div class="timeline-body">
+            <strong>第6報 (21:00):</strong> 派生的なフィッシング攻撃や個人への脅迫のリスクを警告し、ウイルスの徹底スキャン手順を案内しました。<br>
+            <strong>第7報 (23:10):</strong> GMOの社員がお客様宅を直接訪問して合意書を取り交わし、PCを鑑定ラボに回収しました。Trend Microおよび社内200名のセキュリティ専門家と連携してマルウェアを分析しています。
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 27 -->
+      <div class="timeline-item critical">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span class="timeline-date">2026/10/27 (ピークの24時間)</span>
+            <span class="tag danger">第8、9、10、11、12報</span>
+          </div>
+          <div class="timeline-title">脅迫のゼロアワー、ウォータリングホールのわなの発見、見舞金300万円、報奨金基金$1M USD</div>
+          <div class="timeline-body">
+            <strong>09:58 - 第8報:</strong> 12:00の最後通告を前に、GMOはユーザーに対し、PCの電源コードをすべて抜く(PCコード抜去)よう緊急指示を出しました。<br>
+            <strong>11:59 - 第9報:</strong> ゼロアワーの1分前。お客様のPCの検査結果ではランサムウェアは検出されていないことを確認。被害に遭った場合は同等の新品PCを贈呈すると約束しました。<br>
+            <strong>13:55 - 第10報:</strong> 12:30に攻撃者が外部サイトにデータを掲載したことを確認。このサイトは、訪問者のIPを収集する隠れたわなであることが判明しました。<br>
+            <strong>14:55 - 第11報:</strong> SNS上でのリンク共有を禁止。身代金80億円の支払いには応じないと改めて明言しました。<br>
+            <strong>19:10 - 第12報:</strong> 呼称を「犯人」(犯人)に変更。お客様1名あたり最大3,000,000円の「GMO特別見舞金」を実施し、サイトcybercrimebounty.gmoで報奨金100万米ドルのGMOサイバー犯罪報奨金基金を創設しました。
+          </div>
+          <div class="quote-box">
+            「いかなる脅迫にも屈することなく、犯人の特定と刑事責任の追及に向けて警察の捜査に全面的に協力。犯人逮捕につながる有力な情報に対して、最大100万米ドルの報奨金を支払う懸賞金制度を創設」
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 28 -->
+      <div class="timeline-item success">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span class="timeline-date">2026/10/28 (04:00 - 11:00 JST)</span>
+            <span class="tag success">テイクダウン15.5時間 & IR-898</span>
+          </div>
+          <div class="timeline-title">15.5時間で流出ドメインを停止、IR-898を開示、SNS上で法的措置を宣言</div>
+          <div class="timeline-body">
+            <strong>04:00 JST:</strong> GMOは国際的なドメインレジストラおよびグローバルなネットワークインフラ事業者と連携し、わずか15.5時間で、犯人の流出ドメインとミラーサイトを完全にテイクダウンしました。<br>
+            <strong>08:59 JST - IR-898:</strong> 責任分担を定める適時開示を公表しました。親会社(9449)が報奨金基金100万米ドルの全額を拠出し、子会社(4784)が補償費用およびインフラ費用を負担します。<br>
+            <strong>11:00 JST - 第13報:</strong> X(旧Twitter)上で流出リンクを共有した個人に対し、法的措置を宣言しました。発信者情報の開示請求、民事上の損害賠償請求、刑事告訴を行います。
+          </div>
+          <div class="quote-box">
+            「10月28日午前4時頃、当該ウェブサイトのドメインが停止され、閲覧できない状態となったことを確認。SNS上でのURLの拡散は二次被害を拡大させ、犯人の犯罪行為に加担するもの。証拠を保全し、発信者情報開示請求、損害賠償請求、刑事告訴を含めた法的措置を断固として講じる」
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Complete 13 Reports & IR Deep Dive -->
+  <section class="section" id="reports">
+    <div class="section-header">
+      <h2 class="section-title">
+        <span>📑</span> 13件のセキュリティ続報と3件のIRレポートの詳細分析(全文)
+      </h2>
+      <span class="section-badge">クリックで詳細を開く</span>
+    </div>
+
+    <div class="reports-grid">
+
+      <!-- Report 1 -->
+      <div class="report-card">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag danger">第1報</span>
+            <span class="report-date">2026-10-21 04:00 JST</span>
+            <span class="report-name">Onamae Desktop Cloud の全サーバーを緊急で順次電源停止</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>背景:</strong> 10月20日にマルウェアを検知した後、10月21日午前4:00に、GMOは最も強力な措置を実施しました。さらなる悪用を防ぐため、全お客様の仮想サーバー26,739台を順次電源停止したのです。</p>
+          <p><strong>主な内容:</strong> サーバー上に保存された情報が漏えいした可能性を通知。Onamae Desktop Cloud の仮想サーバーシステムには、クレジットカード情報やお客様の決済データは保存されていないと明言しました。</p>
+          <div class="quote-box">参照URL: https://www.onamae.com/news/article/11584</div>
+        </div>
+      </div>
+
+      <!-- Report 2 -->
+      <div class="report-card">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag danger">第2報</span>
+            <span class="report-date">2026-10-22 16:59 JST</span>
+            <span class="report-name">警察への届出と、取引口座の乗っ取りの確認</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>背景:</strong> 多くのお客様がGMOに連絡し、MT4/MT5口座や証券・FX取引口座で、身に覚えのない不審な発注が発生していると報告しました。</p>
+          <p><strong>主な内容:</strong> GMOは警察当局に正式に相談しました。VPS上に保存されていた取引口座のログインデータが第三者に奪取され、不正に利用されたことを認めました。お客様には次の対応を緊急に求めました。(1) 別のクリーンな端末から取引口座のパスワードを変更する。(2) ログイン中のセッションをすべて切断する。</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/20261022/</div>
+        </div>
+      </div>
+
+      <!-- Report 3 -->
+      <div class="report-card">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag">第3報</span>
+            <span class="report-date">2026-10-23 16:10 JST</span>
+            <span class="report-name">セッション維持の脆弱性に関する技術的警告と、24時間365日ホットラインへの拡充</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>背景:</strong> パスワードを変更したにもかかわらず、攻撃者による破壊的な発注が続いたお客様がいました。</p>
+          <p><strong>決定的な技術的発見:</strong> 取引ソフト(MT4/MT5)の接続メカニズムは、セッショントークンまたは長期ソケットに依存しています。各FX・証券業者のサーバー設計によっては、データベース上でパスワードを変更しても<em>開いている接続セッションが自動的に破棄されない</em>場合があります。攻撃者は引き続き発注できてしまいます。</p>
+          <p><strong>指示された対応:</strong> お客様は、取引業者に連絡して、アクティブなセッションをすべて強制切断(Force Terminate Active Sessions)するよう依頼する必要があります。ホットライン 03-5456-2560 を、休日を含め24時間365日体制で設置しました。</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/20261023/</div>
+        </div>
+      </div>
+
+      <!-- Report 4 -->
+      <div class="report-card highlight">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag danger">第4報 (最重要)</span>
+            <span class="report-date">2026-10-24 11:50 JST</span>
+            <span class="report-name">アーキテクチャ上の欠陥、5,000万米ドルの脅迫メール、補償パッケージ、政府への提言</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>1. アーキテクチャ上の欠陥を認める:</strong> システムの管理層に重大なセキュリティ上の欠陥があり、データが不正に外部へ持ち出されました。GMOは旧プラットフォームを恒久的に廃止し、再稼働しないと宣言しました。</p>
+          <p><strong>2. 悪質な脅迫メールを公表:</strong> 攻撃者は5,000万米ドルを要求し、70社以上の口座の破壊、ユーザーの個人PCのデータ暗号化、社内アーキテクチャ資料の公開をほのめかしました。GMOは<em>「断固として妥協せず、身代金は支払わない」</em>と宣言しました。</p>
+          <p><strong>3. 包括的な支援パッケージを約束:</strong></p>
+          <ul>
+            <li><strong>基本見舞金:</strong> 全26,739契約を対象に、お客様1名あたり5,000円。</li>
+            <li><strong>新クラウドインフラ:</strong> 独立した基盤上に構築し、6か月間無償で利用可能。</li>
+            <li><strong>取引損失の補償:</strong> 不正発注による実損を100%補償。</li>
+          </ul>
+          <p><strong>4. 歴史的な提言:</strong> 日本政府に緊急で意見具申を行い、本件を能動的サイバー防御法(Active Cyber Defense)発動の「第1号案件」とするよう求めました。</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/20261024/</div>
+        </div>
+      </div>
+
+      <!-- Report 5 -->
+      <div class="report-card">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag">第5報</span>
+            <span class="report-date">2026-10-24 15:00 JST</span>
+            <span class="report-name">個人アカウント保護の指示とブラウザー同期の切断</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>目的:</strong> 攻撃者がユーザーの個人アカウントや私物端末へ攻撃を拡大するのを防ぐこと。</p>
+          <p><strong>緊急の指示:</strong> (1) クリーンな別の端末から、メール、Google、Apple ID のすべてのアカウントのパスワードを変更する。(2) 隠れたメール転送フィルターを確認して削除する(犯人は2FAのOTPを盗むために設定することが多い)。(3) <strong>ブラウザー同期(Browser Sync)機能をオフにする</strong>。パスワードや悪意ある拡張機能が、自宅や会社のPCに自動的にダウンロードされるのを避けるためです。</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/2026102402/</div>
+        </div>
+      </div>
+
+      <!-- CEO Blog Special -->
+      <div class="report-card highlight">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag danger">CEO Blog</span>
+            <span class="report-date">2026-10-25 JST</span>
+            <span class="report-name">熊谷正寿の声明:経営責任を自ら認め、警鐘を鳴らす</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>論説のタイトル:</strong> <em>「今こそ官民連携で日本を守ろう――能動的サイバー防御を具申した理由」</em>(官民連携で日本を守る - 能動的サイバー防御の発動を具申した理由)。</p>
+          <p><strong>1. 痛恨の過ちを認める:</strong> 社内のホワイトハッカーチーム(GMO Cybersecurity by Ierae および Flatt Security所属、一流の専門家200名)は、<strong>事案の発生前に脆弱性を発見し、警告していました</strong>。しかし、サービス運用チームはシステム停止のリスクを過度に懸念し(FX自動売買ボット向けのサービス可用性(Service Availability)を優先)、段階的で後手に回る慎重な対応をとりました。熊谷CEOは、最高経営責任者としての責任をすべて負うとしました。</p>
+          <p><strong>2. AIによるサイバー飽和攻撃の脅威 (AIのサイバー飽和攻撃):</strong> オープンなAIモデルにより、攻撃コストはゼロに近づいています。Ierae の自動ペネトレーションテストツール ARTEX が攻撃者に兵器化され、日本企業20社への攻撃に使われていたことが判明しました。</p>
+          <p><strong>3. 能動的サイバー防御の論拠:</strong> 数万人の国民の資産が人質に取られた場合、国は国家権限を行使して、海外にある攻撃者のサーバーを探索し無力化すべきです。GMOは金銭的補償の費用をすべて自社で負担します。</p>
+          <div class="quote-box">URL: https://www.kumagai.com/?eid=19600 & https://group.gmo/info/alert/20261025/</div>
+        </div>
+      </div>
+
+      <!-- Report 6 -->
+      <div class="report-card">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag">第6報</span>
+            <span class="report-date">2026-10-26 21:00 JST</span>
+            <span class="report-name">二次的な詐欺への警告、オフラインバックアップ、徹底的なウイルススキャン</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>なりすまし詐欺(Secondary Scam)への警告:</strong> 悪意ある者が、お客様の不安につけ込み、GMOや取引業者を装って「資産回収サポート費用」の支払いを求めるメッセージを送ってきます。GMOは費用を請求することは一切なく、お客様の第1レベルのパスワードを尋ねることもないと明言しています。</p>
+          <p><strong>オフラインバックアップの依頼:</strong> 重要なデータを外付けドライブにバックアップし、接続を外してください(Air-gapped)。ランサムウェアの攻撃でバックアップのコピーまで暗号化されてしまう事態に備えるためです。</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/20261026/</div>
+        </div>
+      </div>
+
+      <!-- Report 7 -->
+      <div class="report-card">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag">第7報</span>
+            <span class="report-date">2026-10-26 23:10 JST</span>
+            <span class="report-name">お客様宅でのPC回収作戦と、Trend Microとの戦略的連携</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>前例のない現地フォレンジック作戦:</strong> GMOの社員(Partners)が、侵害の疑いがある全国のお客様宅を直接訪問し、個人データ保護に関する確認書(確認書)を取り交わしたうえで、PCをラボに持ち帰ってデジタルフォレンジック調査を行います。</p>
+          <p><strong>セキュリティ連合の結成:</strong> 社内のセキュリティ専門家200名が、Trend Micro(トレンドマイクロ)グループおよびAI企業と連携し、マルウェアのサンプルと犯人のC2構造を解析しています。</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/2026102602/</div>
+        </div>
+      </div>
+
+      <!-- Report 8 -->
+      <div class="report-card highlight">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag danger">第8報 (緊急)</span>
+            <span class="report-date">2026-10-27 09:58 JST</span>
+            <span class="report-name">12:00のランサムウェア最後通告:PCの電源コードをすべて抜く指示</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>切迫した背景:</strong> 攻撃者は、GMOが身代金を支払わなければ、10月27日の正午12:00ちょうどにランサムウェア(身代金要求型マルウェア)を起動するという最後通告を出しました。</p>
+          <p><strong>極端な物理的隔離の指示:</strong> バックアップを終えたら、お客様は12:00の正午までに、<strong>ネットワークを切断し、電源を切り、PCに接続されたコードをすべて抜く(PCコード抜去)</strong>必要があります。ネットワークプロトコル(Wake-on-LAN)経由でPCが遠隔起動されたり、ローカルネットワーク経由で暗号化されたりするリスクを排除するためです。</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/20261027/</div>
+        </div>
+      </div>
+
+      <!-- Report 9 -->
+      <div class="report-card">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag">第9報</span>
+            <span class="report-date">2026-10-27 11:59 JST</span>
+            <span class="report-name">ゼロアワーの1分前:ランサムウェアは未検出、新品PCの提供を保証</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>フォレンジックの最新状況:</strong> 10月27日11:59の時点で、回収したお客様のPCの検査を通じて、技術チームは<em>マルウェアやランサムウェアに感染した形跡を一切検出していません</em>。</p>
+          <p><strong>ハードウェアの保護の約束:</strong> 本件を発端としてお客様がランサムウェアに感染した場合、GMOは同等スペックの未開封の新品パソコンを100%提供することを約束します。</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/2026102702/</div>
+        </div>
+      </div>
+
+      <!-- Report 10 -->
+      <div class="report-card highlight">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag danger">第10報</span>
+            <span class="report-date">2026-10-27 13:55 JST</span>
+            <span class="report-name">12:30のデータ流出サイトを確認、ウォータリングホール型の隠れたわなを発見</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>流出の事実:</strong> 12:30に、攻撃者はGMOおよびお客様のものと称するデータを外部サイトに公開しました。</p>
+          <p><strong>危険な隠れたわなへの警告:</strong> 技術分析の結果、この流出サイトは、訪問者のIPアドレスと端末情報を密かに記録している(ウォータリングホール型のわな)ことが判明しました。GMOは、ユーザーがこのサイトにアクセスすることを固く禁じています。</p>
+          <p>取締役会は緊急で会合を開き、このサイトで情報が露出した被害者向けの新たな「特別見舞金」パッケージを策定しました。</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/2026102703/</div>
+        </div>
+      </div>
+
+      <!-- Report 11 -->
+      <div class="report-card">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag">第11報</span>
+            <span class="report-date">2026-10-27 14:55 JST</span>
+            <span class="report-name">リンク共有の禁止と、サイバーテロに資金提供しないという倫理的理念</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>拡散の厳禁:</strong> 犯人のウェブサイトのリンクを拡散・引用しないよう、コミュニティに求めています。誤ってリンクをクリックした方は、直ちに端末の徹底的なウイルススキャンを行ってください。</p>
+          <p><strong>企業倫理の表明:</strong> GMOは、身代金80億円を支払わない理由を明確に説明しました。犯人に金銭を渡せば、グループは武装した高度な技術を持つ犯罪組織の資金源となり、社会全体に害を及ぼすことになります。GMOは、予算をお客様への補償と犯人の逮捕に充てることを選びました。</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/2026102704/</div>
+        </div>
+      </div>
+
+      <!-- Report 12 -->
+      <div class="report-card highlight">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag danger">第12報 (転換点)</span>
+            <span class="report-date">2026-10-27 19:10 JST</span>
+            <span class="report-name">呼称を「犯人」に変更、特別見舞金300万円、報奨金基金$1M USD</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>1. 姿勢の転換:</strong> 相手の呼称を「攻撃者」から「犯人」(犯人 - Criminal)へ正式に変更し、徹底的に追及すると宣言しました。</p>
+          <p><strong>2. GMO特別お見舞金(GMO特別お見舞金)を発表:</strong></p>
+          <ul>
+            <li>基本的な個人情報:10,000円。</li>
+            <li>認証情報/取引所のID:15,000円。</li>
+            <li>特別な保護が必要な機微な個人データ:25,000円。</li>
+            <li>加算され、上限は<strong>お客様1名あたり3,000,000円</strong>。</li>
+          </ul>
+          <p><strong>3. サイバー犯罪者追及基金 GMO Cybercrime Bounty:</strong> 犯人の逮捕につながる合法的な情報を提供した個人・団体に対し、<code>https://cybercrimebounty.gmo/</code>(日本語、英語、中国語)で<strong>1,000,000米ドル(約1.5億円)</strong>の報奨金を懸けました。</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/2026102705/</div>
+        </div>
+      </div>
+
+      <!-- Report 13 -->
+      <div class="report-card highlight">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag success">第13報 (勝利)</span>
+            <span class="report-date">2026-10-28 11:00 JST</span>
+            <span class="report-name">15.5時間で流出ドメインをテイクダウン、SNS上での法的措置の総攻撃</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>1. 迅速なテイクダウン:</strong> 10月28日午前4:00、ウェブサイトが出現してからわずか15.5時間後に、GMOは捜査当局および国際的なパートナーと連携し、犯人のドメインとミラーサイトをすべて停止(テイクダウン)することに成功しました。</p>
+          <p><strong>2. 厳格な法的抑止:</strong> GMOは、X(Twitter)上で犯人のウェブサイトのリンクを拡散する行為は、犯罪への加担にあたると警告しました。GMOはデジタル証拠を保全し、プロバイダーに投稿者の情報開示を求め(発信者情報開示請求)、民事上の損害賠償請求訴訟を提起し、刑事告訴を行います。</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/20261028/</div>
+        </div>
+      </div>
+
+      <!-- IR Disclosures Deep Dive -->
+      <div class="report-card">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag">IR 895, 896, 898</span>
+            <span class="report-date">2026-10-23 ~ 2026-10-28</span>
+            <span class="report-name">証券取引所への適時開示 (適時開示)</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>IR第895号 (10/23):</strong> 子会社のサービスが不正アクセスを受けたことについて、株主向けに行った最初の開示。</p>
+          <p><strong>IR第896号 (10/24):</strong> 見舞金5,000円の支払いと、不正な発注による実損の100%補償を保証する取締役会決議。連結業績への財務的影響は、現時点では直ちに見積もれないとしました。</p>
+          <p><strong>IR第898号 (10/28 08:59 JST):</strong> 上場2社間の財務上の仕組みを明確化。親会社のGMOインターネットグループ株式会社(9449)が報奨金基金の100万米ドルを全額負担し、子会社のGMOインターネット株式会社(4784)が、お客様への補償費用、見舞金、新品PCの提供費用をすべて負担します。</p>
+          <div class="quote-box">証券コード参照: TSE Prime 9449 & TSE Prime 4784</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Technical Anatomy -->
+  <section class="section" id="technical">
+    <div class="section-header">
+      <h2 class="section-title">
+        <span>🔬</span> 技術的解剖と攻撃モデル (Threat Modeling)
+      </h2>
+      <span class="section-badge">フォレンジックとアーキテクチャ</span>
+    </div>
+
+    <div class="grid-2">
+      <div class="tech-box">
+        <h3><span>🚪</span> 1. 侵入ベクターとアーキテクチャ上の弱点</h3>
+        <ul>
+          <li><strong>攻撃対象領域 (Management Plane):</strong> 脆弱性は中央制御システム(Control Panel / 仮想マシンのオーケストレーションAPI)にあり、攻撃者は26,739台のゲストVMすべてに広範囲に干渉できました。</li>
+          <li><strong>マルウェアの設置 (Malicious Script Injection):</strong> 10月20日、攻撃者は不正なスクリプトやプログラムをお客様の仮想マシン環境に展開しました。</li>
+          <li><strong>ペンテストツールの兵器化:</strong> 攻撃グループは、ARTEX (Automated Red Teaming & Penetration Testing tool) を兵器化し、スキャンと攻撃の広範な自動化に利用しました。</li>
+        </ul>
+      </div>
+
+      <div class="tech-box">
+        <h3><span>🔑</span> 2. MT4/MT5の悪用とセッションの乗っ取り</h3>
+        <ul>
+          <li><strong>対象の特性:</strong> Onamae Desktop Cloud は、自動売買ロボット (Expert Advisor - EA) を常時稼働させるための、24時間365日動作する Windows VPS 環境です。取引所のパスワードやAPIキーは、設定内にあらかじめ保存されています。</li>
+          <li><strong>認証情報の窃取:</strong> 攻撃者は、MetaTraderソフトウェアやウェブブラウザーのメモリおよび設定ファイルから、取引所のログイン情報を抽出しました。</li>
+          <li><strong>セッション維持の脆弱性 (Session Persistence):</strong> Socketによる長期接続の仕組みのため、ユーザーが取引所のウェブ画面でパスワードを変更しても、稼働中のTCPセッションは切断されず、攻撃者のボットが破壊的な発注を続けられました。</li>
+        </ul>
+      </div>
+
+      <div class="tech-box">
+        <h3><span>🕸️</span> 3. ウォータリングホール型のわなと心理戦</h3>
+        <ul>
+          <li><strong>データ流出ポータル (Leak Portal):</strong> 10月27日12:30に出現。GMOに5,000万米ドルの身代金を支払わせるための圧力を強める狙いでした。</li>
+          <li><strong>IP収集のわな (Telemetry Trap):</strong> このサイトには追跡コードが埋め込まれ、アクセスした人のIPアドレス、User-Agent、ブラウザーフィンガープリントを密かに記録し、二次的な標的型攻撃に備えていました。</li>
+          <li><strong>ランサムウェアによる心理戦:</strong> 10月27日12:00にユーザーのPCを暗号化するランサムウェアを起動すると脅し、GMOにPCの電源コードを抜く指示を出させました。</li>
+        </ul>
+      </div>
+
+      <div class="tech-box">
+        <h3><span>🛡️</span> 4. ゼロトラストによる再構築アーキテクチャ</h3>
+        <ul>
+          <li><strong>旧プラットフォームの廃棄 (Legacy Abandonment):</strong> 26,739台の仮想サーバー基盤全体を恒久的に隔離し、論理的に廃棄しました。場当たり的なパッチ適用は行いません。</li>
+          <li><strong>独立したクラウド環境:</strong> 物理的にも論理的にも100%分離された代替インフラを新たに構築し、ゼロトラスト・アーキテクチャを採用します。</li>
+          <li><strong>多層防御:</strong> 多要素認証 (MFA)、マイクロセグメンテーション (micro-segmentation) を必須とし、70社以上の取引所に接続するIPレンジを再審査します。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Compensation Framework Table -->
+  <section class="section" id="compensation">
+    <div class="section-header">
+      <h2 class="section-title">
+        <span>💰</span> GMOグループの6階層の包括的補償マトリクス
+      </h2>
+      <span class="section-badge">是正ポリシー</span>
+    </div>
+
+    <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;">
+      GMOは、ユーザーの資産上の権利を完全に守るため、日本では前例のない多層的な財務保証の枠組みを整え、親会社と子会社の役割分担を明確にしました。
+    </p>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>補償項目</th>
+            <th>支払額 / 権利</th>
+            <th>対象</th>
+            <th>条件と証拠</th>
+            <th>支払主体</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. 基本見舞金</strong><br>(お見舞金)</td>
+            <td><span class="amount-highlight">5,000円 / 名</span></td>
+            <td>インシデント時点で有効だった全26,739契約。</td>
+            <td>損害の証明は不要。手続きの案内は2026年10月30日23:59まで。</td>
+            <td>GMO Internet Inc.<br>(4784)</td>
+          </tr>
+          <tr>
+            <td><strong>2. 特別見舞金</strong><br>(GMO特別お見舞金)</td>
+            <td>
+              <span class="amount-highlight">10,000 - 25,000円</span> / データ種別<br>
+              <strong>上限: 3,000,000円</strong>
+            </td>
+            <td>実際の情報が流出サイトに掲載されたお客様。</td>
+            <td>1万円(基本情報)、1.5万円(取引用ID/パスワード)、2.5万円(機微なデータ)。加算可能。</td>
+            <td>GMO Internet Inc.<br>(4784)</td>
+          </tr>
+          <tr>
+            <td><strong>3. 取引損失の補償</strong><br>(不正取引損失補償)</td>
+            <td><span class="amount-highlight">実損の100%</span><br>(注文の損失 + 取引手数料)</td>
+            <td>MT4/MT5経由で、攻撃者により身に覚えのない発注をされたお客様。</td>
+            <td>業者の注文照合記録(時刻、通貨ペア、ロット数、実際の損失額)。GMOの審査のためInvestor Passwordの提供が必要。</td>
+            <td>GMO Internet Inc.<br>(4784)</td>
+          </tr>
+          <tr>
+            <td><strong>4. ハードウェアの補償</strong><br>(ハードウェア補償)</td>
+            <td><span class="amount-highlight">PCを100%新品提供</span><br>(同等スペック)</td>
+            <td>本サービス経由でランサムウェアにPCを暗号化されたお客様。</td>
+            <td>GMOのラボでフォレンジック検査(10月28日時点で実際の感染事例は確認されていません)。</td>
+            <td>GMO Internet Inc.<br>(4784)</td>
+          </tr>
+          <tr>
+            <td><strong>5. 代替クラウドサービス</strong><br>(代替クラウド基盤)</td>
+            <td><span class="amount-highlight">6か月間無償</span><br>(独立したゼロトラスト基盤)</td>
+            <td>引き続き仮想サーバーを利用したいお客様。</td>
+            <td>新環境への移行申込みは2026年10月30日まで。移行しない場合は、旧契約分を返金。</td>
+            <td>GMO Internet Inc.<br>(4784)</td>
+          </tr>
+          <tr>
+            <td><strong>6. サイバー犯罪者追及基金</strong><br>(GMO Cybercrime Bounty)</td>
+            <td><span class="amount-highlight">最大1,000,000米ドル</span><br>(約1.5億円)</td>
+            <td>犯人逮捕につながる法的な手がかりを提供した、世界中の個人・団体。</td>
+            <td>2026年10月28日12:00から、ポータル <code>cybercrimebounty.gmo</code>(日本語、英語、中国語)で受付。</td>
+            <td>GMO Internet Group Inc.<br>(9449 - 親会社)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Governance & Strategy -->
+  <section class="section" id="governance">
+    <div class="section-header">
+      <h2 class="section-title">
+        <span>🏛️</span> 危機管理ガバナンスの教訓と国家安全保障上の意義
+      </h2>
+      <span class="section-badge">歴史的ケーススタディ</span>
+    </div>
+
+    <div class="grid-2">
+      <div class="tech-box">
+        <h3><span>⚖️</span> 「可用性」と「セキュリティ」の衝突 (Availability vs Security)</h3>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 8px;">
+          熊谷正寿CEOが率直に分析した最も高くついた教訓は、事業運営と情報セキュリティのバランスを取れなかったことです。
+        </p>
+        <ul>
+          <li><strong>無視された早期警告:</strong> IeraeとFlatt Securityのホワイトハッカーチームは事前に脆弱性を発見していましたが、現場の管理者は、ユーザーのEA自動売買ボットを止めてしまうことを恐れ、強力なパッチ適用を見送りました。</li>
+          <li><strong>遅れの代償:</strong> 段階的な先送りが、攻撃者に自動的な攻撃で26,739台の仮想マシンを掌握する絶好の機会を与えました。</li>
+          <li><strong>意識の転換:</strong> サイバーセキュリティは可用性に先行しなければなりません。資産が侵害される恐れがある場合は、情報セキュリティを絶対的に優先する必要があります。</li>
+        </ul>
+      </div>
+
+      <div class="tech-box">
+        <h3><span>🇯🇵</span> 「能動的サイバー防御」(Active Cyber Defense) の先例</h3>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 8px;">
+          GMOは、本件を一企業のインシデントの枠を超え、国家安全保障政策の先例とするよう位置づけました。
+        </p>
+        <ul>
+          <li><strong>「第1号案件」の発動:</strong> 能動的サイバー防御法(2026年10月1日施行)の適用を政府に具申しました。</li>
+          <li><strong>教条的な線引きの撤廃:</strong> 電力・水道のインフラだけを守るという見方に反論し、金融機関における国民のデジタル資産の保護も国家安全保障であるとしました。</li>
+          <li><strong>国家の権限:</strong> 企業は補償の財務的費用を自ら負担しますが、国家は、国際的な犯罪者のC2サーバーに侵入し、位置を特定して無力化する責任を負うべきです。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Action Checklist for Users -->
+  <section class="section" id="guidance">
+    <div class="section-header">
+      <h2 class="section-title">
+        <span>🛡️</span> ユーザーおよび被害者のための緊急対応ガイド
+      </h2>
+      <span class="section-badge">防御の推奨事項</span>
+    </div>
+
+    <div class="checklist">
+      <div class="checklist-item">
+        <div class="check-num">1</div>
+        <div class="check-content">
+          <h4>取引口座のパスワードは、安全で独立した端末から変更する</h4>
+          <p>必ず、別のスマートフォンまたはパソコン(Onamae VPSへの接続やEAの稼働に一度も使っていないもの)を使用してください。マルウェアに感染した疑いのある端末では、決してパスワードを変更しないでください。</p>
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="check-num">2</div>
+        <div class="check-content">
+          <h4>必ず取引業者に連絡して、すべてのセッションを強制切断 (Force Kill Sessions) してもらう</h4>
+          <p>パスワードを変更しても、すでに開いているMT4/MT5のSocket接続が切断されないことがあります。ブローカーの管理ポータルにアクセスするか、業者のサポートに電話して、有効なトークン/セッションをすべて失効させるよう依頼してください。</p>
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="check-num">3</div>
+        <div class="check-content">
+          <h4>2要素認証 (2FA/MFA) を有効化し、メールのフィルターを整理する</h4>
+          <p>Authenticatorアプリで2FAを有効にしてください(可能であればSMSは避けます)。Gmail/Yahoo!メールの転送/フィルター設定を確認し、攻撃者が仕込んだ密かなメール転送ルールを削除してください。</p>
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="check-num">4</div>
+        <div class="check-content">
+          <h4>ブラウザー同期 (Browser Sync) をオフにし、保存済みアカウントのパスワードを変更する</h4>
+          <p>Chrome/Edge/Firefoxの同期を切断し、パスワードや悪意ある拡張機能が他のパソコンに自動ダウンロードされるのを避けてください。仮想マシンのブラウザーに保存していたすべてのサービスのパスワードを変更してください。</p>
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="check-num">5</div>
+        <div class="check-content">
+          <h4>オフラインバックアップ (Air-gapped Backup) と徹底スキャン (Full Scan)</h4>
+          <p>重要な文書をポータブルドライブにバックアップし、接続ケーブルを抜いてください。Windows Defenderまたは専用ソフト(Trend Microなど)でフルスキャンを実行してください。</p>
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="check-num">6</div>
+        <div class="check-content">
+          <h4>損害賠償請求に備えて証憑書類を集める (2026/11/06まで)</h4>
+          <p>不正に約定した注文と実際の損失額(注文の損失 + 手数料)を示すMT4/MT5口座のスクリーンショットとログを保存してください。申請ポータルが開いた際にGMOが照合できるよう、閲覧専用パスワード (Investor Password) を設定してください。</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px; padding: 16px; background: var(--bg-surface-elevated); border: 1px solid var(--border); border-radius: var(--radius-md);">
+      <strong style="color: var(--primary);">GMOインターネットの公式サポート窓口(24時間365日):</strong>
+      <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 6px;">
+        • <strong>専用ホットライン:</strong> <code style="font-family: var(--font-mono); font-weight: 700; color: var(--danger);">03-5456-2560</code> (土曜、日曜、祝日を含め24時間対応)<br>
+        • <strong>オンライン受付フォーム:</strong> <a href="https://help.onamae.com/contact/" target="_blank" rel="noopener noreferrer" style="color: var(--primary);">https://help.onamae.com/contact/</a><br>
+        • <strong>報奨金基金ポータル:</strong> <a href="https://cybercrimebounty.gmo/" target="_blank" rel="noopener noreferrer" style="color: var(--primary);">https://cybercrimebounty.gmo/</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Incident Source Citation -->
+  <div class="note" style="margin-top: 32px; font-size: 13px;">
+    <p>
+      <strong>出典:</strong> <a href="https://group.gmo/info/alert/" target="_blank" rel="noopener noreferrer">https://group.gmo/info/alert/</a> &amp; <a href="https://group.gmo/news/" target="_blank" rel="noopener noreferrer">GMO News</a> で公表された公式続報に基づく、サイバーセキュリティ・インテリジェンスの総合レポート。
+    </p>
+    <p style="margin-top: 6px; font-size: 12px; opacity: 0.8;">
+      GMOインターネットグループ株式会社 (TSE Prime: 9449) &amp; GMOインターネット株式会社 (TSE Prime: 4784)。サイバーセキュリティ総合資料の著作権 2026。
+    </p>
+  </div>
+
+</div>
+
+<script>
+  // Accordion Toggle for Reports
+  function toggleReport(header) {
+    const card = header.parentElement;
+    card.classList.toggle('open');
+  }
+
+</script>

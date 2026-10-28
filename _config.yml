@@ -10,10 +10,15 @@ exclude:
   - README.md
   - RULES.md
   - monthly/RULES.md
-  - monthly/template.html
   - _templates
   - Gemfile
   - Gemfile.lock
 
 plugins:
   - jekyll-redirect-from
+
+defaults:
+  - scope:
+      path: "ja"
+    values:
+      lang: "ja"

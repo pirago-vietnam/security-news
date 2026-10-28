@@ -3,6 +3,7 @@ layout: default
 title: "Báo cáo an ninh mạng & Lỗ hổng kỹ thuật"
 description: "Tổng hợp báo cáo sự cố an ninh mạng và lỗ hổng định kỳ theo tháng: AWS, GCP · NodeJS, PHP, Java, .NET · Next.js, Nuxt, Quasar, Laravel, Spring Boot - PiraGo"
 ---
+{% assign lang = page.lang | default: "vi" %}{% assign t = site.data.i18n[lang] %}{% if lang == 'ja' %}{% assign home_url = '/ja/' %}{% else %}{% assign home_url = '/' %}{% endif %}
 
 <div class="hero-section" style="margin-bottom: 32px;">
   <h1>Báo cáo bảo mật</h1>
@@ -38,34 +39,27 @@ description: "Tổng hợp báo cáo sự cố an ninh mạng và lỗ hổng đ
     <a href="{{ '/gmo/gmo_onamae_security_incident_report/' | relative_url }}" class="card-link-btn">Xem báo cáo sự cố chi tiết →</a>
   </section>
 
-  <!-- Báo cáo tháng 10/2026 -->
+  <!-- Báo cáo tháng: lặp theo _data/monthly, mới nhất xếp trên -->
+  {%- for m in site.data.monthly reversed %}
+  {%- assign d = m[1] %}
   <section class="card">
+    {%- if forloop.first %}
     <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: gap; gap: 8px;">
-      <h2>📅 Báo cáo tháng 10/2026</h2>
-      <span class="badge-new">MỚI NHẤT</span>
+      <h2>📅 {{ d.card.title[lang] }}</h2>
+      <span class="badge-new">{{ t.latest }}</span>
     </div>
-    <p class="date">Cập nhật đến 2026-10-26 · Định kỳ hàng tháng</p>
+    {%- else %}
+    <h2>📅 {{ d.card.title[lang] }}</h2>
+    {%- endif %}
+    <p class="date">{{ d.card.date[lang] }}</p>
     <ul>
-      <li><span class="badge crit">PHP</span> CVE-2026-109618/-109619 ("PHP2Shell"): chiếm quyền server từ xa. Nâng lên 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 và tạm đặt <code>session.upload_progress.enabled=0</code> (phòng ngừa thêm CVE-2026-115560).</li>
-      <li><span class="badge crit">Next.js</span> 2 lỗi chiếm quyền server từ xa (<code>use cache</code>, Image Optimization). Nâng lên 16.4.1 / 15.5.28.</li>
-      <li><span class="badge high">Laravel</span> CVE-2026-114509: giả danh người dùng không cần token (MySQL/MariaDB). Nâng lên 13.38.0 / 12.70.1.</li>
-      <li><span class="badge high">AWS/GCP</span> Rò rỉ khóa intermediate CA eMudhra (CVE-2026-111943): cập nhật trust bundle (<code>yum update ca-certificates</code>, botocore ≥ 1.43.117) và thay thế chứng chỉ liên quan trước <strong>28-10-2026</strong>.</li>
+      {%- for it in d.card.items %}
+      <li><span class="badge {{ it.sev }}">{{ it.label }}</span> {{ it.text[lang] }}</li>
+      {%- endfor %}
     </ul>
-    <a href="{{ '/monthly/2026-10/' | relative_url }}" class="card-link-btn">Xem báo cáo đầy đủ →</a>
+    <a href="{{ home_url | append: 'monthly/' | append: m[0] | append: '/' | relative_url }}" class="card-link-btn">{{ t.view_full }}</a>
   </section>
-
-  <!-- Báo cáo tháng 09/2026 -->
-  <section class="card">
-    <h2>📅 Báo cáo tháng 09/2026</h2>
-    <p class="date">Bổ sung đến 2026-10-23 · Lưu trữ</p>
-    <ul>
-      <li><span class="badge crit">Next.js</span> CVE-2026-94545: chiếm quyền server từ xa qua <code>next/og</code> (CVSS 9.5), thêm 7 lỗi cache/SSRF ngày 09-30. Nâng lên 16.3.6 trở lên.</li>
-      <li><span class="badge high">Chrome</span> CVE-2026-87491: zero-day V8 đang bị khai thác. Cập nhật Chrome 153.x.</li>
-      <li><span class="badge crit">Spring Boot</span> Tomcat đi kèm có lỗi bỏ qua ràng buộc bảo mật WebSocket (CVE-2026-76183, CVSS 9.8). Nâng Tomcat lên 10.1.60 / 9.0.122.</li>
-      <li><span class="badge crit">GCP</span> GCP-2026-058: thiếu kiểm tra quyền ở GKE Multi-Cloud (Google xếp Critical, chưa rõ chi tiết).</li>
-    </ul>
-    <a href="{{ '/monthly/2026-09/' | relative_url }}" class="card-link-btn">Xem báo cáo đầy đủ →</a>
-  </section>
+  {%- endfor %}
 
   <!-- Runbooks & Quy chuẩn bảo mật -->
   <section class="card" id="runbooks" style="background: var(--bg-subtle);">

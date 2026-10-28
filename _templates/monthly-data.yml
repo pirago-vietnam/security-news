@@ -1,0 +1,105 @@
+# Mẫu dữ liệu báo cáo tháng. Sao chép thành _data/monthly/YYYY-mm.yml (ví dụ 2026-11.yml).
+# Mọi trường văn bản đều là map {vi, ja}, riêng `name` (tên thành phần) có thể là chuỗi dùng chung.
+# Nội dung cho phép HTML (<strong>, <code>, <a>). Dùng @home@ làm tiền tố link nội bộ,
+# ví dụ <a href="@home@monthly/2026-10/">...</a> (tự thành /monthly/... hoặc /ja/monthly/...).
+# Mức độ (sev): crit | high | med | low. Nhãn hiển thị lấy từ _data/i18n.yml.
+
+title:                       # <title>, breadcrumb, SEO
+  vi: "Báo cáo bảo mật tháng MM/YYYY"
+  ja: "YYYY年M月 セキュリティレポート"
+description:
+  vi: "Mô tả tóm tắt rủi ro..."
+  ja: "リスクの概要..."
+nav:                         # menu dropdown ở header
+  vi: "Tháng MM/YYYY"
+  ja: "YYYY年M月"
+footer_label:                # link ở footer
+  vi: "Báo cáo tháng MM/YYYY"
+  ja: "YYYY年M月 月次レポート"
+h1:
+  vi: "Báo cáo bảo mật tháng MM/YYYY"
+  ja: "YYYY年M月 セキュリティレポート"
+sub:
+  vi: "Số liệu tính đến <strong>YYYY-MM-DD</strong>."
+  ja: "<strong>YYYY年M月D日</strong>時点の情報です。"
+placeholder:                 # placeholder của ô tìm kiếm #tableFilterInput
+  vi: "🔍 Tìm kiếm CVE, framework, thư viện (vd: PHP, Next.js, AWS, RCE)..."
+  ja: "🔍 CVE、フレームワーク、ライブラリで検索（例: PHP, Next.js, AWS, RCE）..."
+scope:
+  vi: "<strong>Phạm vi rà soát:</strong> Hạ tầng (AWS, GCP) · Ngôn ngữ (NodeJS, PHP, Java, .NET, JavaScript) · Framework (Next.js, Nuxt, Quasar, Laravel, Spring Boot)."
+  ja: "<strong>調査範囲:</strong> インフラ（AWS, GCP） · 言語（NodeJS, PHP, Java, .NET, JavaScript） · フレームワーク（Next.js, Nuxt, Quasar, Laravel, Spring Boot）。"
+
+card:                        # thẻ tóm tắt ở index.html (vi) và ja/index.html (ja)
+  title:
+    vi: "Báo cáo tháng MM/YYYY"
+    ja: "YYYY年M月レポート"
+  date:
+    vi: "Cập nhật đến YYYY-MM-DD · Định kỳ hàng tháng"
+    ja: "YYYY年M月D日 時点 · 月次定期レポート"
+  items:
+    - sev: crit
+      label: "PHP"           # nhãn badge, dùng chung cho hai ngôn ngữ
+      text:
+        vi: "Tóm tắt một dòng."
+        ja: "1 行の要約。"
+
+sections:
+  # type: actions -> cột: #, Việc cần làm, Mức độ, Hạn đề xuất (số thứ tự tự đánh)
+  - type: actions
+    title:
+      vi: "1. Việc cần làm ngay"
+      ja: "1. 今すぐ対応すべき事項"
+    rows:
+      - task:
+          vi: "Nâng cấp <strong>PHP</strong> lên bản vá"
+          ja: "<strong>PHP</strong> をパッチ版へアップグレード"
+        sev: crit
+        due:
+          vi: "Ngay"
+          ja: "即時"
+
+  # type: component -> cột: Thành phần, Tóm tắt lỗ hổng, Mức độ, Ảnh hưởng tới hệ thống nào, Cách xử lý
+  - type: component
+    title:
+      vi: "2. Ngôn ngữ"
+      ja: "2. 言語"
+    rows:
+      - name: "PHP"          # chuỗi dùng chung, hoặc map {vi, ja} nếu tên khác nhau
+        sev: high
+        summary:
+          vi: "..."
+          ja: "..."
+        impact:
+          vi: "..."
+          ja: "..."
+        fix:
+          vi: "..."
+          ja: "..."
+
+  # type: provider -> cột: Nhà cung cấp, Bản tin / Tóm tắt, Mức độ, Ảnh hưởng tới hệ thống nào, Cần làm gì
+  # (các trường của hàng giống type: component)
+  - type: provider
+    title:
+      vi: "4. Hạ tầng (Infrastructure: AWS &amp; GCP)"
+      ja: "4. インフラ（Infrastructure: AWS &amp; GCP）"
+    rows:
+      - name: "AWS"
+        sev: med
+        summary:
+          vi: "..."
+          ja: "..."
+        impact:
+          vi: "..."
+          ja: "..."
+        fix:
+          vi: "..."
+          ja: "..."
+
+  # type: list -> danh sách gạch đầu dòng (ghi chú độ tin cậy, nguồn tham khảo)
+  - type: list
+    title:
+      vi: "5. Ghi chú về độ tin cậy"
+      ja: "5. 情報の信頼性に関する注記"
+    items:
+      - vi: "<strong>Đã đối chiếu trực tiếp nguồn chính thức:</strong> ..."
+        ja: "<strong>公式ソースと直接照合済み:</strong> ..."
