@@ -1,0 +1,58 @@
+<header class="pirago-header">
+  <div class="pirago-header-inner">
+    <div class="pirago-brand">
+      <a href="{{ '/' | relative_url }}" class="pirago-brand-link" title="Trang chủ PiraGo Security News">
+        <img src="{{ '/assets/images/logo.webp' | relative_url }}" alt="PiraGo Logo" class="pirago-logo logo-light" width="124" height="33">
+        <img src="{{ '/assets/images/logo_footer.webp' | relative_url }}" alt="PiraGo Logo" class="pirago-logo logo-dark" width="124" height="33">
+        <span class="pirago-brand-badge">Security News</span>
+      </a>
+    </div>
+
+    <nav class="pirago-nav" id="piragoNav">
+      <ul class="pirago-nav-list">
+        <li class="pirago-nav-item">
+          <a href="{{ '/' | relative_url }}" class="pirago-nav-link {% if page.url == '/' or page.url == '/index.html' %}active{% endif %}">
+            <svg class="icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            Trang chủ
+          </a>
+        </li>
+        <li class="pirago-nav-item has-dropdown">
+          <a href="{{ '/#monthly' | relative_url }}" class="pirago-nav-link {% if page.url contains '/monthly/' %}active{% endif %}">
+            <svg class="icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            Báo cáo tháng
+            <span class="dropdown-arrow">▾</span>
+          </a>
+          <ul class="pirago-dropdown">
+            <li><a href="{{ '/monthly/2026-10.html' | relative_url }}" class="{% if page.url contains '2026-10' %}active{% endif %}">Tháng 10/2026 <span class="badge-new">Mới</span></a></li>
+            <li><a href="{{ '/monthly/2026-09.html' | relative_url }}" class="{% if page.url contains '2026-09' %}active{% endif %}">Tháng 09/2026</a></li>
+          </ul>
+        </li>
+        <li class="pirago-nav-item">
+          <a href="{{ '/gmo/gmo_onamae_security_incident_report.html' | relative_url }}" class="pirago-nav-link {% if page.url contains '/gmo/' %}active{% endif %}">
+            <svg class="icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            Sự cố GMO Onamae
+          </a>
+        </li>
+        <li class="pirago-nav-item">
+          <a href="https://pirago.vn" target="_blank" rel="noopener noreferrer" class="pirago-nav-link external-link" title="Truy cập website chính thức PiraGo">
+            <span>pirago.vn</span>
+            <svg class="icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="pirago-header-actions">
+      <button type="button" id="themeToggleBtn" class="theme-toggle-btn" aria-label="Chuyển chế độ Sáng / Tối" title="Chuyển chế độ Sáng / Tối">
+        <span class="theme-icon light-icon" aria-hidden="true">☀️</span>
+        <span class="theme-icon dark-icon" aria-hidden="true">🌙</span>
+      </button>
+
+      <button type="button" id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Mở menu điều hướng" aria-expanded="false">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,16 @@
+title: "PiraGo Security News"
+description: "Cổng thông tin & Báo cáo an ninh mạng nội bộ PiraGo"
+url: "https://security-news.pirago.vn"
+baseurl: ""
+lang: "vi"
+permalink: pretty
+
+# Exclude files from Jekyll processing
+exclude:
+  - README.md
+  - RULES.md
+  - monthly/RULES.md
+  - monthly/template.html
+  - _templates
+  - Gemfile
+  - Gemfile.lock

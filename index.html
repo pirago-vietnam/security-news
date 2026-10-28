@@ -1,77 +1,79 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y0FW1NM42E"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+---
+layout: default
+title: "Báo cáo an ninh mạng & Lỗ hổng kỹ thuật"
+description: "Tổng hợp báo cáo sự cố an ninh mạng và lỗ hổng định kỳ theo tháng: AWS, GCP · NodeJS, PHP, Java, .NET · Next.js, Nuxt, Quasar, Laravel, Spring Boot - PiraGo"
+---
 
-  gtag('config', 'G-Y0FW1NM42E');
-</script>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Báo cáo bảo mật</title>
-<style>
-  :root { --bg: #f6f7f9; --card: #fff; --text: #1d2330; --muted: #5d6679; --line: #e2e5eb; --accent: #2457c5; --crit: #b4232a; --crit-bg: #fde8e9; }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg: #12151c; --card: #1b2029; --text: #e6e9ef; --muted: #98a2b3; --line: #2b3240; --accent: #8ab4ff; --crit: #ff8a8f; --crit-bg: #3a1a1d; }
-  }
-  * { box-sizing: border-box; }
-  body { margin: 0; padding: 32px 16px 48px; background: var(--bg); color: var(--text);
-    font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  main { max-width: 720px; margin: 0 auto; }
-  h1 { font-size: 26px; margin: 0 0 4px; }
-  .sub { color: var(--muted); margin: 0 0 24px; }
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 16px; margin: 0 0 16px; }
-  .card h2 { font-size: 18px; margin: 0; }
-  .card .date { color: var(--muted); font-size: 13px; margin: 0 0 10px; }
-  .card ul { margin: 0 0 12px; padding-left: 20px; }
-  .card li { margin: 4px 0; }
-  .badge { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; color: var(--crit); background: var(--crit-bg); margin-right: 6px; }
-  .card a { color: var(--accent); font-weight: 600; text-decoration: none; }
-  .card a:hover { text-decoration: underline; }
-</style>
-</head>
-<body>
-<main>
+<div class="hero-section" style="margin-bottom: 32px;">
   <h1>Báo cáo bảo mật</h1>
-  <p class="sub">Tổng hợp báo cáo sự cố an ninh mạng và lỗ hổng theo tháng: AWS, GCP · NodeJS, PHP, Java, .NET, JavaScript · Next.js, Nuxt, Quasar, Laravel, Spring Boot.</p>
-  <!-- Thêm báo cáo mới ở đầu danh sách; mỗi lỗi nghiêm trọng một dòng -->
-  <section class="card">
-    <h2>Sự cố an ninh: GMO Onamae Desktop Cloud</h2>
-    <p class="date">Cập nhật đến 2026-10-28 · Khủng hoảng 13 thông cáo &amp; báo cáo IR</p>
+  <p class="sub">
+    Tổng hợp báo cáo sự cố an ninh mạng và lỗ hổng kỹ thuật định kỳ:
+    <strong>Hạ tầng</strong> (AWS, GCP) ·
+    <strong>Ngôn ngữ</strong> (NodeJS, PHP, Java, .NET, JavaScript) ·
+    <strong>Framework</strong> (Next.js, Nuxt, Quasar, Laravel, Spring Boot).
+  </p>
+  <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px;">
+    <span class="badge crit">Phản ứng nhanh</span>
+    <span class="badge high">Hạ tầng AWS / GCP</span>
+    <span class="badge med">Cập nhật định kỳ</span>
+    <span class="badge low">Zero-Day Intel</span>
+  </div>
+</div>
+
+<!-- Danh sách báo cáo - báo cáo mới nhất xếp trên -->
+<div class="reports-list">
+  <!-- Báo cáo sự cố GMO -->
+  <section class="card" style="border-left: 4px solid var(--pirago-red);">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+      <h2>🚨 Sự cố an ninh: GMO Onamae Desktop Cloud</h2>
+      <span class="badge crit">CRITICAL INCIDENT</span>
+    </div>
+    <p class="date">Cập nhật đến 2026-10-28 · Khủng hoảng 13 thông cáo &amp; báo cáo IR (Tập đoàn GMO Internet)</p>
     <ul>
-      <li><span class="badge">Hạ tầng</span>Chiếm quyền 26.739 máy chủ VPS Windows, rò rỉ thông tin đăng nhập MT4/MT5 tác động hơn 70 sàn chứng khoán &amp; FX.</li>
-      <li><span class="badge">Tống tiền</span>Tin tặc đòi 50 triệu USD tiền chuộc; GMO kiên quyết từ chối và lập Quỹ Bounty 1 triệu USD treo thưởng truy bắt thủ phạm.</li>
-      <li><span class="badge">Phòng thủ</span>Takedown sạch tên miền rò rỉ sau 15,5 giờ; kiến nghị Văn phòng Nội các Nhật Bản kích hoạt Luật Phòng thủ mạng chủ động (Active Cyber Defense).</li>
-      <li><span class="badge">Bồi thường</span>Cam kết đền bù 100% thiệt hại giao dịch thực tế do lệnh trái phép + hỗ trợ thăm hỏi đặc biệt lên tới 3.000.000 JPY/khách hàng.</li>
+      <li><span class="badge crit">Hạ tầng</span> Chiếm quyền 26.739 máy chủ VPS Windows, rò rỉ thông tin đăng nhập MT4/MT5 tác động hơn 70 sàn chứng khoán &amp; FX.</li>
+      <li><span class="badge high">Tống tiền</span> Tin tặc đòi 50 triệu USD tiền chuộc; GMO kiên quyết từ chối và lập Quỹ Bounty 1 triệu USD treo thưởng truy bắt thủ phạm.</li>
+      <li><span class="badge med">Phòng thủ</span> Takedown sạch tên miền rò rỉ sau 15,5 giờ; kiến nghị Văn phòng Nội các Nhật Bản kích hoạt Luật Phòng thủ mạng chủ động (Active Cyber Defense).</li>
+      <li><span class="badge low">Bồi thường</span> Cam kết đền bù 100% thiệt hại giao dịch thực tế do lệnh trái phép + hỗ trợ thăm hỏi đặc biệt lên tới 3.000.000 JPY/khách hàng.</li>
     </ul>
-    <a href="gmo/gmo_onamae_security_incident_report.html">Xem báo cáo sự cố chi tiết →</a>
+    <a href="{{ '/gmo/gmo_onamae_security_incident_report.html' | relative_url }}" class="card-link-btn">Xem báo cáo sự cố chi tiết →</a>
   </section>
+
+  <!-- Báo cáo tháng 10/2026 -->
   <section class="card">
-    <h2>Tháng 10/2026</h2>
-    <p class="date">Cập nhật đến 2026-10-26</p>
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: gap; gap: 8px;">
+      <h2>📅 Báo cáo tháng 10/2026</h2>
+      <span class="badge-new">MỚI NHẤT</span>
+    </div>
+    <p class="date">Cập nhật đến 2026-10-26 · Định kỳ hàng tháng</p>
     <ul>
-      <li><span class="badge">PHP</span>CVE-2026-109618/-109619 ("PHP2Shell"): chiếm quyền server từ xa. Nâng lên 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 và tạm đặt <code>session.upload_progress.enabled=0</code> (phòng ngừa thêm CVE-2026-115560).</li>
-      <li><span class="badge">Next.js</span>2 lỗi chiếm quyền server từ xa (<code>use cache</code>, Image Optimization). Nâng lên 16.4.1 / 15.5.28.</li>
-      <li><span class="badge">Laravel</span>CVE-2026-114509: giả danh người dùng không cần token (MySQL/MariaDB). Nâng lên 13.38.0 / 12.70.1.</li>
-      <li><span class="badge">AWS/GCP</span>Rò rỉ khóa intermediate CA eMudhra (CVE-2026-111943): cập nhật trust bundle (<code>yum update ca-certificates</code>, botocore ≥ 1.43.117) và thay thế chứng chỉ liên quan trước <strong>28-10-2026</strong>.</li>
+      <li><span class="badge crit">PHP</span> CVE-2026-109618/-109619 ("PHP2Shell"): chiếm quyền server từ xa. Nâng lên 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 và tạm đặt <code>session.upload_progress.enabled=0</code> (phòng ngừa thêm CVE-2026-115560).</li>
+      <li><span class="badge crit">Next.js</span> 2 lỗi chiếm quyền server từ xa (<code>use cache</code>, Image Optimization). Nâng lên 16.4.1 / 15.5.28.</li>
+      <li><span class="badge high">Laravel</span> CVE-2026-114509: giả danh người dùng không cần token (MySQL/MariaDB). Nâng lên 13.38.0 / 12.70.1.</li>
+      <li><span class="badge high">AWS/GCP</span> Rò rỉ khóa intermediate CA eMudhra (CVE-2026-111943): cập nhật trust bundle (<code>yum update ca-certificates</code>, botocore ≥ 1.43.117) và thay thế chứng chỉ liên quan trước <strong>28-10-2026</strong>.</li>
     </ul>
-    <a href="monthly/2026-10.html">Xem báo cáo đầy đủ →</a>
+    <a href="{{ '/monthly/2026-10.html' | relative_url }}" class="card-link-btn">Xem báo cáo đầy đủ →</a>
   </section>
+
+  <!-- Báo cáo tháng 09/2026 -->
   <section class="card">
-    <h2>Tháng 9/2026</h2>
-    <p class="date">Bổ sung đến 2026-10-23</p>
+    <h2>📅 Báo cáo tháng 09/2026</h2>
+    <p class="date">Bổ sung đến 2026-10-23 · Lưu trữ</p>
     <ul>
-      <li><span class="badge">Next.js</span>CVE-2026-94545: chiếm quyền server từ xa qua <code>next/og</code> (CVSS 9.5), thêm 7 lỗi cache/SSRF ngày 09-30. Nâng lên 16.3.6 trở lên.</li>
-      <li><span class="badge">Chrome</span>CVE-2026-87491: zero-day V8 đang bị khai thác. Cập nhật Chrome 153.x.</li>
-      <li><span class="badge">Spring Boot</span>Tomcat đi kèm có lỗi bỏ qua ràng buộc bảo mật WebSocket (CVE-2026-76183, CVSS 9.8). Nâng Tomcat lên 10.1.60 / 9.0.122.</li>
-      <li><span class="badge">GCP</span>GCP-2026-058: thiếu kiểm tra quyền ở GKE Multi-Cloud (Google xếp Critical, chưa rõ chi tiết).</li>
+      <li><span class="badge crit">Next.js</span> CVE-2026-94545: chiếm quyền server từ xa qua <code>next/og</code> (CVSS 9.5), thêm 7 lỗi cache/SSRF ngày 09-30. Nâng lên 16.3.6 trở lên.</li>
+      <li><span class="badge high">Chrome</span> CVE-2026-87491: zero-day V8 đang bị khai thác. Cập nhật Chrome 153.x.</li>
+      <li><span class="badge crit">Spring Boot</span> Tomcat đi kèm có lỗi bỏ qua ràng buộc bảo mật WebSocket (CVE-2026-76183, CVSS 9.8). Nâng Tomcat lên 10.1.60 / 9.0.122.</li>
+      <li><span class="badge crit">GCP</span> GCP-2026-058: thiếu kiểm tra quyền ở GKE Multi-Cloud (Google xếp Critical, chưa rõ chi tiết).</li>
     </ul>
-    <a href="monthly/2026-09.html">Xem báo cáo đầy đủ →</a>
+    <a href="{{ '/monthly/2026-09.html' | relative_url }}" class="card-link-btn">Xem báo cáo đầy đủ →</a>
   </section>
-</main>
-</body>
-</html>
+
+  <!-- Runbooks & Quy chuẩn bảo mật -->
+  <section class="card" id="runbooks" style="background: var(--bg-subtle);">
+    <h2>📘 Runbooks &amp; Tài Liệu Ứng Phó Khẩn Cấp</h2>
+    <p class="date">Bộ cẩm nang kỹ thuật nội bộ dành cho kỹ sư PiraGo</p>
+    <ul>
+      <li><a href="https://github.com/pirago-vietnam/security-news/tree/main/php-cve-2026-109618-109619" target="_blank" rel="noopener noreferrer"><strong>PHP CVE-2026-109618 / 109619 (PHP2Shell):</strong> Trọn bộ 7 runbook xử lý, phát hiện xâm nhập, checklist thông báo và nâng cấp Docker PHP-FPM</a></li>
+      <li><a href="https://github.com/pirago-vietnam/security-news/blob/main/monthly/RULES.md" target="_blank" rel="noopener noreferrer"><strong>RULES.md:</strong> Quy chuẩn viết báo cáo an ninh mạng định kỳ của PiraGo</a></li>
+    </ul>
+  </section>
+</div>

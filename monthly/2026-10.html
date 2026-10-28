@@ -1,73 +1,27 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y0FW1NM42E"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+---
+layout: default
+title: "Báo cáo bảo mật tháng 10/2026"
+description: "Tổng hợp các rủi ro, lỗ hổng bảo mật và việc cần làm tháng 10/2026: PHP2Shell, Next.js RCE, Laravel, AWS/GCP eMudhra CA"
+category: "Báo cáo tháng"
+---
 
-  gtag('config', 'G-Y0FW1NM42E');
-</script>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Báo cáo bảo mật tháng 10/2026</title>
-<style>
-  :root {
-    --bg: #f6f7f9; --card: #fff; --text: #1d2330; --muted: #5d6679; --line: #e2e5eb;
-    --crit: #b4232a; --crit-bg: #fde8e9;
-    --high: #b25400; --high-bg: #fff0dc;
-    --med: #8a6d00; --med-bg: #fff8d6;
-    --low: #1f7a3d; --low-bg: #e3f6e9;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #12151c; --card: #1b2029; --text: #e6e9ef; --muted: #98a2b3; --line: #2b3240;
-      --crit: #ff8a8f; --crit-bg: #3a1a1d;
-      --high: #ffb066; --high-bg: #3a2a14;
-      --med: #f2d56b; --med-bg: #36300f;
-      --low: #7fd69a; --low-bg: #16301f;
-    }
-  }
-  * { box-sizing: border-box; }
-  body { margin: 0; padding: 24px 16px 48px; background: var(--bg); color: var(--text);
-    font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  main { max-width: 1200px; margin: 0 auto; }
-  h1 { font-size: 26px; margin: 0 0 4px; }
-  h2 { font-size: 19px; margin: 32px 0 10px; }
-  .sub { color: var(--muted); margin: 0 0 16px; }
-  .note { background: var(--card); border: 1px solid var(--line); border-radius: 8px;
-    padding: 10px 14px; margin: 0 0 8px; color: var(--muted); font-size: 14px; }
-  .wrap { overflow-x: auto; background: var(--card); border: 1px solid var(--line); border-radius: 8px; }
-  table { border-collapse: collapse; width: 100%; min-width: 860px; }
-  th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
-  th { font-size: 13px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); background: var(--bg); }
-  tr:last-child td { border-bottom: 0; }
-  td:first-child { font-weight: 600; white-space: nowrap; }
-  .badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 13px; font-weight: 600; white-space: nowrap; }
-  .crit { color: var(--crit); background: var(--crit-bg); }
-  .high { color: var(--high); background: var(--high-bg); }
-  .med { color: var(--med); background: var(--med-bg); }
-  .low { color: var(--low); background: var(--low-bg); }
-  code { font-size: 13px; background: var(--bg); padding: 1px 5px; border-radius: 4px; }
-  a { color: inherit; }
-  ul { margin: 6px 0; padding-left: 20px; }
-  li { margin: 3px 0; }
-  .col-lv { width: 110px; }
-</style>
-</head>
-<body>
-<main>
+<div class="report-header">
+  <h1>Báo cáo bảo mật tháng 10/2026</h1>
+  <p class="sub">Số liệu tính đến <strong>2026-10-26</strong>. Tháng chưa kết thúc, cần cập nhật lại cuối tháng.</p>
+</div>
 
-<h1>Báo cáo bảo mật tháng 10/2026</h1>
-<p class="sub">Số liệu tính đến <strong>2026-10-26</strong>. Tháng chưa kết thúc, cần cập nhật lại cuối tháng.</p>
-<p class="note">Mức độ:
-  <span class="badge crit">Nghiêm trọng</span>
-  <span class="badge high">Cao</span>
-  <span class="badge med">Trung bình</span>
-  <span class="badge low">Thấp</span>
-  · Phạm vi: AWS, GCP · NodeJS, PHP, Java, .NET, JavaScript · Next.js, Nuxt, Quasar, Laravel, Spring Boot.
+<div class="table-filter-bar">
+  <input type="text" id="tableFilterInput" class="table-filter-input" placeholder="🔍 Tìm kiếm CVE, framework, thư viện (vd: PHP, Next.js, AWS, RCE)..." aria-label="Tìm kiếm lỗ hổng">
+  <div class="filter-legend">
+    <span class="badge crit">Nghiêm trọng</span>
+    <span class="badge high">Cao</span>
+    <span class="badge med">Trung bình</span>
+    <span class="badge low">Thấp</span>
+  </div>
+</div>
+
+<p class="note">
+  <strong>Phạm vi rà soát:</strong> Hạ tầng (AWS, GCP) · Ngôn ngữ (NodeJS, PHP, Java, .NET, JavaScript) · Framework (Next.js, Nuxt, Quasar, Laravel, Spring Boot).
 </p>
 
 <h2>1. Việc cần làm ngay</h2>
@@ -77,7 +31,7 @@
 <tr><td>1</td><td>Nâng cấp <strong>PHP</strong> lên 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 và tạm đặt <code>session.upload_progress.enabled=0</code> (phòng ngừa PHP2Shell và CVE-2026-115560)</td><td><span class="badge crit">Nghiêm trọng</span></td><td>Ngay</td></tr>
 <tr><td>2</td><td>Nâng cấp <strong>Next.js</strong> lên 16.4.1 / 15.5.28 (2 lỗi chiếm quyền server từ xa qua <code>use cache</code> và Image Optimization)</td><td><span class="badge crit">Nghiêm trọng</span></td><td>Ngay</td></tr>
 <tr><td>3</td><td>Nâng cấp <strong>Laravel</strong> lên 13.38.0 / 12.70.1 (tối thiểu 13.29.0 / 12.68.0, lỗi đăng nhập giả mạo không cần token và xóa dữ liệu)</td><td><span class="badge crit">Nghiêm trọng</span></td><td>Ngay nếu dùng token API với MySQL/MariaDB</td></tr>
-<tr><td>4</td><td>Cập nhật chứng chỉ CA và trust bundle trên <strong>AWS & GCP</strong> do sự cố rò rỉ khóa CA eMudhra (CVE-2026-111943); thay thế chứng chỉ trước hạn</td><td><span class="badge high">Cao</span></td><td>Trước 28-10-2026</td></tr>
+<tr><td>4</td><td>Cập nhật chứng chỉ CA và trust bundle trên <strong>AWS &amp; GCP</strong> do sự cố rò rỉ khóa CA eMudhra (CVE-2026-111943); thay thế chứng chỉ trước hạn</td><td><span class="badge high">Cao</span></td><td>Trước 28-10-2026</td></tr>
 <tr><td>5</td><td>Nâng cấp <strong>Node.js</strong> lên 26.12.1 / 24.22.1 / 22.23.4 (4 lỗi mức cao, có 1 lỗi chiếm quyền qua Brotli)</td><td><span class="badge high">Cao</span></td><td>Trong tuần</td></tr>
 <tr><td>6</td><td>Nâng cấp <strong>Nuxt</strong> lên 4.6.2 (vá 5 advisory ngày 16-10; Nuxt 3 đã EOL không có bản vá, cần kế hoạch lên Nuxt 4)</td><td><span class="badge high">Cao</span></td><td>Trong tuần</td></tr>
 <tr><td>7</td><td>Cập nhật <strong>Java</strong> (Oracle CPU 10-20, Corretto) và <strong>.NET / ASP.NET Core</strong> (Patch Tuesday 10-13)</td><td><span class="badge high">Cao</span></td><td>Trong tuần</td></tr>
@@ -93,7 +47,7 @@
 <td>CVE-2026-109618, -109619 ("PHP2Shell", CVSS 9.2, chiếm server từ xa không cần đăng nhập). Ngày 10-23 công bố thêm thông báo CVE-2026-115560: nguy cơ RCE nếu đổi serialize handler sang <code>php</code> ở runtime trong khi bật upload progress.</td>
 <td><span class="badge crit">Nghiêm trọng</span></td>
 <td>Mọi ứng dụng PHP (PHP-FPM, mod_php, FrankenPHP, LiteSpeed), kể cả Laravel, Drupal. Nhánh 8.1 trở xuống đã EOL không có bản vá chính thức.</td>
-<td>Nâng PHP lên 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35. Đặt thêm <code>session.upload_progress.enabled = 0</code> trong <code>php.ini</code> để phòng ngừa CVE-2026-115560. <a href="../php-cve-2026-109618-109619/01-tong-quan.md">Chi tiết</a></td></tr>
+<td>Nâng PHP lên 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35. Đặt thêm <code>session.upload_progress.enabled = 0</code> trong <code>php.ini</code> để phòng ngừa CVE-2026-115560. <a href="https://github.com/pirago-vietnam/security-news/tree/main/php-cve-2026-109618-109619/01-tong-quan.md" target="_blank" rel="noopener noreferrer">Chi tiết runbook nội bộ</a></td></tr>
 <tr><td>Node.js</td>
 <td>Bản phát hành 10-21: lỗi Brotli ghi ngoài vùng nhớ (có thể chiếm quyền, CVE-2026-111497); 2 lỗi bỏ qua kiểm tra tên miền của chứng chỉ TLS (CVE-2026-105483, -106069); lỗi <code>dns.resolve</code> (CVE-2026-105482). Thêm 6 lỗi nhẹ hơn.</td>
 <td><span class="badge high">Cao</span></td>
@@ -147,7 +101,7 @@
 <td>Dùng Spring Boot ≥ 4.0.6 / 3.5.14, cập nhật Tomcat/Netty, quét phụ thuộc kỹ.</td></tr>
 </tbody></table></div>
 
-<h2>4. Hạ tầng</h2>
+<h2>4. Hạ tầng (Infrastructure: AWS &amp; GCP)</h2>
 <div class="wrap"><table>
 <thead><tr><th>Nhà cung cấp</th><th>Bản tin / Tóm tắt</th><th class="col-lv">Mức độ</th><th>Ảnh hưởng tới hệ thống nào</th><th>Cần làm gì</th></tr></thead>
 <tbody>
@@ -159,36 +113,32 @@
 <tr><td>GCP</td><td>GCP-2026-072 (10-24): Lỗi PHP RCE (CVE-2026-109618, CVE-2026-109619) ảnh hưởng đến Apigee Developer Portal do khách hàng tự triển khai chạy trên nền Drupal.</td><td><span class="badge crit">Nghiêm trọng</span></td><td>Apigee Developer Portal tự triển khai (Drupal-based)</td><td>Cập nhật runtime PHP và Drupal theo khuyến cáo của GCP.</td></tr>
 <tr><td>GCP</td><td>GCP-2026-071 (10-23): Lỗ hổng khóa riêng tư intermediate CA eMudhra (CVE-2026-111943) do weak entropy.</td><td><span class="badge med">Trung bình</span></td><td>Base OS images của GCP, Google Cloud CLI, các dịch vụ nền tảng</td><td>Cập nhật Google Cloud CLI và cập nhật các gói root CA / hệ điều hành trên VM/GKE.</td></tr>
 <tr><td>GCP</td><td>GCP-2026-070 (10-21): Lỗi PHP RCE. Hạ tầng Google Cloud không bị ảnh hưởng, nhưng workload PHP khách hàng thì có.</td><td><span class="badge crit">Nghiêm trọng</span></td><td>App Engine, Cloud Run, GKE, Compute Engine chạy PHP</td><td>Triển khai lại với PHP đã vá.</td></tr>
-<tr><td>GCP</td><td>GCP-2026-068 (10-14, sửa phân quyền Application Integration - CVE-2026-85298); GCP-2026-069 (10-19, Istio & Envoy).</td><td><span class="badge high">Cao</span></td><td>Application Integration (đã vá sẵn), Cloud Service Mesh, GKE dùng Istio/Envoy</td><td>GCP-2026-068 không cần làm gì. Với Istio/Envoy, theo dõi bản tin Cloud Service Mesh.</td></tr>
+<tr><td>GCP</td><td>GCP-2026-068 (10-14, sửa phân quyền Application Integration - CVE-2026-85298); GCP-2026-069 (10-19, Istio &amp; Envoy).</td><td><span class="badge high">Cao</span></td><td>Application Integration (đã vá sẵn), Cloud Service Mesh, GKE dùng Istio/Envoy</td><td>GCP-2026-068 không cần làm gì. Với Istio/Envoy, theo dõi bản tin Cloud Service Mesh.</td></tr>
 </tbody></table></div>
 
 <h2>5. Ghi chú về độ tin cậy</h2>
 <div class="note">
 <ul>
-  <li><strong>Đã đối chiếu trực tiếp nguồn chính thức:</strong> Node.js, Next.js, advisory Laravel (GitHub Advisories), advisory Nuxt (GitHub Advisories - xác nhận vá tại 4.6.2, Nuxt 3 EOL), Quasar (GitHub Advisories & Releases - xác nhận vá triệt để tại bản 2.35.2 / app-vite 3.10.3), php.net (thông báo cập nhật CVE-2026-115560 ngày 10-23), toàn bộ bản tin AWS (đến 2026-150-AWS ngày 10-24), toàn bộ bản tin Google Cloud (đến GCP-2026-072 ngày 10-24), danh sách CVE Microsoft qua SANS ISC.</li>
+  <li><strong>Đã đối chiếu trực tiếp nguồn chính thức:</strong> Node.js, Next.js, advisory Laravel (GitHub Advisories), advisory Nuxt (GitHub Advisories - xác nhận vá tại 4.6.2, Nuxt 3 EOL), Quasar (GitHub Advisories &amp; Releases - xác nhận vá triệt để tại bản 2.35.2 / app-vite 3.10.3), php.net (thông báo cập nhật CVE-2026-115560 ngày 10-23), toàn bộ bản tin AWS (đến 2026-150-AWS ngày 10-24), toàn bộ bản tin Google Cloud (đến GCP-2026-072 ngày 10-24), danh sách CVE Microsoft qua SANS ISC.</li>
   <li><strong>Chỉ qua bài tổng hợp:</strong> Oracle CPU (trang trả về 403, chưa có danh sách đầy đủ từng CVE của Java SE); CVE-2026-48019 (Laravel) và CVE-2026-40976 (Spring Boot).</li>
   <li><strong>AWS:</strong> Bản tin AWS không phân loại mức độ đồng nhất (hầu hết gắn Important hoặc không ghi), cột mức độ trong bảng là đánh giá phân loại rủi ro kỹ thuật. <strong>.NET:</strong> mức độ theo CVSS và loại lỗi (Microsoft xếp tất cả Important).</li>
   <li><strong>Sự cố eMudhra CA (CVE-2026-111943):</strong> Đã được cả AWS (2026-150-AWS) và GCP (GCP-2026-071) xác nhận; chú ý hạn chót thay thế chứng chỉ trên AWS là 28-10-2026.</li>
 </ul>
 </div>
 
-<h2>6. Nguồn</h2>
+<h2>6. Nguồn tham khảo</h2>
 <div class="note">
 <ul>
-  <li>PHP: <a href="../php-cve-2026-109618-109619/01-tong-quan.md">tổng quan nội bộ</a>, <a href="https://aws.amazon.com/security/security-bulletins/2026-143-aws/">AWS 2026-143</a>, <a href="https://www.php.net/archive/2026.php">php.net (2026 releases & CVE-2026-115560)</a></li>
-  <li>Node.js: <a href="https://nodejs.org/en/blog/vulnerability/october-2026-security-releases">Security Releases 2026-10-21</a></li>
-  <li>Next.js: <a href="https://nextjs.org/blog/nextjs-security-update-october-14-2026">Security Update 2026-10-14</a>, <a href="https://github.com/vercel/next.js/security/advisories">GitHub Advisories</a></li>
-  <li>Laravel: <a href="https://github.com/laravel/framework/security/advisories/GHSA-f9x3-7vq9-cph6">CVE-2026-114509</a>, <a href="https://github.com/laravel/framework/security/advisories/GHSA-5wcm-3v2w-8362">CVE-2026-114508</a>, <a href="https://github.com/laravel/framework/releases">Laravel Releases</a></li>
-  <li>Nuxt: <a href="https://github.com/nuxt/nuxt/security/advisories/GHSA-vjh5-4x84-xrqp">GHSA-vjh5-4x84-xrqp</a>, <a href="https://github.com/nuxt/nuxt/security/advisories/GHSA-xfq5-w38q-pc2x">GHSA-xfq5-w38q-pc2x</a>, <a href="https://github.com/nuxt/nuxt/security/advisories/GHSA-6gq8-jgmh-3ffp">GHSA-6gq8-jgmh-3ffp</a></li>
-  <li>Quasar: <a href="https://github.com/quasarframework/quasar/releases">Quasar Releases (v2.35.2)</a>, <a href="https://github.com/quasarframework/quasar/security/advisories">GitHub Advisories</a></li>
-  <li>Chrome/npm: <a href="https://chromereleases.googleblog.com/search/label/Stable%20updates">Chrome Releases</a>, <a href="https://www.malwarebytes.com/blog/bugs/2026/10/update-chrome-and-chromeos-to-fix-critical-security-issues">Malwarebytes: Chrome 155</a>, <a href="https://securityonline.info/tag/malicious-npm-packages/">securityonline: gói npm độc hại</a></li>
-  <li>Spring: <a href="https://spring.io/security">spring.io/security</a>, <a href="https://www.herodevs.com/blog-posts/spring-boot-managed-dependencies-still-get-cves-after-eol-september-2026-patch-round-up">HeroDevs: round-up tháng 9</a></li>
-  <li>Java: <a href="https://www.oracle.com/security-alerts/cpuoct2026.html">Oracle CPU 10/2026</a>, <a href="https://docs.oracle.com/en-us/iaas/releasenotes/java-management/jdk-cpu-october-2026.htm">Java release notes</a></li>
-  <li>.NET: <a href="https://isc.sans.edu/diary/33422">SANS ISC: Patch Tuesday 10/2026</a>, <a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-october-2026-patch-tuesday-fixes-1-411-flaws-3-zero-days/">BleepingComputer</a></li>
-  <li>Hạ tầng: <a href="https://aws.amazon.com/security/security-bulletins/2026-150-aws/">AWS 2026-150</a>, <a href="https://aws.amazon.com/security/security-bulletins/2026-148-aws/">AWS 2026-148</a>, <a href="https://aws.amazon.com/security/security-bulletins/">AWS Security Bulletins</a>, <a href="https://docs.cloud.google.com/support/bulletins">Google Cloud Security Bulletins (GCP-2026-071, -072)</a></li>
+  <li>PHP: <a href="https://github.com/pirago-vietnam/security-news/tree/main/php-cve-2026-109618-109619/01-tong-quan.md" target="_blank" rel="noopener noreferrer">tổng quan nội bộ</a>, <a href="https://aws.amazon.com/security/security-bulletins/2026-143-aws/" target="_blank" rel="noopener noreferrer">AWS 2026-143</a>, <a href="https://www.php.net/archive/2026.php" target="_blank" rel="noopener noreferrer">php.net (2026 releases &amp; CVE-2026-115560)</a></li>
+  <li>Node.js: <a href="https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" target="_blank" rel="noopener noreferrer">Security Releases 2026-10-21</a></li>
+  <li>Next.js: <a href="https://nextjs.org/blog/nextjs-security-update-october-14-2026" target="_blank" rel="noopener noreferrer">Security Update 2026-10-14</a>, <a href="https://github.com/vercel/next.js/security/advisories" target="_blank" rel="noopener noreferrer">GitHub Advisories</a></li>
+  <li>Laravel: <a href="https://github.com/laravel/framework/security/advisories/GHSA-f9x3-7vq9-cph6" target="_blank" rel="noopener noreferrer">CVE-2026-114509</a>, <a href="https://github.com/laravel/framework/security/advisories/GHSA-5wcm-3v2w-8362" target="_blank" rel="noopener noreferrer">CVE-2026-114508</a>, <a href="https://github.com/laravel/framework/releases" target="_blank" rel="noopener noreferrer">Laravel Releases</a></li>
+  <li>Nuxt: <a href="https://github.com/nuxt/nuxt/security/advisories/GHSA-vjh5-4x84-xrqp" target="_blank" rel="noopener noreferrer">GHSA-vjh5-4x84-xrqp</a>, <a href="https://github.com/nuxt/nuxt/security/advisories/GHSA-xfq5-w38q-pc2x" target="_blank" rel="noopener noreferrer">GHSA-xfq5-w38q-pc2x</a>, <a href="https://github.com/nuxt/nuxt/security/advisories/GHSA-6gq8-jgmh-3ffp" target="_blank" rel="noopener noreferrer">GHSA-6gq8-jgmh-3ffp</a></li>
+  <li>Quasar: <a href="https://github.com/quasarframework/quasar/releases" target="_blank" rel="noopener noreferrer">Quasar Releases (v2.35.2)</a>, <a href="https://github.com/quasarframework/quasar/security/advisories" target="_blank" rel="noopener noreferrer">GitHub Advisories</a></li>
+  <li>Chrome/npm: <a href="https://chromereleases.googleblog.com/search/label/Stable%20updates" target="_blank" rel="noopener noreferrer">Chrome Releases</a>, <a href="https://www.malwarebytes.com/blog/bugs/2026/10/update-chrome-and-chromeos-to-fix-critical-security-issues" target="_blank" rel="noopener noreferrer">Malwarebytes: Chrome 155</a>, <a href="https://securityonline.info/tag/malicious-npm-packages/" target="_blank" rel="noopener noreferrer">securityonline: gói npm độc hại</a></li>
+  <li>Spring: <a href="https://spring.io/security" target="_blank" rel="noopener noreferrer">spring.io/security</a>, <a href="https://www.herodevs.com/blog-posts/spring-boot-managed-dependencies-still-get-cves-after-eol-september-2026-patch-round-up" target="_blank" rel="noopener noreferrer">HeroDevs: round-up tháng 9</a></li>
+  <li>Java: <a href="https://www.oracle.com/security-alerts/cpuoct2026.html" target="_blank" rel="noopener noreferrer">Oracle CPU 10/2026</a>, <a href="https://docs.oracle.com/en-us/iaas/releasenotes/java-management/jdk-cpu-october-2026.htm" target="_blank" rel="noopener noreferrer">Java release notes</a></li>
+  <li>.NET: <a href="https://isc.sans.edu/diary/33422" target="_blank" rel="noopener noreferrer">SANS ISC: Patch Tuesday 10/2026</a>, <a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-october-2026-patch-tuesday-fixes-1-411-flaws-3-zero-days/" target="_blank" rel="noopener noreferrer">BleepingComputer</a></li>
+  <li>Hạ tầng: <a href="https://aws.amazon.com/security/security-bulletins/2026-150-aws/" target="_blank" rel="noopener noreferrer">AWS 2026-150</a>, <a href="https://aws.amazon.com/security/security-bulletins/2026-148-aws/" target="_blank" rel="noopener noreferrer">AWS 2026-148</a>, <a href="https://aws.amazon.com/security/security-bulletins/" target="_blank" rel="noopener noreferrer">AWS Security Bulletins</a>, <a href="https://docs.cloud.google.com/support/bulletins" target="_blank" rel="noopener noreferrer">Google Cloud Security Bulletins (GCP-2026-071, -072)</a></li>
 </ul>
 </div>
-
-</main>
-</body>
-</html>

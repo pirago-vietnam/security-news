@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="auto">
+<head>
+  {% include google-tag.html %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  {% if page.description %}
+  <meta name="description" content="{{ page.description }}">
+  {% else %}
+  <meta name="description" content="{{ site.description }}">
+  {% endif %}
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/images/favicon.png' | relative_url }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ '/assets/css/pirago-theme.css' | relative_url }}">
+
+  <!-- Script phòng ngừa chớp màu (FOUC) khi tải trang -->
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('pirago_theme');
+        if (savedTheme === 'dark' || savedTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', savedTheme);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body class="{{ page.body_class }}">
+  {% include header.html %}
+
+  {% if page.url != '/' and page.url != '/index.html' %}
+  <div class="pirago-breadcrumb-bar">
+    <div class="pirago-container">
+      <nav class="pirago-breadcrumbs" aria-label="Breadcrumb">
+        <a href="{{ '/' | relative_url }}">Trang chủ</a>
+        <span class="breadcrumb-sep">/</span>
+        {% if page.category %}
+        <span class="breadcrumb-category">{{ page.category }}</span>
+        <span class="breadcrumb-sep">/</span>
+        {% endif %}
+        <span class="breadcrumb-current" aria-current="page">{{ page.title | default: "Báo cáo" }}</span>
+      </nav>
+    </div>
+  </div>
+  {% endif %}
+
+  <main class="pirago-main-content {% if page.full_width %}full-width{% endif %}">
+    <div class="pirago-container">
+      {{ content }}
+    </div>
+  </main>
+
+  {% include footer.html %}
+
+  <script src="{{ '/assets/js/pirago.js' | relative_url }}"></script>
+</body>
+</html>

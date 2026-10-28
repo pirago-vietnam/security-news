@@ -1,23 +1,11 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y0FW1NM42E"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+---
+layout: default
+title: "Báo cáo sự cố an ninh: GMO Onamae Desktop Cloud"
+description: "Hồ sơ tình báo và tổng hợp kỹ thuật chuyên sâu về vụ tấn công 26.739 VPS Onamae Desktop Cloud (Tập đoàn GMO Internet) và phản công Active Cyber Defense"
+category: "Sự cố an ninh"
+---
 
-    gtag('config', 'G-Y0FW1NM42E');
-  </script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="claude:viewport-fit-sides" content="cover">
-  <title>GMO Onamae Security Incident Report</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
+<style>
     :root {
       --bg: #f8fafc;
       --bg-surface: #ffffff;
@@ -137,11 +125,11 @@
       min-width: 0;
     }
 
-    /* Top Sticky Header */
+    /* Top Sticky Sub-Header for GMO Incident Sections */
     .header-bar {
       position: sticky;
-      top: env(safe-area-inset-top, 0px);
-      z-index: 100;
+      top: 72px;
+      z-index: 90;
       background: var(--bg-surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
@@ -755,10 +743,8 @@
       text-decoration: underline;
     }
   </style>
-</head>
-<body>
 
-<div class="container">
+<div class="gmo-incident-wrapper">
 
   <!-- Header Bar -->
   <header class="header-bar">
@@ -1553,15 +1539,15 @@
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer>
+  <!-- Incident Source Citation -->
+  <div class="note" style="margin-top: 32px; font-size: 13px;">
     <p>
-      Báo Cáo Tình Báo An Ninh Mạng Tổng Hợp Dựa Trên Chuỗi Thông Cáo Chính Thức Tại <a href="https://group.gmo/info/alert/" target="_blank" rel="noopener noreferrer">https://group.gmo/info/alert/</a> & <a href="https://group.gmo/news/" target="_blank" rel="noopener noreferrer">GMO News</a>.
+      <strong>Nguồn tài liệu:</strong> Báo Cáo Tình Báo An Ninh Mạng Tổng Hợp Dựa Trên Chuỗi Thông Cáo Chính Thức Tại <a href="https://group.gmo/info/alert/" target="_blank" rel="noopener noreferrer">https://group.gmo/info/alert/</a> &amp; <a href="https://group.gmo/news/" target="_blank" rel="noopener noreferrer">GMO News</a>.
     </p>
     <p style="margin-top: 6px; font-size: 12px; opacity: 0.8;">
-      Tập Đoàn GMO Internet Group, Inc. (TSE Prime: 9449) & GMO Internet, Inc. (TSE Prime: 4784). Bản quyền tài liệu tổng hợp an ninh mạng 2026.
+      Tập Đoàn GMO Internet Group, Inc. (TSE Prime: 9449) &amp; GMO Internet, Inc. (TSE Prime: 4784). Bản quyền tài liệu tổng hợp an ninh mạng 2026.
     </p>
-  </footer>
+  </div>
 
 </div>
 
@@ -1572,34 +1558,14 @@
     card.classList.toggle('open');
   }
 
-  // Theme Toggle Functionality
-  const themeToggle = document.getElementById('themeToggle');
-  const themeIcon = document.getElementById('themeIcon');
-
-  function getPreferredTheme() {
-    const saved = localStorage.getItem('gmo_report_theme');
-    if (saved) return saved;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  // Sync GMO in-page theme button with main Pirago theme switcher
+  const gmoThemeBtn = document.getElementById('themeToggle');
+  if (gmoThemeBtn) {
+    gmoThemeBtn.addEventListener('click', () => {
+      const mainThemeBtn = document.getElementById('themeToggleBtn');
+      if (mainThemeBtn) {
+        mainThemeBtn.click();
+      }
+    });
   }
-
-  function setTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    try {
-      localStorage.setItem('gmo_report_theme', theme);
-    } catch(e) {}
-    themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
-  }
-
-  themeToggle.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme') || getPreferredTheme();
-    const next = current === 'dark' ? 'light' : 'dark';
-    setTheme(next);
-  });
-
-  // Init theme
-  const initialTheme = getPreferredTheme();
-  setTheme(initialTheme);
 </script>
-
-</body>
-</html>
