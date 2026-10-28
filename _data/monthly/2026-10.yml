@@ -2,8 +2,8 @@ title:
   vi: Báo cáo bảo mật tháng 10/2026
   ja: 2026年10月 セキュリティレポート
 description:
-  vi: 'Tổng hợp các rủi ro, lỗ hổng bảo mật và việc cần làm tháng 10/2026: PHP2Shell, Next.js RCE, Laravel, AWS/GCP eMudhra CA'
-  ja: 2026年10月のリスク、脆弱性、対応事項のまとめ：PHP2Shell、Next.js RCE、Laravel、AWS/GCP eMudhra CA
+  vi: 'Tổng hợp rủi ro và việc cần làm tháng 10/2026: PHP2Shell, Next.js RCE, Laravel, AWS/GCP eMudhra CA và rò rỉ dữ liệu Docomo plala (Sコース)'
+  ja: 2026年10月のリスクと対応事項：PHP2Shell、Next.js RCE、Laravel、AWS/GCP eMudhra CA、ドコモ plala（Sコース）の情報漏えい
 nav:
   vi: Tháng 10/2026
   ja: 2026年10月
@@ -14,8 +14,8 @@ h1:
   vi: Báo cáo bảo mật tháng 10/2026
   ja: 2026年10月 セキュリティレポート
 sub:
-  vi: Số liệu tính đến <strong>2026-10-26</strong>. Tháng chưa kết thúc, cần cập nhật lại cuối tháng.
-  ja: <strong>2026年10月26日</strong>時点の情報です。月はまだ終了していないため、月末に再更新が必要です。
+  vi: Nội dung kỹ thuật tính đến <strong>2026-10-26</strong>; bổ sung sự cố Docomo plala（Sコース）ngày <strong>2026-10-28</strong>. Tháng chưa kết thúc, cần cập nhật lại cuối tháng.
+  ja: 技術情報は<strong>2026年10月26日</strong>時点。<strong>2026年10月28日</strong>にドコモ plala（Sコース）のインシデントを追記しました。月末に再更新が必要です。
 placeholder:
   vi: '🔍 Tìm kiếm CVE, framework, thư viện (vd: PHP, Next.js, AWS, RCE)...'
   ja: '🔍 CVE、フレームワーク、ライブラリで検索（例: PHP, Next.js, AWS, RCE）...'
@@ -27,8 +27,8 @@ card:
     vi: Báo cáo tháng 10/2026
     ja: 2026年10月レポート
   date:
-    vi: Cập nhật đến 2026-10-26 · Định kỳ hàng tháng
-    ja: 2026年10月26日 時点 · 月次定期レポート
+    vi: Bổ sung Docomo 2026-10-28 · Nội dung kỹ thuật đến 2026-10-26
+    ja: 2026年10月28日 ドコモ追記 · 技術情報は10月26日時点
   items:
   - sev: crit
     label: PHP
@@ -50,6 +50,11 @@ card:
     text:
       vi: 'Rò rỉ khóa intermediate CA eMudhra (CVE-2026-111943): cập nhật trust bundle (<code>yum update ca-certificates</code>, botocore ≥ 1.43.117) và thay thế chứng chỉ liên quan trước <strong>28-10-2026</strong>.'
       ja: 'eMudhra の中間CA鍵の漏えい (CVE-2026-111943): トラストバンドルを更新 (<code>yum update ca-certificates</code>、botocore ≥ 1.43.117) し、関連する証明書を <strong>2026年10月28日</strong>までに交換してください。'
+  - sev: high
+    label: Docomo / plala
+    text:
+      vi: Rò rỉ 443.495 bản ghi khách hàng plala（Sコース）qua cơ sở dữ liệu So-net của đối tác. Theo Docomo, phạm vi này không bao gồm mật khẩu hay thông tin thanh toán. Cảnh giác liên hệ giả mạo.
+      ja: 委託先のSo-net会員データベースからplala（Sコース）の顧客情報443,495件が流出。ドコモによると、この範囲にパスワード・決済情報は含まれません。不審な連絡に注意してください。
 sections:
 - title:
     vi: 1. Việc cần làm ngay
@@ -348,8 +353,24 @@ sections:
       vi: GCP-2026-068 không cần làm gì. Với Istio/Envoy, theo dõi bản tin Cloud Service Mesh.
       ja: GCP-2026-068 は対応不要です。Istio/Envoy については、Cloud Service Mesh のニュースを確認してください。
 - title:
-    vi: 5. Ghi chú về độ tin cậy
-    ja: 5. 情報の信頼性に関する注記
+    vi: 5. Sự cố dữ liệu tại nhà cung cấp
+    ja: 5. サービス委託先での情報漏えい
+  type: provider
+  rows:
+  - name: Docomo Hikari / plala（Sコース）
+    summary:
+      vi: 'NTT Docomo công bố ngày 27-10: 443.495 bản ghi khách hàng bị rò rỉ sau truy cập trái phép ngày 19-10 vào cơ sở dữ liệu hội viên So-net do Sony Network Communications quản lý. Lộ thông tin cá nhân, email, ID đăng nhập My Page và ID kết nối Internet.'
+      ja: 'NTTドコモが10月27日に公表。10月19日の委託先ソニーネットワークコミュニケーションズのSo-net会員データベースへの不正アクセスにより、顧客情報443,495件が流出。個人情報、メールアドレス、マイページのログイン用ID、インターネット接続用IDが対象。'
+    sev: high
+    impact:
+      vi: Khách hàng đang dùng plala（Sコース）và đã hủy trong 6 tháng gần nhất. Theo Docomo, phạm vi này không bao gồm mật khẩu, thẻ tín dụng hay tài khoản ngân hàng; các gói plala khác không bị rò rỉ trong vụ việc này.
+      ja: plala（Sコース）を利用中、または過去6か月以内に解約したお客様。ドコモによると、この範囲にパスワード・クレジットカード・銀行口座情報は含まれず、他のplalaコースの情報は本件で流出していません。
+    fix:
+      vi: 'Nhà cung cấp đã dừng máy chủ liên quan và chặn nguồn truy cập trái phép; sẽ liên hệ riêng khách hàng. Cảnh giác email/SMS/cuộc gọi giả mạo, không mở liên kết hay tệp đáng ngờ. Chưa ghi nhận thiệt hại thứ cấp tính đến 27-10. <a href="@home@docomo/docomo_plala_security_incident_report/">Báo cáo chi tiết và khuyến nghị nội bộ</a>.'
+      ja: '委託先は対象サーバを停止し、不正アクセス元の通信を遮断。対象者には個別連絡予定です。不審なメール・SMS・電話に注意し、リンクや添付ファイルを開かないでください。10月27日時点で二次被害は未確認。<a href="@home@docomo/docomo_plala_security_incident_report/">詳細レポートと社内推奨事項</a>。'
+- title:
+    vi: 6. Ghi chú về độ tin cậy
+    ja: 6. 情報の信頼性に関する注記
   type: list
   items:
   - vi: <strong>Đã đối chiếu trực tiếp nguồn chính thức:</strong> Node.js, Next.js, advisory Laravel (GitHub Advisories), advisory Nuxt (GitHub Advisories - xác nhận vá tại 4.6.2, Nuxt 3 EOL), Quasar (GitHub Advisories &amp; Releases - xác nhận vá triệt để tại bản 2.35.2 / app-vite 3.10.3), php.net (thông báo cập nhật CVE-2026-115560 ngày 10-23), toàn bộ bản tin AWS (đến 2026-150-AWS ngày 10-24), toàn bộ bản tin Google Cloud (đến GCP-2026-072 ngày 10-24), danh sách CVE Microsoft qua SANS ISC.
@@ -360,11 +381,15 @@ sections:
     ja: <strong>AWS:</strong> AWS のニュースは重大度の分類が統一されておらず（大半が Important か記載なし）、表の重大度列は技術的なリスク分類に基づく評価です。<strong>.NET:</strong> 重大度は CVSS と脆弱性の種類に基づきます（Microsoft はすべて Important に分類）。
   - vi: <strong>Sự cố eMudhra CA (CVE-2026-111943):</strong> Đã được cả AWS (2026-150-AWS) và GCP (GCP-2026-071) xác nhận; chú ý hạn chót thay thế chứng chỉ trên AWS là 28-10-2026.
     ja: <strong>eMudhra CA インシデント（CVE-2026-111943）:</strong> AWS（2026-150-AWS）と GCP（GCP-2026-071）の両方で確認済みです。AWS での証明書差し替えの期限は 2026年10月28日である点にご注意ください。
+  - vi: '<strong>Docomo plala（Sコース）:</strong> Bổ sung ngày 28-10, đã đối chiếu CNET Japan và thông báo chính thức NTT Docomo ngày 27-10. Số 443.495 bản ghi và kết luận không lộ mật khẩu/thông tin thanh toán chỉ áp dụng cho phạm vi này, không đại diện toàn bộ So-net. Mức high là đánh giá rủi ro dữ liệu nội bộ, không phải CVSS; chưa có chi tiết CVE hay IOC trong hai nguồn này.'
+    ja: '<strong>ドコモ plala（Sコース）:</strong> 10月28日追記。CNET Japanと10月27日のNTTドコモ公式発表を照合済み。443,495件、およびパスワード・決済情報が含まれないという説明は、この範囲に限り、So-net全体を示すものではありません。highは社内の情報漏えいリスク評価でありCVSSではなく、両情報源にCVE・IOCの詳細はありません。'
 - title:
-    vi: 6. Nguồn tham khảo
-    ja: 6. 参考資料
+    vi: 7. Nguồn tham khảo
+    ja: 7. 参考資料
   type: list
   items:
+  - vi: 'Docomo plala（Sコース）: <a href="https://www.docomo.ne.jp/info/notice/page/261027_05_m.html" target="_blank" rel="noopener noreferrer">NTT Docomo (thông báo chính thức 27-10-2026)</a>, <a href="https://japan.cnet.com/article/35254048/" target="_blank" rel="noopener noreferrer">CNET Japan (28-10-2026)</a>'
+    ja: 'ドコモ plala（Sコース）: <a href="https://www.docomo.ne.jp/info/notice/page/261027_05_m.html" target="_blank" rel="noopener noreferrer">NTTドコモ（2026年10月27日公式発表）</a>, <a href="https://japan.cnet.com/article/35254048/" target="_blank" rel="noopener noreferrer">CNET Japan（2026年10月28日）</a>'
   - vi: 'PHP: <a href="https://github.com/pirago-vietnam/security-news/tree/main/php-cve-2026-109618-109619/01-tong-quan.md" target="_blank" rel="noopener noreferrer">tổng quan nội bộ</a>, <a href="https://aws.amazon.com/security/security-bulletins/2026-143-aws/" target="_blank" rel="noopener noreferrer">AWS 2026-143</a>, <a href="https://www.php.net/archive/2026.php" target="_blank" rel="noopener noreferrer">php.net (2026 releases &amp; CVE-2026-115560)</a>'
     ja: 'PHP: <a href="https://github.com/pirago-vietnam/security-news/tree/main/php-cve-2026-109618-109619/01-tong-quan.md" target="_blank" rel="noopener noreferrer">社内概要</a>, <a href="https://aws.amazon.com/security/security-bulletins/2026-143-aws/" target="_blank" rel="noopener noreferrer">AWS 2026-143</a>, <a href="https://www.php.net/archive/2026.php" target="_blank" rel="noopener noreferrer">php.net (2026 releases &amp; CVE-2026-115560)</a>'
   - vi: 'Node.js: <a href="https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" target="_blank" rel="noopener noreferrer">Security Releases 2026-10-21</a>'

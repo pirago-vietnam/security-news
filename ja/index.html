@@ -23,6 +23,21 @@ description: "月次のセキュリティインシデントおよび脆弱性レ
 
 <!-- レポート一覧 - 最新のレポートを上に表示 -->
 <div class="reports-list">
+  <!-- ドコモ / plalaインシデントレポート -->
+  <section class="card" style="border-left: 4px solid var(--high);">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+      <h2>⚠️ 情報漏えい：ドコモ光 plala（Sコース）</h2>
+      <span class="badge high">情報漏えい</span>
+    </div>
+    <p class="date">2026年10月28日更新 · NTTドコモが10月27日に公表</p>
+    <ul>
+      <li>委託先のソニーネットワークコミュニケーションズが管理するSo-net会員データベースから、<strong>顧客情報443,495件</strong>が流出。</li>
+      <li>個人情報、メールアドレス、IDが対象。ドコモによると、plala（Sコース）の範囲ではパスワード・決済情報は含まれません。</li>
+      <li>不審なメール・SMS・電話に注意。10月27日時点で二次被害は未確認。対象のお客様には個別に連絡予定。</li>
+    </ul>
+    <a href="{{ '/ja/docomo/docomo_plala_security_incident_report/' | relative_url }}" class="card-link-btn">影響範囲と対応の推奨事項を見る →</a>
+  </section>
+
   <!-- GMOインシデントレポート -->
   <section class="card" style="border-left: 4px solid var(--pirago-red);">
     <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">

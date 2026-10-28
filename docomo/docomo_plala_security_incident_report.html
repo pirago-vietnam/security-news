@@ -1,0 +1,72 @@
+---
+layout: default
+title: "Sự cố Docomo Hikari plala (Sコース): rò rỉ 443.495 bản ghi khách hàng"
+description: "Báo cáo vụ rò rỉ dữ liệu plala (Sコース) qua cơ sở dữ liệu So-net của nhà cung cấp, phạm vi ảnh hưởng và khuyến nghị ứng phó. Cập nhật 28-10-2026."
+category: "Sự cố an ninh"
+permalink: /docomo/docomo_plala_security_incident_report/
+---
+
+<div class="report-header">
+  <h1>Sự cố Docomo Hikari: rò rỉ dữ liệu plala（Sコース）</h1>
+  <p class="sub">Cập nhật ngày <strong>2026-10-28</strong> · Đối chiếu bài CNET Japan ngày 28/10 và thông báo NTT Docomo ngày 27/10/2026.</p>
+</div>
+
+<div class="note">
+  <strong>Tóm tắt:</strong> NTT Docomo xác nhận rò rỉ <strong>443.495 bản ghi khách hàng</strong> sau khi cơ sở dữ liệu hội viên So-net do đối tác Sony Network Communications quản lý bị truy cập trái phép. Đây là sự cố dữ liệu tại nhà cung cấp dịch vụ, không phải thông báo về một CVE hay bản vá phần mềm cụ thể.
+</div>
+
+<section class="card">
+  <h2>1. Phạm vi ảnh hưởng đã xác nhận</h2>
+  <ul>
+    <li><strong>Đối tượng:</strong> khách hàng đang dùng Docomo Hikari “plala（Sコース）” và khách hàng đã hủy dịch vụ này trong 6 tháng gần nhất, theo thông báo ngày 27/10.</li>
+    <li><strong>Quy mô:</strong> 443.495 bản ghi; không suy diễn đây là số người duy nhất hoặc quy mô toàn bộ sự cố tại So-net.</li>
+    <li><strong>Dữ liệu bị lộ:</strong> họ tên, số điện thoại, ngày sinh, giới tính, địa chỉ email thuộc miền <code>so-net.ne.jp</code>, email liên hệ đã đăng ký, ID người dùng đăng nhập So-net My Page và ID kết nối Internet.</li>
+    <li><strong>Không nằm trong dữ liệu rò rỉ của phạm vi này:</strong> mật khẩu và thông tin thanh toán, bao gồm thẻ tín dụng và tài khoản ngân hàng, theo NTT Docomo.</li>
+    <li><strong>Các dịch vụ khác:</strong> NTT Docomo cho biết thông tin khách hàng của “plala（ドコモ光）”, “ぷらら光メイト with フレッツ” và các gói dịch vụ plala khác không bị rò rỉ trong vụ việc này.</li>
+  </ul>
+  <p class="note">Không áp dụng kết luận “không lộ mật khẩu / thông tin thanh toán” cho toàn bộ khách hàng hoặc dịch vụ của Sony Network Communications/So-net. Báo cáo này chỉ xác nhận phạm vi Docomo Hikari plala（Sコース）.</p>
+</section>
+
+<section class="card">
+  <h2>2. Diễn biến và xử lý của nhà cung cấp</h2>
+  <ul>
+    <li><strong>19/10/2026:</strong> xảy ra truy cập trái phép vào máy chủ cơ sở dữ liệu hội viên So-net do Sony Network Communications quản lý.</li>
+    <li><strong>26/10/2026:</strong> NTT Docomo nhận báo cáo từ đối tác và xác nhận vụ rò rỉ.</li>
+    <li><strong>27/10/2026:</strong> NTT Docomo công bố sự cố, phạm vi dữ liệu và hướng dẫn khách hàng.</li>
+    <li><strong>28/10/2026:</strong> CNET Japan đăng bài tổng hợp vụ việc.</li>
+  </ul>
+  <p>Đối tác báo cáo đã dừng máy chủ liên quan và chặn ngay lưu lượng từ nguồn truy cập trái phép sau khi phát hiện sự việc. NTT Docomo sẽ liên hệ riêng với khách hàng bị ảnh hưởng.</p>
+  <p class="note"><strong>Trạng thái tại thời điểm thông báo 27/10:</strong> chưa ghi nhận việc sử dụng trái phép dữ liệu hoặc thiệt hại thứ cấp liên quan. Điều này không có nghĩa là không còn nguy cơ bị lợi dụng về sau.</p>
+</section>
+
+<section class="card">
+  <h2>3. Việc khách hàng cần làm theo thông báo</h2>
+  <ul>
+    <li>Cảnh giác email, SMS và cuộc gọi giả mạo sử dụng thông tin cá nhân đã lộ. Không trả lời liên hệ đáng ngờ, không mở liên kết hoặc tệp đính kèm trong các tin nhắn đó.</li>
+    <li>Kiểm tra thông báo riêng từ nhà cung cấp qua kênh chính thức; không đăng nhập qua liên kết do người lạ gửi.</li>
+    <li>Nếu muốn, có thể đổi địa chỉ email thuộc miền <code>so-net.ne.jp</code> tại So-net My Page; phần tên miền phụ phía bên phải ký tự <code>@</code> không đổi được.</li>
+    <li>Hỗ trợ chính thức: <strong>plala（Sコース）特設ダイヤル — 0120-035-700</strong>, từ 10:00 đến 19:00 giờ Nhật, kể cả thứ Bảy, Chủ nhật và ngày lễ.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>4. Khuyến nghị nội bộ cho kỹ sư và quản lý dự án</h2>
+  <p class="date">Đánh giá phòng ngừa của PiraGo; không phải kết luận điều tra hay yêu cầu bắt buộc từ NTT Docomo.</p>
+  <ul>
+    <li><strong>Rà soát sử dụng dịch vụ:</strong> xác định đội ngũ/dự án có dùng đúng plala（Sコース）hoặc email So-net cho công việc, liên hệ vận hành hay khôi phục tài khoản hay không; không mặc định mọi thuê bao Docomo đều bị ảnh hưởng.</li>
+    <li><strong>Chống giả mạo:</strong> nhắc bộ phận hỗ trợ và vận hành không dùng riêng họ tên, ngày sinh, số điện thoại hoặc ID làm bằng chứng xác thực. Xác minh yêu cầu nhạy cảm qua một kênh độc lập.</li>
+    <li><strong>Bảo vệ tài khoản:</strong> bật xác thực nhiều yếu tố ở nơi được hỗ trợ và không dùng lại mật khẩu. Việc đổi mật khẩu nên theo hướng dẫn chính thức hoặc khi phát hiện đăng nhập bất thường; thông báo hiện tại không xác nhận lộ mật khẩu trong phạm vi này.</li>
+    <li><strong>Khi có dấu hiệu bị lợi dụng:</strong> lưu lại email/SMS, nhật ký đăng nhập và thời điểm phát hiện; báo đầu mối an ninh nội bộ và nhà cung cấp qua kênh chính thức.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>5. Giới hạn xác minh và nguồn tham khảo</h2>
+  <ul>
+    <li>Chưa có chi tiết trong hai nguồn đã đối chiếu về phương thức xâm nhập ban đầu, CVE bị khai thác, danh tính tác nhân hay chỉ dấu xâm nhập (IOC); không suy đoán ransomware hoặc lộ mật khẩu.</li>
+    <li>Thông tin “chưa có thiệt hại thứ cấp” là trạng thái ngày 27/10/2026, không phải bảo đảm cho các thời điểm sau đó.</li>
+    <li><a href="https://www.docomo.ne.jp/info/notice/page/261027_05_m.html" target="_blank" rel="noopener noreferrer">NTT Docomo — thông báo chính thức ngày 27/10/2026 về dữ liệu plala（Sコース）</a> (nguồn sơ cấp, đã đối chiếu).</li>
+    <li><a href="https://japan.cnet.com/article/35254048/" target="_blank" rel="noopener noreferrer">CNET Japan — ドコモ光、44万件の顧客情報流出</a> (28/10/2026, 04:10; bài viết người dùng cung cấp).</li>
+  </ul>
+  <a href="{{ '/monthly/2026-10/' | relative_url }}" class="card-link-btn">Xem báo cáo bảo mật tháng 10/2026 →</a>
+</section>

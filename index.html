@@ -23,6 +23,21 @@ description: "Tổng hợp báo cáo sự cố an ninh mạng và lỗ hổng đ
 
 <!-- Danh sách báo cáo - báo cáo mới nhất xếp trên -->
 <div class="reports-list">
+  <!-- Báo cáo sự cố Docomo / plala -->
+  <section class="card" style="border-left: 4px solid var(--high);">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+      <h2>⚠️ Sự cố dữ liệu: Docomo Hikari plala（Sコース）</h2>
+      <span class="badge high">RÒ RỈ DỮ LIỆU</span>
+    </div>
+    <p class="date">Cập nhật 2026-10-28 · Công bố bởi NTT Docomo ngày 27/10</p>
+    <ul>
+      <li><strong>443.495 bản ghi khách hàng</strong> bị rò rỉ qua cơ sở dữ liệu So-net do đối tác Sony Network Communications quản lý.</li>
+      <li>Lộ thông tin cá nhân, email và ID; theo Docomo, không bao gồm mật khẩu hay thông tin thanh toán trong phạm vi plala（Sコース）.</li>
+      <li>Cảnh giác email/SMS/cuộc gọi giả mạo. Tính đến 27/10 chưa ghi nhận thiệt hại thứ cấp; khách hàng bị ảnh hưởng sẽ được liên hệ riêng.</li>
+    </ul>
+    <a href="{{ '/docomo/docomo_plala_security_incident_report/' | relative_url }}" class="card-link-btn">Xem phạm vi ảnh hưởng và khuyến nghị ứng phó →</a>
+  </section>
+
   <!-- Báo cáo sự cố GMO -->
   <section class="card" style="border-left: 4px solid var(--pirago-red);">
     <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
