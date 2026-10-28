@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="claude:viewport-fit-sides" content="cover">
+  <title>GMO Onamae Security Incident Report</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #f1f5f9;
+      --bg-surface-subtle: #f8fafc;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      --primary: #1e3a8a;
+      --primary-hover: #172554;
+      --primary-light: #eff6ff;
+      --danger: #dc2626;
+      --danger-light: #fef2f2;
+      --danger-border: #fecaca;
+      --warning: #d97706;
+      --warning-light: #fffbeb;
+      --success: #16a34a;
+      --success-light: #f0fdf4;
+      --badge-bg: #e2e8f0;
+      --badge-text: #334155;
+      --accent: #2563eb;
+      --accent-glow: rgba(37, 99, 235, 0.15);
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-jp: 'Noto Sans JP', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #090d16;
+        --bg-surface: #111827;
+        --bg-surface-elevated: #1f2937;
+        --bg-surface-subtle: #162032;
+        --border: #1f293d;
+        --border-strong: #374151;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --text-subtle: #64748b;
+        --primary: #3b82f6;
+        --primary-hover: #60a5fa;
+        --primary-light: rgba(59, 130, 246, 0.12);
+        --danger: #ef4444;
+        --danger-light: rgba(239, 68, 68, 0.12);
+        --danger-border: rgba(239, 68, 68, 0.3);
+        --warning: #f59e0b;
+        --warning-light: rgba(245, 158, 11, 0.12);
+        --success: #10b981;
+        --success-light: rgba(16, 185, 129, 0.12);
+        --badge-bg: #1e293b;
+        --badge-text: #cbd5e1;
+        --accent: #38bdf8;
+        --accent-glow: rgba(56, 189, 248, 0.15);
+        --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+        --card-shadow-hover: 0 10px 20px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+        color-scheme: dark;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #090d16;
+      --bg-surface: #111827;
+      --bg-surface-elevated: #1f2937;
+      --bg-surface-subtle: #162032;
+      --border: #1f293d;
+      --border-strong: #374151;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --primary-light: rgba(59, 130, 246, 0.12);
+      --danger: #ef4444;
+      --danger-light: rgba(239, 68, 68, 0.12);
+      --danger-border: rgba(239, 68, 68, 0.3);
+      --warning: #f59e0b;
+      --warning-light: rgba(245, 158, 11, 0.12);
+      --success: #10b981;
+      --success-light: rgba(16, 185, 129, 0.12);
+      --badge-bg: #1e293b;
+      --badge-text: #cbd5e1;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+      --card-shadow-hover: 0 10px 20px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+      color-scheme: dark;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.65;
+      font-size: 15px;
+      padding-top: max(16px, env(safe-area-inset-top, 0px));
+      padding-bottom: max(32px, env(safe-area-inset-bottom, 0px));
+      padding-left: max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      min-width: 0;
+    }
+
+    /* Top Sticky Header */
+    .header-bar {
+      position: sticky;
+      top: env(safe-area-inset-top, 0px);
+      z-index: 100;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px 20px;
+      margin-bottom: 24px;
+      backdrop-filter: blur(12px);
+      box-shadow: var(--card-shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .header-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--danger-light);
+      color: var(--danger);
+      border: 1px solid var(--danger-border);
+    }
+
+    .badge-status::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 8px currentColor;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      max-width: 100%;
+      padding-bottom: 2px;
+    }
+
+    .nav-btn {
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--text-muted);
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-btn:hover {
+      color: var(--text-main);
+      background: var(--primary-light);
+      border-color: var(--primary);
+    }
+
+    .theme-toggle-btn {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Hero Banner */
+    .hero {
+      background: linear-gradient(135deg, rgba(30, 58, 138, 0.08) 0%, rgba(220, 38, 38, 0.05) 100%), var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      margin-bottom: 24px;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--danger), var(--primary));
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .hero-meta span {
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+    }
+
+    .hero h1 {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
+
+    .hero-sub {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      max-width: 900px;
+    }
+
+    .hero-entities {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .tag.primary {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: rgba(37, 99, 235, 0.2);
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--card-shadow-hover);
+    }
+
+    .kpi-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+
+    .kpi-value {
+      font-size: 24px;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: var(--text-main);
+      margin-bottom: 4px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .kpi-value.danger { color: var(--danger); }
+    .kpi-value.primary { color: var(--primary); }
+    .kpi-value.warning { color: var(--warning); }
+    .kpi-value.success { color: var(--success); }
+
+    .kpi-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Section Component */
+    .section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      margin-bottom: 28px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-main);
+    }
+
+    .section-badge {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      background: var(--badge-bg);
+      color: var(--badge-text);
+    }
+
+    /* Timeline Styles */
+    .timeline {
+      position: relative;
+      margin-top: 20px;
+      padding-left: 24px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      bottom: 6px;
+      left: 7px;
+      width: 2px;
+      background: var(--border-strong);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 22px;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -24px;
+      top: 4px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      border: 3px solid var(--primary);
+      z-index: 2;
+    }
+
+    .timeline-item.critical .timeline-dot {
+      border-color: var(--danger);
+      background: var(--danger-light);
+    }
+
+    .timeline-item.warning .timeline-dot {
+      border-color: var(--warning);
+    }
+
+    .timeline-item.success .timeline-dot {
+      border-color: var(--success);
+    }
+
+    .timeline-card {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      transition: all 0.2s;
+    }
+
+    .timeline-card:hover {
+      border-color: var(--border-strong);
+      background: var(--bg-surface-subtle);
+    }
+
+    .timeline-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .timeline-date {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .timeline-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .timeline-body {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .quote-box {
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--bg-surface);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 13px;
+      font-family: var(--font-jp);
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* Reports Accordion Grid */
+    .reports-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .report-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--bg-surface-elevated);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .report-card.highlight {
+      border-left: 4px solid var(--danger);
+    }
+
+    .report-header {
+      padding: 14px 18px;
+      background: var(--bg-surface);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      user-select: none;
+    }
+
+    .report-header:hover {
+      background: var(--bg-surface-subtle);
+    }
+
+    .report-title-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .report-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .report-tag.danger {
+      background: var(--danger-light);
+      color: var(--danger);
+    }
+
+    .report-date {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-subtle);
+    }
+
+    .report-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .report-chevron {
+      font-size: 18px;
+      color: var(--text-subtle);
+      transition: transform 0.2s;
+    }
+
+    .report-card.open .report-chevron {
+      transform: rotate(180deg);
+    }
+
+    .report-content {
+      padding: 18px;
+      border-top: 1px solid var(--border);
+      display: none;
+      background: var(--bg-surface-elevated);
+      font-size: 14px;
+    }
+
+    .report-card.open .report-content {
+      display: block;
+    }
+
+    /* Technical Grid */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .tech-box {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+    }
+
+    .tech-box h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-main);
+    }
+
+    .tech-box ul {
+      padding-left: 20px;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .tech-box li {
+      margin-bottom: 8px;
+    }
+
+    /* Tables */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-top: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      text-align: left;
+    }
+
+    th {
+      background: var(--bg-surface-elevated);
+      color: var(--text-muted);
+      font-weight: 700;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-main);
+      vertical-align: top;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: var(--bg-surface-subtle);
+    }
+
+    .amount-highlight {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--danger);
+    }
+
+    /* Code & logs */
+    .code-block {
+      background: #0f172a;
+      color: #e2e8f0;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      margin-top: 12px;
+      border: 1px solid #1e293b;
+      line-height: 1.5;
+    }
+
+    /* Action Checklist */
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: 10px;
+      background: var(--bg-surface-elevated);
+    }
+
+    .check-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .check-content h4 {
+      font-size: 14.5px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--text-main);
+    }
+
+    .check-content p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 32px 0 16px;
+      color: var(--text-subtle);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+      margin-top: 32px;
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header Bar -->
+  <header class="header-bar">
+    <div class="header-title-group">
+      <span class="badge-status">CRITICAL INCIDENT</span>
+      <strong style="font-size: 15px;">GMO Internet Group</strong>
+    </div>
+
+    <nav class="header-nav">
+      <a href="#summary" class="nav-btn">Tổng Quan</a>
+      <a href="#timeline" class="nav-btn">Trục Thời Gian</a>
+      <a href="#reports" class="nav-btn">13 Thông Cáo & IR</a>
+      <a href="#technical" class="nav-btn">Phân Tích Kỹ Thuật</a>
+      <a href="#compensation" class="nav-btn">Bồi Thường & IR</a>
+      <a href="#governance" class="nav-btn">Quản Trị & Chiến Lược</a>
+      <a href="#guidance" class="nav-btn">Chỉ Dẫn Bảo Vệ</a>
+    </nav>
+
+    <button id="themeToggle" class="theme-toggle-btn" aria-label="Đổi giao diện">
+      <span id="themeIcon">🌓</span> Theme
+    </button>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="summary">
+    <div class="hero-meta">
+      <span>CẬP NHẬT: 28/10/2026</span>
+      <span>•</span>
+      <span>ĐỐI TƯỢNG: お名前.com デスクトップクラウド (Onamae Desktop Cloud)</span>
+      <span>•</span>
+      <span>VỤ VIỆC SỐ 1 - ACTIVE CYBER DEFENSE</span>
+    </div>
+    <h1>Báo Cáo An Ninh Mạng Toàn Diện Về Vụ Tấn Công Dịch Vụ Onamae Desktop Cloud (Tập Đoàn GMO Internet)</h1>
+    <p class="hero-sub">
+      Hồ sơ tình báo và tổng hợp kỹ thuật chuyên sâu về chuỗi 13 thông cáo khẩn cấp và các công bố tài chính IR ( 適時開示 ) của Tập đoàn GMO Internet Group (9449) và công ty con GMO Internet Inc. (4784) liên quan đến vụ xâm nhập 26.739 máy chủ ảo VPS, đánh cắp thông tin tài khoản MT4/MT5, tống tiền 50 triệu USD và chiến dịch phản công triệt hạ tên miền tin tặc sau 15,5 giờ.
+    </p>
+
+    <div class="hero-entities">
+      <span class="tag primary">Đông Chứng Prime: 9449</span>
+      <span class="tag primary">Đông Chứng Prime: 4784</span>
+      <span class="tag">26.739 Máy chủ ảo</span>
+      <span class="tag">70+ Công ty CK & Sàn FX</span>
+      <span class="tag">Chiến dịch Takedown 15.5h</span>
+      <span class="tag">Quỹ Bounty: $1,000,000 USD</span>
+      <span class="tag">Phòng thủ mạng chủ động (能動的サイバー防御)</span>
+    </div>
+  </section>
+
+  <!-- KPI Grid -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">Hạ Tầng Bị Đột Nhập</div>
+      <div class="kpi-value danger">26.739</div>
+      <div class="kpi-desc">Toàn bộ máy ảo VPS Windows Desktop Cloud bị đóng băng khẩn cấp từ 04:00 ngày 21/10.</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Sàn Giao Dịch Bị Tác Động</div>
+      <div class="kpi-value warning">70+ Sàn</div>
+      <div class="kpi-desc">Các sàn chứng khoán, Forex, crypto bị tin tặc thao túng đặt lệnh hủy hoại số dư.</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Tiền Chuộc Bị Từ Chối</div>
+      <div class="kpi-value danger">$50M USD</div>
+      <div class="kpi-desc">Khoảng 8 tỷ JPY; GMO kiên quyết không trả tiền để không tiếp tay cho tội phạm.</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Quỹ Treo Thưởng Bắt Thủ Phạm</div>
+      <div class="kpi-value success">$1M USD</div>
+      <div class="kpi-desc">Tập đoàn mẹ tài trợ Quỹ GMO Cybercrime Bounty qua cổng quốc tế 3 ngôn ngữ.</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Tốc Độ Triệt Hạ Web Rò Rỉ</div>
+      <div class="kpi-value primary">15.5 Giờ</div>
+      <div class="kpi-desc">Takedown toàn bộ tên miền rò rỉ và mirror sites lúc 04:00 sáng ngày 28/10.</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Bồi Thường Tổn Thất Lệnh</div>
+      <div class="kpi-value success">100% Thực Tế</div>
+      <div class="kpi-desc">Cam kết bồi hoàn 100% tổn thất thực tế từ lệnh trái phép + tối đa 3 triệu JPY tiền thăm hỏi.</div>
+    </div>
+  </div>
+
+  <!-- Detailed Timeline Section -->
+  <section class="section" id="timeline">
+    <div class="section-header">
+      <h2 class="section-title">
+        <span>⏱️</span> Trục Thời Gian Toàn Cảnh Sự Cố (19/10/2026 - 28/10/2026)
+      </h2>
+      <span class="section-badge">10 Ngày Khủng Hoảng</span>
+    </div>
+
+    <div class="timeline">
+
+      <!-- Day 19 -->
+      <div class="timeline-item warning">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span class="timeline-date">19/10/2026</span>
+            <span class="tag">Bắt đầu điều tra</span>
+          </div>
+          <div class="timeline-title">Khách Hàng Báo Cáo Bất Thường Ban Đầu</div>
+          <div class="timeline-body">
+            Khách hàng phản ánh các hiện tượng bất thường khi vận hành máy ảo Windows Desktop Cloud. Đội ngũ kỹ thuật GMO tiếp nhận thông tin và khởi động quy trình điều tra an ninh nội bộ.
+          </div>
+          <div class="quote-box">
+            「10月19日：お客様からのお問い合わせを受け、調査を開始」
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 20 -->
+      <div class="timeline-item critical">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span class="timeline-date">20/10/2026</span>
+            <span class="tag danger">Phát hiện mã độc</span>
+          </div>
+          <div class="timeline-title">Xác Nhận Chương Trình Bất Hợp Pháp & Đóng Cổng Quản Trị</div>
+          <div class="timeline-body">
+            GMO xác nhận có chương trình bất hợp pháp (mã độc) được cài cắm vào môi trường máy chủ của một số khách hàng. Biện pháp phong tỏa tức thì: đình chỉ toàn bộ đăng ký mới và ngắt kết nối giao diện Control Panel.
+          </div>
+          <div class="quote-box">
+            「10月20日：不正なプログラムの設置を確認。新規お申し込みおよびコントロールパネルを停止」
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 21 -->
+      <div class="timeline-item critical">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span class="timeline-date">21/10/2026 (04:00 & 11:57 JST)</span>
+            <span class="tag danger">Đóng băng 26.739 máy chủ & Thư tống tiền</span>
+          </div>
+          <div class="timeline-title">Tắt Khẩn Cấp Toàn Bộ Dịch Vụ, Phát Hành Thông Cáo 1 & Nhận Tối Hậu Thư 50M USD</div>
+          <div class="timeline-body">
+            <strong>04:00 JST:</strong> Để ngăn chặn thiệt hại lan rộng, GMO thực hiện tắt nguồn tuần tự toàn bộ 26.739 máy chủ ảo trên tất cả các gói dịch vụ và phát hành Thông cáo Đợt 1 (第1報).<br>
+            <strong>11:57 JST:</strong> Kẻ tấn công gửi thư tống tiền đòi 50.000.000 USD (khoảng 8 tỷ JPY), đe dọa phá hủy tài khoản tại 70+ sàn, phát tán ransomware vào PC khách hàng và rò rỉ thiết kế nội bộ.<br>
+            <strong>Cùng ngày:</strong> Khách hàng bắt đầu phản ánh tài khoản giao dịch tài chính bị can thiệp đặt lệnh khống ngoài ý muốn.
+          </div>
+          <div class="quote-box">
+            「10月21日 4:00：被害拡大防止のため、全プランのサーバーを順次停止。第1報を掲載。10月21日以降：お客様より、お取引口座における身に覚えのない操作等のご報告を受付」
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 22 -->
+      <div class="timeline-item critical">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span class="timeline-date">22/10/2026 (16:59 JST)</span>
+            <span class="tag danger">Báo Cảnh sát & Thông cáo 2</span>
+          </div>
+          <div class="timeline-title">Báo Cáo Cảnh Sát, Thừa Nhận Lộ Thông Tin Đăng Nhập Giao Dịch</div>
+          <div class="timeline-body">
+            GMO chính thức tham vấn và chuyển giao thông tin cho Cơ quan Cảnh sát. Phát hành Thông cáo Đợt 2 (第2報), thừa nhận thông tin đăng nhập sàn giao dịch lưu trên VPS bị đánh cắp; khẩn cấp kêu gọi khách hàng đổi mật khẩu từ thiết bị độc lập và ngắt toàn bộ phiên kết nối.
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 23 -->
+      <div class="timeline-item warning">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span class="timeline-date">23/10/2026 (16:10 JST)</span>
+            <span class="tag">Thông cáo 3 & IR-895</span>
+          </div>
+          <div class="timeline-title">Cảnh Báo Lỗ Hổng Duy Trì Phiên MT4/MT5 & Công Bố IR Ban Đầu</div>
+          <div class="timeline-body">
+            Phát hành Thông cáo Đợt 3 (第3報) và văn bản công bố chứng khoán IR số 895. Cảnh báo kỹ thuật chuyên sâu: do đặc thù kiến trúc của các sàn FX, đổi mật khẩu không tự hủy phiên kết nối đang mở; bắt buộc khách hàng phải yêu cầu sàn cưỡng chế hủy phiên (Force Session Kill). Nâng cấp hotline 24/7.
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 24 -->
+      <div class="timeline-item critical">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span class="timeline-date">24/10/2026 (11:50 & 15:00 JST)</span>
+            <span class="tag danger">Từ chối tống tiền, Gói bồi thường & Kiến nghị chính phủ</span>
+          </div>
+          <div class="timeline-title">Thông Cáo 4, Đợt 5, IR-896 & Đề Xuất Kích Hoạt Luật Phòng Thủ Mạng Chủ Động</div>
+          <div class="timeline-body">
+            <strong>Thông cáo 4 & IR-896:</strong> Thừa nhận lỗ hổng kiến trúc tầng quản trị; công khai việc kẻ tấn công tống tiền 50M USD; GMO tuyên bố kiên quyết từ chối nộp tiền chuộc. Công bố hủy bỏ hoàn toàn nền tảng cũ, cam kết đền bù 5.000 JPY/khách hàng, miễn phí 6 tháng hạ tầng mới và bồi thường 100% thiệt hại giao dịch thực tế.<br>
+            <strong>Đề xuất Chính phủ:</strong> Đệ trình khẩn cấp lên Văn phòng Nội các đề nghị xem đây là "Vụ việc số 1" kích hoạt Luật Phòng thủ không gian mạng chủ động (Active Cyber Defense).<br>
+            <strong>Thông cáo 5 (15:00):</strong> Chỉ dẫn khẩn cấp dọn dẹp bộ lọc email, ngắt đồng bộ trình duyệt để tránh lây lan mã độc sang máy cá nhân.
+          </div>
+          <div class="quote-box">
+            「当社は、攻撃者からの要求には応じません。警察庁サイバー特別捜査部等と連携し、断固とした対応をとってまいります」
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 25 -->
+      <div class="timeline-item critical">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span class="timeline-date">25/10/2026</span>
+            <span class="tag danger">Tuyên ngôn CEO Kumagai</span>
+          </div>
+          <div class="timeline-title">CEO Kumagai Masatoshi Xuất Bản Bài Xã Luận: Thừa Nhận Lỗi Hệ Thống & Kêu Gọi Toàn Dân Phòng Vệ</div>
+          <div class="timeline-body">
+            CEO Kumagai công bố bài viết gây chấn động: <em>"Bảo vệ Nhật Bản qua hợp tác công tư - Lý do kiến nghị kích hoạt phòng thủ mạng chủ động"</em>. Tiết lộ sự thật: các chuyên gia Whitehat nội bộ (Ierae/Flatt) từng cảnh báo lỗ hổng trước sự cố, nhưng đội ngũ vận hành vì ưu tiên tính sẵn sàng (Availability) cho bot trade FX nên đã trì hoãn vá triệt để. Cảnh báo mối đe dọa từ "Tấn công bão hòa mạng bằng AI" và công cụ ARTEX bị vũ khí hóa.
+          </div>
+          <div class="quote-box">
+            「今こそ官民連携で日本を守ろう――能動的サイバー防御を具申した理由。ホワイトハッカー部隊が事前に問題を認識し指摘していたにもかかわらず、現場の判断が保守的・段階的で、後手に回ってしまった。最高経営責任者である私の経営責任」
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 26 -->
+      <div class="timeline-item warning">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span class="timeline-date">26/10/2026 (21:00 & 23:10 JST)</span>
+            <span class="tag">Thông cáo 6 & 7</span>
+          </div>
+          <div class="timeline-title">Thu Hồi Máy Tính Tận Nhà Trên Toàn Quốc & Liên Minh Trend Micro</div>
+          <div class="timeline-body">
+            <strong>Thông cáo 6 (21:00):</strong> Cảnh báo nguy cơ bị tấn công lừa đảo phái sinh và tống tiền cá nhân; hướng dẫn quét sâu virus toàn diện.<br>
+            <strong>Thông cáo 7 (23:10):</strong> Nhân viên GMO trực tiếp đến tận nhà khách hàng ký thỏa thuận và thu hồi máy tính về phòng lab giám định; liên minh cùng Trend Micro và 200 chuyên gia an ninh nội bộ phân tích mã độc.
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 27 -->
+      <div class="timeline-item critical">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span class="timeline-date">27/10/2026 (Cao Điểm 24 Giờ)</span>
+            <span class="tag danger">Thông cáo 8, 9, 10, 11, 12</span>
+          </div>
+          <div class="timeline-title">Giờ G Tống Tiền, Phát Hiện Bẫy Watering-Hole, Tiền Thăm Hỏi 3 Triệu JPY & Quỹ Bounty $1M USD</div>
+          <div class="timeline-body">
+            <strong>09:58 - Thông cáo 8:</strong> Trước tối hậu thư 12:00, GMO phát lệnh khẩn cấp yêu cầu người dùng rút toàn bộ dây cắm nguồn máy tính (PCコード抜去).<br>
+            <strong>11:59 - Thông cáo 9:</strong> 1 phút trước giờ G; xác nhận kết quả kiểm tra máy khách hàng chưa phát hiện ransomware. Cam kết tặng PC mới tương đương nếu bị hại.<br>
+            <strong>13:55 - Thông cáo 10:</strong> Xác nhận lúc 12:30 kẻ tấn công đăng dữ liệu lên web ngoài; phát hiện trang này là bẫy ngầm thu thập IP khách truy cập.<br>
+            <strong>14:55 - Thông cáo 11:</strong> Cấm chia sẻ link trên mạng xã hội; khẳng định không thỏa hiệp nộp 8 tỷ Yên tiền chuộc.<br>
+            <strong>19:10 - Thông cáo 12:</strong> Đổi cách gọi sang "Tội phạm" (犯人). Ban hành "Tiền thăm hỏi đặc biệt GMO" lên tới 3.000.000 JPY/khách hàng; thành lập Quỹ GMO Cybercrime Bounty treo thưởng 1.000.000 USD tại cổng <code>cybercrimebounty.gmo</code>.
+          </div>
+          <div class="quote-box">
+            「いかなる脅迫にも屈することなく、犯人の特定と刑事責任の追及に向けて警察の捜査に全面的に協力。犯人逮捕につながる有力な情報に対して、最大100万米ドルの報奨金を支払う懸賞金制度を創設」
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 28 -->
+      <div class="timeline-item success">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span class="timeline-date">28/10/2026 (04:00 - 11:00 JST)</span>
+            <span class="tag success">Takedown 15.5h & IR-898</span>
+          </div>
+          <div class="timeline-title">Đánh Sập Tên Miền Rò Rỉ Sau 15,5 Giờ, Công Bố IR-898 & Tuyên Chiến Pháp Lý Trên SNS</div>
+          <div class="timeline-body">
+            <strong>04:00 JST:</strong> GMO phối hợp cùng các nhà đăng ký tên miền quốc tế và hạ tầng mạng toàn cầu đánh sập hoàn toàn (takedown) tên miền rò rỉ của thủ phạm và các mirror sites chỉ sau 15,5 giờ.<br>
+            <strong>08:59 JST - IR-898:</strong> Công bố thông tin chứng khoán phân định trách nhiệm: Tập đoàn mẹ (9449) tài trợ 100% quỹ 1 triệu USD Bounty; công ty con (4784) chịu chi phí bồi thường và hạ tầng.<br>
+            <strong>11:00 JST - Thông cáo 13:</strong> Tuyên chiến pháp lý với những cá nhân chia sẻ liên kết rò rỉ trên mạng xã hội X: thực hiện yêu cầu tiết lộ danh tính, kiện bồi thường dân sự và nộp đơn khởi tố hình sự.
+          </div>
+          <div class="quote-box">
+            「10月28日午前4時頃、当該ウェブサイトのドメインが停止され、閲覧できない状態となったことを確認。SNS上でのURLの拡散は二次被害を拡大させ、犯人の犯罪行為に加担するもの。証拠を保全し、発信者情報開示請求、損害賠償請求、刑事告訴を含めた法的措置を断固として講じる」
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Complete 13 Reports & IR Deep Dive -->
+  <section class="section" id="reports">
+    <div class="section-header">
+      <h2 class="section-title">
+        <span>📑</span> Toàn Văn Phân Tích Chi Tiết 13 Thông Cáo An Ninh & 3 Báo Cáo IR
+      </h2>
+      <span class="section-badge">Bấm để mở chi tiết</span>
+    </div>
+
+    <div class="reports-grid">
+
+      <!-- Report 1 -->
+      <div class="report-card">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag danger">第1報</span>
+            <span class="report-date">2026-10-21 04:00 JST</span>
+            <span class="report-name">Tắt nguồn khẩn cấp tuần tự toàn bộ máy chủ Onamae Desktop Cloud</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>Bối cảnh:</strong> Sau khi phát hiện mã độc vào ngày 20/10, lúc 04:00 sáng ngày 21/10, GMO thực hiện biện pháp mạnh tay nhất: ngắt điện tuần tự toàn bộ 26.739 máy chủ ảo của tất cả khách hàng nhằm ngăn chặn hành vi khai thác tiếp diễn.</p>
+          <p><strong>Nội dung trọng tâm:</strong> Thông báo khả năng thông tin lưu trên máy chủ bị rò rỉ. Khẳng định hệ thống máy chủ ảo Onamae Desktop Cloud không lưu trữ thông tin thẻ tín dụng hoặc dữ liệu thanh toán của khách hàng.</p>
+          <div class="quote-box">URL tham chiếu: https://www.onamae.com/news/article/11584</div>
+        </div>
+      </div>
+
+      <!-- Report 2 -->
+      <div class="report-card">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag danger">第2報</span>
+            <span class="report-date">2026-10-22 16:59 JST</span>
+            <span class="report-name">Báo cáo Cảnh sát & Xác nhận tài khoản giao dịch bị chiếm đoạt</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>Bối cảnh:</strong> Nhiều khách hàng liên hệ GMO phản ánh việc tài khoản MT4/MT5 và tài khoản giao dịch chứng khoán/Forex có phát sinh lệnh đặt lạ, bất thường ngoài ý muốn.</p>
+          <p><strong>Nội dung trọng tâm:</strong> GMO chính thức tham vấn Cơ quan Cảnh sát. Thừa nhận dữ liệu đăng nhập tài khoản giao dịch lưu trên VPS đã bị bên thứ ba chiếm đoạt và lợi dụng bất hợp pháp. Khẩn cấp yêu cầu khách hàng: (1) Đổi mật khẩu tài khoản giao dịch từ thiết bị khác sạch; (2) Ngắt kết nối toàn bộ phiên đang đăng nhập.</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/20261022/</div>
+        </div>
+      </div>
+
+      <!-- Report 3 -->
+      <div class="report-card">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag">第3報</span>
+            <span class="report-date">2026-10-23 16:10 JST</span>
+            <span class="report-name">Cảnh báo kỹ thuật về lỗ hổng duy trì phiên & Nâng cấp Hotline 24/7</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>Bối cảnh:</strong> Một số khách hàng đã đổi mật khẩu nhưng tài khoản vẫn tiếp tục bị tin tặc đặt lệnh phá hoại.</p>
+          <p><strong>Phát hiện kỹ thuật chí tử:</strong> Cơ chế kết nối của các phần mềm giao dịch (MT4/MT5) dựa trên session token hoặc socket dài hạn. Tùy thuộc vào thiết kế server của từng sàn FX/chứng khoán, việc đổi mật khẩu trên database có thể <em>không tự động hủy các phiên kết nối đang mở</em>. Kẻ tấn công vẫn có thể tiếp tục đặt lệnh.</p>
+          <p><strong>Hành động chỉ định:</strong> Khách hàng bắt buộc phải liên hệ sàn giao dịch yêu cầu cưỡng chế ngắt toàn bộ phiên kết nối (Force Terminate Active Sessions). Thiết lập đường dây nóng 03-5456-2560 hoạt động 24/7 kể cả ngày nghỉ.</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/20261023/</div>
+        </div>
+      </div>
+
+      <!-- Report 4 -->
+      <div class="report-card highlight">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag danger">第4報 (Trọng Yếu)</span>
+            <span class="report-date">2026-10-24 11:50 JST</span>
+            <span class="report-name">Lỗ hổng kiến trúc, Thư tống tiền 50M USD, Gói bồi thường & Kiến nghị Chính phủ</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>1. Thừa nhận lỗ hổng kiến trúc:</strong> Hệ thống tồn tại lỗi bảo mật nghiêm trọng ở tầng quản trị, dẫn đến việc dữ liệu bị trích xuất ra ngoài trái phép. GMO tuyên bố hủy bỏ vĩnh viễn nền tảng cũ, không khởi động lại.</p>
+          <p><strong>2. Công khai thư tống tiền tàn khốc:</strong> Kẻ tấn công đòi 50 triệu USD, đe dọa phá hủy tài khoản tại 70+ sàn, mã hóa dữ liệu máy tính cá nhân người dùng và công khai tài liệu kiến trúc nội bộ. GMO tuyên bố: <em>"Kiên quyết không thỏa hiệp, không trả tiền chuộc"</em>.</p>
+          <p><strong>3. Cam kết gói hỗ trợ toàn diện:</strong></p>
+          <ul>
+            <li><strong>Tiền thăm hỏi cơ bản:</strong> 5.000 Yên/khách hàng cho toàn bộ 26.739 hợp đồng.</li>
+            <li><strong>Hạ tầng đám mây mới:</strong> Xây dựng trên nền tảng độc lập, miễn phí 6 tháng sử dụng.</li>
+            <li><strong>Bồi thường thiệt hại giao dịch:</strong> Bồi thường 100% tổn thất thực tế do lệnh trái phép gây ra.</li>
+          </ul>
+          <p><strong>4. Đề xuất lịch sử:</strong> Đệ trình khẩn cấp lên Chính phủ Nhật Bản xem đây là "Vụ việc kích hoạt số 1" của Luật Phòng thủ không gian mạng chủ động (Active Cyber Defense).</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/20261024/</div>
+        </div>
+      </div>
+
+      <!-- Report 5 -->
+      <div class="report-card">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag">第5報</span>
+            <span class="report-date">2026-10-24 15:00 JST</span>
+            <span class="report-name">Chỉ thị bảo vệ tài khoản cá nhân & Ngắt đồng bộ trình duyệt</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>Mục tiêu:</strong> Ngăn chặn tin tặc tấn công lan truyền sang tài khoản cá nhân và thiết bị riêng của người dùng.</p>
+          <p><strong>Chỉ thị khẩn:</strong> (1) Đổi mật khẩu toàn bộ tài khoản email, Google, Apple ID từ thiết bị sạch độc lập; (2) Kiểm tra và xóa bộ lọc chuyển tiếp email ẩn (thủ phạm thường cài để đánh cắp OTP 2FA); (3) <strong>Tắt tính năng đồng bộ trình duyệt (Browser Sync)</strong> để tránh mật khẩu và extension độc hại tự tải về máy tính gia đình/công ty.</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/2026102402/</div>
+        </div>
+      </div>
+
+      <!-- CEO Blog Special -->
+      <div class="report-card highlight">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag danger">CEO Blog</span>
+            <span class="report-date">2026-10-25 JST</span>
+            <span class="report-name">Tuyên ngôn Kumagai Masatoshi: Tự nhận trách nhiệm quản trị & Hồi chuông báo động</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>Tên bài xã luận:</strong> <em>「今こそ官民連携で日本を守ろう――能動的サイバー防御を具申した理由」</em> (Bảo vệ Nhật Bản qua hợp tác công tư - Lý do kiến nghị kích hoạt phòng thủ mạng chủ động).</p>
+          <p><strong>1. Thừa nhận sai sót đau đớn:</strong> Đội ngũ Whitehat nội bộ (thuộc GMO Cybersecurity by Ierae và Flatt Security với 200 chuyên gia hàng đầu) <strong>đã từng phát hiện và cảnh báo về lỗ hổng trước khi sự cố xảy ra</strong>. Tuy nhiên, đội ngũ vận hành dịch vụ vì quá e ngại rủi ro ngắt quãng hệ thống (ưu tiên tính sẵn sàng Service Availability cho các bot trading FX) nên đã xử lý thận trọng từng bước và chậm trễ. CEO Kumagai nhận hoàn toàn trách nhiệm lãnh đạo tối cao.</p>
+          <p><strong>2. Hiểm họa Tấn công bão hòa mạng bằng AI (AIのサイバー飽和攻撃):</strong> Các mô hình AI mở giúp chi phí tấn công giảm về 0. Phát hiện công cụ kiểm thử xâm nhập tự động ARTEX của Ierae đã bị tin tặc vũ khí hóa để tấn công 20 công ty tại Nhật Bản.</p>
+          <p><strong>3. Biện luận về Phòng thủ mạng chủ động:</strong> Khi tài sản của hàng vạn người dân bị đem làm con tin, nhà nước phải dùng thẩm quyền quốc gia để truy quét và vô hiệu hóa máy chủ tin tặc ở nước ngoài. GMO tự chịu mọi chi phí bồi thường tài chính.</p>
+          <div class="quote-box">URL: https://www.kumagai.com/?eid=19600 & https://group.gmo/info/alert/20261025/</div>
+        </div>
+      </div>
+
+      <!-- Report 6 -->
+      <div class="report-card">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag">第6報</span>
+            <span class="report-date">2026-10-26 21:00 JST</span>
+            <span class="report-name">Cảnh báo lừa đảo thứ cấp, sao lưu offline & Quét virus chuyên sâu</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>Cảnh báo lừa đảo mạo danh (Secondary Scam):</strong> Kẻ xấu lợi dụng tâm lý lo lắng của khách hàng để gửi tin nhắn mạo danh GMO hoặc sàn giao dịch yêu cầu đóng "phí hỗ trợ thu hồi tài sản". GMO khẳng định không bao giờ thu phí và không bao giờ hỏi mật khẩu cấp 1 của khách hàng.</p>
+          <p><strong>Yêu cầu sao lưu ngoại tuyến:</strong> Sao lưu dữ liệu quan trọng sang ổ cứng gắn ngoài và rút dây kết nối (Air-gapped) để đề phòng trường hợp bị Ransomware tấn công mã hóa luôn bản sao lưu.</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/20261026/</div>
+        </div>
+      </div>
+
+      <!-- Report 7 -->
+      <div class="report-card">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag">第7報</span>
+            <span class="report-date">2026-10-26 23:10 JST</span>
+            <span class="report-name">Chiến dịch thu hồi máy tính tận nhà & Hợp tác chiến lược cùng Trend Micro</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>Chiến dịch pháp y tận nơi chưa từng có:</strong> Nhân viên GMO (Partners) trực tiếp đến tận nhà khách hàng nghi ngờ bị xâm nhập trên toàn quốc, ký kết văn bản cam kết bảo vệ dữ liệu cá nhân (確認書) và mang máy tính về phòng thí nghiệm để điều tra kỹ thuật số.</p>
+          <p><strong>Huy động liên minh bảo mật:</strong> 200 chuyên gia an ninh nội bộ phối hợp cùng Tập đoàn Trend Micro (トレンドマイクロ) và các công ty AI để bóc tách mẫu mã độc và cấu trúc C2 của tin tặc.</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/2026102602/</div>
+        </div>
+      </div>
+
+      <!-- Report 8 -->
+      <div class="report-card highlight">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag danger">第8報 (Khẩn Cấp)</span>
+            <span class="report-date">2026-10-27 09:58 JST</span>
+            <span class="report-name">Tối hậu thư Ransomware 12:00: Mệnh lệnh rút toàn bộ dây cắm máy tính</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>Bối cảnh nguy cấp:</strong> Tin tặc ra tối hậu thư sẽ kích hoạt mã độc tống tiền (Ransomware) vào đúng 12:00 trưa ngày 27/10 nếu GMO không nộp tiền chuộc.</p>
+          <p><strong>Mệnh lệnh cô lập vật lý cực đoan:</strong> Sau khi sao lưu xong, khách hàng phải <strong>ngắt mạng, tắt nguồn và rút toàn bộ dây cắm nối vào máy tính (PCコード抜去)</strong> trước 12:00 trưa nhằm triệt tiêu nguy cơ máy bị bật từ xa qua giao thức mạng (Wake-on-LAN) hoặc bị mã hóa qua mạng cục bộ.</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/20261027/</div>
+        </div>
+      </div>
+
+      <!-- Report 9 -->
+      <div class="report-card">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag">第9報</span>
+            <span class="report-date">2026-10-27 11:59 JST</span>
+            <span class="report-name">1 phút trước giờ G: Chưa phát hiện Ransomware & Bảo đảm cấp PC mới</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>Cập nhật pháp y:</strong> Tính đến 11:59 trưa ngày 27/10, qua quá trình kiểm tra các máy tính thu hồi từ khách hàng, đội ngũ kỹ thuật <em>chưa phát hiện bất kỳ dấu vết lây nhiễm mã độc hay ransomware nào</em>.</p>
+          <p><strong>Cam kết bảo vệ phần cứng:</strong> Nếu khách hàng bị dính ransomware bắt nguồn từ sự cố này, GMO cam kết cấp mới 100% một máy tính cá nhân nguyên seal có cấu hình tương đương.</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/2026102702/</div>
+        </div>
+      </div>
+
+      <!-- Report 10 -->
+      <div class="report-card highlight">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag danger">第10報</span>
+            <span class="report-date">2026-10-27 13:55 JST</span>
+            <span class="report-name">Xác nhận trang web rò rỉ dữ liệu lúc 12:30 & Phát hiện bẫy ngầm Watering-Hole</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>Thực tế rò rỉ:</strong> Vào lúc 12:30, kẻ tấn công đã công khai dữ liệu mạo nhận là của GMO và khách hàng lên một trang web ngoài.</p>
+          <p><strong>Cảnh báo bẫy ngầm nguy hiểm:</strong> Phân tích kỹ thuật chỉ ra rằng trang web rò rỉ này đang âm thầm ghi lại địa chỉ IP và thông tin thiết bị của người truy cập (bẫy watering-hole). GMO nghiêm cấm người dùng truy cập trang web này.</p>
+          <p>Ban giám đốc họp khẩn cấp để xây dựng gói "Tiền thăm hỏi đặc biệt" mới dành riêng cho các nạn nhân bị lộ thông tin trên trang này.</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/2026102703/</div>
+        </div>
+      </div>
+
+      <!-- Report 11 -->
+      <div class="report-card">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag">第11報</span>
+            <span class="report-date">2026-10-27 14:55 JST</span>
+            <span class="report-name">Cấm chia sẻ liên kết & Triết lý đạo đức không tài trợ khủng bố mạng</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>Nghiêm cấm lan truyền:</strong> Yêu cầu cộng đồng không lan truyền, trích dẫn liên kết trang web của tin tặc. Ai lỡ bấm vào liên kết phải lập tức quét virus toàn diện thiết bị.</p>
+          <p><strong>Tuyên bố đạo đức doanh nghiệp:</strong> GMO giải thích rõ lý do không trả 8 tỷ Yên tiền chuộc: việc nộp tiền cho tin tặc sẽ biến tập đoàn thành nguồn tài trợ cho các tổ chức tội phạm có vũ trang và công nghệ cao, gây nguy hại cho toàn xã hội. GMO lựa chọn dùng ngân sách để bồi thường cho khách hàng và truy bắt tội phạm.</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/2026102704/</div>
+        </div>
+      </div>
+
+      <!-- Report 12 -->
+      <div class="report-card highlight">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag danger">第12報 (Bước Ngoặt)</span>
+            <span class="report-date">2026-10-27 19:10 JST</span>
+            <span class="report-name">Đổi cách gọi "Tội phạm", Tiền thăm hỏi đặc biệt 3M JPY & Quỹ Bounty $1M USD</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>1. Bước ngoặt lập trường:</strong> Chính thức đổi danh xưng đối phương từ "Kẻ tấn công" sang "Thủ phạm/Tội phạm" (犯人 - Criminal), tuyên bố truy quét tới cùng.</p>
+          <p><strong>2. Ban hành Tiền thăm hỏi đặc biệt GMO (GMO特別お見舞金):</strong></p>
+          <ul>
+            <li>Thông tin cá nhân cơ bản: 10.000 JPY.</li>
+            <li>Thông tin xác thực/ID sàn giao dịch: 15.000 JPY.</li>
+            <li>Dữ liệu cá nhân nhạy cảm cần bảo vệ đặc biệt: 25.000 JPY.</li>
+            <li>Được cộng dồn, mức trần lên đến <strong>3.000.000 JPY/khách hàng</strong>.</li>
+          </ul>
+          <p><strong>3. Quỹ săn tội phạm mạng GMO Cybercrime Bounty:</strong> Treo thưởng <strong>1.000.000 USD (khoảng 150 triệu Yên)</strong> tại cổng <code>https://cybercrimebounty.gmo/</code> (tiếng Nhật, Anh, Trung) cho cá nhân/tổ chức cung cấp thông tin hợp pháp giúp bắt giữ thủ phạm.</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/2026102705/</div>
+        </div>
+      </div>
+
+      <!-- Report 13 -->
+      <div class="report-card highlight">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag success">第13報 (Chiến Thắng)</span>
+            <span class="report-date">2026-10-28 11:00 JST</span>
+            <span class="report-name">Đánh sập tên miền rò rỉ sau 15,5 giờ & Tổng tấn công pháp lý trên mạng xã hội</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>1. Thần tốc Takedown:</strong> Vào lúc 04:00 sáng ngày 28/10, chỉ 15,5 giờ sau khi website xuất hiện, GMO cùng các cơ quan điều tra và đối tác quốc tế đã đình chỉ thành công (takedown) toàn bộ tên miền và các trang mirror của thủ phạm.</p>
+          <p><strong>2. Răn đe pháp lý nghiêm khắc:</strong> GMO cảnh báo việc lan truyền liên kết trang web của thủ phạm trên mạng xã hội X (Twitter) là hành vi đồng lõa tiếp tay cho tội phạm. GMO bảo lưu bằng chứng số, yêu cầu nhà mạng tiết lộ danh tính người đăng (発信者情報開示請求), khởi kiện dân sự đòi bồi thường thiệt hại và nộp đơn khởi tố hình sự.</p>
+          <div class="quote-box">URL: https://group.gmo/info/alert/20261028/</div>
+        </div>
+      </div>
+
+      <!-- IR Disclosures Deep Dive -->
+      <div class="report-card">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag">IR 895, 896, 898</span>
+            <span class="report-date">2026-10-23 ~ 2026-10-28</span>
+            <span class="report-name">Các công bố thông tin đại chúng chứng khoán (適時開示)</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>IR Article 895 (23/10):</strong> Công bố ban đầu cho các cổ đông về việc dịch vụ của công ty con bị truy cập trái phép.</p>
+          <p><strong>IR Article 896 (24/10):</strong> Nghị quyết Hội đồng quản trị về việc chi trả tiền thăm hỏi 5.000 JPY và bảo lãnh bồi thường 100% tổn thất thực tế do lệnh giao dịch gian lận. Thừa nhận chưa thể ước tính ngay mức ảnh hưởng tài chính hợp nhất.</p>
+          <p><strong>IR Article 898 (28/10 08:59 JST):</strong> Xác định rõ cơ chế tài chính giữa 2 thực thể niêm yết: Tập đoàn mẹ GMO Internet Group Inc. (9449) chịu trách nhiệm toàn bộ 1 triệu USD tiền thưởng Quỹ Bounty; Công ty con GMO Internet Inc. (4784) gánh toàn bộ chi phí bồi thường khách hàng, tiền thăm hỏi và tài trợ máy tính mới.</p>
+          <div class="quote-box">Tham chiếu mã chứng khoán: TSE Prime 9449 & TSE Prime 4784</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Technical Anatomy -->
+  <section class="section" id="technical">
+    <div class="section-header">
+      <h2 class="section-title">
+        <span>🔬</span> Giải Phẫu Kỹ Thuật & Mô Hình Tấn Công (Threat Modeling)
+      </h2>
+      <span class="section-badge">Pháp Y & Kiến Trúc</span>
+    </div>
+
+    <div class="grid-2">
+      <div class="tech-box">
+        <h3><span>🚪</span> 1. Vector Đột Nhập & Điểm Yếu Kiến Trúc</h3>
+        <ul>
+          <li><strong>Vùng tấn công (Management Plane):</strong> Lỗ hổng nằm ở hệ thống điều khiển trung tâm (Control Panel / API điều phối máy ảo), cho phép kẻ tấn công can thiệp trên diện rộng vào toàn bộ 26.739 guest VM.</li>
+          <li><strong>Cài cắm mã độc (Malicious Script Injection):</strong> Ngày 20/10, tin tặc triển khai các đoạn script và chương trình bất hợp pháp vào môi trường máy ảo của khách hàng.</li>
+          <li><strong>Vũ khí hóa công cụ Pentest:</strong> Nhóm tấn công đã vũ khí hóa công cụ ARTEX (Automated Red Teaming & Penetration Testing tool) để tự động hóa dò quét và khai thác diện rộng.</li>
+        </ul>
+      </div>
+
+      <div class="tech-box">
+        <h3><span>🔑</span> 2. Khai Thác MT4/MT5 & Chiếm Đoạt Phiên</h3>
+        <ul>
+          <li><strong>Đặc thù đối tượng:</strong> Onamae Desktop Cloud là môi trường VPS Windows chạy 24/7 để treo robot giao dịch tự động (Expert Advisor - EA). Mật khẩu sàn và khóa API được lưu sẵn trong cấu hình.</li>
+          <li><strong>Trích xuất thông tin xác thực:</strong> Kẻ tấn công trích xuất thông tin đăng nhập sàn từ bộ nhớ và file cấu hình của phần mềm MetaTrader cũng như các trình duyệt web.</li>
+          <li><strong>Lỗ hổng duy trì phiên (Session Persistence):</strong> Do cơ chế kết nối dài hạn qua Socket, việc người dùng đổi mật khẩu ở giao diện web của sàn không làm đứt phiên TCP đang hoạt động, cho phép bot của tin tặc tiếp tục đặt lệnh phá hoại.</li>
+        </ul>
+      </div>
+
+      <div class="tech-box">
+        <h3><span>🕸️</span> 3. Bẫy Ngầm Watering-Hole & Tâm Lý Chiến</h3>
+        <ul>
+          <li><strong>Cổng rò rỉ dữ liệu (Leak Portal):</strong> Xuất hiện lúc 12:30 ngày 27/10 nhằm gia tăng sức ép buộc GMO trả tiền chuộc 50 triệu USD.</li>
+          <li><strong>Bẫy thu thập IP (Telemetry Trap):</strong> Trang web được gắn mã theo dõi âm thầm ghi lại địa chỉ IP, User-Agent và vân tay trình duyệt của bất kỳ ai truy cập, chuẩn bị cho các đợt tấn công mục tiêu thứ cấp.</li>
+          <li><strong>Đòn tâm lý chiến Ransomware:</strong> Đe dọa kích hoạt ransomware mã hóa PC người dùng vào 12:00 ngày 27/10, buộc GMO phải phát lệnh rút dây cắm nguồn máy tính.</li>
+        </ul>
+      </div>
+
+      <div class="tech-box">
+        <h3><span>🛡️</span> 4. Kiến Trúc Tái Thiết Lập Zero-Trust</h3>
+        <ul>
+          <li><strong>Tiêu hủy nền tảng cũ (Legacy Abandonment):</strong> Toàn bộ hạ tầng 26.739 máy chủ ảo bị cô lập vĩnh viễn và tiến hành tiêu hủy logic, từ chối vá chắp vá.</li>
+          <li><strong>Môi trường đám mây độc lập:</strong> Xây dựng hạ tầng thay thế mới hoàn toàn tách rời 100% về vật lý và logic, áp dụng kiến trúc Zero-Trust.</li>
+          <li><strong>Bảo vệ đa tầng:</strong> Bắt buộc xác thực đa yếu tố (MFA), phân đoạn mạng vi mô (micro-segmentation) và tái thẩm định các dải IP kết nối với hơn 70 sàn giao dịch.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Compensation Framework Table -->
+  <section class="section" id="compensation">
+    <div class="section-header">
+      <h2 class="section-title">
+        <span>💰</span> Ma Trận Bồi Thường Toàn Diện 6 Tầng Của Tập Đoàn GMO
+      </h2>
+      <span class="section-badge">Chính Sách Khắc Phục</span>
+    </div>
+
+    <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;">
+      GMO đã thiết lập một khung bảo đảm tài chính đa tầng chưa từng có tiền lệ tại Nhật Bản nhằm bảo vệ tuyệt đối quyền lợi tài sản của người dùng, phân định rõ ràng giữa công ty mẹ và công ty con:
+    </p>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Hạng Mục Bồi Thường</th>
+            <th>Mức Chi Trả / Quyền Lợi</th>
+            <th>Đối Tượng Áp Dụng</th>
+            <th>Điều Kiện & Chứng Cứ</th>
+            <th>Đơn Vị Chi Trả</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Tiền thăm hỏi cơ bản</strong><br>(お見舞金)</td>
+            <td><span class="amount-highlight">5.000 JPY / người</span></td>
+            <td>Toàn bộ 26.739 hợp đồng đang hoạt động tại thời điểm sự cố.</td>
+            <td>Không cần chứng minh thiệt hại; hướng dẫn thủ tục trước 23:59 ngày 30/10/2026.</td>
+            <td>GMO Internet Inc.<br>(4784)</td>
+          </tr>
+          <tr>
+            <td><strong>2. Tiền thăm hỏi đặc biệt</strong><br>(GMO特別お見舞金)</td>
+            <td>
+              <span class="amount-highlight">10.000 - 25.000 JPY</span> / loại dữ liệu<br>
+              <strong>Tối đa: 3.000.000 JPY</strong>
+            </td>
+            <td>Khách hàng có thông tin thực tế bị đăng tải trên website rò rỉ.</td>
+            <td>10k JPY (thông tin cơ bản); 15k JPY (ID/Pass giao dịch); 25k JPY (dữ liệu nhạy cảm). Cho phép cộng dồn.</td>
+            <td>GMO Internet Inc.<br>(4784)</td>
+          </tr>
+          <tr>
+            <td><strong>3. Bồi thường tổn thất giao dịch</strong><br>(不正取引損失補償)</td>
+            <td><span class="amount-highlight">100% Tổn Thất Thực Tế</span><br>(Lỗ lệnh + Phí giao dịch)</td>
+            <td>Khách hàng bị tin tặc đặt lệnh khống ngoài ý muốn qua MT4/MT5.</td>
+            <td>Hồ sơ đối soát lệnh sàn (thời gian, cặp tiền, số lot, số lỗ thực tế); cung cấp Investor Password để GMO thẩm tra.</td>
+            <td>GMO Internet Inc.<br>(4784)</td>
+          </tr>
+          <tr>
+            <td><strong>4. Bồi thường phần cứng</strong><br>(ハードウェア補償)</td>
+            <td><span class="amount-highlight">Cấp mới 100% PC</span><br>(Cấu hình tương đương)</td>
+            <td>Khách hàng bị mã độc ransomware mã hóa máy tính qua dịch vụ.</td>
+            <td>Kiểm tra pháp y tại lab GMO (tính đến 28/10 chưa ghi nhận ca lây nhiễm thực tế).</td>
+            <td>GMO Internet Inc.<br>(4784)</td>
+          </tr>
+          <tr>
+            <td><strong>5. Dịch vụ đám mây thay thế</strong><br>(代替クラウド基盤)</td>
+            <td><span class="amount-highlight">Miễn Phí 6 Tháng</span><br>(Hạ tầng Zero-Trust độc lập)</td>
+            <td>Khách hàng có nhu cầu tiếp tục sử dụng máy chủ ảo.</td>
+            <td>Đăng ký chuyển đổi môi trường mới trước thời hạn 30/10/2026. Nếu không chuyển, được hoàn tiền hợp đồng cũ.</td>
+            <td>GMO Internet Inc.<br>(4784)</td>
+          </tr>
+          <tr>
+            <td><strong>6. Quỹ săn tội phạm mạng</strong><br>(GMO Cybercrime Bounty)</td>
+            <td><span class="amount-highlight">Tối Đa 1.000.000 USD</span><br>(~150 Triệu JPY)</td>
+            <td>Cá nhân/tổ chức toàn cầu cung cấp manh mối pháp lý bắt giữ thủ phạm.</td>
+            <td>Tiếp nhận qua cổng <code>cybercrimebounty.gmo</code> (Nhật, Anh, Trung) từ 12:00 ngày 28/10/2026.</td>
+            <td>GMO Internet Group Inc.<br>(9449 - Tập đoàn mẹ)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Governance & Strategy -->
+  <section class="section" id="governance">
+    <div class="section-header">
+      <h2 class="section-title">
+        <span>🏛️</span> Bài Học Quản Trị Khủng Hoảng & Tầm Vóc An Ninh Quốc Gia
+      </h2>
+      <span class="section-badge">Case Study Lịch Sử</span>
+    </div>
+
+    <div class="grid-2">
+      <div class="tech-box">
+        <h3><span>⚖️</span> Xung Đột "Tính Sẵn Sàng" vs "Bảo Mật" (Availability vs Security)</h3>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 8px;">
+          Bài học đắt giá nhất được CEO Kumagai Masatoshi thẳng thắn mổ xẻ là sự thất bại trong cân bằng giữa vận hành kinh doanh và an toàn thông tin:
+        </p>
+        <ul>
+          <li><strong>Cảnh báo sớm bị phớt lờ:</strong> Đội ngũ Whitehat của Ierae và Flatt Security đã phát hiện lỗ hổng trước đó nhưng cấp quản lý hiện trường ngần ngại áp dụng biện pháp vá mạnh tay vì sợ làm sập bot trade EA của người dùng.</li>
+          <li><strong>Cái giá của sự chậm trễ:</strong> Sự chần chừ từng bước đã tạo cơ hội vàng cho tin tặc khai thác tự động và khống chế 26.739 máy ảo.</li>
+          <li><strong>Thay đổi tư duy:</strong> An ninh mạng phải đi trước tính sẵn sàng; khi có nguy cơ xâm phạm tài sản, an toàn thông tin phải được ưu tiên tuyệt đối.</li>
+        </ul>
+      </div>
+
+      <div class="tech-box">
+        <h3><span>🇯🇵</span> Tiền Lệ "Phòng Thủ Mạng Chủ Động" (Active Cyber Defense)</h3>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 8px;">
+          GMO đã đưa vụ việc vượt ra khỏi khuôn khổ một sự cố doanh nghiệp, trở thành tiền lệ chính sách an ninh quốc gia:
+        </p>
+        <ul>
+          <li><strong>Kích hoạt "Vụ việc số 1":</strong> Đệ trình Chính phủ áp dụng Luật Phòng thủ không gian mạng chủ động (hiệu lực từ 01/10/2026).</li>
+          <li><strong>Xóa bỏ ranh giới giáo điều:</strong> Phản biện quan điểm chỉ bảo vệ hạ tầng điện/nước; bảo vệ tài sản số của người dân tại các định chế tài chính cũng là an ninh quốc gia.</li>
+          <li><strong>Quyền hạn nhà nước:</strong> Doanh nghiệp tự gánh chi phí tài chính bồi thường, nhưng nhà nước phải có trách nhiệm thâm nhập, định vị và vô hiệu hóa các máy chủ C2 của tội phạm quốc tế.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Action Checklist for Users -->
+  <section class="section" id="guidance">
+    <div class="section-header">
+      <h2 class="section-title">
+        <span>🛡️</span> Cẩm Nang Hành Động Khẩn Cấp Dành Cho Người Dùng & Nạn Nhân
+      </h2>
+      <span class="section-badge">Khuyến Nghị Bảo Vệ</span>
+    </div>
+
+    <div class="checklist">
+      <div class="checklist-item">
+        <div class="check-num">1</div>
+        <div class="check-content">
+          <h4>Đổi mật khẩu tài khoản giao dịch từ THIẾT BỊ ĐỘC LẬP AN TOÀN</h4>
+          <p>Bắt buộc sử dụng điện thoại thông minh hoặc máy tính riêng biệt (chưa từng dùng để kết nối vào VPS Onamae hoặc chạy EA). Tuyệt đối không đổi mật khẩu trên các thiết bị nghi ngờ có mã độc.</p>
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="check-num">2</div>
+        <div class="check-content">
+          <h4>Bắt buộc liên hệ sàn để CƯỠNG CHẾ HỦY TOÀN BỘ PHIÊN (Force Kill Sessions)</h4>
+          <p>Việc đổi mật khẩu có thể không làm ngắt các kết nối Socket của MT4/MT5 đang mở sẵn. Cần truy cập cổng quản trị của broker hoặc gọi hỗ trợ sàn yêu cầu thu hồi toàn bộ active tokens/sessions.</p>
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="check-num">3</div>
+        <div class="check-content">
+          <h4>Kích hoạt xác thực 2 yếu tố (2FA/MFA) & Dọn dẹp bộ lọc Email</h4>
+          <p>Kích hoạt 2FA qua ứng dụng Authenticator (tránh dùng SMS nếu có thể). Kiểm tra mục Forwarding/Filters trong Gmail/Yahoo Mail để xóa các quy tắc chuyển tiếp email lén lút do tin tặc cài đặt.</p>
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="check-num">4</div>
+        <div class="check-content">
+          <h4>Tắt tính năng đồng bộ trình duyệt (Browser Sync) & Đổi mật khẩu tài khoản lưu trong vault</h4>
+          <p>Ngắt đồng bộ trên Chrome/Edge/Firefox để tránh mật khẩu và extension độc hại tự tải về các máy tính khác. Thay đổi mật khẩu toàn bộ dịch vụ từng lưu trên trình duyệt máy ảo.</p>
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="check-num">5</div>
+        <div class="check-content">
+          <h4>Sao lưu ngoại tuyến (Air-gapped Backup) & Quét sâu virus (Full Scan)</h4>
+          <p>Sao lưu tài liệu quan trọng ra ổ cứng di động rồi rút cáp kết nối. Chạy quét virus toàn diện bằng Windows Defender hoặc phần mềm chuyên dụng (Trend Micro, v.v.).</p>
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="check-num">6</div>
+        <div class="check-content">
+          <h4>Thu thập hồ sơ chứng từ chuẩn bị nộp yêu cầu bồi thường thiệt hại (Trước 06/11/2026)</h4>
+          <p>Chụp ảnh và xuất log tài khoản MT4/MT5 chứng minh các lệnh khớp trái phép, số tiền lỗ thực tế (lỗ lệnh + phí). Thiết lập mật khẩu chỉ xem (Investor Password) để GMO đối soát khi cổng nộp hồ sơ mở.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px; padding: 16px; background: var(--bg-surface-elevated); border: 1px solid var(--border); border-radius: var(--radius-md);">
+      <strong style="color: var(--primary);">Kênh Hỗ Trợ Chính Thức 24/7 Từ GMO Internet:</strong>
+      <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 6px;">
+        • <strong>Đường dây nóng chuyên dụng:</strong> <code style="font-family: var(--font-mono); font-weight: 700; color: var(--danger);">03-5456-2560</code> (Phục vụ 24/24 cả Thứ Bảy, Chủ Nhật và Ngày Lễ)<br>
+        • <strong>Biểu mẫu tiếp nhận trực tuyến:</strong> <a href="https://help.onamae.com/contact/" target="_blank" rel="noopener noreferrer" style="color: var(--primary);">https://help.onamae.com/contact/</a><br>
+        • <strong>Cổng thông tin Quỹ tiền thưởng Bounty:</strong> <a href="https://cybercrimebounty.gmo/" target="_blank" rel="noopener noreferrer" style="color: var(--primary);">https://cybercrimebounty.gmo/</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      Báo Cáo Tình Báo An Ninh Mạng Tổng Hợp Dựa Trên Chuỗi Thông Cáo Chính Thức Tại <a href="https://group.gmo/info/alert/" target="_blank" rel="noopener noreferrer">https://group.gmo/info/alert/</a> & <a href="https://group.gmo/news/" target="_blank" rel="noopener noreferrer">GMO News</a>.
+    </p>
+    <p style="margin-top: 6px; font-size: 12px; opacity: 0.8;">
+      Tập Đoàn GMO Internet Group, Inc. (TSE Prime: 9449) & GMO Internet, Inc. (TSE Prime: 4784). Bản quyền tài liệu tổng hợp an ninh mạng 2026.
+    </p>
+  </footer>
+
+</div>
+
+<script>
+  // Accordion Toggle for Reports
+  function toggleReport(header) {
+    const card = header.parentElement;
+    card.classList.toggle('open');
+  }
+
+  // Theme Toggle Functionality
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+
+  function getPreferredTheme() {
+    const saved = localStorage.getItem('gmo_report_theme');
+    if (saved) return saved;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    try {
+      localStorage.setItem('gmo_report_theme', theme);
+    } catch(e) {}
+    themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+
+  themeToggle.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme') || getPreferredTheme();
+    const next = current === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+  });
+
+  // Init theme
+  const initialTheme = getPreferredTheme();
+  setTheme(initialTheme);
+</script>
+
+</body>
+</html>
