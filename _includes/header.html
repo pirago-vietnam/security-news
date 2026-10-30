@@ -28,11 +28,17 @@
             {%- endfor %}
           </ul>
         </li>
-        <li class="pirago-nav-item">
-          <a href="{{ home_url | append: 'gmo/gmo_onamae_security_incident_report/' | relative_url }}" class="pirago-nav-link {% if page.url contains '/gmo/' %}active{% endif %}">
+        <li class="pirago-nav-item has-dropdown">
+          <a href="{{ home_url | append: '#featured' | relative_url }}" class="pirago-nav-link {% if page.url contains '/featured/' %}active{% endif %}">
             <svg class="icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-            {{ t.gmo_nav }}
+            {{ t.featured }}
+            <span class="dropdown-arrow">▾</span>
           </a>
+          <ul class="pirago-dropdown">
+            {%- for c in site.data.featured %}
+            <li><a href="{{ home_url | append: c.path | relative_url }}" class="{% if page.url contains c.path %}active{% endif %}">{{ c.nav[lang] }}</a></li>
+            {%- endfor %}
+          </ul>
         </li>
         <li class="pirago-nav-item">
           <a href="https://pirago.vn" target="_blank" rel="noopener noreferrer" class="pirago-nav-link external-link" title="{{ t.visit_pirago }}">

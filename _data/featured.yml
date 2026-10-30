@@ -1,0 +1,70 @@
+# Các case nổi bật (sự cố lớn, phân tích lỗ hổng, runbook ứng phó). Thứ tự = thứ tự hiển thị.
+# `path` tính từ gốc ngôn ngữ (vi: "/", ja: "/ja/").
+- id: gmo
+  path: "featured/gmo/gmo_onamae_security_incident_report/"
+  icon: "🚨"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL INCIDENT"}
+  nav: {vi: "Sự cố GMO Onamae", ja: "GMOお名前.com インシデント"}
+  title: {vi: "Sự cố an ninh: GMO Onamae Desktop Cloud", ja: "セキュリティインシデント: GMO お名前.com デスクトップクラウド"}
+  date: {vi: "Cập nhật đến 2026-10-30 · Khủng hoảng 16 thông cáo & báo cáo IR (Tập đoàn GMO Internet)", ja: "2026年10月30日 時点 · 16件の公式発表 & IRレポートに基づく危機対応 (GMOインターネットグループ)"}
+  link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Hạ tầng", ja: "インフラ"}
+      text: {vi: "Chiếm quyền 26.739 máy chủ VPS Windows, rò rỉ thông tin đăng nhập MT4/MT5 tác động hơn 70 sàn chứng khoán & FX.", ja: "Windows VPSサーバー26,739台が乗っ取られ、MT4/MT5のログイン情報が漏えい。70以上の証券・FX会社に影響。"}
+    - sev: high
+      label: {vi: "Tống tiền", ja: "恐喝"}
+      text: {vi: "Tin tặc đòi 50 triệu USD tiền chuộc; GMO kiên quyết từ chối và lập Quỹ Bounty 1 triệu USD treo thưởng truy bắt thủ phạm.", ja: "ハッカーが身代金5,000万米ドルを要求。GMOは断固として拒否し、犯人逮捕に向けた懸賞金として100万米ドルのバウンティ基金を設立。"}
+    - sev: med
+      label: {vi: "Phòng thủ", ja: "防御"}
+      text: {vi: "Takedown sạch tên miền rò rỉ sau 15,5 giờ; kiến nghị Văn phòng Nội các Nhật Bản kích hoạt Luật Phòng thủ mạng chủ động (Active Cyber Defense).", ja: "漏えいしたドメインを15.5時間でテイクダウン。日本の内閣官房に対し、アクティブサイバーディフェンス法の発動を提言。"}
+    - sev: low
+      label: {vi: "Bồi thường", ja: "補償"}
+      text: {vi: "Cam kết đền bù 100% thiệt hại giao dịch thực tế do lệnh trái phép + hỗ trợ thăm hỏi đặc biệt lên tới 3.000.000 JPY/khách hàng.", ja: "不正注文による実際の取引損失を100%補償するとともに、お客様1名あたり最大3,000,000 JPYの特別見舞金を支給。"}
+
+- id: linux-cve-2026-98432
+  path: "featured/linux-cve-2026-98432/analysis/"
+  icon: "🐧"
+  accent: true
+  badge: {sev: high, text: "HIGH"}
+  nav: {vi: "Linux kernel CVE-2026-98432", ja: "Linux カーネル CVE-2026-98432"}
+  title: {vi: "Phân tích lỗ hổng: Linux kernel CVE-2026-98432", ja: "脆弱性分析: Linux カーネル CVE-2026-98432"}
+  date: {vi: "Cập nhật đến 2026-10-30 · Use-after-free TCP IPv4 · CVSS 9.8 (kernel CNA) / 8.1 (Red Hat)", ja: "2026年10月30日 時点 · TCP IPv4 の use-after-free · CVSS 9.8（カーネル CNA）/ 8.1（Red Hat）"}
+  link: {vi: "Xem phân tích chi tiết →", ja: "詳細分析を見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Nguy cơ", ja: "リスク"}
+      text: {vi: "Race giữa SYN retransmit và việc giải phóng socket; hậu quả dễ xảy ra nhất là kernel panic, xấu nhất là chiếm quyền. Chưa thấy khai thác thực tế.", ja: "SYN 再送とソケット解放の race。最も起こりやすい影響はカーネルパニック、最悪の場合は乗っ取り。実際の悪用は未確認です。"}
+    - sev: high
+      label: {vi: "Dễ bị tấn công", ja: "狙われやすい対象"}
+      text: {vi: "Máy mở cổng TCP thẳng ra internet, node EKS/GKE dùng NodePort/hostNetwork, host chưa có bản vá (Ubuntu, RHEL, AL2).", ja: "TCP ポートをインターネットに直接公開するホスト、NodePort/hostNetwork を使う EKS/GKE ノード、未修正のディストリビューション（Ubuntu、RHEL、AL2）。"}
+    - sev: med
+      label: {vi: "Mô phỏng", ja: "シミュレーション"}
+      text: {vi: "Chuỗi tấn công 5 giai đoạn có hình minh họa, 3 kịch bản diễn tập và danh sách TODO cần làm ngay (không có mã khai thác).", ja: "図解付きの 5 段階の攻撃チェーン、3 つの机上演習シナリオ、今すぐ対応すべき TODO（攻撃コードなし）。"}
+    - sev: low
+      label: {vi: "Xử lý", ja: "対処"}
+      text: {vi: "Cập nhật kernel và reboot; không có workaround chính thức.", ja: "カーネルを更新して再起動。公式な回避策はありません。"}
+
+- id: php2shell
+  path: "featured/php-cve-2026-109618-109619/php2shell-runbook/"
+  icon: "📘"
+  accent: false
+  badge: {sev: crit, text: "RUNBOOK"}
+  nav: {vi: "Runbook PHP CVE-2026-109618", ja: "PHP CVE-2026-109618 ランブック"}
+  title: {vi: "Runbook ứng phó: PHP CVE-2026-109618 / 109619 (PHP2Shell)", ja: "対応ランブック: PHP CVE-2026-109618 / 109619 (PHP2Shell)"}
+  date: {vi: "Lỗ hổng RCE PHP · Bộ cẩm nang kỹ thuật nội bộ dành cho kỹ sư PiraGo", ja: "PHP の RCE 脆弱性 · PiraGo のエンジニア向け社内技術ハンドブック"}
+  link: {vi: "Xem runbook đầy đủ →", ja: "ランブック全文を見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Xử lý", ja: "対応"}
+      text: {vi: "RCE không cần xác thực trong lõi PHP (CVSS 9.2). Cập nhật ứng dụng không giúp được; phải vá PHP và restart.", ja: "PHP コアの認証不要 RCE（CVSS 9.2）。アプリ更新では解決せず、PHP の更新と再起動が必要。"}
+    - sev: high
+      label: {vi: "Dễ bị tấn công", ja: "狙われやすい対象"}
+      text: {vi: "Apache mod_php, PHP-FPM lộ internet, PHP 8.1 trở xuống (EOL), image Docker cũ, hosting managed.", ja: "Apache mod_php、公開 PHP-FPM、PHP 8.1 以下（EOL）、古い Docker イメージ、マネージドホスティング。"}
+    - sev: med
+      label: {vi: "Tạm thời", ja: "暫定対策"}
+      text: {vi: "Tắt upload progress, đặt memory_limit bằng php_admin_value, hạn chế multipart ở WAF/LB, thu hẹp truy cập.", ja: "upload progress の無効化、php_admin_value での memory_limit 設定、WAF/LB での multipart 制限、アクセス範囲の縮小。"}
+    - sev: low
+      label: {vi: "Triệt để", ja: "恒久対策"}
+      text: {vi: "Nâng lên 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35, restart, build lại image; lên kế hoạch rời PHP 8.1 trở xuống.", ja: "8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 へ更新して再起動、イメージ再ビルド。PHP 8.1 以下からの移行を計画。"}

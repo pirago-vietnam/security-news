@@ -23,38 +23,26 @@ description: "Tổng hợp báo cáo sự cố an ninh mạng và lỗ hổng đ
 
 <!-- Danh sách báo cáo - báo cáo mới nhất xếp trên -->
 <div class="reports-list">
-  <!-- Báo cáo sự cố GMO -->
-  <section class="card" style="border-left: 4px solid var(--pirago-red);">
+  <!-- Case nổi bật: lặp theo _data/featured -->
+  <h2 class="section-heading" id="featured">⭐ {{ t.featured }}</h2>
+  <p class="date">{{ t.featured_sub }}</p>
+  {%- for c in site.data.featured %}
+  <section class="card"{% if c.accent %} style="border-left: 4px solid var(--pirago-red);"{% endif %}>
     <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
-      <h2>🚨 Sự cố an ninh: GMO Onamae Desktop Cloud</h2>
-      <span class="badge crit">CRITICAL INCIDENT</span>
+      <h2>{{ c.icon }} {{ c.title[lang] }}</h2>
+      <span class="badge {{ c.badge.sev }}">{{ c.badge.text }}</span>
     </div>
-    <p class="date">Cập nhật đến 2026-10-30 · Khủng hoảng 16 thông cáo &amp; báo cáo IR (Tập đoàn GMO Internet)</p>
+    <p class="date">{{ c.date[lang] }}</p>
     <ul>
-      <li><span class="badge crit">Hạ tầng</span> Chiếm quyền 26.739 máy chủ VPS Windows, rò rỉ thông tin đăng nhập MT4/MT5 tác động hơn 70 sàn chứng khoán &amp; FX.</li>
-      <li><span class="badge high">Tống tiền</span> Tin tặc đòi 50 triệu USD tiền chuộc; GMO kiên quyết từ chối và lập Quỹ Bounty 1 triệu USD treo thưởng truy bắt thủ phạm.</li>
-      <li><span class="badge med">Phòng thủ</span> Takedown sạch tên miền rò rỉ sau 15,5 giờ; kiến nghị Văn phòng Nội các Nhật Bản kích hoạt Luật Phòng thủ mạng chủ động (Active Cyber Defense).</li>
-      <li><span class="badge low">Bồi thường</span> Cam kết đền bù 100% thiệt hại giao dịch thực tế do lệnh trái phép + hỗ trợ thăm hỏi đặc biệt lên tới 3.000.000 JPY/khách hàng.</li>
+      {%- for it in c.items %}
+      <li><span class="badge {{ it.sev }}">{{ it.label[lang] }}</span> {{ it.text[lang] }}</li>
+      {%- endfor %}
     </ul>
-    <a href="{{ '/gmo/gmo_onamae_security_incident_report/' | relative_url }}" class="card-link-btn">Xem báo cáo sự cố chi tiết →</a>
+    <a href="{{ home_url | append: c.path | relative_url }}" class="card-link-btn">{{ c.link[lang] }}</a>
   </section>
+  {%- endfor %}
 
-  <!-- Phân tích lỗ hổng: Linux kernel CVE-2026-98432 -->
-  <section class="card" style="border-left: 4px solid var(--pirago-red);">
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
-      <h2>🐧 Phân tích lỗ hổng: Linux kernel CVE-2026-98432</h2>
-      <span class="badge high">HIGH</span>
-    </div>
-    <p class="date">Cập nhật đến 2026-10-30 · Use-after-free TCP IPv4 · CVSS 9.8 (kernel CNA) / 8.1 (Red Hat)</p>
-    <ul>
-      <li><span class="badge crit">Nguy cơ</span> Race giữa SYN retransmit và việc giải phóng socket; hậu quả dễ xảy ra nhất là kernel panic, xấu nhất là chiếm quyền. Chưa thấy khai thác thực tế.</li>
-      <li><span class="badge high">Dễ bị tấn công</span> Máy mở cổng TCP thẳng ra internet, node EKS/GKE dùng NodePort/hostNetwork, host chưa có bản vá (Ubuntu, RHEL, AL2).</li>
-      <li><span class="badge med">Mô phỏng</span> Chuỗi tấn công 5 giai đoạn có hình minh họa, 3 kịch bản diễn tập và danh sách TODO cần làm ngay (không có mã khai thác).</li>
-      <li><span class="badge low">Xử lý</span> Cập nhật kernel và reboot; không có workaround chính thức.</li>
-    </ul>
-    <a href="{{ '/linux-cve-2026-98432/analysis/' | relative_url }}" class="card-link-btn">Xem phân tích chi tiết →</a>
-  </section>
-
+  <h2 class="section-heading" id="monthly">📅 {{ t.monthly }}</h2>
   <!-- Báo cáo tháng: lặp theo _data/monthly, mới nhất xếp trên -->
   {%- for m in site.data.monthly reversed %}
   {%- assign d = m[1] %}
@@ -79,10 +67,9 @@ description: "Tổng hợp báo cáo sự cố an ninh mạng và lỗ hổng đ
 
   <!-- Runbooks & Quy chuẩn bảo mật -->
   <section class="card" id="runbooks" style="background: var(--bg-subtle);">
-    <h2>📘 Runbooks &amp; Tài Liệu Ứng Phó Khẩn Cấp</h2>
+    <h2>📘 Quy chuẩn &amp; Tài liệu</h2>
     <p class="date">Bộ cẩm nang kỹ thuật nội bộ dành cho kỹ sư PiraGo</p>
     <ul>
-      <li><a href="{{ '/php-cve-2026-109618-109619/php2shell-runbook/' | relative_url }}"><strong>PHP CVE-2026-109618 / 109619 (PHP2Shell):</strong> Trọn bộ 7 runbook xử lý, phát hiện xâm nhập, checklist thông báo và nâng cấp Docker PHP-FPM trong một trang</a></li>
       <li><a href="https://github.com/pirago-vietnam/security-news/blob/main/monthly/RULES.md" target="_blank" rel="noopener noreferrer"><strong>RULES.md:</strong> Quy chuẩn viết báo cáo an ninh mạng định kỳ của PiraGo</a></li>
     </ul>
   </section>

@@ -4,7 +4,7 @@
 - Mỗi tháng gồm **1 file dữ liệu song ngữ** và **2 file stub** (không viết HTML bảng bằng tay):
   - `_data/monthly/YYYY-mm.yml`: toàn bộ nội dung Việt + Nhật (sao chép từ `_templates/monthly-data.yml`).
   - `monthly/YYYY-mm.html`: stub tiếng Việt (sao chép từ `_templates/monthly-stub.html`).
-  - `ja/monthly/YYYY-mm.html`: stub tiếng Nhật, giống stub trên nhưng bỏ `redirect_from`.
+  - `monthly/ja/YYYY-mm.html`: stub tiếng Nhật (sao chép từ `_templates/monthly-stub-ja.html`, đã có `lang: ja` và `permalink: /ja/monthly/YYYY-mm/`).
 - Stub chỉ chứa Front Matter và một dòng `{% include monthly-report.html %}`:
 ```yaml
 ---

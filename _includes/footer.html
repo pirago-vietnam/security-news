@@ -41,8 +41,9 @@
           {%- for m in site.data.monthly reversed %}
           <li><a href="{{ home_url | append: 'monthly/' | append: m[0] | append: '/' | relative_url }}">{{ m[1].footer_label[lang] }}{% if forloop.first %} <span class="badge-mini">{{ t.new }}</span>{% endif %}</a></li>
           {%- endfor %}
-          <li><a href="{{ home_url | append: 'gmo/gmo_onamae_security_incident_report/' | relative_url }}">{{ t.gmo_footer }}</a></li>
-          <li><a href="{{ home_url | append: 'php-cve-2026-109618-109619/php2shell-runbook/' | relative_url }}">{{ t.php_runbook }}</a></li>
+          {%- for c in site.data.featured %}
+          <li><a href="{{ home_url | append: c.path | relative_url }}">{{ c.nav[lang] }}</a></li>
+          {%- endfor %}
           <li><a href="https://github.com/pirago-vietnam/security-news/blob/main/monthly/RULES.md" target="_blank" rel="noopener noreferrer">{{ t.rules }}</a></li>
         </ul>
       </div>

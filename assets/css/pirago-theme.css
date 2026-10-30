@@ -935,3 +935,10 @@ html[lang="ja"] body {
   line-break: strict;
   overflow-wrap: anywhere;
 }
+
+.section-heading {
+  margin: 32px 0 4px;
+  font-size: 1.35rem;
+  scroll-margin-top: 80px;
+}
+.section-heading:first-child { margin-top: 0; }

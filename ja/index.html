@@ -23,38 +23,26 @@ description: "月次のセキュリティインシデントおよび脆弱性レ
 
 <!-- レポート一覧 - 最新のレポートを上に表示 -->
 <div class="reports-list">
-  <!-- GMOインシデントレポート -->
-  <section class="card" style="border-left: 4px solid var(--pirago-red);">
+  <!-- Case nổi bật: lặp theo _data/featured -->
+  <h2 class="section-heading" id="featured">⭐ {{ t.featured }}</h2>
+  <p class="date">{{ t.featured_sub }}</p>
+  {%- for c in site.data.featured %}
+  <section class="card"{% if c.accent %} style="border-left: 4px solid var(--pirago-red);"{% endif %}>
     <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
-      <h2>🚨 セキュリティインシデント: GMO お名前.com デスクトップクラウド</h2>
-      <span class="badge crit">CRITICAL INCIDENT</span>
+      <h2>{{ c.icon }} {{ c.title[lang] }}</h2>
+      <span class="badge {{ c.badge.sev }}">{{ c.badge.text }}</span>
     </div>
-    <p class="date">2026年10月30日 時点 · 16件の公式発表 &amp; IRレポートに基づく危機対応 (GMOインターネットグループ)</p>
+    <p class="date">{{ c.date[lang] }}</p>
     <ul>
-      <li><span class="badge crit">インフラ</span> Windows VPSサーバー26,739台が乗っ取られ、MT4/MT5のログイン情報が漏えい。70以上の証券・FX会社に影響。</li>
-      <li><span class="badge high">恐喝</span> ハッカーが身代金5,000万米ドルを要求。GMOは断固として拒否し、犯人逮捕に向けた懸賞金として100万米ドルのバウンティ基金を設立。</li>
-      <li><span class="badge med">防御</span> 漏えいしたドメインを15.5時間でテイクダウン。日本の内閣官房に対し、アクティブサイバーディフェンス法の発動を提言。</li>
-      <li><span class="badge low">補償</span> 不正注文による実際の取引損失を100%補償するとともに、お客様1名あたり最大3,000,000 JPYの特別見舞金を支給。</li>
+      {%- for it in c.items %}
+      <li><span class="badge {{ it.sev }}">{{ it.label[lang] }}</span> {{ it.text[lang] }}</li>
+      {%- endfor %}
     </ul>
-    <a href="{{ '/ja/gmo/gmo_onamae_security_incident_report/' | relative_url }}" class="card-link-btn">インシデント詳細レポートを見る →</a>
+    <a href="{{ home_url | append: c.path | relative_url }}" class="card-link-btn">{{ c.link[lang] }}</a>
   </section>
+  {%- endfor %}
 
-  <!-- 脆弱性分析: Linux カーネル CVE-2026-98432 -->
-  <section class="card" style="border-left: 4px solid var(--pirago-red);">
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
-      <h2>🐧 脆弱性分析: Linux カーネル CVE-2026-98432</h2>
-      <span class="badge high">HIGH</span>
-    </div>
-    <p class="date">2026年10月30日 時点 · TCP IPv4 の use-after-free · CVSS 9.8（カーネル CNA）/ 8.1（Red Hat）</p>
-    <ul>
-      <li><span class="badge crit">リスク</span> SYN 再送とソケット解放の race。最も起こりやすい影響はカーネルパニック、最悪の場合は乗っ取り。実際の悪用は未確認です。</li>
-      <li><span class="badge high">狙われやすい対象</span> TCP ポートをインターネットに直接公開するホスト、NodePort/hostNetwork を使う EKS/GKE ノード、未修正のディストリビューション（Ubuntu、RHEL、AL2）。</li>
-      <li><span class="badge med">シミュレーション</span> 図解付きの 5 段階の攻撃チェーン、3 つの机上演習シナリオ、今すぐ対応すべき TODO（攻撃コードなし）。</li>
-      <li><span class="badge low">対処</span> カーネルを更新して再起動。公式な回避策はありません。</li>
-    </ul>
-    <a href="{{ '/ja/linux-cve-2026-98432/analysis/' | relative_url }}" class="card-link-btn">詳細分析を見る →</a>
-  </section>
-
+  <h2 class="section-heading" id="monthly">📅 {{ t.monthly }}</h2>
   <!-- Báo cáo tháng: lặp theo _data/monthly, mới nhất xếp trên -->
   {%- for m in site.data.monthly reversed %}
   {%- assign d = m[1] %}
@@ -79,10 +67,9 @@ description: "月次のセキュリティインシデントおよび脆弱性レ
 
   <!-- ランブック & セキュリティ基準 -->
   <section class="card" id="runbooks" style="background: var(--bg-subtle);">
-    <h2>📘 ランブック &amp; 緊急対応ドキュメント</h2>
+    <h2>📘 規約 &amp; ドキュメント</h2>
     <p class="date">PiraGoのエンジニア向け社内技術ハンドブック集</p>
     <ul>
-      <li><a href="{{ '/ja/php-cve-2026-109618-109619/php2shell-runbook/' | relative_url }}"><strong>PHP CVE-2026-109618 / 109619 (PHP2Shell):</strong> 対応ランブック7本、侵害検知、通知チェックリスト、Docker PHP-FPM のアップグレードを1ページに集約</a></li>
       <li><a href="https://github.com/pirago-vietnam/security-news/blob/main/monthly/RULES.md" target="_blank" rel="noopener noreferrer"><strong>RULES.md:</strong> PiraGoの定期サイバーセキュリティレポート作成基準</a></li>
     </ul>
   </section>

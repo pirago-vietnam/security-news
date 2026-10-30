@@ -17,7 +17,8 @@ vi:
     actions: ["#", "Việc cần làm", "Mức độ", "Hạn đề xuất"]
     component: ["Thành phần", "Tóm tắt lỗ hổng", "Mức độ", "Ảnh hưởng tới hệ thống nào", "Cách xử lý"]
     provider: ["Nhà cung cấp", "Bản tin / Tóm tắt", "Mức độ", "Ảnh hưởng tới hệ thống nào", "Cần làm gì"]
-  gmo_nav: "Sự cố GMO Onamae"
+  featured: "Case nổi bật"
+  featured_sub: "Sự cố lớn, phân tích lỗ hổng và runbook ứng phó khẩn cấp"
   visit_pirago: "Truy cập website chính thức PiraGo"
   toggle_theme: "Chuyển chế độ Sáng / Tối"
   open_menu: "Mở menu điều hướng"
@@ -31,8 +32,6 @@ vi:
   phone: "Điện thoại:"
   col_reports: "Báo Cáo An Ninh"
   reports_home: "Trang chủ Báo cáo"
-  gmo_footer: "Sự cố GMO Onamae Desktop Cloud"
-  php_runbook: "Runbook PHP CVE-2026-109618"
   rules: "Quy chuẩn báo cáo (RULES.md)"
   col_services: "Dịch Vụ PiraGo"
   svc_1: "Phát triển Offshore chất lượng cao"
@@ -63,7 +62,8 @@ ja:
     actions: ["#", "対応事項", "重大度", "推奨期限"]
     component: ["コンポーネント", "脆弱性の概要", "重大度", "影響を受けるシステム", "対処方法"]
     provider: ["プロバイダー", "ニュース / 概要", "重大度", "影響を受けるシステム", "必要な対応"]
-  gmo_nav: "GMOお名前.com インシデント"
+  featured: "注目ケース"
+  featured_sub: "重大インシデント、脆弱性分析、緊急対応ランブック"
   visit_pirago: "PiraGo 公式サイトへ"
   toggle_theme: "ライト / ダークモード切替"
   open_menu: "ナビゲーションメニューを開く"
@@ -77,8 +77,6 @@ ja:
   phone: "電話:"
   col_reports: "セキュリティレポート"
   reports_home: "レポートホーム"
-  gmo_footer: "GMOお名前.com デスクトップクラウド インシデント"
-  php_runbook: "PHP CVE-2026-109618 ランブック"
   rules: "レポート作成規約 (RULES.md)"
   col_services: "PiraGo のサービス"
   svc_1: "高品質オフショア開発"
