@@ -39,6 +39,22 @@ description: "Tổng hợp báo cáo sự cố an ninh mạng và lỗ hổng đ
     <a href="{{ '/gmo/gmo_onamae_security_incident_report/' | relative_url }}" class="card-link-btn">Xem báo cáo sự cố chi tiết →</a>
   </section>
 
+  <!-- Phân tích lỗ hổng: Linux kernel CVE-2026-98432 -->
+  <section class="card" style="border-left: 4px solid var(--pirago-red);">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+      <h2>🐧 Phân tích lỗ hổng: Linux kernel CVE-2026-98432</h2>
+      <span class="badge high">HIGH</span>
+    </div>
+    <p class="date">Cập nhật đến 2026-10-30 · Use-after-free TCP IPv4 · CVSS 9.8 (kernel CNA) / 8.1 (Red Hat)</p>
+    <ul>
+      <li><span class="badge crit">Nguy cơ</span> Race giữa SYN retransmit và việc giải phóng socket; hậu quả dễ xảy ra nhất là kernel panic, xấu nhất là chiếm quyền. Chưa thấy khai thác thực tế.</li>
+      <li><span class="badge high">Dễ bị tấn công</span> Máy mở cổng TCP thẳng ra internet, node EKS/GKE dùng NodePort/hostNetwork, host chưa có bản vá (Ubuntu, RHEL, AL2).</li>
+      <li><span class="badge med">Mô phỏng</span> Chuỗi tấn công 5 giai đoạn có hình minh họa, 3 kịch bản diễn tập và danh sách TODO cần làm ngay (không có mã khai thác).</li>
+      <li><span class="badge low">Xử lý</span> Cập nhật kernel và reboot; không có workaround chính thức.</li>
+    </ul>
+    <a href="{{ '/linux-cve-2026-98432/analysis/' | relative_url }}" class="card-link-btn">Xem phân tích chi tiết →</a>
+  </section>
+
   <!-- Báo cáo tháng: lặp theo _data/monthly, mới nhất xếp trên -->
   {%- for m in site.data.monthly reversed %}
   {%- assign d = m[1] %}

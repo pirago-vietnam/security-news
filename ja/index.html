@@ -39,6 +39,22 @@ description: "月次のセキュリティインシデントおよび脆弱性レ
     <a href="{{ '/ja/gmo/gmo_onamae_security_incident_report/' | relative_url }}" class="card-link-btn">インシデント詳細レポートを見る →</a>
   </section>
 
+  <!-- 脆弱性分析: Linux カーネル CVE-2026-98432 -->
+  <section class="card" style="border-left: 4px solid var(--pirago-red);">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+      <h2>🐧 脆弱性分析: Linux カーネル CVE-2026-98432</h2>
+      <span class="badge high">HIGH</span>
+    </div>
+    <p class="date">2026年10月30日 時点 · TCP IPv4 の use-after-free · CVSS 9.8（カーネル CNA）/ 8.1（Red Hat）</p>
+    <ul>
+      <li><span class="badge crit">リスク</span> SYN 再送とソケット解放の race。最も起こりやすい影響はカーネルパニック、最悪の場合は乗っ取り。実際の悪用は未確認です。</li>
+      <li><span class="badge high">狙われやすい対象</span> TCP ポートをインターネットに直接公開するホスト、NodePort/hostNetwork を使う EKS/GKE ノード、未修正のディストリビューション（Ubuntu、RHEL、AL2）。</li>
+      <li><span class="badge med">シミュレーション</span> 図解付きの 5 段階の攻撃チェーン、3 つの机上演習シナリオ、今すぐ対応すべき TODO（攻撃コードなし）。</li>
+      <li><span class="badge low">対処</span> カーネルを更新して再起動。公式な回避策はありません。</li>
+    </ul>
+    <a href="{{ '/ja/linux-cve-2026-98432/analysis/' | relative_url }}" class="card-link-btn">詳細分析を見る →</a>
+  </section>
+
   <!-- Báo cáo tháng: lặp theo _data/monthly, mới nhất xếp trên -->
   {%- for m in site.data.monthly reversed %}
   {%- assign d = m[1] %}

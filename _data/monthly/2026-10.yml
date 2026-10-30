@@ -2,8 +2,8 @@ title:
   vi: Báo cáo bảo mật tháng 10/2026
   ja: 2026年10月 セキュリティレポート
 description:
-  vi: 'Tổng hợp các rủi ro, lỗ hổng bảo mật và việc cần làm tháng 10/2026: PHP2Shell, Next.js RCE, Laravel, AWS/GCP eMudhra CA'
-  ja: 2026年10月のリスク、脆弱性、対応事項のまとめ：PHP2Shell、Next.js RCE、Laravel、AWS/GCP eMudhra CA
+  vi: 'Tổng hợp các rủi ro, lỗ hổng bảo mật và việc cần làm tháng 10/2026: PHP2Shell, Next.js RCE, Laravel, Linux kernel TCP UAF, AWS/GCP eMudhra CA'
+  ja: 2026年10月のリスク、脆弱性、対応事項のまとめ：PHP2Shell、Next.js RCE、Laravel、Linux kernel TCP UAF、AWS/GCP eMudhra CA
 nav:
   vi: Tháng 10/2026
   ja: 2026年10月
@@ -14,8 +14,8 @@ h1:
   vi: Báo cáo bảo mật tháng 10/2026
   ja: 2026年10月 セキュリティレポート
 sub:
-  vi: Số liệu tính đến <strong>2026-10-26</strong>. Tháng chưa kết thúc, cần cập nhật lại cuối tháng.
-  ja: <strong>2026年10月26日</strong>時点の情報です。月はまだ終了していないため、月末に再更新が必要です。
+  vi: Số liệu tính đến <strong>2026-10-30</strong>. Tháng chưa kết thúc, cần cập nhật lại cuối tháng.
+  ja: <strong>2026年10月30日</strong>時点の情報です。月はまだ終了していないため、月末に再更新が必要です。
 placeholder:
   vi: '🔍 Tìm kiếm CVE, framework, thư viện (vd: PHP, Next.js, AWS, RCE)...'
   ja: '🔍 CVE、フレームワーク、ライブラリで検索（例: PHP, Next.js, AWS, RCE）...'
@@ -27,8 +27,8 @@ card:
     vi: Báo cáo tháng 10/2026
     ja: 2026年10月レポート
   date:
-    vi: Cập nhật đến 2026-10-26 · Định kỳ hàng tháng
-    ja: 2026年10月26日 時点 · 月次定期レポート
+    vi: Cập nhật đến 2026-10-30 · Định kỳ hàng tháng
+    ja: 2026年10月30日 時点 · 月次定期レポート
   items:
   - sev: crit
     label: PHP
@@ -40,6 +40,11 @@ card:
     text:
       vi: 2 lỗi chiếm quyền server từ xa (<code>use cache</code>, Image Optimization). Nâng lên 16.4.1 / 15.5.28.
       ja: サーバーを遠隔から乗っ取られる脆弱性が2件 (<code>use cache</code>、Image Optimization)。16.4.1 / 15.5.28 へアップグレード。
+  - sev: high
+    label: Linux kernel
+    text:
+      vi: 'CVE-2026-98432: lỗi use-after-free TCP IPv4 (CVSS 9.8 theo kernel CNA, chưa thấy khai thác thực tế). Cập nhật kernel và reboot; ưu tiên máy/node lộ internet.'
+      ja: 'CVE-2026-98432: TCP IPv4 の use-after-free (カーネル CNA の CVSS は 9.8、実際の悪用は未確認)。カーネルを更新して再起動。インターネットに公開されたホスト/ノードを優先。'
   - sev: high
     label: Laravel
     text:
@@ -94,6 +99,13 @@ sections:
   - task:
       vi: Nâng cấp <strong>Nuxt</strong> lên 4.6.2 (vá 5 advisory ngày 16-10; Nuxt 3 đã EOL không có bản vá, cần kế hoạch lên Nuxt 4)
       ja: <strong>Nuxt</strong> を 4.6.2 にアップグレードする（10月16日に 5 件のアドバイザリを修正。Nuxt 3 は EOL でパッチなし、Nuxt 4 への移行計画が必要）
+    sev: high
+    due:
+      vi: Trong tuần
+      ja: 今週中
+  - task:
+      vi: 'Cập nhật <strong>kernel Linux</strong> (EC2/GCE, node EKS/GKE, Docker host) cho CVE-2026-98432 rồi reboot; ưu tiên máy mở cổng TCP ra internet. <a href="@home@linux-cve-2026-98432/analysis/">Phân tích chi tiết</a>'
+      ja: 'CVE-2026-98432 に対応するため、<strong>Linux カーネル</strong> (EC2/GCE、EKS/GKE ノード、Docker ホスト) を更新して再起動する。インターネットに TCP ポートを公開しているホストを優先。<a href="@home@linux-cve-2026-98432/analysis/">詳細分析</a>'
     sev: high
     due:
       vi: Trong tuần
@@ -347,6 +359,17 @@ sections:
     fix:
       vi: GCP-2026-068 không cần làm gì. Với Istio/Envoy, theo dõi bản tin Cloud Service Mesh.
       ja: GCP-2026-068 は対応不要です。Istio/Envoy については、Cloud Service Mesh のニュースを確認してください。
+  - name: Linux kernel
+    summary:
+      vi: 'CVE-2026-98432 (công bố 15-10): use-after-free ở TCP IPv4 do <code>ireq_opt</code>/<code>inet_opt</code> bị giải phóng không chờ RCU; race giữa SYN retransmit và việc giải phóng socket. CVSS 9.8 (kernel CNA, Ubuntu), 8.1 (Red Hat, sơ bộ), Amazon 7.0 (chưa xác minh vector). Chưa vào CISA KEV, EPSS 0,388% (29-10).'
+      ja: 'CVE-2026-98432（10月15日公開）：TCP IPv4 で <code>ireq_opt</code>/<code>inet_opt</code> が RCU を待たずに解放される use-after-free。SYN 再送とソケット解放の race。CVSS は 9.8（カーネル CNA、Ubuntu）、8.1（Red Hat、暫定）、Amazon は 7.0（ベクター未確認）。CISA KEV 未登録、EPSS 0.388%（10月29日）。'
+    sev: high
+    impact:
+      vi: 'Mọi máy Linux có cổng TCP IPv4 đang listen: EC2/GCE, node EKS/GKE, Docker host (chung kernel). Fargate, Cloud Run, dịch vụ managed do nhà cung cấp vá.'
+      ja: 'IPv4 の TCP ポートを待ち受ける全 Linux ホスト：EC2/GCE、EKS/GKE ノード、Docker ホスト（カーネル共有）。Fargate、Cloud Run、マネージドサービスはプロバイダーが対応。'
+    fix:
+      vi: 'Lên kernel đã vá (upstream 5.10.272 / 5.15.223 / 6.1.190 / 6.6.159 / 6.12.113 / 6.18.56 / 7.2.10; Debian bookworm 6.1.190-1, trixie 6.12.113-1; AL2023 kernel6.12 và kernel6.18) rồi reboot. Ubuntu, RHEL, AL2023 kernel mặc định, AL2 chưa có bản vá (30-10). Không có workaround chính thức. Chi tiết: <a href="@home@linux-cve-2026-98432/analysis/">trang phân tích</a>.'
+      ja: '修正済みカーネル（upstream 5.10.272 / 5.15.223 / 6.1.190 / 6.6.159 / 6.12.113 / 6.18.56 / 7.2.10、Debian bookworm 6.1.190-1、trixie 6.12.113-1、AL2023 の kernel6.12 と kernel6.18）へ更新して再起動してください。Ubuntu、RHEL、AL2023 標準 kernel、AL2 は 10月30日時点で未修正です。公式な回避策はありません。詳細は<a href="@home@linux-cve-2026-98432/analysis/">分析ページ</a>。'
 - title:
     vi: 5. Ghi chú về độ tin cậy
     ja: 5. 情報の信頼性に関する注記
@@ -360,6 +383,8 @@ sections:
     ja: <strong>AWS:</strong> AWS のニュースは重大度の分類が統一されておらず（大半が Important か記載なし）、表の重大度列は技術的なリスク分類に基づく評価です。<strong>.NET:</strong> 重大度は CVSS と脆弱性の種類に基づきます（Microsoft はすべて Important に分類）。
   - vi: <strong>Sự cố eMudhra CA (CVE-2026-111943):</strong> Đã được cả AWS (2026-150-AWS) và GCP (GCP-2026-071) xác nhận; chú ý hạn chót thay thế chứng chỉ trên AWS là 28-10-2026.
     ja: <strong>eMudhra CA インシデント（CVE-2026-111943）:</strong> AWS（2026-150-AWS）と GCP（GCP-2026-071）の両方で確認済みです。AWS での証明書差し替えの期限は 2026年10月28日である点にご注意ください。
+  - vi: '<strong>Linux kernel CVE-2026-98432:</strong> điểm CVSS khác nhau giữa các nguồn (9.8 / 8.1 / 7.0); NVD chưa phân tích. Tình trạng bản vá lấy từ trang tracker của Debian, Ubuntu, Amazon Linux, chưa đọc nguyên văn commit upstream. Chưa xác minh được bulletin của Google/GKE. Việc một mô hình nội bộ chưa phát hành của Anthropic tạo được khai thác từ xa (có nhắc MPTCP) mới chỉ qua bản tóm tắt, chưa đọc nguyên văn bài gốc.'
+    ja: '<strong>Linux カーネル CVE-2026-98432:</strong> CVSS は情報源により異なります（9.8 / 8.1 / 7.0）。NVD は未分析です。修正状況は Debian、Ubuntu、Amazon Linux のトラッカーによるもので、upstream のコミット原文は未確認です。Google/GKE のセキュリティ情報も未確認です。Anthropic の未公開内部モデルがリモート攻撃コードを作成したという件（MPTCP に言及）は要約のみで、原文は未確認です。'
 - title:
     vi: 6. Nguồn tham khảo
     ja: 6. 参考資料
@@ -387,3 +412,5 @@ sections:
     ja: '.NET: <a href="https://isc.sans.edu/diary/33422" target="_blank" rel="noopener noreferrer">SANS ISC: Patch Tuesday 10/2026</a>, <a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-october-2026-patch-tuesday-fixes-1-411-flaws-3-zero-days/" target="_blank" rel="noopener noreferrer">BleepingComputer</a>'
   - vi: 'Hạ tầng: <a href="https://aws.amazon.com/security/security-bulletins/2026-150-aws/" target="_blank" rel="noopener noreferrer">AWS 2026-150</a>, <a href="https://aws.amazon.com/security/security-bulletins/2026-148-aws/" target="_blank" rel="noopener noreferrer">AWS 2026-148</a>, <a href="https://aws.amazon.com/security/security-bulletins/" target="_blank" rel="noopener noreferrer">AWS Security Bulletins</a>, <a href="https://docs.cloud.google.com/support/bulletins" target="_blank" rel="noopener noreferrer">Google Cloud Security Bulletins (GCP-2026-071, -072)</a>'
     ja: 'インフラ: <a href="https://aws.amazon.com/security/security-bulletins/2026-150-aws/" target="_blank" rel="noopener noreferrer">AWS 2026-150</a>, <a href="https://aws.amazon.com/security/security-bulletins/2026-148-aws/" target="_blank" rel="noopener noreferrer">AWS 2026-148</a>, <a href="https://aws.amazon.com/security/security-bulletins/" target="_blank" rel="noopener noreferrer">AWS Security Bulletins</a>, <a href="https://docs.cloud.google.com/support/bulletins" target="_blank" rel="noopener noreferrer">Google Cloud Security Bulletins (GCP-2026-071, -072)</a>'
+  - vi: 'Linux kernel: <a href="https://github.com/advisories/GHSA-qp6h-4hvh-qqqc" target="_blank" rel="noopener noreferrer">GHSA-qp6h-4hvh-qqqc</a>, <a href="https://security-tracker.debian.org/tracker/CVE-2026-98432" target="_blank" rel="noopener noreferrer">Debian</a>, <a href="https://ubuntu.com/security/CVE-2026-98432" target="_blank" rel="noopener noreferrer">Ubuntu</a>, <a href="https://explore.alas.aws.amazon.com/CVE-2026-98432.html" target="_blank" rel="noopener noreferrer">Amazon Linux ALAS</a>, <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2553390" target="_blank" rel="noopener noreferrer">Red Hat Bugzilla</a>, <a href="@home@linux-cve-2026-98432/analysis/">phân tích nội bộ</a>'
+    ja: 'Linux カーネル: <a href="https://github.com/advisories/GHSA-qp6h-4hvh-qqqc" target="_blank" rel="noopener noreferrer">GHSA-qp6h-4hvh-qqqc</a>, <a href="https://security-tracker.debian.org/tracker/CVE-2026-98432" target="_blank" rel="noopener noreferrer">Debian</a>, <a href="https://ubuntu.com/security/CVE-2026-98432" target="_blank" rel="noopener noreferrer">Ubuntu</a>, <a href="https://explore.alas.aws.amazon.com/CVE-2026-98432.html" target="_blank" rel="noopener noreferrer">Amazon Linux ALAS</a>, <a href="https://bugzilla.redhat.com/show_bug.cgi?id=2553390" target="_blank" rel="noopener noreferrer">Red Hat Bugzilla</a>, <a href="@home@linux-cve-2026-98432/analysis/">社内分析</a>'
