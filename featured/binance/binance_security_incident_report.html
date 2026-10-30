@@ -1,0 +1,197 @@
+---
+layout: default
+title: "Sự cố an ninh Binance 29-30/10/2026"
+description: "Diễn biến, nguyên nhân kỹ thuật sơ bộ, tác động tài chính, quy kết và bài học cho PiraGo từ vụ mất khoảng 6,3 tỷ USD tài sản tại Binance (đang diễn biến)"
+category: "Sự cố an ninh"
+---
+<style>
+  .an-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
+  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--border); }
+  .an-sec { margin: 0 0 40px; }
+  .an-sec h2 { font-size: 21px; margin: 24px 0 12px; scroll-margin-top: 90px; }
+  .an-sec h3 { font-size: 17px; margin: 20px 0 8px; }
+  .an-sec ul, .an-sec ol { padding-left: 22px; }
+  .an-sec li { margin: 4px 0; }
+  .an-sec .table-wrap { overflow-x: auto; }
+  .an-sec code { word-break: break-all; }
+</style>
+
+<div class="report-header">
+  <h1>Sự cố an ninh Binance 29-30/10/2026</h1>
+  <p class="sub">Cập nhật <strong>2026-10-30</strong>. Trạng thái: <strong>đang diễn biến</strong>, số liệu còn sơ bộ và có thể thay đổi. Bản tin tháng: <a href="{{ '/monthly/2026-10/' | relative_url }}">Báo cáo tháng 10/2026</a>.</p>
+</div>
+
+<blockquote class="callout">
+  <p><strong>Cách đọc độ tin cậy:</strong> <span class="badge low">Binance xác nhận</span> là phát biểu của Binance, do báo chí dẫn lại (PiraGo chưa đọc được văn bản gốc). <span class="badge med">Báo cáo</span> là thông tin từ bên thứ ba (TRM Labs, Chainalysis, báo chí), Binance chưa xác nhận. <span class="badge high">Chưa xác minh</span> là nguồn đơn lẻ hoặc chỉ thấy đoạn trích tìm kiếm.</p>
+</blockquote>
+
+<nav class="an-nav" aria-label="Mục lục">
+  <a href="#tom-tat">1. Tóm tắt</a>
+  <a href="#dien-bien">2. Diễn biến</a>
+  <a href="#nguyen-nhan">3. Nguyên nhân kỹ thuật</a>
+  <a href="#tai-chinh">4. Tác động tài chính &amp; ứng phó</a>
+  <a href="#quy-ket">5. Quy kết</a>
+  <a href="#bai-hoc">6. Bài học cho PiraGo</a>
+  <a href="#nguon">7. Nguồn và độ tin cậy</a>
+</nav>
+
+<section class="an-sec">
+<h2 id="tom-tat">1. Tóm tắt</h2>
+<ul>
+  <li><strong>Sự việc:</strong> ngày 29/10/2026 xuất hiện các giao dịch rút tiền trái phép khỏi ví nóng của Binance, phần lớn tiền rời đi trong khoảng 20 phút <span class="badge med">Báo cáo</span> (TRM Labs). Binance xác nhận có sự cố an ninh và tạm dừng rút tiền trên nhiều mạng <span class="badge low">Binance xác nhận</span>.</li>
+  <li><strong>Quy mô:</strong> Binance ước tính tác động khoảng 6,3 tỷ USD <span class="badge low">Binance xác nhận</span>; TRM khoảng 6,36 tỷ USD trên 10 chain, Chainalysis khoảng 6,4 tỷ USD <span class="badge med">Báo cáo</span>. Đây là ước tính tài sản bị ảnh hưởng, chưa phải số lỗ ròng cuối cùng. Một số nguồn gọi là vụ trộm tiền mã hóa lớn nhất từng ghi nhận (Bybit 2025: khoảng 1,5 tỷ USD).</li>
+  <li><strong>Nguyên nhân sơ bộ:</strong> laptop của một kỹ sư DevOps bị xâm nhập, từ đó truy cập một service container và gửi giao dịch rút trái phép. Binance không thấy bằng chứng lộ private key của ví. Điều tra sau đó cho thấy có thêm điểm bị xâm nhập khác, chưa công bố cụ thể <span class="badge low">Binance xác nhận</span>.</li>
+  <li><strong>Ứng phó:</strong> Binance cam kết bù toàn bộ thiệt hại từ quỹ SAFU và tiền của công ty; khoảng 3 tỷ USD bị phong tỏa on-chain cùng đối tác (con số lệch giữa các nguồn, xem mục 4).</li>
+  <li><strong>Quy kết:</strong> TRM (độ tin cậy cao) và Chainalysis ("likely") cho rằng do nhóm TraderTraitor của Triều Tiên. <strong>Binance chưa xác nhận quy kết này.</strong></li>
+  <li><strong>Chưa xác nhận:</strong> chưa nguồn nào PiraGo đọc được xác nhận việc mở lại rút tiền. Binance chỉ nói kỳ vọng bắt đầu khôi phục trong vòng 48 giờ.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="dien-bien">2. Diễn biến</h2>
+<p>Giờ theo nguồn dẫn, múi giờ ghi theo từng dòng. Các mốc có thể được cập nhật khi Binance công bố bản phân tích sau sự cố.</p>
+<div class="table-wrap">
+<table id="timeline">
+  <thead><tr><th>Thời điểm</th><th>Sự kiện</th><th>Độ tin cậy</th></tr></thead>
+  <tbody>
+    <tr><td>29/10, khoảng 20:05 UTC</td><td>Bắt đầu các giao dịch đáng ngờ; phần lớn tiền di chuyển trong khoảng 20 phút.</td><td><span class="badge med">Báo cáo</span> (TRM Labs)</td></tr>
+    <tr><td>29/10</td><td>Người dùng báo tiền bị rút. CZ đăng trên X rằng nhiều khả năng Binance bị hack và kỳ vọng người dùng được bù đầy đủ.</td><td><span class="badge med">Báo cáo</span></td></tr>
+    <tr><td>29/10 (TechCrunch đăng 3:27 pm PDT)</td><td>Binance xác nhận có sự cố an ninh, "đang điều tra tích cực", nói "user funds are completely safe". Phát ngôn viên Ross O'Leary cho biết đã tạm dừng rút tiền trên nhiều mạng như biện pháp phòng ngừa. Ban đầu Binance dùng cụm "potential security issue", sau đổi thành "security incident".</td><td><span class="badge low">Binance xác nhận</span></td></tr>
+    <tr><td>Đêm 29/10 đến rạng sáng 30/10</td><td>Tether, Circle phong tỏa tiền. Tether, Circle, Ripple, World Liberty Financial và Arbitrum Security Council phong tỏa tổng cộng khoảng 2,7 tỷ USD vào sáng sớm 30/10.</td><td><span class="badge med">Báo cáo</span></td></tr>
+    <tr><td>30/10, sáng sớm</td><td>Binance đăng bản cập nhật an ninh đầu tiên.</td><td><span class="badge low">Binance xác nhận</span></td></tr>
+    <tr><td>30/10, 07:26 ET</td><td>Binance cập nhật: điều tra sâu hơn cho thấy có điểm bị xâm nhập ngoài chiếc laptop bị chiếm.</td><td><span class="badge low">Binance xác nhận</span></td></tr>
+    <tr><td>30/10 (Yi He)</td><td>Binance "kỳ vọng bắt đầu khôi phục dịch vụ rút tiền trong vòng 48 giờ tới" sau khi rà soát lại dịch vụ rút tiền và các địa chỉ liên quan. Đây là kỳ vọng, chưa phải xác nhận đã mở lại. Chưa rõ tất cả các mạng có mở lại cùng lúc hay không.</td><td><span class="badge low">Binance xác nhận</span> (kỳ vọng)</td></tr>
+    <tr><td>30/10</td><td>Một tiêu đề của CryptoTimes ghi "45 giờ" thay vì 48 giờ. Có thể là cùng mốc 48 giờ tính từ thời điểm muộn hơn, nhưng PiraGo không đọc được trang này.</td><td><span class="badge high">Chưa xác minh</span> (chỉ đoạn trích)</td></tr>
+  </tbody>
+</table>
+</div>
+<p><strong>Lưu ý nguồn lệch:</strong> các ước tính thiệt hại sớm (ít nhất 2 tỷ USD, tới 5,7 tỷ USD theo CoinDesk) là số liệu ban đầu, chưa được xác nhận, về sau các nguồn đưa ra khoảng 6,3-6,4 tỷ USD. TechCrunch ghi chưa rõ nguyên nhân vì bài viết trước khi Binance cập nhật về laptop DevOps; đây là chênh lệch thời điểm, không phải mâu thuẫn. Một vụ khác trên TechCrunch (Polymarket/DebugBear, khoảng 2 triệu USD, do bên thứ ba bị xâm nhập) được mô tả là riêng biệt, không nhập với Binance. Về việc nạp tiền, The Block ghi vẫn nạp được, còn ABC/Al Jazeera ghi cả nạp và rút đều bị tạm dừng; Binance (qua Yi He) nói nạp tiền bình thường.</p>
+</section>
+
+<section class="an-sec">
+<h2 id="nguyen-nhan">3. Nguyên nhân kỹ thuật</h2>
+<p>Toàn bộ mục này là <strong>sơ bộ</strong>. Binance hứa công bố bản phân tích kỹ thuật sau khi điều tra xong.</p>
+<h3>3.1. Phát hiện của Binance</h3>
+<ul>
+  <li><span class="badge low">Binance xác nhận</span> Sơ bộ: laptop của một kỹ sư DevOps bị xâm nhập, cho phép kẻ tấn công truy cập một service container, sau đó gửi các giao dịch rút trái phép.</li>
+  <li><span class="badge low">Binance xác nhận</span> Không có bằng chứng lộ private key của ví.</li>
+  <li><span class="badge low">Binance xác nhận</span> Phát hiện sau: cuộc tấn công phức tạp hơn một thiết bị. Co-CEO Richard Teng: kẻ tấn công "không chỉ dùng quyền của một kỹ sư" và đây "không phải một thao tác one-click". Các điểm xâm nhập bổ sung chưa được nêu cụ thể.</li>
+  <li><span class="badge low">Binance xác nhận</span> Binance đã thu hồi ủy quyền của địa chỉ bị ảnh hưởng và đang làm mới dịch vụ rút tiền cùng các địa chỉ liên quan.</li>
+</ul>
+<h3>3.2. Phân tích của bên thứ ba</h3>
+<ul>
+  <li><span class="badge med">Báo cáo</span> TRM Labs, trên Ethereum: một ví nóng bị chiếm quyền bằng 50 ủy quyền ký trước (pre-signed authorizations), nhiều khả năng thu được qua phishing. Theo Yahoo Finance dẫn TRM, đây là cơ chế EIP-7702: lô ủy quyền cho phép một hợp đồng độc hại điều khiển ví nóng của Binance và liên tục rút tiền về. Các ví khác dùng giao dịch ký thông thường.</li>
+  <li><span class="badge med">Báo cáo</span> TRM, trên các chain khác: ví dùng nhiều loại khóa và sơ đồ ký khác nhau vẫn tạo ra chữ ký hợp lệ trong khoảng 30 phút. TRM đánh giá đây là dấu hiệu xâm nhập hạ tầng ký của ví nóng Binance. Đây là nhận định của TRM, không phải kết luận của Binance.</li>
+  <li><span class="badge high">Chưa xác minh</span> Một tiêu đề CryptoTicker và đoạn trích tìm kiếm nhắc tới khoảng 2,8 tỷ USD bị rút khỏi một ví; PiraGo không đọc được trang và chưa kiểm chứng mối liên hệ với nhận định của TRM.</li>
+  <li><span class="badge high">Chưa xác minh</span> Suy đoán, không phải sự kiện: CEO NyxLab Kok Tin Gan cho rằng một chữ ký duy nhất có thể đã cấp token toàn quyền không hết hạn cho một ví nóng (CBS dẫn như phân tích của ông).</li>
+</ul>
+<h3>3.3. Điều chưa biết</h3>
+<ul>
+  <li>Cách laptop DevOps bị xâm nhập (phishing, mã độc hay cách khác) chưa được nguồn nào xác lập.</li>
+  <li>Các điểm xâm nhập bổ sung chưa được công bố.</li>
+  <li>Chưa rõ vector có giống vụ Bybit 2025 hay không. Điểm chung có thể nêu từ nguồn: tấn công vào hạ tầng ký và vận hành của sàn, không phải phá vỡ mật mã; Binance nói không có bằng chứng lộ private key. TRM chỉ nói "một số đặc điểm khớp với các vụ trộm trước đó gắn với Triều Tiên, gồm Bybit". Bybit, theo báo chí công khai, có nguyên nhân gốc là tấn công chuỗi cung ứng Safe{Wallet}.</li>
+  <li>Chưa có IOC công khai (địa chỉ, tx hash, domain) trong các bài PiraGo đọc được. Cần xem trực tiếp trang của TRM.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="tai-chinh">4. Tác động tài chính &amp; ứng phó</h2>
+<h3>4.1. Số tiền bị ảnh hưởng</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Nguồn</th><th>Con số</th><th>Ghi chú</th></tr></thead>
+  <tbody>
+    <tr><td>Binance</td><td>khoảng 6,3 tỷ USD</td><td>Ước tính tài sản bị ảnh hưởng do rút trái phép, không phải số lỗ ròng cuối cùng. <span class="badge low">Binance xác nhận</span></td></tr>
+    <tr><td>TRM Labs</td><td>khoảng 6,36 tỷ USD, 10 chain (gồm Ethereum, Bitcoin, Tron, Solana, XRPL)</td><td><span class="badge med">Báo cáo</span></td></tr>
+    <tr><td>Chainalysis</td><td>khoảng 6,4 tỷ USD</td><td><span class="badge med">Báo cáo</span></td></tr>
+    <tr><td>Theo dõi on-chain sớm (Unchained)</td><td>khoảng 3,52 tỷ USD vào một địa chỉ nhận trong khoảng 4:24-5:04 pm ET ngày 29/10</td><td>Gồm khoảng 1,68 tỷ USDT, 823 triệu USDC, 197.170 ETH và khoảng 564 triệu USD ở 62 token khác. <span class="badge med">Báo cáo</span> (một nguồn)</td></tr>
+  </tbody>
+</table>
+</div>
+<ul>
+  <li><span class="badge med">Báo cáo</span> Các ví bị ảnh hưởng là ví nóng của chính Binance; tiền khách hàng không bị dùng để bù (theo tóm tắt các bài của The Block/TokenPost, PiraGo chưa đọc trực tiếp).</li>
+  <li><span class="badge med">Báo cáo</span> Theo TRM, kẻ tấn công còn giữ hơn 420.000 ETH và 18.270 BTC (khoảng 2,4 tỷ USD). Kẻ tấn công đã đổi một phần stablecoin sang BTC và ETH, làm hạn chế khả năng chặn của các đơn vị phát hành; tài sản vẫn truy vết được và có thể bị gắn cờ khi vào sàn hợp tác.</li>
+  <li>PiraGo không nêu số liệu thanh lý hay thiệt hại trên BNB Chain vì không có nguồn đáng tin đã đọc. Giá BTC giảm khoảng 3,2% xuống dưới 79.000 USD chiều 29/10 (AP) và khoảng 5% xuống dưới 77.000 USD ngày 30/10 (Al Jazeera), là hai mốc thời gian khác nhau <span class="badge med">Báo cáo</span>.</li>
+</ul>
+<h3>4.2. Tiền bị phong tỏa và chênh lệch số liệu</h3>
+<ul>
+  <li><span class="badge low">Binance xác nhận</span> Khoảng 3 tỷ USD bị phong tỏa on-chain cùng các đối tác blockchain.</li>
+  <li><span class="badge med">Báo cáo</span> Theo The Block: Tether hơn 1,57 tỷ USDT, Circle hơn 800 triệu USDC, Ripple khoảng 200 triệu USD, World Liberty Financial khoảng 27 triệu USD stablecoin cùng 2 triệu USD token riêng. Arbitrum Security Council được cho là đã phong tỏa khoảng 30,5 triệu USD (qua kết quả tìm kiếm, chưa đọc trang gốc). Circle được cho là phối hợp với cơ quan thực thi pháp luật.</li>
+  <li><strong>Chênh lệch:</strong> Al Jazeera ghi tiêu đề 2,54 tỷ USD (số sớm), phần nội dung và Binance về sau ghi khoảng 3 tỷ USD; TRM đếm khoảng 2,7 tỷ USD lúc 00:30 UTC ngày 30/10. Phần lớn có thể do khác thời điểm chụp số liệu. Tổng các khoản phong tỏa của đối tác trong bài The Block (khoảng 2,6 tỷ USD) chưa tới 3 tỷ USD; phần chênh chưa được giải thích trong các nguồn đã đọc. Tiền bị phong tỏa nằm ngoài khoản dự phòng 6,34 tỷ USD.</li>
+  <li><span class="badge med">Báo cáo</span> Chuyên gia TRM Ari Redbord: việc thu hồi cần một quy trình pháp lý riêng (lệnh tòa, phối hợp với đơn vị phát hành).</li>
+</ul>
+<h3>4.3. Bù đắp và khôi phục</h3>
+<ul>
+  <li><span class="badge low">Binance xác nhận</span> Sẽ bù toàn bộ thiệt hại từ quỹ SAFU và tiền công ty. Richard Teng: "Your money is safe, and we're covering every loss."</li>
+  <li><span class="badge low">Binance xác nhận</span> Cam kết hơn 6,34 tỷ USD tiền công ty và dự trữ. Khoảng 5 tỷ USD đã nằm sẵn trong đúng các token bị ảnh hưởng; khoảng 1,34 tỷ USD còn lại đang mua qua thị trường và OTC. Binance cảnh báo thanh khoản mỏng và thời gian thanh toán có thể làm chậm việc mua.</li>
+  <li><span class="badge med">Báo cáo</span> Yi He: việc mua lại dùng cả BTC/ETH của công ty; một bài ghi rõ bài đăng không nói BTC/ETH đã bị bán. Binance đã bắt đầu khôi phục tài sản bị ảnh hưởng nhưng chưa nêu số lượng hay thời hạn hoàn tất.</li>
+  <li><span class="badge low">Binance xác nhận</span> Sẽ công bố Proof of Reserves cập nhật sau khi khắc phục, cùng bản phân tích kỹ thuật chi tiết; đang phối hợp với cơ quan thực thi pháp luật. Chưa có cơ quan quản lý nào bị nêu tên hay hành động quản lý nào trong các nguồn đã đọc.</li>
+  <li><span class="badge high">Chưa xác nhận</span> Mở lại rút tiền: Binance chỉ nêu kỳ vọng trong vòng 48 giờ. PiraGo chưa thấy nguồn nào xác nhận việc đã mở lại.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="quy-ket">5. Quy kết</h2>
+<ul>
+  <li><span class="badge med">Báo cáo</span> TRM Labs quy cho TraderTraitor, "đơn vị hacker tinh nhuệ của Triều Tiên", với nhận định "high confidence"; cho rằng nhiều đặc điểm khớp các vụ trộm trước đây gắn với Triều Tiên, gồm Bybit (CBS, Yahoo Finance dẫn lại; trang TRM trả về 403 nên PiraGo chưa đọc trực tiếp).</li>
+  <li><span class="badge med">Báo cáo</span> CEO Chainalysis Jonathan Levin nói trên mạng xã hội rằng vụ việc "likely" do TraderTraitor thực hiện.</li>
+  <li>Bộ Tài chính Mỹ cho rằng TraderTraitor là một phần của Lazarus Group (CBS dẫn).</li>
+  <li><strong>Binance chưa xác nhận quy kết.</strong> Theo tóm tắt các bài báo (chưa kiểm chứng trực tiếp), Binance đang phối hợp với cơ quan thực thi pháp luật để xác định đối tượng. Quy kết hiện là đánh giá của các hãng phân tích blockchain, chưa phải kết luận chính thức.</li>
+  <li><span class="badge high">Chưa xác minh</span> Một đoạn trích NPR nói FBI cho rằng Triều Tiên/TraderTraitor chịu trách nhiệm; CBS chỉ nhắc FBI trong vụ Bybit 2025, không phải Binance. Các nguồn mâu thuẫn, coi là chưa xác nhận. Đoạn trích cũng ghi Elliptic kêu gọi thận trọng, chưa kiểm chứng.</li>
+  <li>So sánh: Bybit (khoảng 21/02/2025, khoảng 1,5 tỷ USD) được FBI quy cho Triều Tiên/TraderTraitor. Theo con số của TRM, vụ Binance lớn hơn khoảng 4 lần.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="bai-hoc">6. Bài học cho PiraGo</h2>
+<p>Mỗi mục được gắn nhãn: <strong>từ nguồn</strong> là điều rút ra trực tiếp từ dữ kiện đã công bố; <strong>khuyến nghị của PiraGo</strong> là đề xuất của chúng tôi, Binance hay TRM không công bố. Áp dụng cho hạ tầng AWS/GCP và các stack Node, PHP, Java, Next.js, Laravel, npm, Composer, Maven.</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>#</th><th>Bài học</th><th>Nhãn</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Laptop DevOps được báo cáo là điểm vào ban đầu, nên coi máy DevOps/quản trị là tài sản tầng 0.</td><td>từ nguồn</td></tr>
+    <tr><td>2</td><td>Cuộc tấn công không chỉ dùng quyền của một kỹ sư; tiền được rút qua chuỗi laptop, service container, hạ tầng ký. Đánh giá cả chuỗi quyền, không chỉ từng thiết bị.</td><td>từ nguồn</td></tr>
+    <tr><td>3</td><td>Tiền rời đi trong khoảng 20 phút trên 10 chain; cần cảnh báo thời gian thực và quy trình tạm dừng khẩn cấp đã diễn tập.</td><td>từ nguồn</td></tr>
+    <tr><td>4</td><td>Máy riêng hoặc profile được quản lý cho truy cập quản trị prod cloud; không duyệt web cá nhân hay cài phần mềm lạ trên đó. Mã hóa ổ đĩa, MDM, tự động vá OS, không cấp quyền admin cục bộ mặc định.</td><td>khuyến nghị của PiraGo</td></tr>
+    <tr><td>5</td><td>MFA bằng khóa phần cứng (FIDO2) cho cloud console, Git hosting và registry; không để SMS/TOTP làm phương án dự phòng cho vai trò đặc quyền.</td><td>khuyến nghị của PiraGo</td></tr>
+    <tr><td>6</td><td>Không để credential cloud dài hạn trên đĩa: dùng AWS IAM Identity Center và đăng nhập ngắn hạn của gcloud; quét laptop tìm <code>~/.aws/credentials</code>, file JSON service account, file <code>.env</code>.</td><td>khuyến nghị của PiraGo</td></tr>
+    <tr><td>7</td><td>Mỗi workload một service account với quyền tối thiểu; dùng OIDC federation (GitHub Actions sang AWS/GCP) thay vì lưu khóa; token có TTL ngắn, không dùng token không hết hạn; secret để trong Secrets Manager/Secret Manager và xoay vòng khi có sự cố laptop.</td><td>khuyến nghị của PiraGo</td></tr>
+    <tr><td>8</td><td>Bảo vệ pipeline: branch protection, bắt buộc review, môi trường prod cần phê duyệt thủ công; egress filtering cho container; cảnh báo khi service account dùng từ IP/region lạ (CloudTrail, GCP Audit Logs).</td><td>khuyến nghị của PiraGo</td></tr>
+    <tr><td>9</td><td>Chuẩn bị sẵn khả năng thu hồi toàn bộ token/khóa của một người hoặc dịch vụ trong vài phút (break-glass).</td><td>khuyến nghị của PiraGo</td></tr>
+    <tr><td>10</td><td>Với dự án khách hàng xử lý tiền, thanh toán hay crypto: hạn mức theo tài sản/khung giờ kèm circuit breaker, giới hạn số dư ví nóng, phê duyệt nhiều bên ngoài băng tần với giao dịch lớn hoặc địa chỉ đích mới, danh sách địa chỉ cho phép có độ trễ khi thay đổi, ký giao dịch tách khỏi host ứng dụng (HSM/MPC/KMS có chính sách).</td><td>khuyến nghị của PiraGo</td></tr>
+    <tr><td>11</td><td>EDR có chống can thiệp trên mọi máy kỹ sư (gồm macOS), cảnh báo tới kênh có người trực. Phát hiện tiến trình con bất thường của Terminal/IDE, launch agent mới, <code>curl | sh</code>, truy cập file credential, lệnh gọi cloud API lệch baseline.</td><td>khuyến nghị của PiraGo</td></tr>
+    <tr><td>12</td><td>Quy trình khi nghi ngờ: cô lập máy, thu hồi phiên SSO, xoay vòng mọi secret mà máy đó có thể chạm tới.</td><td>khuyến nghị của PiraGo</td></tr>
+    <tr><td>13</td><td>Nguồn chưa xác lập laptop bị xâm nhập bằng cách nào, nên không giả định là phishing. Tuy nhiên vẫn nên coi liên hệ tuyển dụng, "bài test code", repo take-home lạ là nguy hiểm; chạy repo lạ trong VM dùng một lần hoặc Codespace, không chạy trên laptop công việc. Xác minh yêu cầu cấp quyền, phát hành, thanh toán qua kênh thứ hai.</td><td>khuyến nghị của PiraGo</td></tr>
+    <tr><td>14</td><td>Khóa phiên bản phụ thuộc (<code>package-lock.json</code>, <code>composer.lock</code>, kiểm tra checksum Maven), dùng <code>npm ci --ignore-scripts</code> khi có thể, qua private registry proxy; thẩm định tiện ích IDE; hạn chế người được thêm dependency hoặc publish package.</td><td>khuyến nghị của PiraGo</td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section class="an-sec">
+<h2 id="nguon">7. Nguồn và độ tin cậy</h2>
+<p>Sự cố mới xảy ra trong vài giờ. Tất cả phát biểu của Binance trong trang này là do báo chí dẫn lại: trang thông báo chính thức của Binance ("Security Incident Update (2026-10-30)") chỉ hiện tiêu đề, không có nội dung. Cần đối chiếu lại với nguồn gốc khi có.</p>
+<h3>Đã đọc được</h3>
+<ul>
+  <li><a href="https://techcrunch.com/2026/10/29/binance-pauses-withdrawals-as-hackers-suspected-of-stealing-billions-in-crypto/">TechCrunch (29/10)</a></li>
+  <li><a href="https://www.helpnetsecurity.com/2026/10/30/binance-crypto-hack/">Help Net Security (30/10)</a></li>
+  <li><a href="https://businessupturn.com/finance/cryptocurrency/binance-withdrawals-to-resume-within-48-hours-says-yi-he-after-record-6-36-billion-crypto-hack/">Business Upturn</a></li>
+  <li><a href="https://abcnews.com/Business/binance-estimates-security-breach-impact-63-billion/story?id=137698510">ABC News</a></li>
+  <li><a href="https://www.theblock.co/news/ecosystems/2026-10-30-binance-says-it-has-6-34-billion-ready-to-cover-hack-losses-432208">The Block</a></li>
+  <li><a href="https://www.aljazeera.com/economy/2026/10/30/binance-says-2-54bn-in-crypto-funds-frozen-amid-potential-security-issue">Al Jazeera</a></li>
+  <li><a href="https://tech-insider.org/binance-withdrawals-paused-3-52b-outflow-tether-circle-freeze-2026/">Tech Insider</a> (nguồn thứ cấp, tổng hợp AP và Unchained)</li>
+  <li><a href="https://www.cbsnews.com/news/binance-hack-north-korea/">CBS News</a></li>
+  <li><a href="https://finance.yahoo.com/markets/crypto/articles/binance-6-3-billion-hack-083916125.html">Yahoo Finance</a></li>
+  <li><a href="https://www.tokenpost.com/news/technology/44756">TokenPost (44756)</a>, <a href="https://www.tokenpost.com/news/technology/44715">TokenPost (44715)</a>, <a href="https://www.bitbase.com/news/binance-buys-back-stolen-altcoins-after-hack">Bitbase</a> (dẫn trong dữ kiện về dự trữ và mua lại)</li>
+  <li>Bối cảnh Bybit 2025: <a href="https://ic3.gov/psa/2025/psa250226">FBI IC3 PSA I-022625</a>, <a href="https://thehackernews.com/2025/02/bybit-hack-traced-to-safewallet-supply.html">The Hacker News</a></li>
+</ul>
+<h3>Không đọc được hoặc chỉ thấy đoạn trích</h3>
+<ul>
+  <li>Trang thông báo của Binance: chỉ có tiêu đề, không có nội dung.</li>
+  <li><a href="https://www.trmlabs.com/resources/blog/north-korea-steals-usd-6-36-billion-from-binance-in-the-largest-hack-in-history">TRM Labs blog</a>: HTTP 403. Lời TRM lấy từ CBS và Yahoo Finance.</li>
+  <li><a href="https://thehackernews.com/2026/10/binance-suffers-security-breach.html">The Hacker News (2026)</a>, Axios, SOCRadar: HTTP 403, chỉ thấy đoạn trích tìm kiếm.</li>
+  <li><a href="https://www.cryptotimes.io/2026/10/30/binance-hack-update-more-breach-points-withdrawals-to-restart-in-45-hours/">CryptoTimes</a>: HTTP 403, chỉ tiêu đề (mốc 45 giờ).</li>
+  <li><a href="https://cryptoticker.io/en/binance-hack-hot-wallet-drained/">CryptoTicker</a>: HTTP 429, chỉ tiêu đề và đoạn trích.</li>
+  <li>CNBC (<a href="https://www.cnbc.com/2026/10/30/bitcoin-ether-price-binance-security-scare-rattles-crypto-markets.html">thị trường</a>, <a href="https://www.cnbc.com/2026/10/30/billions-in-crypto-frozen-in-binance-hack-heres-what-happens-next-.html">phong tỏa</a>), Gulf Business, <a href="https://www.npr.org/2026/10/30/g-s1-150902/blockchain-intelligence-firms-link-north-korea-to-6-3b-hack-on-binance">NPR</a>, <a href="https://www.itp.net/cybersecurity/binance-hack-6-34bn-reserved-to-cover-losses-as-crypto-withdrawals-remain-paused">ITP</a>: không đọc được (403, timeout hoặc chỉ tiêu đề/đoạn trích).</li>
+</ul>
+</section>

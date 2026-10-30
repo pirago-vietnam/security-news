@@ -1,0 +1,238 @@
+---
+layout: default
+lang: ja
+title: "Binance セキュリティインシデント (2026年10月29-30日)"
+description: "2026年10月29日から30日にかけて発生した Binance のホットウォレットからの不正出金インシデントの経緯、技術的な原因、財務的影響、攻撃者の特定、PiraGo への教訓"
+category: "セキュリティインシデント"
+permalink: /ja/featured/binance/binance_security_incident_report/
+---
+<style>
+  .an-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
+  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--border); }
+  .an-sec { margin: 0 0 40px; }
+  .an-sec h2 { font-size: 21px; margin: 24px 0 12px; scroll-margin-top: 90px; }
+  .an-sec h3 { font-size: 17px; margin: 20px 0 8px; }
+  .an-sec ul, .an-sec ol { padding-left: 22px; }
+  .an-sec li { margin: 4px 0; }
+  .an-sec .table-wrap { overflow-x: auto; }
+</style>
+
+<div class="report-header">
+  <h1>Binance セキュリティインシデント: ホットウォレットからの不正出金（2026年10月29-30日）</h1>
+  <p class="sub"><strong>2026年10月30日 時点、進行中。</strong>インシデント発生から間もないため、数値と原因は暫定情報で、今後変わる可能性があります。月次レポート: <a href="{{ '/ja/monthly/2026-10/' | relative_url }}">2026年10月 セキュリティレポート</a>。</p>
+</div>
+
+<blockquote class="callout">
+  <p><strong>表記の凡例:</strong> <strong>[確認済]</strong> = Binance 自身の発表（報道経由で伝えられたもの。一次テキストは PiraGo では未読）。<strong>[報道]</strong> = TRM Labs、Chainalysis、報道機関など第三者による報告で、Binance は確認していません。<strong>[未検証]</strong> = 単一情報源、または検索結果のスニペットのみ。</p>
+</blockquote>
+
+<nav class="an-nav" aria-label="目次">
+  <a href="#tom-tat">1. 概要</a>
+  <a href="#dien-bien">2. 経緯</a>
+  <a href="#nguyen-nhan">3. 技術的な原因</a>
+  <a href="#tai-chinh">4. 財務的影響と対応</a>
+  <a href="#quy-ket">5. 攻撃者の特定</a>
+  <a href="#bai-hoc">6. PiraGo への教訓</a>
+  <a href="#nguon">7. 情報源と信頼性</a>
+</nav>
+
+<section class="an-sec">
+<h2 id="tom-tat">1. 概要</h2>
+<ul>
+  <li><strong>出来事:</strong> 2026年10月29日、Binance のウォレットから不正な出金が行われ、Binance は複数のネットワークで出金を一時停止し、セキュリティインシデントを認めました。<em>[確認済]</em></li>
+  <li><strong>規模:</strong> Binance は影響額を約 63 億ドルと見積もっています（最終的な純損失ではなく、影響を受けた資産の推定）。<em>[確認済]</em> TRM Labs は約 63.6 億ドル（10 のブロックチェーン）、Chainalysis は約 64 億ドルとしています。<em>[報道]</em> 報道では、過去最大の暗号資産窃盗とされ、従来の記録は 2025年 Bybit の約 15 億ドルです。<em>[報道]</em></li>
+  <li><strong>原因（暫定）:</strong> 侵害された DevOps エンジニアのノート PC からサービスコンテナにアクセスされ、不正な出金トランザクションが送信されたと Binance は説明しています。ウォレットの秘密鍵の漏えいを示す証拠は確認されていません。その後の調査で、ノート PC 以外にも侵害箇所があったと発表されましたが、詳細は未公表です。<em>[確認済]</em></li>
+  <li><strong>顧客への影響:</strong> Binance は SAFU 基金と自己資金で全損失を補填すると表明しています。<em>[確認済]</em></li>
+  <li><strong>攻撃者:</strong> TRM Labs と Chainalysis は北朝鮮関連の TraderTraitor によるものと評価していますが、Binance は攻撃者を特定していません。<em>[報道]</em></li>
+  <li><strong>現状:</strong> 出金再開は確認されていません（読めた情報源の範囲）。技術的な事後検証（ポストモーテム）と更新版 Proof of Reserves は、調査と是正の後に公開される予定です。<em>[確認済]</em></li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="dien-bien">2. 経緯</h2>
+<p>時刻は情報源の記載どおりです。UTC と ET、PDT が混在しています。</p>
+<div class="table-wrap">
+<table id="timeline">
+  <thead><tr><th>日時</th><th>出来事</th><th>区分</th></tr></thead>
+  <tbody>
+    <tr><td>10月29日 約 20:05 UTC</td><td>不審なトランザクションが始まり、資金の大半は約 20 分以内に移動（TRM Labs）。</td><td>[報道]</td></tr>
+    <tr><td>10月29日</td><td>ユーザーが資金の流出を報告。CZ は X に、Binance がハッキングされた可能性が高く、ユーザーは「全額補填される」はずだと投稿。</td><td>[報道]</td></tr>
+    <tr><td>10月29日（TechCrunch 掲載は太平洋夏時間 15:27）</td><td>Binance がセキュリティインシデントを認め、「actively investigating」「user funds are completely safe」と表明。広報の Ross O'Leary 氏は、予防措置として複数のネットワークで出金を停止したと説明。当初は「potential security issue」と表現していた。</td><td>[確認済]</td></tr>
+    <tr><td>10月29日夜から30日早朝</td><td>Tether と Circle が資金を凍結。Tether、Circle、Ripple、World Liberty Financial、Arbitrum Security Council による凍結は、30日早朝に約 27 億ドルに達した。</td><td>[報道]</td></tr>
+    <tr><td>10月30日 早朝</td><td>Binance が最初のセキュリティ更新を公表。</td><td>[確認済]</td></tr>
+    <tr><td>10月30日 07:26 ET</td><td>Binance が、追加調査で侵害されたノート PC 以外にも侵害箇所があったと発表。</td><td>[確認済]</td></tr>
+    <tr><td>10月30日（金）</td><td>共同創業者の Yi He 氏が、出金サービスの復旧を「今後 48 時間以内に開始する見込み」と表明。入金は通常どおり。これは見込みであり、再開の確認ではありません。全ネットワークが同時に再開するかも不明です。</td><td>[確認済]（見込み）</td></tr>
+    <tr><td>10月30日</td><td>CryptoTimes の見出しは「45 時間」で再開としているが（ページは読めず、スニペットのみ）、同じ 48 時間の見込みを後の時刻から数えたものと推測されます。</td><td>[未検証]</td></tr>
+  </tbody>
+</table>
+</div>
+<h3>情報源間の食い違い</h3>
+<ul>
+  <li><strong>出金再開までの時間:</strong> 「48 時間以内」（Yi He 氏）と「45 時間」（CryptoTimes の見出し）。いずれも未確認です。</li>
+  <li><strong>入金の扱い:</strong> The Block は入金は可能で出金のみ停止としていますが、ABC と Al Jazeera は入金と出金の両方が停止されたとしています。<em>[報道]</em></li>
+  <li><strong>初期の損失額:</strong> TechCrunch は「少なくとも 20 億ドル」、CoinDesk は最大 57 億ドルという推定を伝えましたが、初期の未確認の数字です。後の報道は約 63-64 億ドルです。</li>
+  <li><strong>原因の記載:</strong> TechCrunch は原因が示されていないと書いています。これは Binance の DevOps ノート PC に関する更新より前の記事であり、時点の違いで、矛盾ではありません。</li>
+  <li><strong>別件:</strong> TechCrunch が伝えた Polymarket/DebugBear の件（約 200 万ドル、サードパーティの侵害）は別のインシデントとされており、Binance の件と混同しないでください。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="nguyen-nhan">3. 技術的な原因</h2>
+<p>根本原因は調査中です。以下はいずれも暫定情報で、Binance の技術的な事後検証（ポストモーテム）はまだ公開されていません。</p>
+<h3>3.1. Binance の発表</h3>
+<ul>
+  <li><strong>初期の暫定調査 <em>[確認済]</em>:</strong> 侵害された DevOps エンジニアのノート PC により、攻撃者がサービスコンテナへのアクセスを得て、不正な出金トランザクションを送信した。</li>
+  <li><strong>秘密鍵 <em>[確認済]</em>:</strong> ウォレットの秘密鍵の漏えいを示す証拠はない。</li>
+  <li><strong>後の調査 <em>[確認済]</em>:</strong> 共同 CEO の Richard Teng 氏は、攻撃者は 1 人のエンジニアの権限だけを使ったのではなく、「one-click」の単一操作でもなかったと述べました。追加の侵害箇所は具体的に示されていません。</li>
+  <li>Binance は出金サービスと関連アドレスの刷新（revamp）を進めており、影響を受けたアドレスの承認を取り消したと報じられています。<em>[確認済]</em></li>
+</ul>
+<h3>3.2. 第三者の分析 <em>[報道]</em></h3>
+<ul>
+  <li><strong>Ethereum（TRM Labs）:</strong> 50 件の署名済み認可（pre-signed authorizations）を使って、ホットウォレットが乗っ取られた。認可はフィッシングで入手された可能性が高いとされています。報道によれば EIP-7702 が使われ、悪意あるコントラクトがウォレットを制御し、入金された資金を繰り返し流出させました。</li>
+  <li><strong>他のチェーン（TRM Labs）:</strong> 鍵の種類や署名方式が異なるウォレットでも、約 30 分以内に有効な署名が生成された。TRM はこれを、Binance のホットウォレット署名基盤の侵害と評価しています（TRM の評価）。</li>
+  <li>CryptoTicker の見出しとスニペットには、EIP-7702 の認可で Ethereum のホットウォレットに攻撃者のコードを実行させ、1 つのウォレットから約 28 億ドルが流出したとあります。<em>[未検証]</em> スニペットのみで、TRM の記述との関係は確認していません。</li>
+  <li><strong>推測（事実ではない）:</strong> NyxLab の CEO Kok Tin Gan 氏は、1 回の署名でホットウォレットへの失効しない完全アクセス権限が付与された可能性を示唆しています。これは同氏の分析であり、確認された事実ではありません。</li>
+</ul>
+<h3>3.3. 確定していない点</h3>
+<ul>
+  <li>ノート PC がどう侵害されたか（フィッシングかどうかを含む）は、情報源で示されていません。</li>
+  <li>追加の侵害箇所と、攻撃の全体経路。</li>
+  <li>2025年 Bybit と同じ侵入経路かどうか。Bybit の根本原因は Safe{Wallet} のサプライチェーン侵害と報じられましたが、Binance で同じ手口だったかは確認されていません。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="tai-chinh">4. 財務的影響と対応</h2>
+<h3>4.1. 影響額</h3>
+<ul>
+  <li>Binance の見積もり: 不正出金による影響は約 63 億ドル。影響を受けた資産の推定で、最終的な純損失ではありません。<em>[確認済]</em></li>
+  <li>TRM Labs は約 63.6 億ドル（Ethereum、Bitcoin、Tron、Solana、XRPL を含む 10 チェーン）、Chainalysis は約 64 億ドル。<em>[報道]</em></li>
+  <li>初期のオンチェーン追跡（Unchained）では、10月29日の 16:24 から 17:04 ET に、約 35.2 億ドルが 1 つの受取アドレスに到達したとされます（約 16.8 億ドルの USDT、8.23 億ドルの USDC、他の 62 トークンで約 5.64 億ドル、197,170 ETH）。<em>[報道]</em></li>
+  <li>被害を受けたのは Binance 自身のホットウォレットで、顧客資金は使われていないと報じられています。<em>[報道]</em></li>
+  <li>攻撃者の手元に残る額: TRM によれば 420,000 ETH 超と 18,270 BTC（約 24 億ドル）。<em>[報道]</em></li>
+</ul>
+<h3>4.2. 凍結された資金</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>主体</th><th>凍結額</th><th>区分</th></tr></thead>
+  <tbody>
+    <tr><td>Binance（総額）</td><td>約 30 億ドル近く（ブロックチェーンのパートナーと共同）</td><td>[確認済]</td></tr>
+    <tr><td>Tether</td><td>15.7 億ドル超の USDT（CEO Ardoino 氏は「15 億ドル超」）</td><td>[報道]</td></tr>
+    <tr><td>Circle</td><td>8 億ドル超の USDC（CEO Allaire 氏も「8 億ドル超」）</td><td>[報道]</td></tr>
+    <tr><td>Ripple</td><td>約 2 億ドル</td><td>[報道]</td></tr>
+    <tr><td>World Liberty Financial</td><td>ステーブルコイン約 2,700 万ドルと自社トークン 200 万ドル</td><td>[報道]</td></tr>
+    <tr><td>Arbitrum Security Council</td><td>約 3,050 万ドル（ページ未取得）</td><td>[報道]</td></tr>
+  </tbody>
+</table>
+</div>
+<ul>
+  <li><strong>食い違い:</strong> Al Jazeera の見出しは凍結 25.4 億ドルですが、本文と Binance の後の発表は約 30 億ドルです。TRM の集計は 2026年10月30日 00:30 UTC 時点で約 27 億ドルです。時点の違いと考えられますが、パートナー別の凍結額を合計しても（約 26 億ドル）30 億ドルには届かず、残りは読めた情報源では説明されていません。</li>
+  <li>凍結資金は、補填用の準備金（下記）とは別で、その一部ではありません。<em>[報道]</em></li>
+  <li>攻撃者は一部のステーブルコインを BTC や ETH に交換しており、発行体による凍結が難しくなっています。資産は追跡可能で、協力的な取引所に入った時点でフラグを立てられます。<em>[報道]</em></li>
+  <li>TRM の Ari Redbord 氏: 資金の回収には、裁判所命令や発行体との調整など、別の法的手続が必要です。<em>[報道]</em></li>
+</ul>
+<h3>4.3. 補填と準備金</h3>
+<ul>
+  <li>Binance は SAFU 基金と自己資金で全損失を補填すると表明。Richard Teng 氏: 「Your money is safe, and we're covering every loss.」<em>[確認済]</em></li>
+  <li>63.4 億ドル超の自己資金と準備金を補填に充当。約 50 億ドルは同じ対象トークンで既に保有しており、残りの約 13.4 億ドルを市場および OTC 取引で購入中。流動性と決済の制約で購入が遅れる可能性があると警告しています。<em>[確認済]</em></li>
+  <li>Yi He 氏: 買い戻しには自社保有の BTC と ETH も使う。報道の 1 つは、投稿が BTC/ETH を売却したとは述べていないと指摘。Binance は影響を受けた資産の復元を開始したが、戻った額や完了時期は示していません。<em>[報道]</em></li>
+  <li>更新版 Proof of Reserves は是正後に公開予定。<em>[確認済]</em></li>
+</ul>
+<h3>4.4. 出金、入金、市場、当局</h3>
+<ul>
+  <li>出金は 10月29日に複数のネットワークで予防措置として停止。復旧は「出金サービスと関連アドレスのセキュリティ刷新」の後、約 48 時間以内の見込みで、再開の確認はありません。</li>
+  <li>市場: BTC は 10月29日午後に約 3.2% 下落して 79,000 ドルを割り込み（AP）、Al Jazeera は 10月30日に約 5% 下落して 77,000 ドル未満と伝えています。時点が異なり、いずれも報道です。<em>[報道]</em></li>
+  <li>法執行機関: Binance は法執行機関と協力していると表明。<em>[確認済]</em> Circle は凍結を法執行機関と調整したと報じられています。<em>[報道]</em> 読めた情報源には、規制当局名や規制措置の記載はありません。</li>
+  <li>参考: Binance の運用資産は CoinMarketCap によれば約 1,550 億ドル（Al Jazeera）。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="quy-ket">5. 攻撃者の特定</h2>
+<blockquote class="callout">
+  <p><strong>重要:</strong> 攻撃者の特定は TRM Labs と Chainalysis の評価であり、<strong>Binance は攻撃者を特定していません。</strong>以下は確定した事実として扱わないでください。TRM のブログ原文は取得できず（HTTP 403）、TRM の発言は CBS と Yahoo Finance 経由の引用です。</p>
+</blockquote>
+<ul>
+  <li><strong>TRM Labs <em>[報道]</em>:</strong> 「北朝鮮のエリートハッキング部隊」TraderTraitor によるものと、「高い確信度（high confidence）」をもって判断。「今回の攻撃の複数の特徴は、Bybit を含む過去の北朝鮮関連の強奪と一致する」と述べています。</li>
+  <li><strong>Chainalysis <em>[報道]</em>:</strong> CEO の Jonathan Levin 氏は、TraderTraitor による犯行の「可能性が高い（likely）」とソーシャルメディアで述べました。</li>
+  <li>米財務省は TraderTraitor を Lazarus Group の一部と見ていると、CBS は伝えています。</li>
+  <li><strong>Binance:</strong> 攻撃者を特定しておらず、誰が責任者かを確認するため法執行機関と協力していると、検索結果の要約は伝えています（一次情報では未確認）。</li>
+  <li><strong>FBI:</strong> CBS が FBI に言及しているのは 2025年の Bybit のみです（FBI IC3 PSA I-022625-PSA）。NPR のスニペットには、FBI が Binance の件も北朝鮮の TraderTraitor によるものとしたとの記述がありますが、確認できておらず、報道間で食い違っています。<strong>未確認</strong>として扱います。</li>
+  <li><strong>Elliptic:</strong> 慎重な対応を促したとのスニペットのみ。<em>[未検証]</em></li>
+  <li><strong>Bybit との比較:</strong> Bybit は 2025年2月21日ごろ、約 15 億ドル。Binance は TRM の数字で約 4 倍です。共通点として情報源から言えるのは、暗号の突破ではなく、取引所の署名・運用基盤の侵害という型にとどまり、侵入経路が同じかは確認されていません。</li>
+  <li><strong>IOC:</strong> 読めた記事には、アドレス、トランザクションハッシュ、ドメインなどの IOC は公開されていません。TRM の原文で確認してください。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="bai-hoc">6. PiraGo への教訓</h2>
+<p>各項目に出所を明記します。<strong>情報源より</strong> = 報道された事実から読み取れる点。<strong>PiraGo の推奨</strong> = PiraGo の見解で、Binance や TRM が公表した対策ではありません。</p>
+<h3>6.1. 開発・DevOps 端末の保護</h3>
+<ul>
+  <li><strong>[情報源より]</strong> 暫定的な侵入経路は DevOps エンジニアのノート PC の侵害とされているため、DevOps 端末は最重要資産として扱う。</li>
+  <li><strong>[PiraGo の推奨]</strong> 本番クラウドへのアクセスは専用の管理端末（または管理されたプロファイル）に限定し、私的なブラウジングや未検証のインストールを禁止する。</li>
+  <li><strong>[PiraGo の推奨]</strong> ディスク暗号化、MDM、OS の自動更新、既定でローカル管理者権限なし、可能なら許可リスト方式。</li>
+  <li><strong>[PiraGo の推奨]</strong> クラウドコンソール、Git ホスティング、レジストリには FIDO2 ハードウェアキーによる MFA。特権ロールでは SMS/TOTP へのフォールバックを無効化。</li>
+  <li><strong>[PiraGo の推奨]</strong> ディスク上に長期クラウド認証情報を置かない（AWS IAM Identity Center / SSO、gcloud の短期認証を使用）。<code>~/.aws/credentials</code>、サービスアカウント JSON、<code>.env</code> を端末でスキャンする。</li>
+  <li><strong>[PiraGo の推奨]</strong> IDE 拡張とパッケージのインストールスクリプトを審査する。可能なら <code>npm ci --ignore-scripts</code>、ロックファイル（package-lock、composer.lock、Maven のチェックサム検証）を固定し、許可リスト付きのプライベートレジストリプロキシを使う。</li>
+</ul>
+<h3>6.2. CI/CD とコンテナのサービスアカウント・シークレットの範囲</h3>
+<ul>
+  <li><strong>[情報源より]</strong> 攻撃者はサービスコンテナに到達して出金を実行したと報じられている。失効しない権限トークンについての指摘もありますが、これは未確認の分析です。</li>
+  <li><strong>[PiraGo の推奨]</strong> ワークロードごとに 1 つのサービスアカウントと最小権限。パイプラインで人間の管理者アイデンティティを共有しない。</li>
+  <li><strong>[PiraGo の推奨]</strong> 保存キーの代わりに OIDC フェデレーション（GitHub Actions から AWS/GCP）を使い、短い TTL のトークンにする。失効しないトークンは使わない。</li>
+  <li><strong>[PiraGo の推奨]</strong> シークレットは Secrets Manager / Secret Manager に置き、環境変数ファイルやイメージに入れない。定期的に、また端末のインシデント時にローテーションする。</li>
+  <li><strong>[PiraGo の推奨]</strong> パイプラインの変更権限を制限（ブランチ保護、必須レビュー、本番デプロイは手動承認付きの保護環境）。</li>
+  <li><strong>[PiraGo の推奨]</strong> コンテナの egress フィルタリングとネットワークポリシー。想定外の IP やリージョンからのサービスアカウント使用を、CloudTrail、GCP Audit Logs でアラートする。</li>
+  <li><strong>[PiraGo の推奨]</strong> ユーザーやサービスの全トークン・全キーを数分で失効できる緊急手順（break-glass）を準備する。</li>
+</ul>
+<h3>6.3. 出金・取引承認の統制（金銭、暗号資産、決済を扱う顧客案件向け）</h3>
+<ul>
+  <li><strong>[情報源より]</strong> 資金は約 20 分で 10 のチェーンに流出し、ホットウォレットの認可が悪用された（TRM による EIP-7702 の署名済み認可の報告）。</li>
+  <li><strong>[PiraGo の推奨]</strong> 資産・時間枠ごとの速度と金額の上限、自動サーキットブレーカー、ホットウォレット残高の上限を設ける。</li>
+  <li><strong>[PiraGo の推奨]</strong> 大口または新規送金先への送金は、別デバイス・別ネットワークでの多者承認とする。承認者をコードをデプロイした同じアイデンティティにしない。</li>
+  <li><strong>[PiraGo の推奨]</strong> 送金先の許可リストと、変更時の遅延。</li>
+  <li><strong>[PiraGo の推奨]</strong> 署名はアプリケーションホストから分離（ポリシー付きの HSM/MPC/KMS）し、別デバイスで人が読める形のトランザクション確認を行う。</li>
+  <li><strong>[PiraGo の推奨]</strong> リアルタイムの異常検知と、試験済みの緊急停止手順。</li>
+</ul>
+<h3>6.4. 端末の EDR と検知</h3>
+<ul>
+  <li><strong>[PiraGo の推奨]</strong> 全エンジニア端末（macOS を含む）に EDR を導入し、改ざん防止を有効にして、アラートを担当者のいるチャンネルに送る。</li>
+  <li><strong>[PiraGo の推奨]</strong> 検知対象: Terminal/IDE の不審な子プロセス、新しい launch agent、<code>curl | sh</code>、ad hoc 署名の不明なバイナリ、新規インフラへの外向き通信、認証情報ファイルへのアクセス。</li>
+  <li><strong>[PiraGo の推奨]</strong> CLI セッションからのクラウド API 呼び出しがベースラインから外れた場合（新しいリージョン、IAM 変更、キー作成）をログとアラートの対象にする。</li>
+  <li><strong>[PiraGo の推奨]</strong> 隔離手順: 疑いがあれば端末を隔離し、SSO セッションを失効させ、その端末が到達できた全シークレットをローテーションする。</li>
+</ul>
+<h3>6.5. ソーシャルエンジニアリング対策</h3>
+<ul>
+  <li><strong>[情報源より]</strong> ノート PC がどう侵害されたかは情報源で確立されていないため、フィッシングと決めつけない。TRM の Ethereum に関する分析では、署名済み認可がフィッシングで入手された可能性が高いとされています。</li>
+  <li><strong>[PiraGo の推奨]</strong> 見知らぬ採用担当者、「コーディングテスト」、「課題リポジトリ」、「投資家・パートナー」からの連絡は敵対的とみなし、未知のリポジトリは使い捨ての VM/Codespace で実行し、業務端末では実行しない。</li>
+  <li><strong>[PiraGo の推奨]</strong> アクセス、リリース、支払いの依頼は別経路で確認し、自分で開始していない MFA プロンプトは承認しない。</li>
+  <li><strong>[PiraGo の推奨]</strong> 実例を使った短い定期的なフィッシング・誘い込み訓練と、責めない報告窓口。</li>
+  <li><strong>[PiraGo の推奨]</strong> 依存関係の追加やパッケージ公開の権限を限定し、新しいメンテナーや依存関係をレビューする。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="nguon">7. 情報源と信頼性</h2>
+<p>本レポートは、報道とアナリストの記事に基づく二次情報です。Binance の公式発表ページは見出し（Security Incident Update (2026-10-30)）のみで本文を読めませんでした。再確認は一次情報で行ってください。</p>
+<h3>読めた情報源</h3>
+<ul>
+  <li><a href="https://techcrunch.com/2026/10/29/binance-pauses-withdrawals-as-hackers-suspected-of-stealing-billions-in-crypto/" target="_blank" rel="noopener noreferrer">TechCrunch</a></li>
+  <li><a href="https://www.helpnetsecurity.com/2026/10/30/binance-crypto-hack/" target="_blank" rel="noopener noreferrer">Help Net Security</a></li>
+  <li><a href="https://businessupturn.com/finance/cryptocurrency/binance-withdrawals-to-resume-within-48-hours-says-yi-he-after-record-6-36-billion-crypto-hack/" target="_blank" rel="noopener noreferrer">Business Upturn</a></li>
+  <li><a href="https://abcnews.com/Business/binance-estimates-security-breach-impact-63-billion/story?id=137698510" target="_blank" rel="noopener noreferrer">ABC News</a></li>
+  <li><a href="https://www.theblock.co/news/ecosystems/2026-10-30-binance-says-it-has-6-34-billion-ready-to-cover-hack-losses-432208" target="_blank" rel="noopener noreferrer">The Block</a></li>
+  <li><a href="https://www.aljazeera.com/economy/2026/10/30/binance-says-2-54bn-in-crypto-funds-frozen-amid-potential-security-issue" target="_blank" rel="noopener noreferrer">Al Jazeera</a></li>
+  <li><a href="https://tech-insider.org/binance-withdrawals-paused-3-52b-outflow-tether-circle-freeze-2026/" target="_blank" rel="noopener noreferrer">tech-insider.org</a>（二次情報）</li>
+  <li><a href="https://www.cbsnews.com/news/binance-hack-north-korea/" target="_blank" rel="noopener noreferrer">CBS News</a>、<a href="https://finance.yahoo.com/markets/crypto/articles/binance-6-3-billion-hack-083916125.html" target="_blank" rel="noopener noreferrer">Yahoo Finance</a></li>
+  <li><a href="https://www.tokenpost.com/news/technology/44756" target="_blank" rel="noopener noreferrer">TokenPost (44756)</a>、<a href="https://www.tokenpost.com/news/technology/44715" target="_blank" rel="noopener noreferrer">TokenPost (44715)</a>、<a href="https://www.bitbase.com/news/binance-buys-back-stolen-altcoins-after-hack" target="_blank" rel="noopener noreferrer">Bitbase</a>（検索要約を含む）</li>
+  <li>過去事例（Bybit）: <a href="https://ic3.gov/psa/2025/psa250226" target="_blank" rel="noopener noreferrer">FBI IC3 PSA</a>、<a href="https://thehackernews.com/2025/02/bybit-hack-traced-to-safewallet-supply.html" target="_blank" rel="noopener noreferrer">The Hacker News</a></li>
+</ul>
+<h3>読めなかった、またはスニペットのみの情報源</h3>
+<ul>
+  <li>HTTP 403 / 429 で取得不可: <a href="https://www.trmlabs.com/resources/blog/north-korea-steals-usd-6-36-billion-from-binance-in-the-largest-hack-in-history" target="_blank" rel="noopener noreferrer">TRM Labs ブログ</a>（TRM の発言は CBS・Yahoo 経由）、<a href="https://thehackernews.com/2026/10/binance-suffers-security-breach.html" target="_blank" rel="noopener noreferrer">The Hacker News</a>、Axios、<a href="https://www.cryptotimes.io/2026/10/30/binance-hack-update-more-breach-points-withdrawals-to-restart-in-45-hours/" target="_blank" rel="noopener noreferrer">CryptoTimes</a>、SOCRadar、<a href="https://cryptoticker.io/en/binance-hack-hot-wallet-drained/" target="_blank" rel="noopener noreferrer">CryptoTicker</a>、Gulf Business、<a href="https://www.cnbc.com/2026/10/30/bitcoin-ether-price-binance-security-scare-rattles-crypto-markets.html" target="_blank" rel="noopener noreferrer">CNBC</a>。</li>
+  <li>スニペットまたは見出しのみ: <a href="https://www.npr.org/2026/10/30/g-s1-150902/blockchain-intelligence-firms-link-north-korea-to-6-3b-hack-on-binance" target="_blank" rel="noopener noreferrer">NPR</a>、<a href="https://www.cnbc.com/2026/10/30/billions-in-crypto-frozen-in-binance-hack-heres-what-happens-next-.html" target="_blank" rel="noopener noreferrer">CNBC</a>、<a href="https://www.itp.net/cybersecurity/binance-hack-6-34bn-reserved-to-cover-losses-as-crypto-withdrawals-remain-paused" target="_blank" rel="noopener noreferrer">ITP.net</a>。</li>
+  <li>Binance の公式発表は本文を読めず、Binance の発言はすべて上記の報道経由です。</li>
+</ul>
+<p><strong>未確認:</strong> 侵害箇所の全体像、出金再開の有無と時期（48 時間か 45 時間か）、凍結総額（約 25.4 億ドル、約 27 億ドル、約 30 億ドル）の内訳、TraderTraitor という特定に対する Binance・FBI の見解、IOC。BNB Chain の声明、清算額、BNB の下落率は、読めた情報源に記載がなく、本レポートでは扱いません。</p>
+</section>

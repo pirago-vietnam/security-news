@@ -1,5 +1,28 @@
 # Các case nổi bật (sự cố lớn, phân tích lỗ hổng, runbook ứng phó). Thứ tự = thứ tự hiển thị.
 # `path` tính từ gốc ngôn ngữ (vi: "/", ja: "/ja/").
+- id: binance
+  path: "featured/binance/binance_security_incident_report/"
+  icon: "💸"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL INCIDENT"}
+  nav: {vi: "Sự cố Binance", ja: "Binance インシデント"}
+  title: {vi: "Sự cố an ninh: Binance bị tấn công ~6,3 tỷ USD", ja: "セキュリティインシデント: Binance 約63億米ドルの不正流出"}
+  date: {vi: "Cập nhật đến 2026-10-30 · Đang diễn biến · Vụ hack tiền mã hóa lớn nhất lịch sử (theo báo chí)", ja: "2026年10月30日 時点 · 進行中 · 報道によると暗号資産史上最大の被害"}
+  link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Quy mô", ja: "規模"}
+      text: {vi: "Binance ước tính khoảng 6,3 tỷ USD tài sản bị ảnh hưởng; đã dự phòng hơn 6,34 tỷ USD và cam kết bù đắp toàn bộ thiệt hại của người dùng.", ja: "Binance は約63億米ドルの資産が影響を受けたと推計。63.4億米ドル超を確保し、ユーザーの損失を全額補償すると表明。"}
+    - sev: high
+      label: {vi: "Nguyên nhân", ja: "原因"}
+      text: {vi: "Sơ bộ: laptop của kỹ sư DevOps bị xâm nhập, dẫn tới container dịch vụ; sau đó phát hiện thêm điểm xâm nhập khác. Chưa có bằng chứng lộ private key ví.", ja: "暫定: DevOps エンジニアのノート PC が侵害されサービスコンテナへ到達。その後、別の侵入経路も判明。ウォレット秘密鍵の漏えいの証拠は未確認。"}
+    - sev: med
+      label: {vi: "Quy kết", ja: "攻撃者"}
+      text: {vi: "TRM Labs quy cho nhóm TraderTraitor (Triều Tiên); Binance chưa xác nhận.", ja: "TRM Labs は北朝鮮の TraderTraitor によるものと分析。Binance は未確認。"}
+    - sev: low
+      label: {vi: "Ứng phó", ja: "対応"}
+      text: {vi: "Đã đóng băng khoảng 3 tỷ USD (số liệu nguồn khác nhau), tạm dừng rút tiền để rà soát an ninh; sẽ công bố báo cáo đầy đủ sau.", ja: "約30億米ドルを凍結（情報源により数値が異なる）。出金を停止しセキュリティを見直し中。詳細レポートは後日公表予定。"}
+
 - id: gmo
   path: "featured/gmo/gmo_onamae_security_incident_report/"
   icon: "🚨"
