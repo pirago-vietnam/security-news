@@ -53,21 +53,21 @@
   badge: {sev: high, text: "HIGH"}
   nav: {vi: "Linux kernel CVE-2026-98432", ja: "Linux カーネル CVE-2026-98432"}
   title: {vi: "Phân tích lỗ hổng: Linux kernel CVE-2026-98432", ja: "脆弱性分析: Linux カーネル CVE-2026-98432"}
-  date: {vi: "Cập nhật đến 2026-10-30 · Use-after-free TCP IPv4 · CVSS 9.8 (kernel CNA) / 8.1 (Red Hat)", ja: "2026年10月30日 時点 · TCP IPv4 の use-after-free · CVSS 9.8（カーネル CNA）/ 8.1（Red Hat）"}
+  date: {vi: "Cập nhật đến 2026-11-02 · Use-after-free TCP IPv4 · CVSS 9.8 (kernel CNA, Red Hat, Ubuntu)", ja: "2026年11月2日 時点 · TCP IPv4 の use-after-free · CVSS 9.8（カーネル CNA、Red Hat、Ubuntu）"}
   link: {vi: "Xem phân tích chi tiết →", ja: "詳細分析を見る →"}
   items:
     - sev: crit
       label: {vi: "Nguy cơ", ja: "リスク"}
-      text: {vi: "Race giữa SYN retransmit và việc giải phóng socket; hậu quả dễ xảy ra nhất là kernel panic, xấu nhất là chiếm quyền. Chưa thấy khai thác thực tế.", ja: "SYN 再送とソケット解放の race。最も起こりやすい影響はカーネルパニック、最悪の場合は乗っ取り。実際の悪用は未確認です。"}
+      text: {vi: "Race giữa SYN retransmit và việc giải phóng socket; hậu quả dễ xảy ra nhất là kernel panic, xấu nhất là chiếm quyền. Chưa thấy khai thác được xác nhận; có một số repo GitHub tự nhận là PoC, chưa kiểm chứng.", ja: "SYN 再送とソケット解放の race。最も起こりやすい影響はカーネルパニック、最悪の場合は乗っ取り。実際の悪用は未確認です。GitHub には PoC を名乗るリポジトリが複数ありますが、未検証です。"}
     - sev: high
       label: {vi: "Dễ bị tấn công", ja: "狙われやすい対象"}
-      text: {vi: "Máy mở cổng TCP thẳng ra internet, node EKS/GKE dùng NodePort/hostNetwork, host chưa có bản vá (Ubuntu, RHEL, AL2).", ja: "TCP ポートをインターネットに直接公開するホスト、NodePort/hostNetwork を使う EKS/GKE ノード、未修正のディストリビューション（Ubuntu、RHEL、AL2）。"}
+      text: {vi: "Máy mở cổng TCP thẳng ra internet, node EKS/GKE dùng NodePort/hostNetwork, host chưa có bản vá (chủ yếu Ubuntu; RHEL 8/9/10 đã có bản vá ngày 1/11).", ja: "TCP ポートをインターネットに直接公開するホスト、NodePort/hostNetwork を使う EKS/GKE ノード、未修正のホスト（主に Ubuntu。RHEL 8/9/10 は 11 月 1 日に修正版が公開）。"}
     - sev: med
       label: {vi: "Mô phỏng", ja: "シミュレーション"}
       text: {vi: "Chuỗi tấn công 5 giai đoạn có hình minh họa, 3 kịch bản diễn tập và danh sách TODO cần làm ngay (không có mã khai thác).", ja: "図解付きの 5 段階の攻撃チェーン、3 つの机上演習シナリオ、今すぐ対応すべき TODO（攻撃コードなし）。"}
     - sev: low
       label: {vi: "Xử lý", ja: "対処"}
-      text: {vi: "Cập nhật kernel và reboot; không có workaround chính thức.", ja: "カーネルを更新して再起動。公式な回避策はありません。"}
+      text: {vi: "Cập nhật kernel và reboot. Red Hat có quy tắc nftables chỉ giảm rủi ro, không thay thế việc vá.", ja: "カーネルを更新して再起動。Red Hat の nftables ルールはリスクを下げるだけで、パッチの代わりにはなりません。"}
 
 - id: php2shell
   path: "featured/php-cve-2026-109618-109619/php2shell-runbook/"
