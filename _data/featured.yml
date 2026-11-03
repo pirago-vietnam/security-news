@@ -53,7 +53,7 @@
   badge: {sev: high, text: "HIGH"}
   nav: {vi: "Linux kernel CVE-2026-98432", ja: "Linux カーネル CVE-2026-98432"}
   title: {vi: "Phân tích lỗ hổng: Linux kernel CVE-2026-98432", ja: "脆弱性分析: Linux カーネル CVE-2026-98432"}
-  date: {vi: "Cập nhật đến 2026-11-02 · Use-after-free TCP IPv4 · CVSS 9.8 (kernel CNA, Red Hat, Ubuntu)", ja: "2026年11月2日 時点 · TCP IPv4 の use-after-free · CVSS 9.8（カーネル CNA、Red Hat、Ubuntu）"}
+  date: {vi: "Cập nhật đến 2026-11-03 · Use-after-free TCP IPv4 · CVSS 9.8 (kernel CNA, Red Hat, Ubuntu)", ja: "2026年11月3日 時点 · TCP IPv4 の use-after-free · CVSS 9.8（カーネル CNA、Red Hat、Ubuntu）"}
   link: {vi: "Xem phân tích chi tiết →", ja: "詳細分析を見る →"}
   items:
     - sev: crit
