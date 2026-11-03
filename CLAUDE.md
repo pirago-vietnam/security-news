@@ -59,3 +59,8 @@ When creating or modifying security reports, strictly follow `monthly/RULES.md`:
   git commit -m "add monthly security report YYYY-mm"
   git push origin main
   ```
+
+## Rules
+
+- **Subagents for Search, Scan & Explore**: Always use the Haiku model (`model: "haiku"`) when spawning subagents via the `Agent` tool for search, scan, codebase exploration, or research tasks (e.g., `Explore` or `general-purpose` search agents).
+
