@@ -63,8 +63,8 @@
       label: {vi: "Dễ bị tấn công", ja: "狙われやすい対象"}
       text: {vi: "Máy mở cổng TCP thẳng ra internet, node EKS/GKE dùng NodePort/hostNetwork, host chưa có bản vá (chủ yếu Ubuntu; RHEL 8/9/10 đã có bản vá ngày 1/11).", ja: "TCP ポートをインターネットに直接公開するホスト、NodePort/hostNetwork を使う EKS/GKE ノード、未修正のホスト（主に Ubuntu。RHEL 8/9/10 は 11 月 1 日に修正版が公開）。"}
     - sev: med
-      label: {vi: "Mô phỏng", ja: "シミュレーション"}
-      text: {vi: "Chuỗi tấn công 5 giai đoạn có hình minh họa, 3 kịch bản diễn tập và danh sách TODO cần làm ngay (không có mã khai thác).", ja: "図解付きの 5 段階の攻撃チェーン、3 つの机上演習シナリオ、今すぐ対応すべき TODO（攻撃コードなし）。"}
+      label: {vi: "AL2 / AL2023", ja: "AL2 / AL2023"}
+      text: {vi: "Hướng dẫn từng bước cho Amazon Linux 2 và 2023: kiểm tra máy, cập nhật kernel và reboot, chặn gói TCP có IP options bằng nftables khi chưa reboot được, gỡ sau khi vá (không có mã khai thác).", ja: "Amazon Linux 2 / 2023 向けの手順: ホスト確認、カーネル更新と再起動、すぐ再起動できない場合の nftables による IP オプション付き TCP パケットの遮断、修正後の撤去（攻撃コードなし）。"}
     - sev: low
       label: {vi: "Xử lý", ja: "対処"}
       text: {vi: "Cập nhật kernel và reboot. Red Hat có quy tắc nftables chỉ giảm rủi ro, không thay thế việc vá.", ja: "カーネルを更新して再起動。Red Hat の nftables ルールはリスクを下げるだけで、パッチの代わりにはなりません。"}
