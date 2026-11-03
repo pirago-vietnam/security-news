@@ -30,7 +30,7 @@
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
   nav: {vi: "Sự cố GMO Onamae", ja: "GMOお名前.com インシデント"}
   title: {vi: "Sự cố an ninh: GMO Onamae Desktop Cloud", ja: "セキュリティインシデント: GMO お名前.com デスクトップクラウド"}
-  date: {vi: "Cập nhật đến 2026-10-30 · Khủng hoảng 16 thông cáo & báo cáo IR (Tập đoàn GMO Internet)", ja: "2026年10月30日 時点 · 16件の公式発表 & IRレポートに基づく危機対応 (GMOインターネットグループ)"}
+  date: {vi: "Cập nhật đến 2026-11-03 · 16 thông cáo, báo cáo IR & họp báo 02/11 (Tập đoàn GMO Internet)", ja: "2026年11月3日 時点 · 16件の公式発表・IRレポート & 11月2日の記者会見 (GMOインターネットグループ)"}
   link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
   items:
     - sev: crit

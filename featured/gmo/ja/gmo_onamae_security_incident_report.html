@@ -769,7 +769,7 @@ redirect_from:
   <!-- Hero Section -->
   <section class="hero" id="summary">
     <div class="hero-meta">
-      <span>更新日: 2026/10/30</span>
+      <span>更新日: 2026/11/03</span>
       <span>•</span>
       <span>対象: お名前.com デスクトップクラウド (Onamae Desktop Cloud)</span>
       <span>•</span>
@@ -829,9 +829,9 @@ redirect_from:
   <section class="section" id="timeline">
     <div class="section-header">
       <h2 class="section-title">
-        <span>⏱️</span> インシデント全体のタイムライン (2026/10/19 - 2026/10/30)
+        <span>⏱️</span> インシデント全体のタイムライン (2026/10/19 - 2026/11/02)
       </h2>
-      <span class="section-badge">危機の12日間</span>
+      <span class="section-badge">危機の15日間</span>
     </div>
 
     <div class="timeline">
@@ -1063,6 +1063,24 @@ redirect_from:
           <div class="timeline-title">お見舞金のお受け取り手続きおよび代替サービス提供についてのご案内を開始</div>
           <div class="timeline-body">
             ご契約のお客様への個別連絡を開始し、お見舞金の受け取り手続きと代替サービスを案内。引き続き、流出内容のSNS等での拡散を控えるよう呼びかけています。
+          </div>
+        </div>
+      </div>
+
+      <!-- Day Nov 2 -->
+      <div class="timeline-item critical">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span class="timeline-date">2026/11/02</span>
+            <span class="tag danger">初の記者会見・役員報酬減額</span>
+          </div>
+          <div class="timeline-title">GMO初の記者会見:攻撃者は約2.5か月潜伏、2024年のイエラエ指摘は会長に届かず</div>
+          <div class="timeline-body">
+            約3時間半に及ぶ会見で、実際の侵入経過が初めて示されました。<strong>8/5</strong> 顧客VPSから管理者アカウントを窃取 → <strong>8/17</strong> 管理サーバーに侵入 → <strong>9/20〜10/14</strong> 顧客VMへマルウェアを配布 → <strong>10/20</strong> お客様からの問い合わせで発覚。GMOは対応が「深さと速さの両面で不足」だったと認め、GMOサイバーセキュリティ byイエラエによる2024年の指摘は熊谷会長に報告されず、取締役会へ上げる基準もありませんでした。役員4名の報酬を3か月間20〜30%減額します(12月支給分から)。
+          </div>
+          <div class="quote-box">
+            会見内容は報道(ビジネス+IT、@IT)による情報です。更新時点で、対応する公式発表は group.gmo/info/alert/ に掲載されていません。
           </div>
         </div>
       </div>
@@ -1407,6 +1425,33 @@ redirect_from:
         </div>
       </div>
 
+      <!-- Press conference 2026-11-02 -->
+      <div class="report-card highlight">
+        <div class="report-header" onclick="toggleReport(this)">
+          <div class="report-title-area">
+            <span class="report-tag danger">記者会見</span>
+            <span class="report-date">2026-11-02</span>
+            <span class="report-name">初の記者会見:実際の侵入経過・根本原因・経営責任</span>
+          </div>
+          <span class="report-chevron">▼</span>
+        </div>
+        <div class="report-content">
+          <p><strong>1. 侵入の経過(会見による):</strong></p>
+          <ul>
+            <li><strong>8月5日:</strong> 攻撃者が顧客のVPSに侵入し、管理者アカウントを窃取。</li>
+            <li><strong>8月17日:</strong> 管理サーバーに侵入。</li>
+            <li><strong>9月20日〜10月14日:</strong> 管理サーバー経由で最大26,739台の顧客VMにマルウェアを配布。</li>
+            <li><strong>10月20日:</strong> お客様からの問い合わせで発覚。2か月以上(約2.5か月)気付かず。</li>
+            <li><strong>10月27日:</strong> 窃取データの一部が外部サイトに掲載。要求額は80億円と説明(GMOは拒否)。</li>
+          </ul>
+          <p><strong>2. GMOが認めた根本原因:</strong> 既知の脆弱性への対処が不十分/2024年の指摘のフォロー不足/管理サーバー侵害を2か月以上検知できなかった監視/顧客の利便性のためドライブ共有を初期有効にしており、お客様のローカルPCのファイルにもアクセスされた。侵入経路の詳細は未公表。</p>
+          <p><strong>3. 2024年の指摘:</strong> GMOサイバーセキュリティ byイエラエ(2022年にGMO傘下)が2024年4月24日にサービスを診断し改善を提言。結果はサービス責任者とシステム部門に伝わったが会長には届かず、再診断もなし。4回の緊急メンテナンス(4〜5月)を実施したものの不十分と認めた。</p>
+          <p><strong>4. 経営責任:</strong> 熊谷会長30%、伊藤氏25%、山下氏・児玉氏が各20%を、12月支給分から3か月間減額。事前の経緯の調査完了後に追加の責任を検討。</p>
+          <p><strong>5. 補償:</strong> 不正FX取引による損失を補填(<strong>2026/11/6</strong>から順次受付)、対象のお客様全員に一律5,000円、振替・両替手数料を6か月間免除。攻撃者は現時点で未特定。バウンティへの情報提供は約700件(報道ベース、単位未確認)。</p>
+          <div class="quote-box">出典: <a href="https://atmarkit.itmedia.co.jp/ait/articles/2611/03/news014.html" target="_blank" rel="noopener noreferrer">@IT (11/3)</a> および <a href="https://news.yahoo.co.jp/articles/83aed0816d588a56ff89d24acbf6d858b964a6e9" target="_blank" rel="noopener noreferrer">ビジネス+IT</a>。公式発表との照合は未了で、一部の数値(バウンティ件数、補填上限)は要確認です。</div>
+        </div>
+      </div>
+
       <!-- IR Disclosures Deep Dive -->
       <div class="report-card">
         <div class="report-header" onclick="toggleReport(this)">
@@ -1582,6 +1627,18 @@ redirect_from:
           <li><strong>「第1号案件」の発動:</strong> 能動的サイバー防御法(2026年10月1日施行)の適用を政府に具申しました。</li>
           <li><strong>教条的な線引きの撤廃:</strong> 電力・水道のインフラだけを守るという見方に反論し、金融機関における国民のデジタル資産の保護も国家安全保障であるとしました。</li>
           <li><strong>国家の権限:</strong> 企業は補償の財務的費用を自ら負担しますが、国家は、国際的な犯罪者のC2サーバーに侵入し、位置を特定して無力化する責任を負うべきです。</li>
+        </ul>
+      </div>
+
+      <div class="tech-box">
+        <h3><span>📣</span> 11/2 更新:指摘は経営層に届いていなかった</h3>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 8px;">
+          記者会見では、10/25のCEOブログとは異なる側面が示されました。
+        </p>
+        <ul>
+          <li><strong>報告基準の欠如:</strong> 2024年のイエラエの診断結果はサービス責任者とシステム部門止まりで会長に届かず、取締役会へ上げる基準もありませんでした。</li>
+          <li><strong>検知の遅れ:</strong> 管理サーバーは8/17から掌握されていたが、発覚は10/20のお客様の問い合わせ。監視では検知できませんでした。</li>
+          <li><strong>リスクのある初期設定:</strong> ドライブ共有が初期有効だったため、VM上のマルウェアがお客様のPC内ファイルに到達できました。</li>
         </ul>
       </div>
     </div>
