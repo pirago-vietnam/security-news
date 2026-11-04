@@ -53,7 +53,7 @@
   badge: {sev: high, text: "HIGH"}
   nav: {vi: "Linux kernel CVE-2026-98432", ja: "Linux カーネル CVE-2026-98432"}
   title: {vi: "Phân tích lỗ hổng: Linux kernel CVE-2026-98432", ja: "脆弱性分析: Linux カーネル CVE-2026-98432"}
-  date: {vi: "Cập nhật đến 2026-11-03 · Use-after-free TCP IPv4 · CVSS 9.8 (kernel CNA, Red Hat, Ubuntu)", ja: "2026年11月3日 時点 · TCP IPv4 の use-after-free · CVSS 9.8（カーネル CNA、Red Hat、Ubuntu）"}
+  date: {vi: "Cập nhật đến 2026-11-04 · Use-after-free TCP IPv4 · CVSS 9.8 (kernel CNA, Red Hat, Ubuntu)", ja: "2026年11月4日 時点 · TCP IPv4 の use-after-free · CVSS 9.8（カーネル CNA、Red Hat、Ubuntu）"}
   link: {vi: "Xem phân tích chi tiết →", ja: "詳細分析を見る →"}
   items:
     - sev: crit
@@ -63,8 +63,8 @@
       label: {vi: "Dễ bị tấn công", ja: "狙われやすい対象"}
       text: {vi: "Máy mở cổng TCP thẳng ra internet, node EKS/GKE dùng NodePort/hostNetwork, host chưa có bản vá (chủ yếu Ubuntu; RHEL 8/9/10 đã có bản vá ngày 1/11).", ja: "TCP ポートをインターネットに直接公開するホスト、NodePort/hostNetwork を使う EKS/GKE ノード、未修正のホスト（主に Ubuntu。RHEL 8/9/10 は 11 月 1 日に修正版が公開）。"}
     - sev: med
-      label: {vi: "AL2 / AL2023", ja: "AL2 / AL2023"}
-      text: {vi: "Hướng dẫn từng bước cho Amazon Linux 2 và 2023: kiểm tra máy, cập nhật kernel và reboot, chặn gói TCP có IP options bằng nftables khi chưa reboot được, gỡ sau khi vá (không có mã khai thác).", ja: "Amazon Linux 2 / 2023 向けの手順: ホスト確認、カーネル更新と再起動、すぐ再起動できない場合の nftables による IP オプション付き TCP パケットの遮断、修正後の撤去（攻撃コードなし）。"}
+      label: {vi: "AL2 / AL2023 / Ubuntu", ja: "AL2 / AL2023 / Ubuntu"}
+      text: {vi: "Hướng dẫn từng bước cho Amazon Linux 2 và 2023: kiểm tra máy, cập nhật kernel và reboot, chặn gói TCP có IP options bằng nftables khi chưa reboot được, gỡ sau khi vá. Ubuntu (chưa có USN): áp dụng biện pháp tạm thời ngay, cài kernel từ -proposed hoặc chờ USN (không có mã khai thác).", ja: "Amazon Linux 2 / 2023 向けの手順: ホスト確認、カーネル更新と再起動、すぐ再起動できない場合の nftables による IP オプション付き TCP パケットの遮断、修正後の撤去。Ubuntu（USN 未公開）: 暫定対策を即時適用し、-proposed のカーネル導入または USN 待ち（攻撃コードなし）。"}
     - sev: low
       label: {vi: "Xử lý", ja: "対処"}
       text: {vi: "Cập nhật kernel và reboot. Red Hat có quy tắc nftables chỉ giảm rủi ro, không thay thế việc vá.", ja: "カーネルを更新して再起動。Red Hat の nftables ルールはリスクを下げるだけで、パッチの代わりにはなりません。"}
