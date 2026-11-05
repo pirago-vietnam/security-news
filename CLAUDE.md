@@ -62,5 +62,6 @@ When creating or modifying security reports, strictly follow `monthly/RULES.md`:
 
 ## Rules
 
+- Always "fan out subagents" to update the security news.
 - **Subagents for Search, Scan & Explore**: Always use the Haiku model (`model: "haiku"`) when spawning subagents via the `Agent` tool for search, scan, codebase exploration, or research tasks (e.g., `Explore` or `general-purpose` search agents).
 

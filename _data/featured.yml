@@ -53,21 +53,21 @@
   badge: {sev: high, text: "HIGH"}
   nav: {vi: "Linux kernel CVE-2026-98432", ja: "Linux カーネル CVE-2026-98432"}
   title: {vi: "Phân tích lỗ hổng: Linux kernel CVE-2026-98432", ja: "脆弱性分析: Linux カーネル CVE-2026-98432"}
-  date: {vi: "Cập nhật đến 2026-11-04 · Use-after-free TCP IPv4 · CVSS 9.8 (kernel CNA, Red Hat, Ubuntu)", ja: "2026年11月4日 時点 · TCP IPv4 の use-after-free · CVSS 9.8（カーネル CNA、Red Hat、Ubuntu）"}
+  date: {vi: "Cập nhật đến 2026-11-05 · Bản tin AWS 2026-160-AWS xác nhận nguy cơ MPTCP · CVSS 9.8", ja: "2026年11月5日 時点 · AWS速報 2026-160-AWS で MPTCP リスク公式確認 · CVSS 9.8"}
   link: {vi: "Xem phân tích chi tiết →", ja: "詳細分析を見る →"}
   items:
     - sev: crit
       label: {vi: "Nguy cơ", ja: "リスク"}
-      text: {vi: "Race giữa SYN retransmit và việc giải phóng socket; hậu quả dễ xảy ra nhất là kernel panic, xấu nhất là chiếm quyền. Chưa thấy khai thác được xác nhận; có một số repo GitHub tự nhận là PoC, chưa kiểm chứng.", ja: "SYN 再送とソケット解放の race。最も起こりやすい影響はカーネルパニック、最悪の場合は乗っ取り。実際の悪用は未確認です。GitHub には PoC を名乗るリポジトリが複数ありますが、未検証です。"}
+      text: {vi: "Bản tin AWS 2026-160-AWS xác nhận bắt tay MPTCP nhận gói IPv4 TCP chứa IP options có thể dẫn tới rò rỉ dữ liệu hoặc thực thi mã. Chưa thấy khai thác thực tế diện rộng; một số repo GitHub tự nhận PoC chưa kiểm chứng.", ja: "AWS速報 2026-160-AWS により、IPオプション付きIPv4 TCPパケットによるMPTCPハンドシェイクで潜在的なコード実行やデータ漏えいが発生し得ることが公式確認。実際の悪用は未確認。"}
     - sev: high
       label: {vi: "Dễ bị tấn công", ja: "狙われやすい対象"}
-      text: {vi: "Máy mở cổng TCP thẳng ra internet, node EKS/GKE dùng NodePort/hostNetwork, host chưa có bản vá (chủ yếu Ubuntu; RHEL 8/9/10 đã có bản vá ngày 1/11).", ja: "TCP ポートをインターネットに直接公開するホスト、NodePort/hostNetwork を使う EKS/GKE ノード、未修正のホスト（主に Ubuntu。RHEL 8/9/10 は 11 月 1 日に修正版が公開）。"}
+      text: {vi: "Máy mở cổng TCP internet trực tiếp, dịch vụ bật MPTCP (Go 1.24+ bật mặc định trên Linux), host sau NLB TCP pass-through, node Kubernetes chưa vá, máy Ubuntu (chưa có USN, gói vá vẫn ở -proposed ngày 5/11).", ja: "TCPポート直接公開ホスト、MPTCP有効環境（Go 1.24+ でLinux上デフォルト有効）、NLB TCPパススルー配下、未修正Kubernetesノード、Ubuntu（11月5日時点でもUSN未公開、-proposed継続）。"}
     - sev: med
-      label: {vi: "AL2 / AL2023 / Ubuntu", ja: "AL2 / AL2023 / Ubuntu"}
-      text: {vi: "Hướng dẫn từng bước cho Amazon Linux 2 và 2023: kiểm tra máy, cập nhật kernel và reboot, chặn gói TCP có IP options bằng nftables khi chưa reboot được, gỡ sau khi vá. Ubuntu (chưa có USN): áp dụng biện pháp tạm thời ngay, cài kernel từ -proposed hoặc chờ USN (không có mã khai thác).", ja: "Amazon Linux 2 / 2023 向けの手順: ホスト確認、カーネル更新と再起動、すぐ再起動できない場合の nftables による IP オプション付き TCP パケットの遮断、修正後の撤去。Ubuntu（USN 未公開）: 暫定対策を即時適用し、-proposed のカーネル導入または USN 待ち（攻撃コードなし）。"}
+      label: {vi: "Hạ tầng Cloud & Edge", ja: "クラウド & エッジ"}
+      text: {vi: "Hạ tầng AWS & Cloudflare: Edge/Ingress (ALB, CloudFront, Cloudflare Proxy/Tunnel) kết thúc TCP ở biên, che chắn backend (cần khóa Security Group về IP Cloudflare); Global Accelerator drop gói IP options ở data plane; DBs (RDS, Aurora) đã vá tầng host. AL2/AL2023 đã có bản vá, Ubuntu vẫn ở -proposed.", ja: "AWS & Cloudflare インフラ: Edge/Ingress（ALB、CloudFront、Cloudflare Proxy/Tunnel）はエッジでTCP終端しバックエンドを保護（Security Group制限必須）。Global Acceleratorはデータプレーンで破棄、マネージドDBはホスト層パッチ適用済み。AL2/AL2023修正済み、Ubuntuは -proposed。"}
     - sev: low
       label: {vi: "Xử lý", ja: "対処"}
-      text: {vi: "Cập nhật kernel và reboot. Red Hat có quy tắc nftables chỉ giảm rủi ro, không thay thế việc vá.", ja: "カーネルを更新して再起動。Red Hat の nftables ルールはリスクを下げるだけで、パッチの代わりにはなりません。"}
+      text: {vi: "Cập nhật kernel và reboot. Tạm thời: tắt MPTCP (net.mptcp.enabled=0, GODEBUG=multipathtcp=0 cho Go), lọc IP options bằng nftables/iptables u32 hoặc AWS Network Firewall.", ja: "カーネル更新と再起動が恒久対策。暫定措置: MPTCP無効化（net.mptcp.enabled=0、Go向けGODEBUG=multipathtcp=0）、nftables/iptables u32またはAWS Network FirewallによるIPオプション遮断。"}
 
 - id: php2shell
   path: "featured/php-cve-2026-109618-109619/php2shell-runbook/"
