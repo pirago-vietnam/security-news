@@ -769,7 +769,7 @@ redirect_from:
   <!-- Hero Section -->
   <section class="hero" id="summary">
     <div class="hero-meta">
-      <span>更新日: 2026/11/03</span>
+      <span>更新日: 2026/11/05</span>
       <span>•</span>
       <span>対象: お名前.com デスクトップクラウド (Onamae Desktop Cloud)</span>
       <span>•</span>
@@ -829,9 +829,9 @@ redirect_from:
   <section class="section" id="timeline">
     <div class="section-header">
       <h2 class="section-title">
-        <span>⏱️</span> インシデント全体のタイムライン (2026/10/19 - 2026/11/02)
+        <span>⏱️</span> インシデント全体のタイムライン (2026/10/19 - 2026/11/05)
       </h2>
-      <span class="section-badge">危機の15日間</span>
+      <span class="section-badge">インシデントの経過</span>
     </div>
 
     <div class="timeline">
@@ -1080,11 +1080,19 @@ redirect_from:
             約3時間半に及ぶ会見で、実際の侵入経過が初めて示されました。<strong>8/5</strong> 顧客VPSから管理者アカウントを窃取 → <strong>8/17</strong> 管理サーバーに侵入 → <strong>9/20〜10/14</strong> 顧客VMへマルウェアを配布 → <strong>10/20</strong> お客様からの問い合わせで発覚。GMOは対応が「深さと速さの両面で不足」だったと認め、GMOサイバーセキュリティ byイエラエによる2024年の指摘は熊谷会長に報告されず、取締役会へ上げる基準もありませんでした。役員4名の報酬を3か月間20〜30%減額します(12月支給分から)。
           </div>
           <div class="quote-box">
-            会見内容は報道(ビジネス+IT、@IT)による情報です。更新時点で、対応する公式発表は group.gmo/info/alert/ に掲載されていません。
+            会見内容は報道(ビジネス+IT、@IT)によります。報酬減額は<a href="https://group.gmo/ir_news/article/901/" target="_blank" rel="noopener noreferrer">11月2日のIR開示</a>で確認できます。
           </div>
         </div>
       </div>
 
+      <div class="timeline-item success">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-head"><span class="timeline-date">2026/11/05 (18:00 JST)</span><span class="tag">懸賞金の更新</span></div>
+          <div class="timeline-title">懸賞金制度への情報提供は累計839件</div>
+          <div class="timeline-body">GMOは第16報を更新し、前回比17件増の839件と発表しました。これは受付件数であり、検証済みの有力情報の件数ではありません。<a href="https://group.gmo/info/alert/2026102902/" target="_blank" rel="noopener noreferrer">公式発表を見る</a>。</div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1446,7 +1454,7 @@ redirect_from:
           </ul>
           <p><strong>2. GMOが認めた根本原因:</strong> 既知の脆弱性への対処が不十分/2024年の指摘のフォロー不足/管理サーバー侵害を2か月以上検知できなかった監視/顧客の利便性のためドライブ共有を初期有効にしており、お客様のローカルPCのファイルにもアクセスされた。侵入経路の詳細は未公表。</p>
           <p><strong>3. 2024年の指摘:</strong> GMOサイバーセキュリティ byイエラエ(2022年にGMO傘下)が2024年4月24日にサービスを診断し改善を提言。結果はサービス責任者とシステム部門に伝わったが会長には届かず、再診断もなし。4回の緊急メンテナンス(4〜5月)を実施したものの不十分と認めた。</p>
-          <p><strong>4. 経営責任:</strong> 熊谷会長30%、伊藤氏25%、山下氏・児玉氏が各20%を、12月支給分から3か月間減額。事前の経緯の調査完了後に追加の責任を検討。</p>
+          <p><strong>4. 経営責任:</strong> <a href="https://group.gmo/ir_news/article/901/" target="_blank" rel="noopener noreferrer">11月2日の公式開示</a>によると、熊谷氏30%、伊藤氏25%、山下氏・児玉氏各20%の月額報酬を2026年12月支給分から3か月間減額。事前の経緯を検証した上で経営責任を改めて検討します。</p>
           <p><strong>5. 補償:</strong> 不正FX取引による損失を補填(<strong>2026/11/6</strong>から順次受付)、対象のお客様全員に一律5,000円、振替・両替手数料を6か月間免除。攻撃者は現時点で未特定。バウンティへの情報提供は約700件(報道ベース、単位未確認)。</p>
           <div class="quote-box">出典: <a href="https://atmarkit.itmedia.co.jp/ait/articles/2611/03/news014.html" target="_blank" rel="noopener noreferrer">@IT (11/3)</a> および <a href="https://news.yahoo.co.jp/articles/83aed0816d588a56ff89d24acbf6d858b964a6e9" target="_blank" rel="noopener noreferrer">ビジネス+IT</a>。公式発表との照合は未了で、一部の数値(バウンティ件数、補填上限)は要確認です。</div>
         </div>
@@ -1488,7 +1496,7 @@ redirect_from:
         <ul>
           <li><strong>攻撃対象領域 (Management Plane):</strong> 脆弱性は中央制御システム(Control Panel / 仮想マシンのオーケストレーションAPI)にあり、攻撃者は26,739台のゲストVMすべてに広範囲に干渉できました。</li>
           <li><strong>マルウェアの設置 (Malicious Script Injection):</strong> 10月20日、攻撃者は不正なスクリプトやプログラムをお客様の仮想マシン環境に展開しました。</li>
-          <li><strong>ペンテストツールの兵器化:</strong> 攻撃グループは、ARTEX (Automated Red Teaming & Penetration Testing tool) を兵器化し、スキャンと攻撃の広範な自動化に利用しました。</li>
+          <li><strong>AIの関与:</strong> <a href="https://atmarkit.itmedia.co.jp/ait/articles/2611/03/news014.html" target="_blank" rel="noopener noreferrer">@IT</a>によると、本件攻撃にAIが使われた証拠は確認されておらず、ARTEXの使用を確定事実として扱うことはできません。</li>
         </ul>
       </div>
 
@@ -1567,7 +1575,7 @@ redirect_from:
             <td><strong>3. 取引損失の補償</strong><br>(不正取引損失補償)</td>
             <td><span class="amount-highlight">実損の100%</span><br>(注文の損失 + 取引手数料)</td>
             <td>MT4/MT5経由で、攻撃者により身に覚えのない発注をされたお客様。</td>
-            <td>業者の注文照合記録(時刻、通貨ペア、ロット数、実際の損失額)。GMOの審査のためInvestor Passwordの提供が必要。</td>
+            <td>取引履歴などの証憑を保存し、必要な書類はGMOの公式窓口で確認してください。</td>
             <td>GMO Internet Inc.<br>(4784)</td>
           </tr>
           <tr>
@@ -1697,8 +1705,8 @@ redirect_from:
       <div class="checklist-item">
         <div class="check-num">6</div>
         <div class="check-content">
-          <h4>損害賠償請求に備えて証憑書類を集める (2026/11/06まで)</h4>
-          <p>不正に約定した注文と実際の損失額(注文の損失 + 手数料)を示すMT4/MT5口座のスクリーンショットとログを保存してください。申請ポータルが開いた際にGMOが照合できるよう、閲覧専用パスワード (Investor Password) を設定してください。</p>
+          <h4>補償に備えて証憑を保存し、公式窓口で手続きを確認する</h4>
+          <p>不正注文や損失額、手数料を示す取引履歴を保存してください。受付日と申請方法は公式窓口で確認し、確認できないリンクや依頼にパスワードを提供しないでください。</p>
         </div>
       </div>
     </div>
