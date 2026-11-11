@@ -2,8 +2,8 @@ title:
   vi: Báo cáo bảo mật tháng 11/2026
   ja: 2026年11月 セキュリティレポート
 description:
-  vi: 'Tổng hợp các rủi ro, lỗ hổng bảo mật và việc cần làm tháng 11/2026: Visual Studio Code RCE (CVE-2026-120779, CVE-2026-120780), cập nhật Linux kernel TCP UAF (CVE-2026-98432) và bảo mật môi trường phát triển.'
-  ja: '2026年11月のリスク、脆弱性、対応事項のまとめ：Visual Studio Code RCE（CVE-2026-120779、CVE-2026-120780）、Linux kernel TCP UAF（CVE-2026-98432）最新動向、および開発環境セキュリティ。'
+  vi: 'Tổng hợp các rủi ro, lỗ hổng bảo mật và việc cần làm tháng 11/2026: Visual Studio Code RCE (CVE-2026-120779), Zero-Day Google Chrome (CVE-2026-125350), Microsoft Patch Tuesday cho .NET & Visual Studio, Apache Tomcat, Next.js, Linux kernel TCP UAF, và an toàn chuỗi cung ứng AI agent.'
+  ja: '2026年11月のリスク、脆弱性、対応事項のまとめ：Visual Studio Code RCE（CVE-2026-120779）、Google Chrome ゼロデイ（CVE-2026-125350）、Microsoft Patch Tuesday（.NET & Visual Studio）、Apache Tomcat、Next.js、Linux kernel TCP UAF、およびAIエージェントのサプライチェーンセキュリティ。'
 nav:
   vi: Tháng 11/2026
   ja: 2026年11月
@@ -14,14 +14,14 @@ h1:
   vi: Báo cáo bảo mật tháng 11/2026
   ja: 2026年11月 セキュリティレポート
 sub:
-  vi: 'Số liệu tính đến <strong>2026-11-11</strong> (cập nhật theo đợt phát hành Patch Tuesday tháng 11/2026 của Microsoft).'
-  ja: '<strong>2026年11月11日</strong>時点の情報です（Microsoft 2026年11月 Patch Tuesday セキュリティリリースに対応）。'
+  vi: 'Số liệu tính đến <strong>2026-11-11</strong> (cập nhật theo đợt phát hành Patch Tuesday Microsoft, Chrome Zero-Day và các bản tin an ninh định kỳ).'
+  ja: '<strong>2026年11月11日</strong>時点の情報です（Microsoft Patch Tuesday、Chrome ゼロデイ緊急リリースおよび定期セキュリティ情報に対応）。'
 placeholder:
-  vi: '🔍 Tìm kiếm CVE, framework, thư viện (vd: VS Code, Linux, AWS, RCE)...'
-  ja: '🔍 CVE、フレームワーク、ライブラリで検索（例: VS Code, Linux, AWS, RCE）...'
+  vi: '🔍 Tìm kiếm CVE, framework, thư viện (vd: VS Code, Chrome, .NET, Tomcat, Next.js, AWS)...'
+  ja: '🔍 CVE、フレームワーク、ライブラリで検索（例: VS Code, Chrome, .NET, Tomcat, Next.js, AWS）...'
 scope:
-  vi: '<strong>Phạm vi rà soát:</strong> Công cụ &amp; Môi trường phát triển (Visual Studio Code) · Hạ tầng (AWS, GCP) · Ngôn ngữ (NodeJS, PHP, Java, .NET) · Framework (Next.js, Nuxt, Laravel, Spring Boot).'
-  ja: '<strong>調査範囲:</strong> 開発ツール・環境（Visual Studio Code） · インフラ（AWS, GCP） · 言語（NodeJS, PHP, Java, .NET） · フレームワーク（Next.js, Nuxt, Laravel, Spring Boot）。'
+  vi: '<strong>Phạm vi rà soát:</strong> Công cụ &amp; Môi trường phát triển (VS Code, Visual Studio, GitHub Actions) · Trình duyệt (Chrome/V8) · Ngôn ngữ &amp; Runtimes (.NET, Linux, NodeJS, PHP, Java) · Frameworks (Next.js, Nuxt, Laravel, Spring Boot, Tomcat, Quasar) · Hạ tầng &amp; Chuỗi cung ứng (AWS, GCP, npm, PyPI, Composer).'
+  ja: '<strong>調査範囲:</strong> 開発ツール・IDE環境（VS Code、Visual Studio、GitHub Actions） · ブラウザ（Chrome/V8） · 言語・ランタイム（.NET、Linux、NodeJS、PHP、Java） · フレームワーク（Next.js、Nuxt、Laravel、Spring Boot、Tomcat、Quasar） · クラウド・サプライチェーン（AWS、GCP、npm、PyPI、Composer）。'
 
 card:
   title:
@@ -32,20 +32,25 @@ card:
     ja: 2026年11月11日 時点 · 月次定期レポート
   items:
   - sev: crit
-    label: VS Code
+    label: VS Code &amp; Dev Tools
     text:
       vi: 'CVE-2026-120779 / CVE-2026-120780: Lỗ hổng RCE nghiêm trọng (CVSS 9.6) qua workspace/repo độc hại. Nâng cấp ngay lên 1.145.3+ và bật Workspace Trust.'
       ja: 'CVE-2026-120779 / CVE-2026-120780: 悪意あるワークスペース/リポジトリによる重大なRCE脆弱性（CVSS 9.6）。直ちに 1.145.3+ へ更新し Workspace Trust を有効化。'
+  - sev: crit
+    label: Chrome / V8
+    text:
+      vi: 'CVE-2026-125350: Lỗ hổng Zero-Day đang bị khai thác trong thực tế ở trình phân tích cú pháp XML. Cập nhật khẩn cấp Chrome lên 157.0.8103.50+ / 156.0.8078.96.'
+      ja: 'CVE-2026-125350: XMLパーサーにおける悪用確認済みのゼロデイ脆弱性。直ちに Chrome を 157.0.8103.50+ / 156.0.8078.96 へ緊急更新。'
   - sev: high
-    label: Linux kernel
+    label: .NET &amp; Frameworks
     text:
-      vi: 'CVE-2026-98432: Tiếp tục theo dõi bản vá Ubuntu (USN); duy trì bộ lọc nftables/iptables u32 hoặc tắt MPTCP trên các node chưa reboot nâng kernel.'
-      ja: 'CVE-2026-98432: Ubuntu公式パッチ（USN）の動向監視を継続。カーネル未再起動ノードではnftables/iptables u32遮断またはMPTCP無効化を維持。'
-  - sev: med
-    label: Hạ tầng & Cloud
+      vi: 'Patch Tuesday tháng 11 vá .NET 10/9/8; Apache Tomcat lỗi bypass xác thực SASL (CVSS 9.1); Next.js 16.4.5 vá RCE App Router cache; Nuxt lên 4.6.3.'
+      ja: '11月 Patch Tuesday による .NET 10/9/8 修正。Apache Tomcat の SASL 認証バイパス（CVSS 9.1）、Next.js 16.4.5 の App Router キャッシュ RCE 修正、Nuxt 4.6.3 更新。'
+  - sev: high
+    label: Hạ tầng &amp; Chuỗi cung ứng
     text:
-      vi: 'AWS hoàn tất vá tầng host cho RDS/Aurora đối với lỗi kernel TCP; rà soát cấu hình TCP pass-through trên NLB và phân quyền môi trường dev.'
-      ja: 'AWSはRDS/Auroraのホスト層パッチ適用を完了。NLB TCPパススルー設定および開発環境の権限設定を再点検。'
+      vi: 'AWS Nitro Enclave (CVE-2026-98433); GCP Cloud Run/Vertex sandbox escape (CVE-2026-98512); cảnh báo chiến dịch npm/PyPI giả mạo công cụ MCP nhắm vào AI agent.'
+      ja: 'AWS Nitro Enclave（CVE-2026-98433）、GCP Cloud Run/Vertex サンドボックス脱出（CVE-2026-98512）、AIエージェントを標的とした悪意ある MCP パッケージの検知。'
 
 sections:
 - title:
@@ -61,22 +66,50 @@ sections:
       vi: Ngay lập tức (toàn bộ máy kỹ sư &amp; máy ảo)
       ja: 即時（全開発者マシンおよび仮想環境）
   - task:
-      vi: 'Rà soát máy chủ Linux mở cổng TCP internet: cập nhật kernel đã vá <strong>CVE-2026-98432</strong> hoặc áp dụng cấu hình lọc gói IP options bằng nftables/iptables u32'
-      ja: 'インターネット公開されたLinuxサーバーの総点検: <strong>CVE-2026-98432</strong> 修正カーネルへの更新・再起動、またはnftables/iptables u32によるIPオプション遮断ルールの適用'
+      vi: 'Cập nhật khẩn cấp <strong>Google Chrome</strong> lên <strong>157.0.8103.50+</strong> (hoặc 156.0.8078.96 trên kênh Extended Stable) để vá lỗ hổng <strong>Zero-Day CVE-2026-125350</strong> đang bị khai thác trong thực tế'
+      ja: '悪用が確認されている <strong>ゼロデイ脆弱性 CVE-2026-125350</strong> に対応するため、<strong>Google Chrome</strong> を <strong>157.0.8103.50+</strong>（Extended Stable は 156.0.8078.96）へ緊急アップデートする'
+    sev: crit
+    due:
+      vi: Ngay lập tức (toàn bộ máy trạm &amp; thiết bị duyệt web)
+      ja: 即時（全クライアント端末およびWebブラウザ環境）
+  - task:
+      vi: 'Nâng cấp <strong>Next.js</strong> lên <strong>16.4.5 / 15.5.29</strong> (vá lỗi RCE liên quan đến <code>use cache</code> và xử lý ảnh SVG) và <strong>Nuxt</strong> lên <strong>4.6.3</strong>'
+      ja: '<strong>Next.js</strong> を <strong>16.4.5 / 15.5.29</strong> にアップグレードし（<code>use cache</code> および SVG 処理関連の RCE 修正）、<strong>Nuxt</strong> を <strong>4.6.3</strong> へ更新する'
     sev: high
     due:
       vi: Trong tuần
       ja: 今週中
   - task:
-      vi: Cập nhật các extension IDE và môi trường Remote Development (Remote-SSH, Dev Containers, WSL, Codespaces host) lên phiên bản mới nhất
-      ja: IDE拡張機能およびリモート開発環境（Remote-SSH、Dev Containers、WSL、Codespaces ホスト）を最新版へ更新
+      vi: 'Cập nhật <strong>.NET</strong> lên <strong>10.0.15 / 9.0.23 / 8.0.34</strong> (vá CVE-2026-118746 bypass xác thực và CVE-2026-114146/47); rebuild lại Docker container sử dụng base image tháng 11/2026'
+      ja: '<strong>.NET</strong> を <strong>10.0.15 / 9.0.23 / 8.0.34</strong> に更新し（認証バイパス CVE-2026-118746、CVE-2026-114146/47 を修正）、2026年11月ベースイメージで Docker コンテナを再ビルドする'
     sev: high
     due:
       vi: Trong tuần
       ja: 今週中
   - task:
-      vi: 'Duy trì rà soát các phiên bản PHP (&ge; 8.2.35 / 8.3.36 / 8.4.27 / 8.5.12) và Next.js (&ge; 15.5.28 / 16.4.1) đã cảnh báo từ tháng 10'
-      ja: 10月レポートで告知したPHP（8.2.35 / 8.3.36 / 8.4.27 / 8.5.12 以上）およびNext.js（15.5.28 / 16.4.1 以上）のパッチ適用状況の継続確認
+      vi: 'Nâng cấp <strong>Apache Tomcat</strong> lên <strong>11.0.27 / 10.1.61 / 9.0.123</strong> (vá lỗ hổng bypass xác thực JNDI SASL CVSS 9.1) và <strong>Spring Boot</strong> lên <strong>4.0.6 / 3.5.14</strong>'
+      ja: '<strong>Apache Tomcat</strong> を <strong>11.0.27 / 10.1.61 / 9.0.123</strong> に更新し（JNDI SASL 認証バイパス CVSS 9.1 を修正）、<strong>Spring Boot</strong> を <strong>4.0.6 / 3.5.14</strong> へアップグレードする'
+    sev: high
+    due:
+      vi: Trong tuần
+      ja: 今週中
+  - task:
+      vi: 'Rà soát máy chủ Linux mở cổng TCP internet: cập nhật kernel đã vá <strong>CVE-2026-98432</strong> hoặc áp dụng cấu hình lọc gói IP options bằng nftables/iptables u32 và tắt MPTCP'
+      ja: 'インターネット公開されたLinuxサーバーの総点検: <strong>CVE-2026-98432</strong> 修正カーネルへの更新・再起動、またはnftables/iptables u32によるIPオプション遮断ルールの適用とMPTCP無効化'
+    sev: high
+    due:
+      vi: Trong tuần
+      ja: 今週中
+  - task:
+      vi: 'Rà soát runner GitHub Actions tự host (<strong>CVE-2026-11204</strong>: chuyển sang mô hình ephemeral pod) và kiểm duyệt chặt các package npm/PyPI giả mạo công cụ MCP nhắm vào AI agent'
+      ja: 'セルフホスト型 GitHub Actions ランナーの点検（<strong>CVE-2026-11204</strong>: エフェメラル環境への移行）および AI エージェントを騙る不正 npm/PyPI パッケージの厳格な審査'
+    sev: high
+    due:
+      vi: Trong tuần
+      ja: 今週中
+  - task:
+      vi: 'Duy trì các phiên bản <strong>PHP</strong> đã vá (&ge; 8.2.35 / 8.3.36 / 8.4.27 / 8.5.12) và giữ thiết lập <code>session.upload_progress.enabled = 0</code> phòng ngừa sự cố PHP2Shell'
+      ja: 'パッチ適用済み <strong>PHP</strong>（8.2.35 / 8.3.36 / 8.4.27 / 8.5.12 以上）の維持、および PHP2Shell 対策としての <code>session.upload_progress.enabled = 0</code> 設定の継続'
     sev: med
     due:
       vi: Trước 20-11-2026
@@ -98,61 +131,239 @@ sections:
     fix:
       vi: 'Nâng cấp ngay lên Visual Studio Code <strong>1.145.3 trở lên</strong> qua menu <strong>Help &gt; Check for Updates</strong> hoặc tải bản mới nhất từ trang chủ Microsoft. Đảm bảo bật <strong>Workspace Trust</strong> (<code>security.workspace.trust.enabled: true</code>), không bấm "Trust" đối với thư mục hoặc repo chưa rõ nguồn gốc.'
       ja: 'ヘルプメニュー（<strong>Help &gt; Check for Updates</strong>）または公式サイトから <strong>1.145.3 以上</strong>へ直ちに更新してください。<strong>Workspace Trust</strong>（<code>security.workspace.trust.enabled: true</code>）を必ず有効にし、出所不明のリポジトリで信頼（Trust）を許可しないでください。'
+  - name: Microsoft Visual Studio
+    sev: high
+    summary:
+      vi: 'Đợt cập nhật Patch Tuesday tháng 11/2026 vá <strong>CVE-2026-114151</strong> và <strong>CVE-2026-118745</strong>: Lỗ hổng thực thi mã tùy ý (RCE / Arbitrary Code Execution) khi mở project file, custom MSBuild target hoặc tải dependency package chứa mã khai thác.'
+      ja: '2026年11月 Patch Tuesday にて <strong>CVE-2026-114151</strong> および <strong>CVE-2026-118745</strong> を修正。悪意あるプロジェクトファイル、カスタム MSBuild ターゲット、またはパッケージ依存関係の処理時に任意コード実行（RCE）に至る脆弱性。'
+    impact:
+      vi: 'Kỹ sư phát triển phần mềm sử dụng Microsoft Visual Studio 2022 trên Windows khi mở các solution (.sln, .csproj) từ nguồn bên ngoài.'
+      ja: '外部から取得したソリューション（.sln、.csproj）を開く Windows 環境の Visual Studio 2022 利用エンジニア。'
+    fix:
+      vi: 'Mở Visual Studio Installer và cập nhật Visual Studio 2022 lên bản phát hành mới nhất tháng 11/2026.'
+      ja: 'Visual Studio Installer を起動し、Visual Studio 2022 を2026年11月の最新サービスリリースに更新してください。'
+  - name: GitHub Actions (Self-Hosted Runners)
+    sev: high
+    summary:
+      vi: 'Advisory <strong>CVE-2026-11204</strong>: Lỗ hổng phạm vi và lưu vết token trên runner tự host (Self-Hosted Runner Controller). Quá trình dọn dẹp sau job trên các runner dùng chung có thể để rò rỉ OIDC token tạm thời hoặc biến môi trường sang các job tiếp theo từ các PR khác nhau.'
+      ja: 'セキュリティアドバイザリ <strong>CVE-2026-11204</strong>：セルフホスト型 GitHub Actions ランナーコントローラーにおけるトークン永続化・漏えいの脆弱性。共有ランナーでのジョブ完了後のクリーンアップ不備により、異なるPR送信者の後続ジョブに一時的な OIDC トークンや環境変数が漏えいするリスク。'
+    impact:
+      vi: 'Các hệ thống CI/CD sử dụng GitHub Actions self-hosted runner dùng chung giữa các repository hoặc cho phép workflow chạy từ pull request nhánh ngoài/fork.'
+      ja: '複数リポジトリで共有されているセルフホスト型ランナー、または外部フォークからの PR でワークフロー実行を許可している CI/CD パイプライン。'
+    fix:
+      vi: 'Chuyển toàn bộ hạ tầng runner tự host sang dạng container pod dùng một lần (ephemeral single-use pods). Áp dụng chặt chẽ khối <code>permissions:</code> tối thiểu trong file workflow (vd: <code>contents: read</code>) và pin SHA commit đối với third-party Actions.'
+      ja: 'セルフホストランナー基盤を使い捨てコンテナポッド（ephemeral single-use pods）へ移行してください。ワークフロー定義内で最小限の <code>permissions:</code>（例: <code>contents: read</code>）を明示し、外部アクションはコミットSHAで固定してください。'
 
 - title:
-    vi: 3. Hệ điều hành &amp; Ngôn ngữ lập trình (OS &amp; Languages)
-    ja: 3. OSおよびプログラミング言語（OS &amp; Languages）
+    vi: 3. Trình duyệt &amp; Chuỗi cung ứng Package (Browsers &amp; Package Registries)
+    ja: 3. ブラウザおよびパッケージサプライチェーン（Browsers &amp; Package Registries）
+  type: component
+  rows:
+  - name: Google Chrome &amp; Chromium
+    sev: crit
+    summary:
+      vi: '<strong>CVE-2026-125350 (Zero-Day đang bị khai thác ngoài thực tế)</strong>: Lỗ hổng Use-After-Free trong component xử lý XML parser của Chromium cho phép kẻ tấn công làm hỏng bộ nhớ heap và thực thi mã tùy ý trong sandbox khi người dùng truy cập trang web hoặc tải nội dung XML/HTML độc hại. Google phát hành bản vá khẩn cấp ngày 09-11-2026.'
+      ja: '<strong>CVE-2026-125350（実環境で悪用が確認されたゼロデイ脆弱性）</strong>：Chromium の XML パーサーコンポーネントにおける Use-After-Free。悪意ある Web ページや XML/HTML コンテンツを閲覧させることで、ヒープ破壊を引き起こしブラウザサンドボックス内で任意コード実行に至るリスク。Google は2026年11月9日に緊急パッチを配信。'
+    impact:
+      vi: 'Toàn bộ người dùng duyệt web bằng Google Chrome, Microsoft Edge, Brave, Opera trên Windows, macOS và Linux. Các tiến trình headless Chromium / Puppeteer phục vụ render trang.'
+      ja: 'Windows、macOS、Linux 上で Google Chrome、Microsoft Edge、Brave、Opera を利用する全ユーザー、およびページ描画処理を行うヘッドレス Chromium / Puppeteer 環境。'
+    fix:
+      vi: 'Cập nhật ngay Google Chrome lên <strong>157.0.8103.50/.51</strong> (hoặc <strong>156.0.8078.96</strong> trên kênh Extended Stable) qua <strong>Settings &gt; About Google Chrome</strong> và khởi động lại trình duyệt. Cập nhật tương tự đối với Edge, Brave, Opera.'
+      ja: '<strong>Settings &gt; About Google Chrome</strong> より、Google Chrome を直ちに <strong>157.0.8103.50/.51</strong>（Extended Stable は <strong>156.0.8078.96</strong>）に更新しブラウザを再起動してください。Edge、Brave、Opera も同様に対応が必要です。'
+  - name: npm &amp; PyPI (AI Coding Agent Supply Chain)
+    sev: high
+    summary:
+      vi: 'Phát hiện chiến dịch diện rộng với hơn 140 package mã độc trên npm và PyPI mạo danh các máy chủ giao thức Model Context Protocol (MCP), tool connector và tiện ích hỗ trợ AI coding agent. Khi được agent hoặc kỹ sư cài đặt thử nghiệm, mã độc âm thầm quét và exfiltrate các file <code>.env</code>, private key SSH, và thông tin xác thực AWS (<code>~/.aws/credentials</code>).'
+      ja: 'Model Context Protocol（MCP）サーバー、ツールコネクタ、AIコーディングアシスタントの支援ツールを装った140件以上の悪意ある npm/PyPI パッケージによる協調攻撃を検知。エージェントや開発者がインストール・実行した際、<code>.env</code>、SSH秘密鍵、AWS認証情報（<code>~/.aws/credentials</code>）を外部へ不正送信。'
+    impact:
+      vi: 'Máy trạm của kỹ sư sử dụng các công cụ AI coding assistant (Claude Code, Cursor, Copilot Workspace...), môi trường dev/staging có cài đặt package mới chưa qua kiểm duyệt.'
+      ja: 'AIコーディング支援ツール（Claude Code、Cursor、Copilot 等）を利用する開発環境、未検証パッケージをインストールする開発・ステージング環境。'
+    fix:
+      vi: 'Tuân thủ nghiêm ngặt việc khóa phiên bản bằng lockfile (<code>npm ci</code>, <code>pnpm-lock.yaml</code>). Kiểm tra kỹ nguồn gốc package và tác giả trước khi cấu hình MCP server hoặc cho phép AI agent cài đặt thư viện mới. Sử dụng các công cụ quét chuỗi cung ứng (Socket.dev, GitHub Dependency Review).'
+      ja: 'ロックファイルによる依存関係固定（<code>npm ci</code>、<code>pnpm-lock.yaml</code>）を徹底してください。MCP サーバー登録や AI エージェントによるライブラリ自動追加の前にパッケージの出所を必ず監査してください。Socket.dev や GitHub Dependency Review による検証を推奨します。'
+  - name: PHP Composer
+    sev: high
+    summary:
+      vi: '<strong>CVE-2026-109620 (Critical)</strong>: Lỗ hổng Object Injection và Remote Code Execution trong các package tiện ích phổ biến thuộc hệ sinh thái Composer, phát sinh trong quá trình tự động phân giải phụ thuộc và ghi cache.'
+      ja: '<strong>CVE-2026-109620（Critical）</strong>：Composer エコシステム内の主要ユーティリティパッケージにおけるオブジェクト注入およびリモートコード実行（RCE）の脆弱性。依存関係の自動解決およびキャッシュ生成時にトリガーされる恐れ。'
+    impact:
+      vi: 'Ứng dụng PHP và hệ thống CI/CD tự động chạy <code>composer install</code> hoặc <code>composer update</code> chứa các package bị ảnh hưởng.'
+      ja: '影響を受けるパッケージを利用し、<code>composer install</code> や <code>composer update</code> を実行する PHP アプリケーションおよび CI/CD 環境。'
+    fix:
+      vi: 'Chạy lệnh <code>composer audit</code> để rà soát toàn bộ dependency tree; nâng cấp các package bị cảnh báo lên bản phát hành mới nhất.'
+      ja: '<code>composer audit</code> を実行して依存関係ツリー全体を監査し、警告対象パッケージを最新パッチ適用版へ更新してください。'
+
+- title:
+    vi: 4. Hệ điều hành &amp; Ngôn ngữ lập trình (OS &amp; Languages)
+    ja: 4. OSおよびプログラミング言語（OS &amp; Languages）
   type: component
   rows:
   - name: Linux kernel
     sev: high
     summary:
-      vi: 'Tiếp tục theo dõi <strong>CVE-2026-98432</strong> (use-after-free trong ngăn xếp IPv4 TCP khi xử lý IP options, nguy cơ thực thi mã qua MPTCP handshake, CVSS 9.8). Amazon Linux (AL2/AL2023) đã có kernel vá chính thức; Ubuntu các bản 22.04 / 24.04 đang trong giai đoạn phát hành USN. Xem chi tiết tại <a href="@home@featured/linux-cve-2026-98432/analysis/">bài phân tích chuyên sâu</a>.'
-      ja: '<strong>CVE-2026-98432</strong>（IPオプション処理時のIPv4 TCPスタックにおけるuse-after-free、MPTCPハンドシェイク経由のコード実行リスク、CVSS 9.8）の追跡。Amazon Linux（AL2/AL2023）は公式パッチ済み。Ubuntu 22.04 / 24.04 はUSNリリース準備段階。<a href="@home@featured/linux-cve-2026-98432/analysis/">詳細分析ページ</a>を参照。'
+      vi: 'Tiếp tục theo dõi <strong>CVE-2026-98432</strong> (use-after-free trong ngăn xếp IPv4 TCP khi xử lý IP options, nguy cơ thực thi mã qua MPTCP handshake, CVSS 9.8). Amazon Linux (AL2/AL2023) đã có kernel vá chính thức; Ubuntu các bản 22.04 / 24.04 tiếp tục phát hành USN. Xem chi tiết tại <a href="@home@featured/linux-cve-2026-98432/analysis/">bài phân tích chuyên sâu</a>.'
+      ja: '<strong>CVE-2026-98432</strong>（IPオプション処理時のIPv4 TCPスタックにおけるuse-after-free、MPTCPハンドシェイク経由のコード実行リスク、CVSS 9.8）の追跡。Amazon Linux（AL2/AL2023）は公式パッチ済み。Ubuntu 22.04 / 24.04 はUSNアップデートを継続配布中。<a href="@home@featured/linux-cve-2026-98432/analysis/">詳細分析ページ</a>を参照。'
     impact:
       vi: 'Máy chủ Linux mở cổng TCP trực tiếp ra internet hoặc bật MPTCP (Go 1.24+ bật mặc định trên Linux), máy chủ đứng sau NLB TCP pass-through listener.'
       ja: 'TCPポートを直接インターネット公開しているLinuxサーバー、MPTCPが有効な環境（Linux上のGo 1.24+でデフォルト有効）、NLB TCPパススルー配下のサーバー。'
     fix:
       vi: 'Cập nhật kernel bản mới nhất và reboot máy chủ. Nếu chưa thể reboot, áp dụng cấu hình nftables/iptables u32 chặn gói IPv4 chứa IP options hoặc tắt MPTCP (<code>sysctl -w net.mptcp.enabled=0</code>).'
       ja: '最新カーネルに更新して再起動してください。即時再起動が困難な場合は、nftables/iptables u32でIPオプション付きパケットを遮断するか、MPTCPを無効化（<code>sysctl -w net.mptcp.enabled=0</code>）してください。'
-
+  - name: .NET (gồm ASP.NET Core)
+    sev: high
+    summary:
+      vi: 'Đợt cập nhật Patch Tuesday 10-11-2026: <strong>CVE-2026-118746 (CVSS 6.8)</strong> lỗi Security Feature Bypass trong cơ chế Unix Negotiate authentication khi thiếu thông tin channel-binding; <strong>CVE-2026-114146 / CVE-2026-114147</strong> lỗi leo thang đặc quyền (EoP) và từ chối dịch vụ (DoS) trong middleware xử lý request của ASP.NET Core.'
+      ja: '2026年11月10日 Patch Tuesday：<strong>CVE-2026-118746（CVSS 6.8）</strong>チャネルバインディング情報欠落時に不正リクエストを許容する Unix Negotiate 認証バイパス脆弱性、<strong>CVE-2026-114146 / CVE-2026-114147</strong> ASP.NET Core リクエスト処理・ミドルウェアにおける特権昇格（EoP）およびサービス拒否（DoS）。'
+    impact:
+      vi: 'Dịch vụ backend chạy .NET 8.0, 9.0, 10.0 trên Linux/Docker hoặc sử dụng middleware ASP.NET Core xử lý request công khai.'
+      ja: 'Linux/Docker 環境で .NET 8.0、9.0、10.0 を稼働させているバックエンドサービス、および外部リクエストを受け付ける ASP.NET Core ミドルウェア。'
+    fix:
+      vi: 'Cập nhật .NET SDK và runtime lên <strong>10.0.15</strong>, <strong>9.0.23</strong>, <strong>8.0.34</strong> (hoặc SDK 11.0.100+). Rebuild lại các Docker container sử dụng base image .NET cập nhật tháng 11/2026.'
+      ja: '.NET SDK およびランタイムを <strong>10.0.15</strong>、<strong>9.0.23</strong>、<strong>8.0.34</strong>（または SDK 11.0.100+）に更新してください。2026年11月更新の .NET ベースイメージを用いて Docker コンテナを再ビルド・再デプロイしてください。'
   - name: Node.js
     sev: med
     summary:
-      vi: 'Đã phát hành các bản vá định kỳ 26.12.1 / 24.22.1 / 22.23.4 trong đợt cập nhật bảo mật gần nhất; tháng 11 tiếp tục ghi nhận các cảnh báo an toàn liên quan đến chuỗi cung ứng npm và các công cụ AI coding agent tự động cài đặt dependency.'
-      ja: '直近のセキュリティリリース（26.12.1 / 24.22.1 / 22.23.4）の適用を維持。11月はnpmサプライチェーン攻撃および依存関係を自動インストールするAIコーディングツールを標的とした悪意あるパッケージへの警戒が継続。'
+      vi: 'Duy trì các bản vá bảo mật 26.12.1 / 24.22.1 / 22.23.4 (khắc phục lỗi Brotli CVE-2026-111497 và bypass xác thực tên miền chứng chỉ TLS). Tháng 11 không có đợt cập nhật kernel khẩn cấp cho Node.js core; tiếp tục chú trọng an toàn supply chain npm.'
+      ja: 'セキュリティリリース（26.12.1 / 24.22.1 / 22.23.4）の適用を維持（Brotli メモリ範囲外書き込み CVE-2026-111497 および TLS ホスト名検証バイパスの修正）。11月に Node.js コアの緊急リリースはなく、npm サプライチェーン監査を重点的に実施。'
     impact:
       vi: 'Các ứng dụng backend, API, SSR (Next.js, Nuxt) và môi trường phát triển / CI pipeline.'
       ja: 'バックエンドアプリケーション、API、SSR（Next.js、Nuxt）、および開発環境・CIパイプライン。'
     fix:
-      vi: 'Đảm bảo ứng dụng chạy trên các phiên bản Node.js được hỗ trợ (Active/Maintenance LTS). Sử dụng <code>npm audit</code> và khóa phiên bản bằng package-lock.json / pnpm-lock.yaml.'
-      ja: 'サポート対象のLTSバージョンで稼働していることを確認してください。<code>npm audit</code>の実施とpackage-lock.json / pnpm-lock.yamlによるバージョン固定を徹底してください。'
+      vi: 'Đảm bảo ứng dụng chạy trên các phiên bản Node.js được hỗ trợ (Active/Maintenance LTS). Chạy định kỳ <code>npm audit</code> và khóa phiên bản bằng package-lock.json / pnpm-lock.yaml.'
+      ja: 'サポート対象のLTSバージョンで稼働していることを確認してください。<code>npm audit</code>の定期実施とpackage-lock.json / pnpm-lock.yamlによるバージョン固定を徹底してください。'
+  - name: PHP
+    sev: high
+    summary:
+      vi: 'Duy trì cảnh giác sau cuộc khủng hoảng PHP2Shell (CVE-2026-109618, CVE-2026-109619 - CVSS 9.2 Critical RCE qua upload progress). Các bản vá chính thức 8.5.12, 8.4.27, 8.3.36, 8.2.35 đã phát hành ổn định; lưu ý các nhánh 8.1 trở xuống đã EOL không có bản vá từ upstream.'
+      ja: 'PHP2Shell（CVE-2026-109618、CVE-2026-109619 - CVSS 9.2 Critical、upload progress 経由の RCE）を受けた警戒体制を維持。公式修正版 8.5.12、8.4.27、8.3.36、8.2.35 の稼働を確認。8.1 以前の EOL ブランチには upstream パッチがない点に留意。'
+    impact:
+      vi: 'Mọi ứng dụng PHP (PHP-FPM, FrankenPHP, Laravel, WordPress). Môi trường chưa nâng cấp PHP hoặc chưa tắt upload progress.'
+      ja: 'すべての PHP アプリケーション（PHP-FPM、FrankenPHP、Laravel、WordPress 等）。未更新環境または upload progress を無効化していない環境。'
+    fix:
+      vi: 'Đảm bảo đã nâng PHP lên 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35. Đặt cấu hình <code>session.upload_progress.enabled = 0</code> trong <code>php.ini</code>. Xem <a href="@home@featured/php-cve-2026-109618-109619/php2shell-runbook/">runbook nội bộ</a>.'
+      ja: 'PHP を 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 へアップグレード済みであることを確認してください。<code>php.ini</code> で <code>session.upload_progress.enabled = 0</code> を設定してください。<a href="@home@featured/php-cve-2026-109618-109619/php2shell-runbook/">社内ランブック</a>を参照。'
 
 - title:
-    vi: '4. Hạ tầng đám mây (Infrastructure: AWS &amp; GCP)'
-    ja: '4. クラウドインフラ（Infrastructure: AWS &amp; GCP）'
+    vi: 5. Frameworks Web &amp; Hệ sinh thái Java (Frameworks &amp; Java Ecosystem)
+    ja: 5. WebフレームワークおよびJavaエコシステム（Frameworks &amp; Java Ecosystem）
+  type: component
+  rows:
+  - name: Next.js
+    sev: high
+    summary:
+      vi: 'Bản vá <strong>GHSA-673q-mjm6-r5xr / CVE-2026-96889 (Critical)</strong>: Lỗ hổng RCE liên quan đến hàm <code>use cache</code> trong App Router khi trả về dữ liệu kiểu TypedArray, kết hợp với lỗ hổng xử lý file SVG trong thư viện xử lý ảnh <code>sharp / librsvg</code>.'
+      ja: 'セキュリティアドバイザリ <strong>GHSA-673q-mjm6-r5xr / CVE-2026-96889（Critical）</strong>：App Router の <code>use cache</code> 関数が TypedArray を返却する際のリモートコード実行（RCE）の脆弱性、および画像処理コンポーネント（<code>sharp / librsvg</code>）における SVG 処理不備。'
+    impact:
+      vi: 'Các ứng dụng Next.js sử dụng App Router, Server Components và Image Optimization.'
+      ja: 'App Router、Server Components、および Image Optimization を活用している Next.js アプリケーション。'
+    fix:
+      vi: 'Nâng cấp Next.js lên <strong>16.4.5</strong> hoặc <strong>15.5.29 trở lên</strong>.'
+      ja: 'Next.js を <strong>16.4.5</strong> または <strong>15.5.29 以上</strong>にアップグレードしてください。'
+  - name: Nuxt
+    sev: high
+    summary:
+      vi: '<strong>CVE-2026-119198 &amp; CVE-2026-119200</strong>: Lỗ hổng tiết lộ file tùy ý trên development server qua thao tác sự kiện HMR, và lỗi bypass chuẩn hóa đường dẫn URL trong engine Nitro (<code>/%2e/admin</code>).'
+      ja: '<strong>CVE-2026-119198 &amp; CVE-2026-119200</strong>：HMR イベント操作による開発サーバー上の任意ファイル漏えい、および Nitro ルーティング正規化バイパス（<code>/%2e/admin</code>）によるパストラバーサル。'
+    impact:
+      vi: 'Ứng dụng chạy Nuxt 4 (môi trường dev, staging và production dùng Nitro engine).'
+      ja: 'Nuxt 4 を利用するアプリケーション（開発、ステージング、および Nitro エンジン稼働の本番環境）。'
+    fix:
+      vi: 'Nâng cấp Nuxt lên <strong>4.6.3 trở lên</strong>. Lưu ý Nuxt 3 đã hết vòng đời hỗ trợ (EOL), không có bản vá chính thức.'
+      ja: 'Nuxt を <strong>4.6.3 以上</strong>にアップグレードしてください。なお Nuxt 3 は EOL となっており公式修正はありません。'
+  - name: Laravel
+    sev: med
+    summary:
+      vi: 'Tiếp tục theo dõi <strong>CVE-2026-114509</strong>: Lỗ hổng trong hệ thống TokenGuard cho phép giả danh người dùng mà không cần token hợp lệ khi cơ sở dữ liệu MySQL/MariaDB hoạt động ở chế độ so khớp không phân biệt chữ hoa chữ thường.'
+      ja: '<strong>CVE-2026-114509</strong> の継続対応：大文字小文字を区別しない MySQL/MariaDB 環境において、TokenGuard 認証サブシステムの不備により有効なトークンなしでユーザーになりすましが可能な脆弱性。'
+    impact:
+      vi: 'Ứng dụng Laravel sử dụng API Token Authentication với cơ sở dữ liệu MySQL / MariaDB.'
+      ja: 'MySQL / MariaDB を使用し、API トークン認証を採用している Laravel アプリケーション。'
+    fix:
+      vi: 'Nâng cấp Laravel lên <strong>13.29.0+</strong> (hoặc <strong>12.68.0+</strong> đối với nhánh Laravel 12).'
+      ja: 'Laravel を <strong>13.29.0 以上</strong>（Laravel 12 系は <strong>12.68.0 以上</strong>）にアップグレードしてください。'
+  - name: Spring Boot &amp; Spring Framework
+    sev: high
+    summary:
+      vi: '<strong>CVE-2026-40976 (CVSS 9.1 - Critical)</strong>: Bỏ qua kiểm soát bảo mật web khi cấu hình Actuator mặc định không khai báo security filter chain rõ ràng; <strong>CVE-2026-41843</strong> path traversal khi phân giải tài nguyên tĩnh; <strong>CVE-2026-59283</strong> bypass SpEL evaluation.'
+      ja: '<strong>CVE-2026-40976（CVSS 9.1 - Critical）</strong>：明示的なセキュリティフィルターチェーンが設定されていないデフォルト Actuator 構成における Web セキュリティバイパス、<strong>CVE-2026-41843</strong> 静的リソース処理のパストラバーサル、<strong>CVE-2026-59283</strong> SpEL 評価バイパス。'
+    impact:
+      vi: 'Ứng dụng Spring Boot servlet và Spring MVC / WebFlux.'
+      ja: 'サーブレットベースの Spring Boot アプリケーションおよび Spring MVC / WebFlux 環境。'
+    fix:
+      vi: 'Nâng cấp Spring Boot lên <strong>4.0.6</strong>, <strong>3.5.14</strong>, <strong>3.4.16</strong>, hoặc <strong>3.3.19</strong>.'
+      ja: 'Spring Boot を <strong>4.0.6</strong>、<strong>3.5.14</strong>、<strong>3.4.16</strong>、または <strong>3.3.19</strong> にアップグレードしてください。'
+  - name: Apache Tomcat
+    sev: high
+    summary:
+      vi: '<strong>CVE-2026-101296 (CVSS 9.1 - Critical)</strong>: JNDI Realm cấu hình cơ chế SASL non-GSSAPI cho phép bỏ qua xác thực từ xa không cần thông tin đăng nhập; <strong>CVE-2026-103119 (High)</strong> buffer under-read trong AJP connector dẫn đến rò rỉ dữ liệu giữa các request; <strong>CVE-2026-101356 (High)</strong> trộn lẫn request/response trong HTTP/2 async servlet.'
+      ja: '<strong>CVE-2026-101296（CVSS 9.1 - Critical）</strong>：non-GSSAPI SASL 機構を用いた JNDI Realm における認証バイパス、<strong>CVE-2026-103119（High）</strong>AJP コネクタのバッファアンダーリードによるリクエスト間データ漏えい、<strong>CVE-2026-101356（High）</strong>HTTP/2 非同期サーブレットでのオブジェクト誤再利用によるレスポンス混同。'
+    impact:
+      vi: 'Máy chủ Apache Tomcat độc lập hoặc servlet container nhúng trong Spring Boot.'
+      ja: 'スタンドアロンの Apache Tomcat サーバーまたは Spring Boot 内蔵のサーブレットコンテナ。'
+    fix:
+      vi: 'Nâng cấp Apache Tomcat lên <strong>11.0.27</strong>, <strong>10.1.61</strong>, hoặc <strong>9.0.123</strong>.'
+      ja: 'Apache Tomcat を <strong>11.0.27</strong>、<strong>10.1.61</strong>、または <strong>9.0.123</strong> に更新してください。'
+  - name: Netty &amp; Jackson
+    sev: med
+    summary:
+      vi: '<strong>CVE-2026-116541 / CVE-2026-116539</strong> (heap buffer overflow trong <code>netty-tcnative</code> khi ghi BIO record TLS 1.3); <strong>CVE-2026-89407</strong> (ReDoS trong <code>jackson-core</code> NumberInput); <strong>CVE-2026-68497</strong> cạn kiệt bộ nhớ khi stream JSON bất đồng bộ.'
+      ja: '<strong>CVE-2026-116541 / CVE-2026-116539</strong>（<code>netty-tcnative</code> の TLS 1.3 post-handshake BIO 処理におけるヒープオーバーフロー）、<strong>CVE-2026-89407</strong>（<code>jackson-core</code> NumberInput の ReDoS）、<strong>CVE-2026-68497</strong>（非同期 JSON ストリーミング時のメモリ枯渇）。'
+    impact:
+      vi: 'Ứng dụng Java microservices sử dụng Netty (Spring WebFlux, gRPC) và thư viện Jackson parse JSON.'
+      ja: 'Netty を使用する Java マイクロサービス（Spring WebFlux、gRPC）および JSON 解析に Jackson を用いるアプリケーション。'
+    fix:
+      vi: 'Cập nhật <code>netty-tcnative</code> lên <strong>2.0.84.Final trở lên</strong> và cập nhật các gói <code>jackson-core</code> lên bản bảo trì mới nhất.'
+      ja: '<code>netty-tcnative</code> を <strong>2.0.84.Final 以上</strong>に更新し、<code>jackson-core</code> を最新の保守リリースへアップデートしてください。'
+  - name: Quasar Framework
+    sev: med
+    summary:
+      vi: '<strong>CVE-2026-106108 / GHSA-vhhq-m2gm-rwc9</strong>: Lỗ hổng directory traversal trong <code>@quasar/app-vite</code> (v3.1.0 đến v3.2.0) khi xử lý hàm <code>getSsgPages()</code> trong chế độ Static Site Generation (SSG).'
+      ja: '<strong>CVE-2026-106108 / GHSA-vhhq-m2gm-rwc9</strong>：静的サイト生成（SSG）モードの <code>getSsgPages()</code> 処理時における <code>@quasar/app-vite</code>（v3.1.0〜v3.2.0）のディレクトリトラバーサルの脆弱性。'
+    impact:
+      vi: 'Ứng dụng web Quasar sử dụng Vite và chế độ build SSG.'
+      ja: 'Vite および SSG ビルドモードを採用している Quasar Web アプリケーション。'
+    fix:
+      vi: 'Nâng cấp <code>@quasar/app-vite</code> lên <strong>v3.3.0</strong> và Quasar core lên <strong>v2.32.2 trở lên</strong>.'
+      ja: '<code>@quasar/app-vite</code> を <strong>v3.3.0</strong>、Quasar コアパッケージを <strong>v2.32.2 以上</strong>にアップグレードしてください。'
+
+- title:
+    vi: '6. Hạ tầng đám mây (Infrastructure: AWS &amp; GCP)'
+    ja: '6. クラウドインフラ（Infrastructure: AWS &amp; GCP）'
   type: provider
   rows:
   - name: AWS
-    sev: med
+    sev: high
     summary:
-      vi: 'AWS đã hoàn tất vá tầng host cho các dịch vụ cơ sở dữ liệu được quản lý (RDS, Aurora) liên quan đến CVE-2026-98432. Lưu ý kiểm tra lại các cấu hình Network Load Balancer (NLB) TCP pass-through và Security Group.'
-      ja: 'AWSはCVE-2026-98432に関連し、マネージドデータベースサービス（RDS、Aurora）のホスト層パッチ適用を完了。NLB TCPパススルーおよびSecurity Groupの設定再確認を推奨。'
+      vi: '<strong>CVE-2026-98433</strong>: Lỗ hổng side-channel vi kiến trúc ảnh hưởng đến môi trường ảo hóa Nitro thế hệ cũ trên Amazon EC2 đa người thuê (multi-tenant), có nguy cơ suy đoán khóa mật mã khi xảy ra tranh chấp bộ nhớ cực cao; AWS đã hoàn tất triển khai vá hypervisor và firmware tự động trên toàn cầu. Đồng thời AWS đã hoàn tất vá tầng host cho RDS/Aurora đối với lỗi kernel TCP IPv4.'
+      ja: '<strong>CVE-2026-98433</strong>：マルチテナント Amazon EC2 の旧世代 Nitro 仮想化環境におけるマイクロアーキテクチャ・サイドチャネルの脆弱性。極度のメモリ競合条件下で暗号鍵が推測されるリスクに対し、AWS は全世界でハイパーバイザーおよびファームウェアの自動パッチ適用を完了。また RDS/Aurora の IPv4 TCP ホスト層パッチも完了。'
     impact:
-      vi: 'Hạ tầng EC2, EKS node group, NLB listener phục vụ lưu lượng TCP công khai.'
-      ja: 'パブリックTCPトラフィックを処理するEC2、EKSノードグループ、NLBリスナー環境。'
+      vi: 'Các EC2 instance chạy lâu ngày chưa reboot thuộc danh sách bảo trì của AWS; hạ tầng NLB TCP pass-through listener.'
+      ja: 'メンテナンス対象としてフラグが立っている未再起動 EC2 インスタンス、NLB TCP パススルー環境。'
     fix:
-      vi: 'Kiểm tra phiên bản EKS Optimized AMI mới nhất. Đặt CloudFront / ALB / Cloudflare ở tầng biên để kết thúc kết nối TCP trước khi chuyển tiếp vào backend.'
-      ja: '最新のEKS最適化AMIの適用状況を確認してください。エッジ層にCloudFront / ALB / Cloudflareを配置してTCPを終端させてください。'
+      vi: 'Kiểm tra AWS Health Dashboard / Trusted Advisor để reboot các instance có thông báo bảo trì phần cứng. Đặt CloudFront / ALB ở tầng biên để kết thúc kết nối TCP trước khi chuyển tiếp backend.'
+      ja: 'AWS Health Dashboard / Trusted Advisor を確認し、メンテナンス通知のあるインスタンスを再起動してください。エッジ層に CloudFront / ALB を配置して TCP 接続を終端させてください。'
+  - name: GCP
+    sev: high
+    summary:
+      vi: '<strong>CVE-2026-98512</strong>: Lỗ hổng kiểm tra dữ liệu đầu vào trong container runtime loader của Google Cloud Run và Vertex AI Custom Training Jobs, cho phép payload độc hại leo thang đặc quyền cục bộ và vượt rào sandbox thực thi tới nhân host worker. Google đã cập nhật các managed runtime.'
+      ja: '<strong>CVE-2026-98512</strong>：Google Cloud Run および Vertex AI カスタムトレーニングジョブのコンテナランタイムローダーにおける入力検証不備。細工されたコンテナペイロードによりローカル特権昇格およびサンドボックス脱出が発生するリスク。Google はマネージドランタイムを更新済み。'
+    impact:
+      vi: 'Các workload chạy trên Cloud Run và Vertex AI sử dụng custom container image cũ chưa cập nhật base image.'
+      ja: '旧世代のベースイメージを使用している Cloud Run および Vertex AI のカスタムコンテナワークロード。'
+    fix:
+      vi: 'Rebuild lại toàn bộ custom container image triển khai trên Cloud Run / Vertex AI bằng base image mới nhất; kích hoạt Confidential Computing / Confidential VMs cho các workload nhạy cảm.'
+      ja: 'Cloud Run / Vertex AI にデプロイするカスタムコンテナを最新のベースイメージで再ビルドしてください。機密性の高いワークロードでは Confidential Computing / Confidential VMs の有効化を検討してください。'
 
 - title:
-    vi: 5. Ghi chú về độ tin cậy &amp; Nguồn tham khảo
-    ja: 5. 情報の信頼性に関する注記 &amp; 参考情報
+    vi: 7. Ghi chú về độ tin cậy &amp; Nguồn tham khảo
+    ja: 7. 情報の信頼性に関する注記 &amp; 参考情報
   type: list
   items:
-  - vi: '<strong>Đối chiếu nguồn chính thức Microsoft MSRC:</strong> CVE-2026-120779 và CVE-2026-120780 được công bố trong bản tin Patch Tuesday tháng 11/2026 (Microsoft Security Update Guide).'
-    ja: '<strong>Microsoft MSRC 公式ソースとの照合済み:</strong> CVE-2026-120779 および CVE-2026-120780 は 2026年11月 Patch Tuesday（Microsoft Security Update Guide）にて公開。'
-  - vi: '<strong>Mức độ khai thác thực tế:</strong> Hiện chưa ghi nhận mã khai thác công khai (PoC) vũ khí hóa hoặc tấn công diện rộng ngoài thực tế cho CVE-2026-120779; tuy nhiên do mức độ nghiêm trọng RCE CVSS 9.6, khuyến nghị vá ngay trong toàn bộ đội ngũ kỹ thuật.'
-    ja: '<strong>実際の悪用状況:</strong> CVE-2026-120779 について現在実環境での大規模な悪用は確認されていませんが、CVSS 9.6 の重大なRCEであるため、開発チーム全体で即時アップデートを推奨します。'
-  - vi: '<strong>Liên kết tham khảo:</strong> <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://code.visualstudio.com/updates" target="_blank" rel="noopener noreferrer">Visual Studio Code Release Notes</a> · <a href="@home@featured/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a>.'
-    ja: '<strong>参考リンク:</strong> <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://code.visualstudio.com/updates" target="_blank" rel="noopener noreferrer">Visual Studio Code Release Notes</a> · <a href="@home@featured/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a>。'
+  - vi: '<strong>Đối chiếu nguồn chính thức Microsoft MSRC &amp; Patch Tuesday:</strong> CVE-2026-120779, CVE-2026-120780 (Visual Studio Code), CVE-2026-118746 (.NET), CVE-2026-114146/47 (ASP.NET Core) và CVE-2026-114151 (Visual Studio) được công bố trong bản tin bảo mật Patch Tuesday tháng 11/2026.'
+    ja: '<strong>Microsoft MSRC &amp; Patch Tuesday 公式ソースとの照合済み:</strong> CVE-2026-120779、CVE-2026-120780（VS Code）、CVE-2026-118746（.NET）、CVE-2026-114146/47（ASP.NET Core）、CVE-2026-114151（Visual Studio）は 2026年11月 Patch Tuesday にて公開。'
+  - vi: '<strong>Cảnh báo Zero-Day Google Chrome (CVE-2026-125350):</strong> Lỗ hổng Use-After-Free trong trình phân tích XML đã được Google xác nhận có mã khai thác hoạt động thực tế (in the wild); bản vá khẩn cấp đã phát hành trên các kênh Stable và Extended Stable.'
+    ja: '<strong>Google Chrome ゼロデイ警告（CVE-2026-125350）:</strong> XML パーサーの Use-After-Free 脆弱性は Google により実環境での悪用（in the wild）が確認済み。Stable および Extended Stable チャンネルにて緊急アップデートが配信されています。'
+  - vi: '<strong>Cảnh báo chuỗi cung ứng công cụ AI Coding:</strong> Các chiến dịch mã độc mạo danh máy chủ Model Context Protocol (MCP) và công cụ mở rộng IDE đang gia tăng; khuyến nghị toàn bộ kỹ sư áp dụng nguyên tắc kiểm tra mã nguồn và xác minh tính toàn vẹn của lockfile trước khi tích hợp vào môi trường làm việc.'
+    ja: '<strong>AIコーディングツールのサプライチェーン警戒:</strong> Model Context Protocol（MCP）サーバーやIDE拡張ツールを騙る悪意あるパッケージが増加しています。全エンジニアは作業環境に組み込む前にソースコードの監査およびロックファイルの整合性検証を徹底してください。'
+  - vi: '<strong>Liên kết tham khảo:</strong> <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://chromereleases.googleblog.com/" target="_blank" rel="noopener noreferrer">Chrome Releases Blog</a> · <a href="https://spring.io/security/cve" target="_blank" rel="noopener noreferrer">Spring Security Advisories</a> · <a href="https://tomcat.apache.org/security.html" target="_blank" rel="noopener noreferrer">Apache Tomcat Security</a> · <a href="@home@featured/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a> · <a href="@home@featured/php-cve-2026-109618-109619/php2shell-runbook/">PiraGo Runbook: PHP2Shell</a>.'
+    ja: '<strong>参考リンク:</strong> <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://chromereleases.googleblog.com/" target="_blank" rel="noopener noreferrer">Chrome Releases Blog</a> · <a href="https://spring.io/security/cve" target="_blank" rel="noopener noreferrer">Spring Security Advisories</a> · <a href="https://tomcat.apache.org/security.html" target="_blank" rel="noopener noreferrer">Apache Tomcat Security</a> · <a href="@home@featured/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a> · <a href="@home@featured/php-cve-2026-109618-109619/php2shell-runbook/">PiraGo Runbook: PHP2Shell</a>。'
