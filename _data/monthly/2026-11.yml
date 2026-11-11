@@ -1,0 +1,158 @@
+title:
+  vi: Báo cáo bảo mật tháng 11/2026
+  ja: 2026年11月 セキュリティレポート
+description:
+  vi: 'Tổng hợp các rủi ro, lỗ hổng bảo mật và việc cần làm tháng 11/2026: Visual Studio Code RCE (CVE-2026-120779, CVE-2026-120780), cập nhật Linux kernel TCP UAF (CVE-2026-98432) và bảo mật môi trường phát triển.'
+  ja: '2026年11月のリスク、脆弱性、対応事項のまとめ：Visual Studio Code RCE（CVE-2026-120779、CVE-2026-120780）、Linux kernel TCP UAF（CVE-2026-98432）最新動向、および開発環境セキュリティ。'
+nav:
+  vi: Tháng 11/2026
+  ja: 2026年11月
+footer_label:
+  vi: Báo cáo tháng 11/2026
+  ja: 2026年11月 月次レポート
+h1:
+  vi: Báo cáo bảo mật tháng 11/2026
+  ja: 2026年11月 セキュリティレポート
+sub:
+  vi: 'Số liệu tính đến <strong>2026-11-11</strong> (cập nhật theo đợt phát hành Patch Tuesday tháng 11/2026 của Microsoft).'
+  ja: '<strong>2026年11月11日</strong>時点の情報です（Microsoft 2026年11月 Patch Tuesday セキュリティリリースに対応）。'
+placeholder:
+  vi: '🔍 Tìm kiếm CVE, framework, thư viện (vd: VS Code, Linux, AWS, RCE)...'
+  ja: '🔍 CVE、フレームワーク、ライブラリで検索（例: VS Code, Linux, AWS, RCE）...'
+scope:
+  vi: '<strong>Phạm vi rà soát:</strong> Công cụ &amp; Môi trường phát triển (Visual Studio Code) · Hạ tầng (AWS, GCP) · Ngôn ngữ (NodeJS, PHP, Java, .NET) · Framework (Next.js, Nuxt, Laravel, Spring Boot).'
+  ja: '<strong>調査範囲:</strong> 開発ツール・環境（Visual Studio Code） · インフラ（AWS, GCP） · 言語（NodeJS, PHP, Java, .NET） · フレームワーク（Next.js, Nuxt, Laravel, Spring Boot）。'
+
+card:
+  title:
+    vi: Báo cáo tháng 11/2026
+    ja: 2026年11月レポート
+  date:
+    vi: Cập nhật đến 2026-11-11 · Định kỳ hàng tháng
+    ja: 2026年11月11日 時点 · 月次定期レポート
+  items:
+  - sev: crit
+    label: VS Code
+    text:
+      vi: 'CVE-2026-120779 / CVE-2026-120780: Lỗ hổng RCE nghiêm trọng (CVSS 9.6) qua workspace/repo độc hại. Nâng cấp ngay lên 1.145.3+ và bật Workspace Trust.'
+      ja: 'CVE-2026-120779 / CVE-2026-120780: 悪意あるワークスペース/リポジトリによる重大なRCE脆弱性（CVSS 9.6）。直ちに 1.145.3+ へ更新し Workspace Trust を有効化。'
+  - sev: high
+    label: Linux kernel
+    text:
+      vi: 'CVE-2026-98432: Tiếp tục theo dõi bản vá Ubuntu (USN); duy trì bộ lọc nftables/iptables u32 hoặc tắt MPTCP trên các node chưa reboot nâng kernel.'
+      ja: 'CVE-2026-98432: Ubuntu公式パッチ（USN）の動向監視を継続。カーネル未再起動ノードではnftables/iptables u32遮断またはMPTCP無効化を維持。'
+  - sev: med
+    label: Hạ tầng & Cloud
+    text:
+      vi: 'AWS hoàn tất vá tầng host cho RDS/Aurora đối với lỗi kernel TCP; rà soát cấu hình TCP pass-through trên NLB và phân quyền môi trường dev.'
+      ja: 'AWSはRDS/Auroraのホスト層パッチ適用を完了。NLB TCPパススルー設定および開発環境の権限設定を再点検。'
+
+sections:
+- title:
+    vi: 1. Việc cần làm ngay
+    ja: 1. 今すぐ対応すべき事項
+  type: actions
+  rows:
+  - task:
+      vi: 'Nâng cấp <strong>Visual Studio Code</strong> lên <strong>1.145.3 trở lên</strong> (khắc phục lỗ hổng RCE nghiêm trọng CVE-2026-120779 và CVE-2026-120780); bật <strong>Workspace Trust</strong> khi mở mã nguồn bên ngoài'
+      ja: '<strong>Visual Studio Code</strong> を <strong>1.145.3 以上</strong>にアップグレードする（重大なRCE脆弱性 CVE-2026-120779 および CVE-2026-120780 を修正）。外部コードを開く際は <strong>Workspace Trust</strong> を必ず有効化'
+    sev: crit
+    due:
+      vi: Ngay lập tức (toàn bộ máy kỹ sư &amp; máy ảo)
+      ja: 即時（全開発者マシンおよび仮想環境）
+  - task:
+      vi: 'Rà soát máy chủ Linux mở cổng TCP internet: cập nhật kernel đã vá <strong>CVE-2026-98432</strong> hoặc áp dụng cấu hình lọc gói IP options bằng nftables/iptables u32'
+      ja: 'インターネット公開されたLinuxサーバーの総点検: <strong>CVE-2026-98432</strong> 修正カーネルへの更新・再起動、またはnftables/iptables u32によるIPオプション遮断ルールの適用'
+    sev: high
+    due:
+      vi: Trong tuần
+      ja: 今週中
+  - task:
+      vi: Cập nhật các extension IDE và môi trường Remote Development (Remote-SSH, Dev Containers, WSL, Codespaces host) lên phiên bản mới nhất
+      ja: IDE拡張機能およびリモート開発環境（Remote-SSH、Dev Containers、WSL、Codespaces ホスト）を最新版へ更新
+    sev: high
+    due:
+      vi: Trong tuần
+      ja: 今週中
+  - task:
+      vi: 'Duy trì rà soát các phiên bản PHP (&ge; 8.2.35 / 8.3.36 / 8.4.27 / 8.5.12) và Next.js (&ge; 15.5.28 / 16.4.1) đã cảnh báo từ tháng 10'
+      ja: 10月レポートで告知したPHP（8.2.35 / 8.3.36 / 8.4.27 / 8.5.12 以上）およびNext.js（15.5.28 / 16.4.1 以上）のパッチ適用状況の継続確認
+    sev: med
+    due:
+      vi: Trước 20-11-2026
+      ja: 2026年11月20日まで
+
+- title:
+    vi: 2. Công cụ phát triển &amp; Môi trường IDE (Development Tools)
+    ja: 2. 開発ツール・IDE環境（Development Tools）
+  type: component
+  rows:
+  - name: Microsoft Visual Studio Code
+    sev: crit
+    summary:
+      vi: 'Bản tin Patch Tuesday tháng 11/2026: <strong>CVE-2026-120779 (CVSS 9.6 - Critical)</strong> lỗi Code Injection (CWE-94) dẫn tới Remote Code Execution không cần xác thực khi mở workspace/repo chứa cấu hình độc hại; <strong>CVE-2026-120780 (CVSS 8.3 - High)</strong> lỗi bypass phân quyền dẫn đến RCE; <strong>CVE-2026-119982</strong> lỗi vượt rào kiểm soát Workspace Trust khi tải workspace từ xa.'
+      ja: '2026年11月 Patch Tuesday：<strong>CVE-2026-120779（CVSS 9.6 - Critical）</strong>悪意ある設定を含むワークスペース/リポジトリを開くことで認証不要でリモートコード実行（RCE）に至るコードインジェクション（CWE-94）、<strong>CVE-2026-120780（CVSS 8.3 - High）</strong>アクセス制御不備によるRCE、<strong>CVE-2026-119982</strong> リモートワークスペース取得時のWorkspace Trustバイパスを修正。'
+    impact:
+      vi: 'Mọi lập trình viên và kỹ sư sử dụng Visual Studio Code (Windows, macOS, Linux) phiên bản trước 1.145.3. Nguy cơ đặc biệt cao khi clone repo mã nguồn mở chưa kiểm chứng, tải zip project từ bên ngoài hoặc nhấp vào liên kết URI <code>vscode://</code> được kẻ tấn công gài bẫy.'
+      ja: 'バージョン 1.145.3 未満の Visual Studio Code を利用する全開発者・エンジニア（Windows、macOS、Linux）。第三者から提供されたリポジトリ、未検証のオープンソースコード、または <code>vscode://</code> 形式の悪意あるURIリンクを開いた際に重大な侵害リスク。'
+    fix:
+      vi: 'Nâng cấp ngay lên Visual Studio Code <strong>1.145.3 trở lên</strong> qua menu <strong>Help &gt; Check for Updates</strong> hoặc tải bản mới nhất từ trang chủ Microsoft. Đảm bảo bật <strong>Workspace Trust</strong> (<code>security.workspace.trust.enabled: true</code>), không bấm "Trust" đối với thư mục hoặc repo chưa rõ nguồn gốc.'
+      ja: 'ヘルプメニュー（<strong>Help &gt; Check for Updates</strong>）または公式サイトから <strong>1.145.3 以上</strong>へ直ちに更新してください。<strong>Workspace Trust</strong>（<code>security.workspace.trust.enabled: true</code>）を必ず有効にし、出所不明のリポジトリで信頼（Trust）を許可しないでください。'
+
+- title:
+    vi: 3. Hệ điều hành &amp; Ngôn ngữ lập trình (OS &amp; Languages)
+    ja: 3. OSおよびプログラミング言語（OS &amp; Languages）
+  type: component
+  rows:
+  - name: Linux kernel
+    sev: high
+    summary:
+      vi: 'Tiếp tục theo dõi <strong>CVE-2026-98432</strong> (use-after-free trong ngăn xếp IPv4 TCP khi xử lý IP options, nguy cơ thực thi mã qua MPTCP handshake, CVSS 9.8). Amazon Linux (AL2/AL2023) đã có kernel vá chính thức; Ubuntu các bản 22.04 / 24.04 đang trong giai đoạn phát hành USN. Xem chi tiết tại <a href="@home@featured/linux-cve-2026-98432/analysis/">bài phân tích chuyên sâu</a>.'
+      ja: '<strong>CVE-2026-98432</strong>（IPオプション処理時のIPv4 TCPスタックにおけるuse-after-free、MPTCPハンドシェイク経由のコード実行リスク、CVSS 9.8）の追跡。Amazon Linux（AL2/AL2023）は公式パッチ済み。Ubuntu 22.04 / 24.04 はUSNリリース準備段階。<a href="@home@featured/linux-cve-2026-98432/analysis/">詳細分析ページ</a>を参照。'
+    impact:
+      vi: 'Máy chủ Linux mở cổng TCP trực tiếp ra internet hoặc bật MPTCP (Go 1.24+ bật mặc định trên Linux), máy chủ đứng sau NLB TCP pass-through listener.'
+      ja: 'TCPポートを直接インターネット公開しているLinuxサーバー、MPTCPが有効な環境（Linux上のGo 1.24+でデフォルト有効）、NLB TCPパススルー配下のサーバー。'
+    fix:
+      vi: 'Cập nhật kernel bản mới nhất và reboot máy chủ. Nếu chưa thể reboot, áp dụng cấu hình nftables/iptables u32 chặn gói IPv4 chứa IP options hoặc tắt MPTCP (<code>sysctl -w net.mptcp.enabled=0</code>).'
+      ja: '最新カーネルに更新して再起動してください。即時再起動が困難な場合は、nftables/iptables u32でIPオプション付きパケットを遮断するか、MPTCPを無効化（<code>sysctl -w net.mptcp.enabled=0</code>）してください。'
+
+  - name: Node.js
+    sev: med
+    summary:
+      vi: 'Đã phát hành các bản vá định kỳ 26.12.1 / 24.22.1 / 22.23.4 trong đợt cập nhật bảo mật gần nhất; tháng 11 tiếp tục ghi nhận các cảnh báo an toàn liên quan đến chuỗi cung ứng npm và các công cụ AI coding agent tự động cài đặt dependency.'
+      ja: '直近のセキュリティリリース（26.12.1 / 24.22.1 / 22.23.4）の適用を維持。11月はnpmサプライチェーン攻撃および依存関係を自動インストールするAIコーディングツールを標的とした悪意あるパッケージへの警戒が継続。'
+    impact:
+      vi: 'Các ứng dụng backend, API, SSR (Next.js, Nuxt) và môi trường phát triển / CI pipeline.'
+      ja: 'バックエンドアプリケーション、API、SSR（Next.js、Nuxt）、および開発環境・CIパイプライン。'
+    fix:
+      vi: 'Đảm bảo ứng dụng chạy trên các phiên bản Node.js được hỗ trợ (Active/Maintenance LTS). Sử dụng <code>npm audit</code> và khóa phiên bản bằng package-lock.json / pnpm-lock.yaml.'
+      ja: 'サポート対象のLTSバージョンで稼働していることを確認してください。<code>npm audit</code>の実施とpackage-lock.json / pnpm-lock.yamlによるバージョン固定を徹底してください。'
+
+- title:
+    vi: '4. Hạ tầng đám mây (Infrastructure: AWS &amp; GCP)'
+    ja: '4. クラウドインフラ（Infrastructure: AWS &amp; GCP）'
+  type: provider
+  rows:
+  - name: AWS
+    sev: med
+    summary:
+      vi: 'AWS đã hoàn tất vá tầng host cho các dịch vụ cơ sở dữ liệu được quản lý (RDS, Aurora) liên quan đến CVE-2026-98432. Lưu ý kiểm tra lại các cấu hình Network Load Balancer (NLB) TCP pass-through và Security Group.'
+      ja: 'AWSはCVE-2026-98432に関連し、マネージドデータベースサービス（RDS、Aurora）のホスト層パッチ適用を完了。NLB TCPパススルーおよびSecurity Groupの設定再確認を推奨。'
+    impact:
+      vi: 'Hạ tầng EC2, EKS node group, NLB listener phục vụ lưu lượng TCP công khai.'
+      ja: 'パブリックTCPトラフィックを処理するEC2、EKSノードグループ、NLBリスナー環境。'
+    fix:
+      vi: 'Kiểm tra phiên bản EKS Optimized AMI mới nhất. Đặt CloudFront / ALB / Cloudflare ở tầng biên để kết thúc kết nối TCP trước khi chuyển tiếp vào backend.'
+      ja: '最新のEKS最適化AMIの適用状況を確認してください。エッジ層にCloudFront / ALB / Cloudflareを配置してTCPを終端させてください。'
+
+- title:
+    vi: 5. Ghi chú về độ tin cậy &amp; Nguồn tham khảo
+    ja: 5. 情報の信頼性に関する注記 &amp; 参考情報
+  type: list
+  items:
+  - vi: '<strong>Đối chiếu nguồn chính thức Microsoft MSRC:</strong> CVE-2026-120779 và CVE-2026-120780 được công bố trong bản tin Patch Tuesday tháng 11/2026 (Microsoft Security Update Guide).'
+    ja: '<strong>Microsoft MSRC 公式ソースとの照合済み:</strong> CVE-2026-120779 および CVE-2026-120780 は 2026年11月 Patch Tuesday（Microsoft Security Update Guide）にて公開。'
+  - vi: '<strong>Mức độ khai thác thực tế:</strong> Hiện chưa ghi nhận mã khai thác công khai (PoC) vũ khí hóa hoặc tấn công diện rộng ngoài thực tế cho CVE-2026-120779; tuy nhiên do mức độ nghiêm trọng RCE CVSS 9.6, khuyến nghị vá ngay trong toàn bộ đội ngũ kỹ thuật.'
+    ja: '<strong>実際の悪用状況:</strong> CVE-2026-120779 について現在実環境での大規模な悪用は確認されていませんが、CVSS 9.6 の重大なRCEであるため、開発チーム全体で即時アップデートを推奨します。'
+  - vi: '<strong>Liên kết tham khảo:</strong> <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://code.visualstudio.com/updates" target="_blank" rel="noopener noreferrer">Visual Studio Code Release Notes</a> · <a href="@home@featured/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a>.'
+    ja: '<strong>参考リンク:</strong> <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://code.visualstudio.com/updates" target="_blank" rel="noopener noreferrer">Visual Studio Code Release Notes</a> · <a href="@home@featured/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a>。'
