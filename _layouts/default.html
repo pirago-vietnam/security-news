@@ -61,7 +61,9 @@
 
   <main class="pirago-main-content {% if page.full_width %}full-width{% endif %}">
     <div class="pirago-container">
+      {% include share-buttons.html position="top" %}
       {{ content }}
+      {% include share-buttons.html %}
     </div>
   </main>
 

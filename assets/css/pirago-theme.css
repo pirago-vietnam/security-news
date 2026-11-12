@@ -990,3 +990,99 @@ html[lang="ja"] body {
   scroll-margin-top: 80px;
 }
 .section-heading:first-child { margin-top: 0; }
+
+/* ==========================================================================
+   SNS SHARE BAR
+   ========================================================================== */
+.pirago-share-bar {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pirago-share-bar--top {
+  margin-top: 0;
+  margin-bottom: 24px;
+  padding-top: 0;
+  padding-bottom: 16px;
+  border-top: none;
+  border-bottom: 1px solid var(--line);
+}
+
+.pirago-share-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.pirago-share-buttons {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-muted);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease, transform 0.15s ease;
+}
+
+.share-btn:hover {
+  text-decoration: none;
+  transform: translateY(-1px);
+  background: var(--bg-subtle);
+}
+
+.share-btn.share-x:hover {
+  color: var(--text);
+  border-color: var(--text-muted);
+}
+
+.share-btn.share-facebook:hover {
+  color: #1877f2;
+  border-color: #1877f2;
+}
+
+.share-btn.share-linkedin:hover {
+  color: #0a66c2;
+  border-color: #0a66c2;
+}
+
+.share-btn.share-line:hover {
+  color: #06c755;
+  border-color: #06c755;
+}
+
+.share-btn.share-copy:hover,
+.share-btn.share-copy.is-copied {
+  color: var(--pirago-blue);
+  border-color: var(--pirago-blue);
+}
+
+@media (max-width: 768px) {
+  .pirago-share-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

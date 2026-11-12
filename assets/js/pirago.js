@@ -87,4 +87,43 @@
       });
     });
   }
+
+  // --- 4. Copy Share Link ---
+  const copyShareBtns = document.querySelectorAll('.share-copy');
+  copyShareBtns.forEach(function(copyShareBtn) {
+    const labelEl = copyShareBtn.querySelector('.share-copy-text');
+    const defaultLabel = labelEl ? labelEl.textContent : '';
+    let copyTimer = null;
+
+    copyShareBtn.addEventListener('click', function() {
+      const url = copyShareBtn.getAttribute('data-copy-url') || window.location.href;
+      const copiedLabel = copyShareBtn.getAttribute('data-copied-label') || defaultLabel;
+
+      function markCopied() {
+        if (labelEl) labelEl.textContent = copiedLabel;
+        copyShareBtn.classList.add('is-copied');
+        clearTimeout(copyTimer);
+        copyTimer = setTimeout(function() {
+          if (labelEl) labelEl.textContent = defaultLabel;
+          copyShareBtn.classList.remove('is-copied');
+        }, 2000);
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(markCopied).catch(function() {});
+      } else {
+        const input = document.createElement('textarea');
+        input.value = url;
+        input.setAttribute('readonly', '');
+        input.style.position = 'fixed';
+        input.style.opacity = '0';
+        document.body.appendChild(input);
+        input.select();
+        try {
+          if (document.execCommand('copy')) markCopied();
+        } catch (e) {}
+        document.body.removeChild(input);
+      }
+    });
+  });
 })();
