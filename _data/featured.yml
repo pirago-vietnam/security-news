@@ -70,14 +70,14 @@
       text: {vi: "Cập nhật kernel và reboot. Tạm thời: tắt MPTCP (net.mptcp.enabled=0, GODEBUG=multipathtcp=0 cho Go), lọc IP options bằng nftables/iptables u32 hoặc AWS Network Firewall.", ja: "カーネル更新と再起動が恒久対策。暫定措置: MPTCP無効化（net.mptcp.enabled=0、Go向けGODEBUG=multipathtcp=0）、nftables/iptables u32またはAWS Network FirewallによるIPオプション遮断。"}
 
 - id: php2shell
-  path: "featured/php-cve-2026-109618-109619/php2shell-runbook/"
+  path: "featured/php-cve-2026-109618-109619/php2shell/"
   icon: "📘"
   accent: false
-  badge: {sev: crit, text: "RUNBOOK"}
-  nav: {vi: "Runbook PHP CVE-2026-109618", ja: "PHP CVE-2026-109618 ランブック"}
-  title: {vi: "Runbook ứng phó: PHP CVE-2026-109618 / 109619 (PHP2Shell)", ja: "対応ランブック: PHP CVE-2026-109618 / 109619 (PHP2Shell)"}
-  date: {vi: "Lỗ hổng RCE PHP · Bộ cẩm nang kỹ thuật nội bộ dành cho kỹ sư PiraGo", ja: "PHP の RCE 脆弱性 · PiraGo のエンジニア向け社内技術ハンドブック"}
-  link: {vi: "Xem runbook đầy đủ →", ja: "ランブック全文を見る →"}
+  badge: {sev: crit, text: "CRITICAL"}
+  nav: {vi: "PHP CVE-2026-109618", ja: "PHP CVE-2026-109618"}
+  title: {vi: "Hướng dẫn ứng phó: PHP CVE-2026-109618 / 109619 (PHP2Shell)", ja: "対応ガイド: PHP CVE-2026-109618 / 109619 (PHP2Shell)"}
+  date: {vi: "Lỗ hổng RCE PHP · Tổng quan cho non-tech & hướng dẫn xử lý cho kỹ sư PiraGo", ja: "PHP の RCE 脆弱性 · 非エンジニア向け概要 & PiraGo エンジニア向け対応ガイド"}
+  link: {vi: "Xem hướng dẫn đầy đủ →", ja: "ガイド全文を見る →"}
   items:
     - sev: crit
       label: {vi: "Xử lý", ja: "対応"}

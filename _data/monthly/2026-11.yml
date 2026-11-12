@@ -77,36 +77,36 @@ sections:
       ja: '<strong>Next.js</strong> を <strong>16.4.5 / 15.5.29</strong> にアップグレードし（<code>use cache</code> および SVG 処理関連の RCE 修正）、<strong>Nuxt</strong> を <strong>4.6.3</strong> へ更新する'
     sev: high
     due:
-      vi: Trong tuần
-      ja: 今週中
+      vi: Trước 15-11-2026 (ngay lập tức trước lần deploy tiếp theo nếu dùng App Router)
+      ja: 2026年11月15日まで（App Router 利用時は次回デプロイ前に即時対応）
   - task:
       vi: 'Cập nhật <strong>.NET</strong> lên <strong>10.0.15 / 9.0.23 / 8.0.34</strong> (vá CVE-2026-118746 bypass xác thực và CVE-2026-114146/47); rebuild lại Docker container sử dụng base image tháng 11/2026'
       ja: '<strong>.NET</strong> を <strong>10.0.15 / 9.0.23 / 8.0.34</strong> に更新し（認証バイパス CVE-2026-118746、CVE-2026-114146/47 を修正）、2026年11月ベースイメージで Docker コンテナを再ビルドする'
     sev: high
     due:
-      vi: Trong tuần
-      ja: 今週中
+      vi: Trước 18-11-2026 (trước đợt release tiếp theo)
+      ja: 2026年11月18日まで（次回リリース前まで）
   - task:
       vi: 'Nâng cấp <strong>Apache Tomcat</strong> lên <strong>11.0.27 / 10.1.61 / 9.0.123</strong> (vá lỗ hổng bypass xác thực JNDI SASL CVSS 9.1) và <strong>Spring Boot</strong> lên <strong>4.0.6 / 3.5.14</strong>'
       ja: '<strong>Apache Tomcat</strong> を <strong>11.0.27 / 10.1.61 / 9.0.123</strong> に更新し（JNDI SASL 認証バイパス CVSS 9.1 を修正）、<strong>Spring Boot</strong> を <strong>4.0.6 / 3.5.14</strong> へアップグレードする'
     sev: high
     due:
-      vi: Trong tuần
-      ja: 今週中
+      vi: Trước 16-11-2026 (ngay lập tức nếu dùng JNDI Realm)
+      ja: 2026年11月16日まで（JNDI Realm 使用時は即時）
   - task:
       vi: 'Rà soát máy chủ Linux mở cổng TCP internet: cập nhật kernel đã vá <strong>CVE-2026-98432</strong> hoặc áp dụng cấu hình lọc gói IP options bằng nftables/iptables u32 và tắt MPTCP'
       ja: 'インターネット公開されたLinuxサーバーの総点検: <strong>CVE-2026-98432</strong> 修正カーネルへの更新・再起動、またはnftables/iptables u32によるIPオプション遮断ルールの適用とMPTCP無効化'
     sev: high
     due:
-      vi: Trong tuần
-      ja: 今週中
+      vi: Trước 18-11-2026 (áp dụng nftables/tắt MPTCP ngay lập tức nếu mở TCP ra internet)
+      ja: 2026年11月18日まで（TCP インターネット公開時は nftables/MPTCP 無効化を即時適用）
   - task:
       vi: 'Rà soát runner GitHub Actions tự host (<strong>CVE-2026-11204</strong>: chuyển sang mô hình ephemeral pod) và kiểm duyệt chặt các package npm/PyPI giả mạo công cụ MCP nhắm vào AI agent'
       ja: 'セルフホスト型 GitHub Actions ランナーの点検（<strong>CVE-2026-11204</strong>: エフェメラル環境への移行）および AI エージェントを騙る不正 npm/PyPI パッケージの厳格な審査'
     sev: high
     due:
-      vi: Trong tuần
-      ja: 今週中
+      vi: Trước 18-11-2026 (kiểm duyệt MCP/package ngay lập tức trước khi cài đặt)
+      ja: 2026年11月18日まで（MCP/パッケージ審査はインストール前に即時実施）
   - task:
       vi: 'Duy trì các phiên bản <strong>PHP</strong> đã vá (&ge; 8.2.35 / 8.3.36 / 8.4.27 / 8.5.12) và giữ thiết lập <code>session.upload_progress.enabled = 0</code> phòng ngừa sự cố PHP2Shell'
       ja: 'パッチ適用済み <strong>PHP</strong>（8.2.35 / 8.3.36 / 8.4.27 / 8.5.12 以上）の維持、および PHP2Shell 対策としての <code>session.upload_progress.enabled = 0</code> 設定の継続'
@@ -240,8 +240,8 @@ sections:
       vi: 'Mọi ứng dụng PHP (PHP-FPM, FrankenPHP, Laravel, WordPress). Môi trường chưa nâng cấp PHP hoặc chưa tắt upload progress.'
       ja: 'すべての PHP アプリケーション（PHP-FPM、FrankenPHP、Laravel、WordPress 等）。未更新環境または upload progress を無効化していない環境。'
     fix:
-      vi: 'Đảm bảo đã nâng PHP lên 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35. Đặt cấu hình <code>session.upload_progress.enabled = 0</code> trong <code>php.ini</code>. Xem <a href="@home@featured/php-cve-2026-109618-109619/php2shell-runbook/">runbook nội bộ</a>.'
-      ja: 'PHP を 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 へアップグレード済みであることを確認してください。<code>php.ini</code> で <code>session.upload_progress.enabled = 0</code> を設定してください。<a href="@home@featured/php-cve-2026-109618-109619/php2shell-runbook/">社内ランブック</a>を参照。'
+      vi: 'Đảm bảo đã nâng PHP lên 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35. Đặt cấu hình <code>session.upload_progress.enabled = 0</code> trong <code>php.ini</code>. Xem <a href="@home@featured/php-cve-2026-109618-109619/php2shell/">hướng dẫn nội bộ</a>.'
+      ja: 'PHP を 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 へアップグレード済みであることを確認してください。<code>php.ini</code> で <code>session.upload_progress.enabled = 0</code> を設定してください。<a href="@home@featured/php-cve-2026-109618-109619/php2shell/">社内対応ガイド</a>を参照。'
 
 - title:
     vi: 5. Frameworks Web &amp; Hệ sinh thái Java (Frameworks &amp; Java Ecosystem)
@@ -365,5 +365,5 @@ sections:
     ja: '<strong>Google Chrome ゼロデイ警告（CVE-2026-125350）:</strong> XML パーサーの Use-After-Free 脆弱性は Google により実環境での悪用（in the wild）が確認済み。Stable および Extended Stable チャンネルにて緊急アップデートが配信されています。'
   - vi: '<strong>Cảnh báo chuỗi cung ứng công cụ AI Coding:</strong> Các chiến dịch mã độc mạo danh máy chủ Model Context Protocol (MCP) và công cụ mở rộng IDE đang gia tăng; khuyến nghị toàn bộ kỹ sư áp dụng nguyên tắc kiểm tra mã nguồn và xác minh tính toàn vẹn của lockfile trước khi tích hợp vào môi trường làm việc.'
     ja: '<strong>AIコーディングツールのサプライチェーン警戒:</strong> Model Context Protocol（MCP）サーバーやIDE拡張ツールを騙る悪意あるパッケージが増加しています。全エンジニアは作業環境に組み込む前にソースコードの監査およびロックファイルの整合性検証を徹底してください。'
-  - vi: '<strong>Liên kết tham khảo:</strong> <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://chromereleases.googleblog.com/" target="_blank" rel="noopener noreferrer">Chrome Releases Blog</a> · <a href="https://spring.io/security/cve" target="_blank" rel="noopener noreferrer">Spring Security Advisories</a> · <a href="https://tomcat.apache.org/security.html" target="_blank" rel="noopener noreferrer">Apache Tomcat Security</a> · <a href="@home@featured/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a> · <a href="@home@featured/php-cve-2026-109618-109619/php2shell-runbook/">PiraGo Runbook: PHP2Shell</a>.'
-    ja: '<strong>参考リンク:</strong> <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://chromereleases.googleblog.com/" target="_blank" rel="noopener noreferrer">Chrome Releases Blog</a> · <a href="https://spring.io/security/cve" target="_blank" rel="noopener noreferrer">Spring Security Advisories</a> · <a href="https://tomcat.apache.org/security.html" target="_blank" rel="noopener noreferrer">Apache Tomcat Security</a> · <a href="@home@featured/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a> · <a href="@home@featured/php-cve-2026-109618-109619/php2shell-runbook/">PiraGo Runbook: PHP2Shell</a>。'
+  - vi: '<strong>Liên kết tham khảo:</strong> <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://chromereleases.googleblog.com/" target="_blank" rel="noopener noreferrer">Chrome Releases Blog</a> · <a href="https://spring.io/security/cve" target="_blank" rel="noopener noreferrer">Spring Security Advisories</a> · <a href="https://tomcat.apache.org/security.html" target="_blank" rel="noopener noreferrer">Apache Tomcat Security</a> · <a href="@home@featured/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a> · <a href="@home@featured/php-cve-2026-109618-109619/php2shell/">PiraGo Guide: PHP2Shell</a>.'
+    ja: '<strong>参考リンク:</strong> <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://chromereleases.googleblog.com/" target="_blank" rel="noopener noreferrer">Chrome Releases Blog</a> · <a href="https://spring.io/security/cve" target="_blank" rel="noopener noreferrer">Spring Security Advisories</a> · <a href="https://tomcat.apache.org/security.html" target="_blank" rel="noopener noreferrer">Apache Tomcat Security</a> · <a href="@home@featured/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a> · <a href="@home@featured/php-cve-2026-109618-109619/php2shell/">PiraGo Guide: PHP2Shell</a>。'

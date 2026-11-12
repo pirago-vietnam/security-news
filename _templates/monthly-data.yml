@@ -45,6 +45,7 @@ card:                        # thẻ tóm tắt ở index.html (vi) và ja/index
 
 sections:
   # type: actions -> cột: #, Việc cần làm, Mức độ, Hạn đề xuất (số thứ tự tự đánh)
+  # Hạn đề xuất (due) ghi cụ thể thời điểm cần làm (vd: "Ngay lập tức", "Trước DD-MM-YYYY", "Trước khi deploy...", "Sau khi ..."); không ghi chung chung như "Trong tuần" hay "Trong tháng".
   - type: actions
     title:
       vi: "1. Việc cần làm ngay"
@@ -55,7 +56,7 @@ sections:
           ja: "<strong>PHP</strong> をパッチ版へアップグレード"
         sev: crit
         due:
-          vi: "Ngay"
+          vi: "Ngay lập tức"
           ja: "即時"
 
   # type: component -> cột: Thành phần, Tóm tắt lỗ hổng, Mức độ, Ảnh hưởng tới hệ thống nào, Cách xử lý

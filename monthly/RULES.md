@@ -20,12 +20,13 @@ redirect_from:
 ## 2. Tiêu chuẩn nội dung
 - Nội dung trình bày dạng bảng rõ ràng, tóm tắt dễ hiểu cho kỹ sư và quản lý dự án.
 - Section `type: actions | component | provider` tạo bảng với các cột **Mức độ** (`sev`: `crit`, `high`, `med`, `low`), **Ảnh hưởng tới hệ thống nào** (`impact`), **Cách xử lý / Cần làm gì** (`fix`). Section `type: list` tạo danh sách (ghi chú độ tin cậy, nguồn tham khảo).
+- Cột **Hạn đề xuất** (`due`) trong bảng `type: actions` phải ghi cụ thể thời điểm cần làm (ví dụ: `Ngay lập tức`, `Trước DD-MM-YYYY`, `Trước khi deploy...`, `Sau khi có bản vá...`); tránh ghi chung chung như `Trong tuần` hay `Trong tháng`.
 - Mọi trường văn bản phải có đủ cả `vi` và `ja` (riêng `name` có thể là chuỗi dùng chung). Cho phép HTML trong nội dung; link nội bộ dùng tiền tố `@home@`, ví dụ `<a href="@home@monthly/2026-10/">`.
 - Thanh tìm kiếm nhanh `#tableFilterInput` được include dựng sẵn ở đầu trang.
 
 ## 3. Các thành phần trọng tâm cần rà soát
 - **Hạ tầng (Infrastructure):** AWS, GCP
-- **Ngôn ngữ & Runtime:** NodeJS, PHP, Java, .NET, JavaScript
+- **Ngôn ngữ & Runtime:** NodeJS, PHP, Java, Ruby (RoR), JavaScript
 - **Framework:** Next.js, Nuxt, Quasar, Laravel, Spring Boot
 - **Trình duyệt & Package:** Chrome/V8, npm, Composer, Maven
 

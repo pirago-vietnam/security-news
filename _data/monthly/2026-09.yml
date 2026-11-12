@@ -61,36 +61,36 @@ sections:
       ja: <strong>Next.js</strong> をアップグレード（<code>next/og</code> 経由の RCE、および 09-30 公開のキャッシュ/SSRF 関連 7 件）
     sev: crit
     due:
-      vi: Ngay
+      vi: Ngay lập tức
       ja: 即時
   - task:
       vi: Cập nhật <strong>Chrome</strong> lên 153.x (zero-day V8 đang bị khai thác)
       ja: <strong>Chrome</strong> を 153.x に更新（悪用が確認されている V8 のゼロデイ）
     sev: high
     due:
-      vi: Ngay
+      vi: Ngay lập tức
       ja: 即時
   - task:
       vi: Nâng <strong>Tomcat / Netty / Jackson</strong> đi kèm Spring Boot
       ja: Spring Boot に同梱される <strong>Tomcat / Netty / Jackson</strong> をアップグレード
     sev: high
     due:
-      vi: Trong tuần
-      ja: 今週中
+      vi: Trước 30-10-2026
+      ja: 2026年10月30日まで
   - task:
       vi: Nâng <strong>PHP</strong> lên bản có vá 11 advisory (nay lên thẳng bản tháng 10)
       ja: <strong>PHP</strong> を 11 件のアドバイザリが修正された版へ更新（現在は 10 月版へ直接更新を推奨）
     sev: high
     due:
-      vi: Trong tuần
-      ja: 今週中
+      vi: Trước 30-10-2026 (lên thẳng bản tháng 10)
+      ja: 2026年10月30日まで（10月版へ直接更新）
   - task:
       vi: Cập nhật <strong>.NET</strong> 8.0.31 / 9.0.20 / 10.0.12; kiểm tra <strong>SSM Agent</strong> và <strong>EKS Network Policy Agent</strong>
       ja: <strong>.NET</strong> 8.0.31 / 9.0.20 / 10.0.12 に更新。<strong>SSM Agent</strong> と <strong>EKS Network Policy Agent</strong> を確認
     sev: high
     due:
-      vi: Trong tuần
-      ja: 今週中
+      vi: Trước 30-10-2026
+      ja: 2026年10月30日まで
 - title:
     vi: 2. Ngôn ngữ
     ja: 2. 言語
