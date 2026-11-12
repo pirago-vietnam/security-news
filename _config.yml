@@ -3,6 +3,8 @@ description: "Cổng thông tin & Báo cáo an ninh mạng nội bộ PiraGo"
 url: "https://security-news.pirago.vn"
 baseurl: ""
 lang: "vi"
+author: "PiraGo"
+logo: "/assets/images/logo.webp"
 permalink: pretty
 
 # Exclude files from Jekyll processing
@@ -16,6 +18,7 @@ exclude:
 
 plugins:
   - jekyll-redirect-from
+  - jekyll-sitemap
 
 defaults:
   - scope:

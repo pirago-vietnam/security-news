@@ -1,0 +1,168 @@
+{%- assign seo_title = site.title -%}
+{%- if page_title -%}
+  {%- assign seo_title = page_title | append: " | " | append: site.title -%}
+{%- endif -%}
+{%- assign seo_desc = page_desc | default: t.site_description | default: site.description | strip_html | normalize_whitespace -%}
+{%- assign canonical_url = page.url | replace: 'index.html', '' | absolute_url -%}
+{%- if lang == 'ja' -%}
+  {%- assign vi_url = page.url | remove_first: '/ja' -%}
+  {%- if vi_url == '' -%}{%- assign vi_url = '/' -%}{%- endif -%}
+  {%- assign ja_url = page.url -%}
+  {%- assign og_locale = 'ja_JP' -%}
+  {%- assign og_locale_alt = 'vi_VN' -%}
+{%- else -%}
+  {%- assign vi_url = page.url -%}
+  {%- assign ja_url = page.url | prepend: '/ja' -%}
+  {%- assign og_locale = 'vi_VN' -%}
+  {%- assign og_locale_alt = 'ja_JP' -%}
+{%- endif -%}
+{%- assign vi_abs = vi_url | replace: 'index.html', '' | absolute_url -%}
+{%- assign ja_abs = ja_url | replace: 'index.html', '' | absolute_url -%}
+{%- assign og_image = page.image | default: site.logo | default: '/assets/images/logo.webp' -%}
+{%- assign og_image_abs = og_image | absolute_url -%}
+{%- assign is_home = false -%}
+{%- if page.url == '/' or page.url == '/index.html' or page.url == '/ja/' -%}
+  {%- assign is_home = true -%}
+{%- endif -%}
+
+  <title>{{ seo_title | escape }}</title>
+  <meta name="description" content="{{ seo_desc | escape }}">
+  <meta name="robots" content="{% if page.noindex %}noindex, follow{% else %}index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1{% endif %}">
+  <meta name="author" content="{{ site.author | default: 'PiraGo' | escape }}">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)">
+
+  <link rel="canonical" href="{{ canonical_url }}">
+  <link rel="alternate" hreflang="vi" href="{{ vi_abs }}">
+  <link rel="alternate" hreflang="ja" href="{{ ja_abs }}">
+  <link rel="alternate" hreflang="x-default" href="{{ vi_abs }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/images/favicon.png' | relative_url }}">
+  <link rel="apple-touch-icon" href="{{ '/assets/images/favicon.png' | relative_url }}">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="{% if is_home %}website{% else %}article{% endif %}">
+  <meta property="og:site_name" content="{{ site.title | escape }}">
+  <meta property="og:title" content="{{ seo_title | escape }}">
+  <meta property="og:description" content="{{ seo_desc | escape }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:locale" content="{{ og_locale }}">
+  <meta property="og:locale:alternate" content="{{ og_locale_alt }}">
+  <meta property="og:image" content="{{ og_image_abs }}">
+  <meta property="og:image:alt" content="{{ seo_title | escape }}">
+{%- if is_home == false and page_category %}
+  <meta property="article:section" content="{{ page_category | escape }}">
+{%- endif %}
+{%- if is_home == false and page.monthly %}
+  <meta property="article:published_time" content="{{ page.monthly }}-01T00:00:00+07:00">
+{%- elsif is_home == false and page.date %}
+  <meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">
+{%- endif %}
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{ seo_title | escape }}">
+  <meta name="twitter:description" content="{{ seo_desc | escape }}">
+  <meta name="twitter:image" content="{{ og_image_abs }}">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {%- if is_home %}
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "{{ site.url }}/#organization",
+        "name": "PiraGo",
+        "url": "https://pirago.vn",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "{{ site.logo | default: '/assets/images/logo.webp' | absolute_url }}"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "{{ site.url }}/#website",
+        "name": {{ site.title | jsonify }},
+        "url": "{{ site.url }}/",
+        "inLanguage": {{ lang | jsonify }},
+        "description": {{ seo_desc | jsonify }},
+        "publisher": {
+          "@id": "{{ site.url }}/#organization"
+        }
+      }
+    ]
+  }
+  {%- else %}
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "headline": {{ page_title | default: site.title | jsonify }},
+        "description": {{ seo_desc | jsonify }},
+        "url": {{ canonical_url | jsonify }},
+        "inLanguage": {{ lang | jsonify }},
+        "image": {{ og_image_abs | jsonify }},
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": {{ canonical_url | jsonify }}
+        },
+        {%- if page_category %}
+        "articleSection": {{ page_category | jsonify }},
+        {%- endif %}
+        {%- if page.monthly %}
+        "datePublished": "{{ page.monthly }}-01T00:00:00+07:00",
+        {%- elsif page.date %}
+        "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
+        {%- endif %}
+        "author": {
+          "@type": "Organization",
+          "name": "PiraGo",
+          "url": "https://pirago.vn"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "PiraGo",
+          "url": "https://pirago.vn",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "{{ site.logo | default: '/assets/images/logo.webp' | absolute_url }}"
+          }
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": {{ t.home | jsonify }},
+            "item": {{ home_url | absolute_url | jsonify }}
+          },
+          {%- if page_category %}
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": {{ page_category | jsonify }}
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": {{ page_title | default: t.default_title | jsonify }},
+            "item": {{ canonical_url | jsonify }}
+          }
+          {%- else %}
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": {{ page_title | default: t.default_title | jsonify }},
+            "item": {{ canonical_url | jsonify }}
+          }
+          {%- endif %}
+        ]
+      }
+    ]
+  }
+  {%- endif %}
+  </script>
