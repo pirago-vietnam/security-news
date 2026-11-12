@@ -30,7 +30,7 @@
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
   nav: {vi: "Sự cố GMO Onamae", ja: "GMOお名前.com インシデント"}
   title: {vi: "Sự cố an ninh: GMO Onamae Desktop Cloud", ja: "セキュリティインシデント: GMO お名前.com デスクトップクラウド"}
-  date: {vi: "Cập nhật đến 2026-11-05 · 16 thông cáo, báo cáo IR & họp báo 02/11", ja: "2026年11月5日 時点 · 16件の公式発表・IRレポート & 11月2日の記者会見"}
+  date: {vi: "Cập nhật đến 2026-11-12 · 16 thông cáo, IR 06/11, Tổ điều tra liên ngành NPA & 890 tin Bounty", ja: "2026年11月12日 時点 · 16件の続報・11/6 IR開示・警察庁長官指示の合同捜査本部 & 懸賞金890件"}
   link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
   items:
     - sev: crit
@@ -38,13 +38,36 @@
       text: {vi: "Chiếm quyền 26.739 máy chủ VPS Windows, rò rỉ thông tin đăng nhập MT4/MT5 tác động hơn 70 sàn chứng khoán & FX.", ja: "Windows VPSサーバー26,739台が乗っ取られ、MT4/MT5のログイン情報が漏えい。70以上の証券・FX会社に影響。"}
     - sev: high
       label: {vi: "Tống tiền", ja: "恐喝"}
-      text: {vi: "Tin tặc đòi 50 triệu USD tiền chuộc; GMO kiên quyết từ chối và lập Quỹ Bounty 1 triệu USD treo thưởng truy bắt thủ phạm.", ja: "ハッカーが身代金5,000万米ドルを要求。GMOは断固として拒否し、犯人逮捕に向けた懸賞金として100万米ドルのバウンティ基金を設立。"}
+      text: {vi: "Tin tặc đòi 50 triệu USD tiền chuộc; GMO kiên quyết từ chối và lập Quỹ Bounty 1 triệu USD (đã nhận 890 tin báo lũy kế tính đến 11/11).", ja: "ハッカーが身代金5,000万米ドルを要求。GMOは断固として拒否し、100万米ドルの懸賞金基金を設立（11月11日時点で累計890件の情報提供）。"}
     - sev: med
-      label: {vi: "Phòng thủ", ja: "防御"}
-      text: {vi: "Takedown sạch tên miền rò rỉ sau 15,5 giờ; kiến nghị Văn phòng Nội các Nhật Bản kích hoạt Luật Phòng thủ mạng chủ động (Active Cyber Defense).", ja: "漏えいしたドメインを15.5時間でテイクダウン。日本の内閣官房に対し、アクティブサイバーディフェンス法の発動を提言。"}
+      label: {vi: "Điều tra & Phòng thủ", ja: "捜査・防御"}
+      text: {vi: "Takedown tên miền rò rỉ sau 15,5 giờ; ngày 06/11 Tổng cục trưởng Cảnh sát Quốc gia Nhật Bản (NPA) chỉ thị lập Tổ điều tra liên ngành tại Sở Cảnh sát Tokyo.", ja: "流出ドメインを15.5時間でテイクダウン。11月6日、警察庁長官が警察法第61条の3に基づき警視庁への合同捜査本部設置を指示。"}
     - sev: low
       label: {vi: "Bồi thường", ja: "補償"}
-      text: {vi: "Cam kết đền bù 100% thiệt hại giao dịch thực tế do lệnh trái phép + hỗ trợ thăm hỏi đặc biệt lên tới 3.000.000 JPY/khách hàng.", ja: "不正注文による実際の取引損失を100%補償するとともに、お客様1名あたり最大3,000,000 JPYの特別見舞金を支給。"}
+      text: {vi: "Bắt đầu liên hệ từng khách hàng từ 06/11 để bồi thường 100% tổn thất giao dịch thực tế + hỗ trợ thăm hỏi đặc biệt tới 3 triệu JPY; cập nhật số liệu tại buổi công bố KQKD 13/11.", ja: "11月6日より不正取引による実損の100%補償に向けた個別連絡を開始（特別見舞金最大300万円）。申請状況と業績影響の見通しは11月13日の決算説明会で案内予定。"}
+
+- id: apache-cve-2026-119618
+  path: "featured/apache-cve-2026-119618/analysis/"
+  icon: "🌐"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL"}
+  nav: {vi: "Apache CVE-2026-119618", ja: "Apache CVE-2026-119618"}
+  title: {vi: "Phân tích lỗ hổng: Apache HTTP Server CVE-2026-119618 (mod_http2)", ja: "脆弱性分析: Apache HTTP Server CVE-2026-119618（mod_http2）"}
+  date: {vi: "Cập nhật đến 2026-11-12 · Race Condition trong assign_headers() · Đã vá ở 2.4.71", ja: "2026年11月12日 時点 · assign_headers() の競合状態 · 2.4.71 で修正済み"}
+  link: {vi: "Xem phân tích & hướng dẫn →", ja: "分析・対策ガイドを見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Nguy cơ", ja: "リスク"}
+      text: {vi: "Lỗi đồng bộ (CWE-362) trong mod_http2 assign_headers() gây heap corruption và có thể dẫn đến RCE không cần xác thực.", ja: "mod_http2 の assign_headers() における同期不備（CWE-362）によりヒープ破壊および認証不要の RCE に至る恐れ。"}
+    - sev: high
+      label: {vi: "Phạm vi", ja: "影響範囲"}
+      text: {vi: "Apache HTTP Server 2.4.55 đến 2.4.70 (và mod_h2 2.0.8–2.0.42) có bật mod_http2 / giao thức h2 hoặc h2c.", ja: "mod_http2（h2 / h2c）を有効にしている Apache HTTP Server 2.4.55〜2.4.70（および mod_h2 2.0.8〜2.0.42）。"}
+    - sev: med
+      label: {vi: "Tạm thời", ja: "暫定対策"}
+      text: {vi: "Vô hiệu hóa mod_http2 (a2dismod http2 / bỏ LoadModule http2_module) hoặc đặt Protocols http/1.1 nếu chưa thể nâng cấp ngay.", ja: "即時更新が困難な場合は mod_http2 を無効化（a2dismod http2 等）、または Protocols http/1.1 を設定。"}
+    - sev: low
+      label: {vi: "Triệt để", ja: "恒久対策"}
+      text: {vi: "Nâng cấp Apache HTTP Server lên 2.4.71 trở lên (phát hành 11-11-2026), kiểm tra cấu hình và restart dịch vụ / rebuild image.", ja: "Apache HTTP Server を 2.4.71 以上（11月11日リリース）へ更新し、サービス再起動・コンテナ再ビルドを実施。"}
 
 - id: linux-cve-2026-98432
   path: "featured/linux-cve-2026-98432/analysis/"

@@ -2,8 +2,8 @@ title:
   vi: Báo cáo bảo mật tháng 11/2026
   ja: 2026年11月 セキュリティレポート
 description:
-  vi: 'Tổng hợp các rủi ro, lỗ hổng bảo mật và việc cần làm tháng 11/2026: Visual Studio Code RCE (CVE-2026-120779), Zero-Day Google Chrome (CVE-2026-125350), Microsoft Patch Tuesday cho .NET & Visual Studio, Apache Tomcat, Next.js, Linux kernel TCP UAF, và an toàn chuỗi cung ứng AI agent.'
-  ja: '2026年11月のリスク、脆弱性、対応事項のまとめ：Visual Studio Code RCE（CVE-2026-120779）、Google Chrome ゼロデイ（CVE-2026-125350）、Microsoft Patch Tuesday（.NET & Visual Studio）、Apache Tomcat、Next.js、Linux kernel TCP UAF、およびAIエージェントのサプライチェーンセキュリティ。'
+  vi: 'Tổng hợp các rủi ro, lỗ hổng bảo mật và việc cần làm tháng 11/2026: Apache HTTP Server RCE (CVE-2026-119618), Visual Studio Code RCE (CVE-2026-120779), Zero-Day Google Chrome (CVE-2026-125350), Microsoft Patch Tuesday cho .NET & Visual Studio, Apache Tomcat, Next.js, Linux kernel TCP UAF, và an toàn chuỗi cung ứng AI agent.'
+  ja: '2026年11月のリスク、脆弱性、対応事項のまとめ：Apache HTTP Server RCE（CVE-2026-119618）、Visual Studio Code RCE（CVE-2026-120779）、Google Chrome ゼロデイ（CVE-2026-125350）、Microsoft Patch Tuesday（.NET & Visual Studio）、Apache Tomcat、Next.js、Linux kernel TCP UAF、およびAIエージェントのサプライチェーンセキュリティ。'
 nav:
   vi: Tháng 11/2026
   ja: 2026年11月
@@ -14,8 +14,8 @@ h1:
   vi: Báo cáo bảo mật tháng 11/2026
   ja: 2026年11月 セキュリティレポート
 sub:
-  vi: 'Số liệu tính đến <strong>2026-11-11</strong> (cập nhật theo đợt phát hành Patch Tuesday Microsoft, Chrome Zero-Day và các bản tin an ninh định kỳ).'
-  ja: '<strong>2026年11月11日</strong>時点の情報です（Microsoft Patch Tuesday、Chrome ゼロデイ緊急リリースおよび定期セキュリティ情報に対応）。'
+  vi: 'Số liệu tính đến <strong>2026-11-12</strong> (cập nhật theo đợt phát hành Patch Tuesday Microsoft, Chrome Zero-Day, Apache HTTP Server 2.4.71 và các bản tin an ninh định kỳ).'
+  ja: '<strong>2026年11月12日</strong>時点の情報です（Microsoft Patch Tuesday、Chrome ゼロデイ緊急リリース、Apache HTTP Server 2.4.71 および定期セキュリティ情報に対応）。'
 placeholder:
   vi: '🔍 Tìm kiếm CVE, framework, thư viện (vd: VS Code, Chrome, .NET, Tomcat, Next.js, AWS)...'
   ja: '🔍 CVE、フレームワーク、ライブラリで検索（例: VS Code, Chrome, .NET, Tomcat, Next.js, AWS）...'
@@ -28,9 +28,14 @@ card:
     vi: Báo cáo tháng 11/2026
     ja: 2026年11月レポート
   date:
-    vi: Cập nhật đến 2026-11-11 · Định kỳ hàng tháng
-    ja: 2026年11月11日 時点 · 月次定期レポート
+    vi: Cập nhật đến 2026-11-12 · Định kỳ hàng tháng
+    ja: 2026年11月12日 時点 · 月次定期レポート
   items:
+  - sev: crit
+    label: Apache HTTP Server
+    text:
+      vi: 'CVE-2026-119618: Lỗ hổng Race Condition trong mod_http2 dẫn đến heap corruption &amp; RCE (Critical). Nâng cấp ngay lên 2.4.71+ hoặc tạm tắt mod_http2.'
+      ja: 'CVE-2026-119618: mod_http2 の競合状態によるヒープ破壊・RCE脆弱性（Critical）。直ちに 2.4.71+ へ更新、または一時的に mod_http2 を無効化。'
   - sev: crit
     label: VS Code &amp; Dev Tools
     text:
@@ -58,6 +63,13 @@ sections:
     ja: 1. 今すぐ対応すべき事項
   type: actions
   rows:
+  - task:
+      vi: 'Nâng cấp <strong>Apache HTTP Server</strong> lên <strong>2.4.71 trở lên</strong> (vá lỗ hổng RCE nghiêm trọng <strong>CVE-2026-119618</strong> trong <code>mod_http2</code>); nếu chưa thể nâng cấp ngay, tạm thời vô hiệu hóa <code>mod_http2</code> / giao thức <code>h2</code>'
+      ja: '<strong>Apache HTTP Server</strong> を <strong>2.4.71 以上</strong>にアップグレードし、<code>mod_http2</code> の重大な RCE 脆弱性 <strong>CVE-2026-119618</strong> を修正する。即時更新が困難な場合は一時的に <code>mod_http2</code> / <code>h2</code> を無効化'
+    sev: crit
+    due:
+      vi: Ngay lập tức (toàn bộ web server &amp; reverse proxy dùng Apache httpd 2.4.55–2.4.70)
+      ja: 即時（Apache httpd 2.4.55〜2.4.70 を利用する全Webサーバー・リバースプロキシ）
   - task:
       vi: 'Nâng cấp <strong>Visual Studio Code</strong> lên <strong>1.145.3 trở lên</strong> (khắc phục lỗ hổng RCE nghiêm trọng CVE-2026-120779 và CVE-2026-120780); bật <strong>Workspace Trust</strong> khi mở mã nguồn bên ngoài'
       ja: '<strong>Visual Studio Code</strong> を <strong>1.145.3 以上</strong>にアップグレードする（重大なRCE脆弱性 CVE-2026-120779 および CVE-2026-120780 を修正）。外部コードを開く際は <strong>Workspace Trust</strong> を必ず有効化'
@@ -292,6 +304,17 @@ sections:
     fix:
       vi: 'Nâng cấp Spring Boot lên <strong>4.0.6</strong>, <strong>3.5.14</strong>, <strong>3.4.16</strong>, hoặc <strong>3.3.19</strong>.'
       ja: 'Spring Boot を <strong>4.0.6</strong>、<strong>3.5.14</strong>、<strong>3.4.16</strong>、または <strong>3.3.19</strong> にアップグレードしてください。'
+  - name: Apache HTTP Server (mod_http2)
+    sev: crit
+    summary:
+      vi: '<strong>CVE-2026-119618 (Critical)</strong>: Lỗi Race Condition (CWE-362 - Concurrent Execution using Shared Resource with Improper Synchronization) trong hàm <code>assign_headers()</code> của module <code>mod_http2</code>. Khi xử lý nhiều HTTP/2 stream đồng thời trên cùng một kết nối TCP, lỗi đồng bộ có thể gây hỏng bộ nhớ heap (heap corruption) và thực thi mã từ xa (RCE) không cần xác thực.'
+      ja: '<strong>CVE-2026-119618（Critical）</strong>：<code>mod_http2</code> モジュールの <code>assign_headers()</code> における競合状態（Race Condition / CWE-362）の脆弱性。単一TCP接続上で複数のHTTP/2ストリームを多重処理する際の同期不備により、ヒープ破壊および認証不要のリモートコード実行（RCE）に至る恐れ。'
+    impact:
+      vi: 'Các máy chủ web, reverse proxy hoặc container chạy Apache HTTP Server từ <strong>2.4.55 đến 2.4.70</strong> (hoặc <code>mod_h2</code> bản độc lập 2.0.8–2.0.42) có bật HTTP/2 (<code>mod_http2</code>).'
+      ja: 'HTTP/2（<code>mod_http2</code>）を有効にしている <strong>Apache HTTP Server 2.4.55〜2.4.70</strong>（またはスタンドアロン版 <code>mod_h2</code> 2.0.8〜2.0.42）稼働中のWebサーバー、リバースプロキシ、コンテナ環境。'
+    fix:
+      vi: 'Nâng cấp ngay Apache HTTP Server lên phiên bản <strong>2.4.71 trở lên</strong> (phát hành ngày 11-11-2026). Nếu chưa thể nâng cấp ngay, tạm thời vô hiệu hóa <code>mod_http2</code> (tắt <code>LoadModule http2_module</code> hoặc loại bỏ <code>h2</code>/<code>h2c</code> khỏi chỉ thị <code>Protocols</code>). Xem <a href="@home@featured/apache-cve-2026-119618/analysis/">trang phân tích &amp; hướng dẫn chi tiết</a>.'
+      ja: '直ちに Apache HTTP Server を <strong>2.4.71 以上</strong>（2026年11月11日リリース）へアップグレードしてください。即時適用が困難な場合の一時対策として、<code>mod_http2</code> を無効化（<code>LoadModule http2_module</code> の停止、または <code>Protocols</code> ディレクティブから <code>h2</code>/<code>h2c</code> を除外）してください。<a href="@home@featured/apache-cve-2026-119618/analysis/">詳細分析・対策ガイド</a>を参照。'
   - name: Apache Tomcat
     sev: high
     summary:
@@ -359,11 +382,13 @@ sections:
     ja: 7. 情報の信頼性に関する注記 &amp; 参考情報
   type: list
   items:
+  - vi: '<strong>Đối chiếu nguồn chính thức Apache HTTP Server &amp; CVE.org (CVE-2026-119618):</strong> Lỗi đồng bộ trong <code>mod_http2</code> (<code>assign_headers()</code>) do Anthropic OSS Scanner và Google Cloud Vulnerability Research phát hiện, đã được Apache Software Foundation xác nhận và vá trong bản phát hành Apache HTTP Server 2.4.71 ngày 11-11-2026.'
+    ja: '<strong>Apache HTTP Server &amp; CVE.org 公式ソースとの照合済み（CVE-2026-119618）:</strong> <code>mod_http2</code>（<code>assign_headers()</code>）の競合状態は Anthropic OSS Scanner および Google Cloud Vulnerability Research により報告され、Apache Software Foundation により2026年11月11日リリースの Apache HTTP Server 2.4.71 で修正されました。'
   - vi: '<strong>Đối chiếu nguồn chính thức Microsoft MSRC &amp; Patch Tuesday:</strong> CVE-2026-120779, CVE-2026-120780 (Visual Studio Code), CVE-2026-118746 (.NET), CVE-2026-114146/47 (ASP.NET Core) và CVE-2026-114151 (Visual Studio) được công bố trong bản tin bảo mật Patch Tuesday tháng 11/2026.'
     ja: '<strong>Microsoft MSRC &amp; Patch Tuesday 公式ソースとの照合済み:</strong> CVE-2026-120779、CVE-2026-120780（VS Code）、CVE-2026-118746（.NET）、CVE-2026-114146/47（ASP.NET Core）、CVE-2026-114151（Visual Studio）は 2026年11月 Patch Tuesday にて公開。'
   - vi: '<strong>Cảnh báo Zero-Day Google Chrome (CVE-2026-125350):</strong> Lỗ hổng Use-After-Free trong trình phân tích XML đã được Google xác nhận có mã khai thác hoạt động thực tế (in the wild); bản vá khẩn cấp đã phát hành trên các kênh Stable và Extended Stable.'
     ja: '<strong>Google Chrome ゼロデイ警告（CVE-2026-125350）:</strong> XML パーサーの Use-After-Free 脆弱性は Google により実環境での悪用（in the wild）が確認済み。Stable および Extended Stable チャンネルにて緊急アップデートが配信されています。'
   - vi: '<strong>Cảnh báo chuỗi cung ứng công cụ AI Coding:</strong> Các chiến dịch mã độc mạo danh máy chủ Model Context Protocol (MCP) và công cụ mở rộng IDE đang gia tăng; khuyến nghị toàn bộ kỹ sư áp dụng nguyên tắc kiểm tra mã nguồn và xác minh tính toàn vẹn của lockfile trước khi tích hợp vào môi trường làm việc.'
     ja: '<strong>AIコーディングツールのサプライチェーン警戒:</strong> Model Context Protocol（MCP）サーバーやIDE拡張ツールを騙る悪意あるパッケージが増加しています。全エンジニアは作業環境に組み込む前にソースコードの監査およびロックファイルの整合性検証を徹底してください。'
-  - vi: '<strong>Liên kết tham khảo:</strong> <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://chromereleases.googleblog.com/" target="_blank" rel="noopener noreferrer">Chrome Releases Blog</a> · <a href="https://spring.io/security/cve" target="_blank" rel="noopener noreferrer">Spring Security Advisories</a> · <a href="https://tomcat.apache.org/security.html" target="_blank" rel="noopener noreferrer">Apache Tomcat Security</a> · <a href="@home@featured/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a> · <a href="@home@featured/php-cve-2026-109618-109619/php2shell/">PiraGo Guide: PHP2Shell</a>.'
-    ja: '<strong>参考リンク:</strong> <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://chromereleases.googleblog.com/" target="_blank" rel="noopener noreferrer">Chrome Releases Blog</a> · <a href="https://spring.io/security/cve" target="_blank" rel="noopener noreferrer">Spring Security Advisories</a> · <a href="https://tomcat.apache.org/security.html" target="_blank" rel="noopener noreferrer">Apache Tomcat Security</a> · <a href="@home@featured/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a> · <a href="@home@featured/php-cve-2026-109618-109619/php2shell/">PiraGo Guide: PHP2Shell</a>。'
+  - vi: '<strong>Liên kết tham khảo:</strong> <a href="https://httpd.apache.org/security/vulnerabilities_24.html" target="_blank" rel="noopener noreferrer">Apache HTTP Server 2.4 Security</a> · <a href="https://www.cve.org/CVERecord?id=CVE-2026-119618" target="_blank" rel="noopener noreferrer">CVE-2026-119618</a> · <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://chromereleases.googleblog.com/" target="_blank" rel="noopener noreferrer">Chrome Releases Blog</a> · <a href="https://spring.io/security/cve" target="_blank" rel="noopener noreferrer">Spring Security Advisories</a> · <a href="https://tomcat.apache.org/security.html" target="_blank" rel="noopener noreferrer">Apache Tomcat Security</a> · <a href="@home@featured/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a> · <a href="@home@featured/php-cve-2026-109618-109619/php2shell/">PiraGo Guide: PHP2Shell</a>.'
+    ja: '<strong>参考リンク:</strong> <a href="https://httpd.apache.org/security/vulnerabilities_24.html" target="_blank" rel="noopener noreferrer">Apache HTTP Server 2.4 Security</a> · <a href="https://www.cve.org/CVERecord?id=CVE-2026-119618" target="_blank" rel="noopener noreferrer">CVE-2026-119618</a> · <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://chromereleases.googleblog.com/" target="_blank" rel="noopener noreferrer">Chrome Releases Blog</a> · <a href="https://spring.io/security/cve" target="_blank" rel="noopener noreferrer">Spring Security Advisories</a> · <a href="https://tomcat.apache.org/security.html" target="_blank" rel="noopener noreferrer">Apache Tomcat Security</a> · <a href="@home@featured/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a> · <a href="@home@featured/php-cve-2026-109618-109619/php2shell/">PiraGo Guide: PHP2Shell</a>。'
