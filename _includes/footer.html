@@ -42,8 +42,11 @@
           <li><a href="{{ home_url | append: 'monthly/' | append: m[0] | append: '/' | relative_url }}">{{ m[1].footer_label[lang] }}{% if forloop.first %} <span class="badge-mini">{{ t.new }}</span>{% endif %}</a></li>
           {%- endfor %}
           {%- for c in site.data.featured %}
+          {%- unless c.archived %}
           <li><a href="{{ home_url | append: c.path | relative_url }}">{{ c.nav[lang] }}</a></li>
+          {%- endunless %}
           {%- endfor %}
+          <li><a href="{{ home_url | append: '#featured-archive' | relative_url }}">📦 {{ t.featured_archive }}</a></li>
           <li><a href="https://github.com/pirago-vietnam/security-news/blob/main/monthly/RULES.md" target="_blank" rel="noopener noreferrer">{{ t.rules }}</a></li>
         </ul>
       </div>

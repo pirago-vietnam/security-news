@@ -27,6 +27,7 @@ description: "月次のセキュリティインシデントおよび脆弱性レ
   <h2 class="section-heading" id="featured">⭐ {{ t.featured }}</h2>
   <p class="date">{{ t.featured_sub }}</p>
   {%- for c in site.data.featured %}
+  {%- unless c.archived %}
   <section class="card"{% if c.accent %} style="border-left: 4px solid var(--pirago-red);"{% endif %}>
     <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
       <h2>{{ c.icon }} {{ c.title[lang] }}</h2>
@@ -40,7 +41,26 @@ description: "月次のセキュリティインシデントおよび脆弱性レ
     </ul>
     <a href="{{ home_url | append: c.path | relative_url }}" class="card-link-btn">{{ c.link[lang] }}</a>
   </section>
+  {%- endunless %}
   {%- endfor %}
+
+  {%- assign archived_cases = site.data.featured | where: "archived", true %}
+  {%- if archived_cases.size > 0 %}
+  <section class="card" id="featured-archive" style="background: var(--bg-subtle);">
+    <details>
+      <summary style="cursor: pointer; font-weight: 700; font-size: 16px;">📦 {{ t.featured_archive }} ({{ archived_cases.size }})</summary>
+      <ul style="margin-top: 12px;">
+        {%- for c in archived_cases %}
+        <li>
+          <span class="badge {{ c.badge.sev }}">{{ c.badge.text }}</span>
+          <a href="{{ home_url | append: c.path | relative_url }}"><strong>{{ c.icon }} {{ c.title[lang] }}</strong></a>
+          <span class="date" style="display: inline; margin-left: 6px;">— {{ c.date[lang] }}</span>
+        </li>
+        {%- endfor %}
+      </ul>
+    </details>
+  </section>
+  {%- endif %}
 
   <h2 class="section-heading" id="monthly">📅 {{ t.monthly }}</h2>
   <!-- Báo cáo tháng: lặp theo _data/monthly, mới nhất xếp trên -->

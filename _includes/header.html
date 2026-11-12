@@ -36,8 +36,11 @@
           </a>
           <ul class="pirago-dropdown">
             {%- for c in site.data.featured %}
+            {%- unless c.archived %}
             <li><a href="{{ home_url | append: c.path | relative_url }}" class="{% if page.url contains c.path %}active{% endif %}">{{ c.nav[lang] }}</a></li>
+            {%- endunless %}
             {%- endfor %}
+            <li><a href="{{ home_url | append: '#featured-archive' | relative_url }}">📦 {{ t.featured_archive }}</a></li>
           </ul>
         </li>
         <li class="pirago-nav-item">

@@ -19,6 +19,7 @@ vi:
     provider: ["Nhà cung cấp", "Bản tin / Tóm tắt", "Mức độ", "Ảnh hưởng tới hệ thống nào", "Cần làm gì"]
   featured: "Case nổi bật"
   featured_sub: "Sự cố lớn, phân tích lỗ hổng và runbook ứng phó khẩn cấp"
+  featured_archive: "Các case nổi bật trước"
   visit_pirago: "Truy cập website chính thức PiraGo"
   toggle_theme: "Chuyển chế độ Sáng / Tối"
   open_menu: "Mở menu điều hướng"
@@ -64,6 +65,7 @@ ja:
     provider: ["プロバイダー", "ニュース / 概要", "重大度", "影響を受けるシステム", "必要な対応"]
   featured: "注目ケース"
   featured_sub: "重大インシデント、脆弱性分析、緊急対応ランブック"
+  featured_archive: "過去の注目ケース"
   visit_pirago: "PiraGo 公式サイトへ"
   toggle_theme: "ライト / ダークモード切替"
   open_menu: "ナビゲーションメニューを開く"

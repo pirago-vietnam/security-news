@@ -1,6 +1,30 @@
 # Các case nổi bật (sự cố lớn, phân tích lỗ hổng, runbook ứng phó). Thứ tự = thứ tự hiển thị.
 # `path` tính từ gốc ngôn ngữ (vi: "/", ja: "/ja/").
+- id: apache-cve-2026-119618
+  path: "featured/apache-cve-2026-119618/analysis/"
+  icon: "🌐"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL"}
+  nav: {vi: "Apache CVE-2026-119618", ja: "Apache CVE-2026-119618"}
+  title: {vi: "Apache HTTP Server mod_http2 RCE (CVE-2026-119618) — Lỗi đồng bộ HTTP/2 gây chiếm quyền máy chủ", ja: "Apache HTTP Server mod_http2 RCE（CVE-2026-119618）— HTTP/2 同期不備によるサーバー乗っ取りの恐れ"}
+  date: {vi: "Cập nhật đến 2026-11-12 · Race Condition trong assign_headers() · Đã vá ở 2.4.71", ja: "2026年11月12日 時点 · assign_headers() の競合状態 · 2.4.71 で修正済み"}
+  link: {vi: "Xem phân tích & hướng dẫn →", ja: "分析・対策ガイドを見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Nguy cơ", ja: "リスク"}
+      text: {vi: "Lỗi đồng bộ (CWE-362) trong mod_http2 assign_headers() gây heap corruption và có thể dẫn đến RCE không cần xác thực.", ja: "mod_http2 の assign_headers() における同期不備（CWE-362）によりヒープ破壊および認証不要の RCE に至る恐れ。"}
+    - sev: high
+      label: {vi: "Phạm vi", ja: "影響範囲"}
+      text: {vi: "Apache HTTP Server 2.4.55 đến 2.4.70 (và mod_h2 2.0.8–2.0.42) có bật mod_http2 / giao thức h2 hoặc h2c.", ja: "mod_http2（h2 / h2c）を有効にしている Apache HTTP Server 2.4.55〜2.4.70（および mod_h2 2.0.8〜2.0.42）。"}
+    - sev: med
+      label: {vi: "Tạm thời", ja: "暫定対策"}
+      text: {vi: "Vô hiệu hóa mod_http2 (a2dismod http2 / bỏ LoadModule http2_module) hoặc đặt Protocols http/1.1 nếu chưa thể nâng cấp ngay.", ja: "即時更新が困難な場合は mod_http2 を無効化（a2dismod http2 等）、または Protocols http/1.1 を設定。"}
+    - sev: low
+      label: {vi: "Triệt để", ja: "恒久対策"}
+      text: {vi: "Nâng cấp Apache HTTP Server lên 2.4.71 trở lên (phát hành 11-11-2026), kiểm tra cấu hình và restart dịch vụ / rebuild image.", ja: "Apache HTTP Server を 2.4.71 以上（11月11日リリース）へ更新し、サービス再起動・コンテナ再ビルドを実施。"}
+
 - id: binance
+  archived: true
   path: "featured/binance/binance_security_incident_report/"
   icon: "💸"
   accent: true
@@ -24,6 +48,7 @@
       text: {vi: "Đã đóng băng khoảng 3 tỷ USD (số liệu nguồn khác nhau), tạm dừng rút tiền để rà soát an ninh; sẽ công bố báo cáo đầy đủ sau.", ja: "約30億米ドルを凍結（情報源により数値が異なる）。出金を停止しセキュリティを見直し中。詳細レポートは後日公表予定。"}
 
 - id: gmo
+  archived: true
   path: "featured/gmo/gmo_onamae_security_incident_report/"
   icon: "🚨"
   accent: true
@@ -46,30 +71,8 @@
       label: {vi: "Bồi thường", ja: "補償"}
       text: {vi: "Bắt đầu liên hệ từng khách hàng từ 06/11 để bồi thường 100% tổn thất giao dịch thực tế + hỗ trợ thăm hỏi đặc biệt tới 3 triệu JPY; cập nhật số liệu tại buổi công bố KQKD 13/11.", ja: "11月6日より不正取引による実損の100%補償に向けた個別連絡を開始（特別見舞金最大300万円）。申請状況と業績影響の見通しは11月13日の決算説明会で案内予定。"}
 
-- id: apache-cve-2026-119618
-  path: "featured/apache-cve-2026-119618/analysis/"
-  icon: "🌐"
-  accent: true
-  badge: {sev: crit, text: "CRITICAL"}
-  nav: {vi: "Apache CVE-2026-119618", ja: "Apache CVE-2026-119618"}
-  title: {vi: "Phân tích lỗ hổng: Apache HTTP Server CVE-2026-119618 (mod_http2)", ja: "脆弱性分析: Apache HTTP Server CVE-2026-119618（mod_http2）"}
-  date: {vi: "Cập nhật đến 2026-11-12 · Race Condition trong assign_headers() · Đã vá ở 2.4.71", ja: "2026年11月12日 時点 · assign_headers() の競合状態 · 2.4.71 で修正済み"}
-  link: {vi: "Xem phân tích & hướng dẫn →", ja: "分析・対策ガイドを見る →"}
-  items:
-    - sev: crit
-      label: {vi: "Nguy cơ", ja: "リスク"}
-      text: {vi: "Lỗi đồng bộ (CWE-362) trong mod_http2 assign_headers() gây heap corruption và có thể dẫn đến RCE không cần xác thực.", ja: "mod_http2 の assign_headers() における同期不備（CWE-362）によりヒープ破壊および認証不要の RCE に至る恐れ。"}
-    - sev: high
-      label: {vi: "Phạm vi", ja: "影響範囲"}
-      text: {vi: "Apache HTTP Server 2.4.55 đến 2.4.70 (và mod_h2 2.0.8–2.0.42) có bật mod_http2 / giao thức h2 hoặc h2c.", ja: "mod_http2（h2 / h2c）を有効にしている Apache HTTP Server 2.4.55〜2.4.70（および mod_h2 2.0.8〜2.0.42）。"}
-    - sev: med
-      label: {vi: "Tạm thời", ja: "暫定対策"}
-      text: {vi: "Vô hiệu hóa mod_http2 (a2dismod http2 / bỏ LoadModule http2_module) hoặc đặt Protocols http/1.1 nếu chưa thể nâng cấp ngay.", ja: "即時更新が困難な場合は mod_http2 を無効化（a2dismod http2 等）、または Protocols http/1.1 を設定。"}
-    - sev: low
-      label: {vi: "Triệt để", ja: "恒久対策"}
-      text: {vi: "Nâng cấp Apache HTTP Server lên 2.4.71 trở lên (phát hành 11-11-2026), kiểm tra cấu hình và restart dịch vụ / rebuild image.", ja: "Apache HTTP Server を 2.4.71 以上（11月11日リリース）へ更新し、サービス再起動・コンテナ再ビルドを実施。"}
-
 - id: linux-cve-2026-98432
+  archived: true
   path: "featured/linux-cve-2026-98432/analysis/"
   icon: "🐧"
   accent: true
@@ -93,6 +96,7 @@
       text: {vi: "Cập nhật kernel và reboot. Tạm thời: tắt MPTCP (net.mptcp.enabled=0, GODEBUG=multipathtcp=0 cho Go), lọc IP options bằng nftables/iptables u32 hoặc AWS Network Firewall.", ja: "カーネル更新と再起動が恒久対策。暫定措置: MPTCP無効化（net.mptcp.enabled=0、Go向けGODEBUG=multipathtcp=0）、nftables/iptables u32またはAWS Network FirewallによるIPオプション遮断。"}
 
 - id: php2shell
+  archived: true
   path: "featured/php-cve-2026-109618-109619/php2shell/"
   icon: "📘"
   accent: false
