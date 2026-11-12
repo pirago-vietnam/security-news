@@ -46,20 +46,17 @@ description: "Tổng hợp báo cáo sự cố an ninh mạng và lỗ hổng đ
 
   {%- assign archived_cases = site.data.featured | where: "archived", true %}
   {%- if archived_cases.size > 0 %}
-  <section class="card" id="featured-archive" style="background: var(--bg-subtle);">
-    <details>
-      <summary style="cursor: pointer; font-weight: 700; font-size: 16px;">📦 {{ t.featured_archive }} ({{ archived_cases.size }})</summary>
-      <ul style="margin-top: 12px;">
-        {%- for c in archived_cases %}
-        <li>
-          <span class="badge {{ c.badge.sev }}">{{ c.badge.text }}</span>
-          <a href="{{ home_url | append: c.path | relative_url }}"><strong>{{ c.icon }} {{ c.title[lang] }}</strong></a>
-          <span class="date" style="display: inline; margin-left: 6px;">— {{ c.date[lang] }}</span>
-        </li>
-        {%- endfor %}
-      </ul>
-    </details>
-  </section>
+  <div id="featured-archive" style="margin: 4px 0 24px;">
+    <h3 style="font-size: 15px; margin: 0 0 8px; color: var(--text-muted);">{{ t.featured_archive }}</h3>
+    <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px;">
+      {%- for c in archived_cases limit:5 %}
+      <li style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+        <span class="badge {{ c.badge.sev }}">{{ c.badge.text }}</span>
+        <a href="{{ home_url | append: c.path | relative_url }}">{{ c.icon }} {{ c.title[lang] }}</a>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
   {%- endif %}
 
   <h2 class="section-heading" id="monthly">📅 {{ t.monthly }}</h2>

@@ -40,7 +40,17 @@
             <li><a href="{{ home_url | append: c.path | relative_url }}" class="{% if page.url contains c.path %}active{% endif %}">{{ c.nav[lang] }}</a></li>
             {%- endunless %}
             {%- endfor %}
-            <li><a href="{{ home_url | append: '#featured-archive' | relative_url }}">📦 {{ t.featured_archive }}</a></li>
+            {%- assign archived_cases = site.data.featured | where: "archived", true %}
+            {%- if archived_cases.size > 0 %}
+            <li class="has-submenu">
+              <a href="{{ home_url | append: '#featured-archive' | relative_url }}">{{ t.featured_archive }} <span class="dropdown-arrow">▸</span></a>
+              <ul class="pirago-submenu">
+                {%- for c in archived_cases limit:5 %}
+                <li><a href="{{ home_url | append: c.path | relative_url }}" class="{% if page.url contains c.path %}active{% endif %}">{{ c.nav[lang] }}</a></li>
+                {%- endfor %}
+              </ul>
+            </li>
+            {%- endif %}
           </ul>
         </li>
         <li class="pirago-nav-item">

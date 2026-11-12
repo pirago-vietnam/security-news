@@ -46,7 +46,7 @@
           <li><a href="{{ home_url | append: c.path | relative_url }}">{{ c.nav[lang] }}</a></li>
           {%- endunless %}
           {%- endfor %}
-          <li><a href="{{ home_url | append: '#featured-archive' | relative_url }}">📦 {{ t.featured_archive }}</a></li>
+          <li><a href="{{ home_url | append: '#featured-archive' | relative_url }}">{{ t.featured_archive }}</a></li>
         </ul>
       </div>
 

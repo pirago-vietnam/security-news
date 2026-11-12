@@ -30,7 +30,7 @@
   accent: true
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
   nav: {vi: "Sự cố Binance", ja: "Binance インシデント"}
-  title: {vi: "Sự cố an ninh: Binance bị tấn công ~6,3 tỷ USD", ja: "セキュリティインシデント: Binance 約63億米ドルの不正流出"}
+  title: {vi: "Binance (~6,3 tỷ USD) — Rò rỉ từ laptop DevOps vào container dịch vụ", ja: "Binance（約63億米ドル流出）— DevOps 端末侵害からサービスコンテナへ到達"}
   date: {vi: "Cập nhật đến 2026-10-30 · Đang diễn biến · Vụ hack tiền mã hóa lớn nhất lịch sử (theo báo chí)", ja: "2026年10月30日 時点 · 進行中 · 報道によると暗号資産史上最大の被害"}
   link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
   items:
@@ -54,7 +54,7 @@
   accent: true
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
   nav: {vi: "Sự cố GMO Onamae", ja: "GMOお名前.com インシデント"}
-  title: {vi: "Sự cố an ninh: GMO Onamae Desktop Cloud", ja: "セキュリティインシデント: GMO お名前.com デスクトップクラウド"}
+  title: {vi: "GMO Onamae Desktop Cloud — Chiếm quyền 26.739 VPS Windows, rò rỉ MT4/MT5", ja: "GMO お名前.com デスクトップクラウド — Windows VPS 26,739台乗っ取り・MT4/MT5情報漏えい"}
   date: {vi: "Cập nhật đến 2026-11-12 · 16 thông cáo, IR 06/11, Tổ điều tra liên ngành NPA & 890 tin Bounty", ja: "2026年11月12日 時点 · 16件の続報・11/6 IR開示・警察庁長官指示の合同捜査本部 & 懸賞金890件"}
   link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
   items:
@@ -78,7 +78,7 @@
   accent: true
   badge: {sev: high, text: "HIGH"}
   nav: {vi: "Linux kernel CVE-2026-98432", ja: "Linux カーネル CVE-2026-98432"}
-  title: {vi: "Phân tích lỗ hổng: Linux kernel CVE-2026-98432", ja: "脆弱性分析: Linux カーネル CVE-2026-98432"}
+  title: {vi: "Linux kernel TCP IPv4 UAF (CVE-2026-98432) — Nguy cơ RCE/rò rỉ qua MPTCP", ja: "Linux カーネル TCP IPv4 UAF（CVE-2026-98432）— MPTCP 経由の RCE・情報漏えいリスク"}
   date: {vi: "Cập nhật đến 2026-11-05 · Bản tin AWS 2026-160-AWS xác nhận nguy cơ MPTCP · CVSS 9.8", ja: "2026年11月5日 時点 · AWS速報 2026-160-AWS で MPTCP リスク公式確認 · CVSS 9.8"}
   link: {vi: "Xem phân tích chi tiết →", ja: "詳細分析を見る →"}
   items:
@@ -102,7 +102,7 @@
   accent: false
   badge: {sev: crit, text: "CRITICAL"}
   nav: {vi: "PHP CVE-2026-109618", ja: "PHP CVE-2026-109618"}
-  title: {vi: "Hướng dẫn ứng phó: PHP CVE-2026-109618 / 109619 (PHP2Shell)", ja: "対応ガイド: PHP CVE-2026-109618 / 109619 (PHP2Shell)"}
+  title: {vi: "PHP2Shell (CVE-2026-109618 / 109619) — RCE không cần xác thực trong lõi PHP", ja: "PHP2Shell（CVE-2026-109618 / 109619）— PHP コアの認証不要 RCE"}
   date: {vi: "Lỗ hổng RCE PHP · Tổng quan cho non-tech & hướng dẫn xử lý cho kỹ sư PiraGo", ja: "PHP の RCE 脆弱性 · 非エンジニア向け概要 & PiraGo エンジニア向け対応ガイド"}
   link: {vi: "Xem hướng dẫn đầy đủ →", ja: "ガイド全文を見る →"}
   items:
