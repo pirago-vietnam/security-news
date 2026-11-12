@@ -1,0 +1,164 @@
+---
+layout: default
+title: "無印良品 (MUJI / Ryohin Keikaku) — Rò rỉ tối đa 27,26 triệu tài khoản & 1,09 triệu số thẻ MUJI Card"
+description: "Diễn biến, phạm vi dữ liệu bị ảnh hưởng, nguyên nhân kỹ thuật (lưu giữ thẻ không xóa, credential stuffing), buổi họp báo ngày 12/11/2026 và khuyến cáo từ PiraGo"
+category: "Sự cố an ninh"
+---
+<style>
+  .an-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
+  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--border); }
+  .an-sec { margin: 0 0 40px; }
+  .an-sec h2 { font-size: 21px; margin: 24px 0 12px; scroll-margin-top: 90px; }
+  .an-sec h3 { font-size: 17px; margin: 20px 0 8px; }
+  .an-sec ul, .an-sec ol { padding-left: 22px; }
+  .an-sec li { margin: 4px 0; }
+  .an-sec .table-wrap { overflow-x: auto; }
+  .an-sec code { word-break: break-all; }
+</style>
+
+<div class="report-header">
+  <h1>無印良品 (MUJI / Ryohin Keikaku) — Rò rỉ tối đa 27,26 triệu tài khoản &amp; 1,09 triệu số thẻ MUJI Card</h1>
+  <p class="sub">Cập nhật <strong>2026-11-12</strong> (sau buổi họp báo của Chủ tịch Satoshi Shimizu). Trạng thái: <strong>đang diễn biến</strong>, MUJI Net Store vẫn tạm ngừng chưa có lịch mở lại. Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a>.</p>
+</div>
+
+<blockquote class="callout">
+  <p><strong>Tóm tắt nhanh (Non-tech):</strong> Từ cuối tháng 10/2026, hệ thống ứng dụng <strong>MUJI App</strong> và trang thương mại điện tử <strong>MUJI Net Store</strong> bị tin tặc xâm nhập, làm lộ thông tin của tối đa <strong>27,26 triệu tài khoản</strong> (bao gồm cả người đã hủy tài khoản) và <strong>1,09 triệu số thẻ tín dụng MUJI Card</strong>. Nguyên nhân chính được công ty thừa nhận tại họp báo ngày 12/11 là do lỗ hổng hệ thống, không xóa dữ liệu thẻ/tài khoản cũ theo quy định, kết hợp với tấn công dò mật khẩu tự động (credential stuffing). Hiện website mua hàng trực tuyến của MUJI vẫn đóng cửa để rà soát an ninh.</p>
+</blockquote>
+
+<nav class="an-nav" aria-label="Mục lục">
+  <a href="#tom-tat">1. Tóm tắt</a>
+  <a href="#dien-bien">2. Diễn biến</a>
+  <a href="#pham-vi">3. Phạm vi dữ liệu bị ảnh hưởng</a>
+  <a href="#nguyen-nhan">4. Nguyên nhân &amp; vấn đề lưu trữ dữ liệu</a>
+  <a href="#ung-pho">5. Ứng phó &amp; khuyến cáo</a>
+  <a href="#bai-hoc">6. Khuyến cáo từ PiraGo</a>
+  <a href="#nguon">7. Nguồn tham khảo</a>
+</nav>
+
+<section class="an-sec">
+<h2 id="tom-tat">1. Tóm tắt</h2>
+<ul>
+  <li><strong>Sự việc:</strong> Ngày 29/10/2026, Công ty Ryohin Keikaku (đơn vị vận hành chuỗi bán lẻ 無印良品 / MUJI) phát hiện truy cập trái phép từ bên ngoài vào hệ thống liên quan đến <strong>MUJI App</strong> và <strong>MUJI Net Store</strong> <span class="badge low">Công ty xác nhận</span>.</li>
+  <li><strong>Quy mô ảnh hưởng:</strong> Tối đa khoảng <strong>27,26 triệu</strong> tài khoản có nguy cơ lộ email, ngày sinh, giới tính, ID thành viên; khoảng <strong>750.000</strong> hồ sơ gồm cả họ tên, địa chỉ, số điện thoại; khoảng <strong>1,09 triệu</strong> số thẻ tín dụng MUJI Card (đầy đủ chữ số); và khoảng <strong>440.000</strong> thông tin người nhận hàng COD <span class="badge low">Công ty xác nhận</span>.</li>
+  <li><strong>Họp báo ngày 12/11/2026:</strong> Chủ tịch <strong>Satoshi Shimizu (清水智)</strong> cúi đầu xin lỗi công khai, thừa nhận công ty đã để tồn tại dữ liệu thẻ tín dụng và dữ liệu người dùng đã hủy tài khoản lẽ ra phải tiêu hủy, đồng thời xác nhận chưa thể ấn định ngày mở lại Net Store <span class="badge med">Báo chí Nhật Bản</span>.</li>
+  <li><strong>Ghi chú tách biệt:</strong> Ngày 02/11/2026, Ryohin Keikaku cũng công bố một sự cố khác liên quan đến dữ liệu đặt hàng rèm cửa theo yêu cầu (giai đoạn 2018–2022, khoảng 20.000 hồ sơ).</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="dien-bien">2. Diễn biến</h2>
+<div class="table-wrap">
+<table id="timeline">
+  <thead><tr><th>Thời điểm</th><th>Sự kiện</th><th>Nguồn / Ghi chú</th></tr></thead>
+  <tbody>
+    <tr><td>29/10/2026</td><td>Phát hiện truy cập trái phép từ bên ngoài; chặn truy cập vào vùng bị ảnh hưởng và áp dụng bản sửa lỗi.</td><td><span class="badge low">Ryohin Keikaku</span></td></tr>
+    <tr><td>30/10/2026</td><td><strong>Báo cáo thứ 1:</strong> Công bố nguy cơ lộ email, ngày sinh, giới tính, ID thành viên của tối đa ~27,26 triệu người dùng MUJI App.</td><td><span class="badge low">Ryohin Keikaku</span></td></tr>
+    <tr><td>02/11/2026</td><td>Thông báo tới đối tác phát hành thẻ (Credit Saison) về nguy cơ số thẻ MUJI Card nằm trong phạm vi bị ảnh hưởng.</td><td><span class="badge med">Báo cáo</span></td></tr>
+    <tr><td>04/11/2026</td><td><strong>Báo cáo thứ 2:</strong> Mở rộng phạm vi sang người dùng MUJI Net Store (kể cả không dùng app), một phần họ tên/địa chỉ/SĐT và ~1,09 triệu số thẻ MUJI Card.</td><td><span class="badge low">Ryohin Keikaku</span></td></tr>
+    <tr><td>06/11/2026 (16:00 JST)</td><td><strong>Báo cáo thứ 3:</strong> Tạm ngừng MUJI Net Store và hầu hết tính năng MUJI App (chỉ giữ hiển thị mã vạch thẻ thành viên tại cửa hàng); dự kiến mở lại sau 1–2 ngày.</td><td><span class="badge low">Ryohin Keikaku</span></td></tr>
+    <tr><td>09/11/2026</td><td><strong>Báo cáo thứ 4:</strong> Hoãn mở lại Net Store do phát hiện dấu hiệu tấn công nhồi thông tin đăng nhập (credential stuffing), nguy cơ lộ ~270.000 lịch sử mua hàng/điểm, tăng số hồ sơ có họ tên/địa chỉ/SĐT lên ~750.000 và lộ ~440.000 thông tin người nhận COD.</td><td><span class="badge low">Ryohin Keikaku</span></td></tr>
+    <tr><td>10/11/2026</td><td>Bắt đầu gửi thông báo trực tiếp qua email và thư bưu điện tới các khách hàng thuộc diện ảnh hưởng.</td><td><span class="badge low">Ryohin Keikaku</span></td></tr>
+    <tr><td>12/11/2026</td><td><strong>Họp báo tại Tokyo:</strong> Chủ tịch Satoshi Shimizu xin lỗi, thừa nhận lỗi không xóa dữ liệu thẻ và tài khoản cũ; chưa xác định ngày mở lại Net Store; đã báo cáo lên PPC và METI.</td><td><span class="badge med">NHK / Sankei / Asahi / Japan Times</span></td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section class="an-sec">
+<h2 id="pham-vi">3. Phạm vi dữ liệu bị ảnh hưởng</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Nhóm đối tượng</th><th>Số lượng (tối đa)</th><th>Trường dữ liệu có nguy cơ bị lộ</th><th>Lưu ý</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Thành viên MUJI App &amp; Net Store (gồm người đã hủy tài khoản)</td>
+      <td>~27.260.000</td>
+      <td>Email, ngày sinh, giới tính, ID thành viên</td>
+      <td>Phạm vi rộng nhất, bao gồm cả 退会者 (người đã hủy tài khoản).</td>
+    </tr>
+    <tr>
+      <td>Một phần thành viên App &amp; Net Store</td>
+      <td>~750.000</td>
+      <td>Họ tên, địa chỉ, số điện thoại (ngoài các thông tin trên)</td>
+      <td>Cập nhật tăng từ báo cáo thứ 4 (09/11).</td>
+    </tr>
+    <tr>
+      <td>Tài khoản bị nghi đăng nhập trái phép (Credential Stuffing)</td>
+      <td>~270.000</td>
+      <td>Lịch sử mua hàng, thông tin điểm thưởng</td>
+      <td>Phát hiện trên MUJI Net Store ngày 09/11.</td>
+    </tr>
+    <tr>
+      <td>Chủ thẻ tín dụng <strong>MUJI Card</strong> (gia nhập đến 07/2021)</td>
+      <td>~1.090.000</td>
+      <td><strong>Số thẻ tín dụng (đầy đủ chữ số)</strong>, MUJI Card ID, ngày sinh</td>
+      <td>Khoảng <strong>345.000 thẻ</strong> còn hiệu lực. Không gồm tên chủ thẻ, ngày hết hạn và mã CVV.</td>
+    </tr>
+    <tr>
+      <td>Thẻ đăng ký trực tiếp trên app / web khác</td>
+      <td>~120</td>
+      <td>6 số đầu + 2 số cuối số thẻ, tên chủ thẻ</td>
+      <td>Dữ liệu đã cắt/che bớt một phần.</td>
+    </tr>
+    <tr>
+      <td>Người nhận hàng COD (đơn từ 02/01/2020 – 10/02/2025)</td>
+      <td>~440.000</td>
+      <td>Họ tên người nhận, mã bưu điện giao hàng</td>
+      <td>Bổ sung trong báo cáo ngày 09/11.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section class="an-sec">
+<h2 id="nguyen-nhan">4. Nguyên nhân &amp; vấn đề lưu trữ dữ liệu</h2>
+<h3>4.1. Hai vectơ tấn công được ghi nhận</h3>
+<ul>
+  <li><strong>Xâm nhập qua lỗ hổng hệ thống:</strong> Công ty xác nhận tồn tại lỗ hổng ở một phần hệ thống cho phép truy cập trái phép từ bên ngoài vào dữ liệu khách hàng (chi tiết lỗ hổng chưa được công bố).</li>
+  <li><strong>Tấn công nhồi thông tin đăng nhập (Credential Stuffing / リスト型攻撃):</strong> Kẻ tấn công sử dụng danh sách ID/mật khẩu thu thập từ các vụ lộ lọt bên ngoài để đăng nhập trái phép hàng loạt vào MUJI Net Store, dẫn tới việc bị xem trộm lịch sử mua hàng và điểm thưởng (~270.000 tài khoản).</li>
+</ul>
+
+<h3>4.2. Dữ liệu có lưu ở dạng raw / không masking không?</h3>
+<ul>
+  <li><strong>Lưu 16 chữ số không masking suốt 5 năm (FNN &amp; WWD Japan):</strong> Trước tháng 07/2021, Ryohin Keikaku thu thập số thẻ MUJI Card để cấp ưu đãi riêng (独自特典). Khi thay đổi hệ thống vào <strong>tháng 07/2021</strong>, công ty ngừng thu thập mới nhưng <strong>bỏ sót không xóa dữ liệu cũ</strong>. Tại họp báo 12/11, Giám đốc điều hành <strong>Takahiro Miyazawa (宮澤高浩)</strong> thừa nhận: <em>"Việc lưu giữ số thẻ 16 chữ số mà không thực hiện che/mask (マスキング) là vấn đề lớn nhất; lẽ ra phải xử lý xóa từ tháng 07/2021"</em>.</li>
+  <li><strong>Chưa công bố chi tiết mã hóa DB:</strong> Trong các thông cáo chính thức, hãng chưa nêu rõ cơ chế mã hóa ở tầng lưu trữ DB; tuy nhiên, việc để nguyên 16 chữ số không masking cùng dữ liệu người dùng đã hủy tài khoản (退会者) và phát cảnh báo nguy cơ lộ số thẻ đầy đủ cho thấy dữ liệu đã ở trạng thái có thể đọc được khi hệ thống bị xâm nhập.</li>
+  <li><strong>Chậm trễ trong phản ứng ban đầu (FNN):</strong> Về việc đến ngày 06/11 mới tạm dừng Net Store (sau khi phát hiện sự cố từ 29/10), Chủ tịch Satoshi Shimizu thừa nhận: <em>"Nhìn lại, giá như chúng tôi hành động sớm hơn"</em>.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="ung-pho">5. Ứng phó, bồi thường &amp; định hướng mới</h2>
+<ul>
+  <li><strong>Phía Ryohin Keikaku:</strong> Chặn truy cập bất thường từ nước ngoài, vá lỗ hổng, đóng MUJI Net Store và phần lớn tính năng MUJI App để rà soát toàn diện; gửi thông báo cá nhân từ ngày 10/11; báo cáo Ủy ban Bảo vệ Thông tin Cá nhân (PPC) và Bộ Kinh tế, Thương mại và Công nghiệp (METI).</li>
+  <li><strong>Phí đổi thẻ &amp; bồi thường (ANN / WWD Japan / FNN):</strong> Công ty cam kết <strong>chi trả 100% phí phát hành lại thẻ MUJI Card</strong> cho các khách hàng thuộc diện ảnh hưởng; hiện chưa ghi nhận thiệt hại thực tế, nhưng nếu phát sinh giao dịch gian lận sẽ <strong>xử lý và bồi thường từng trường hợp</strong>.</li>
+  <li><strong>Chuyển hướng chiến lược dữ liệu "tối thiểu hóa" (WWD Japan):</strong> Chủ tịch Satoshi Shimizu tuyên bố đặt lại từ con số 0 cách thu thập dữ liệu cá nhân: <em>"Trước hết để đảm bảo an toàn, ưu tiên hàng đầu là không nắm giữ thông tin không cần thiết, sau đó mới tới sự tiện lợi"</em>, đồng thời cam kết không ngần ngại đầu tư bảo mật trong cả kỳ này và kỳ tới.</li>
+  <li><strong>Đặt lại mật khẩu bắt buộc:</strong> Khi Net Store mở lại, công ty dự kiến yêu cầu toàn bộ thành viên đặt lại mật khẩu.</li>
+  <li><strong>Khuyến cáo cho người dùng:</strong>
+    <ul>
+      <li>Kiểm tra sao kê thẻ tín dụng (đặc biệt là MUJI Card) và liên hệ đơn vị phát hành nếu phát hiện giao dịch lạ.</li>
+      <li>Không tái sử dụng mật khẩu giữa MUJI và các dịch vụ khác.</li>
+      <li>Cảnh giác email/tin nhắn giả mạo (phishing) — MUJI khẳng định không bao giờ hỏi mật khẩu hoặc số thẻ qua email hay điện thoại.</li>
+    </ul>
+  </li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="bai-hoc">6. Khuyến cáo từ PiraGo</h2>
+<ol>
+  <li><strong>Không lưu trữ số thẻ (Tokenization / PCI-DSS):</strong> Tuyệt đối không lưu full PAN (số thẻ đầy đủ) trong database hay log ứng dụng; chỉ giữ token từ cổng thanh toán hoặc dạng đã mask tối đa theo quy chuẩn.</li>
+  <li><strong>Thực thi vòng đời xóa dữ liệu (Data Retention &amp; Deletion):</strong> Tài khoản đã hủy (soft-delete) hoặc dữ liệu giao dịch quá hạn phải có cơ chế purge/anonymize tự động và kiểm toán định kỳ, tránh giữ "dữ liệu chết" thành mồi ngon cho kẻ tấn công.</li>
+  <li><strong>Phòng thủ Credential Stuffing:</strong> Bắt buộc rate-limiting, WAF/bot mitigation, kiểm tra mật khẩu rò rỉ (breached password check) và khuyến khích/bắt buộc MFA cho các thao tác nhạy cảm.</li>
+  <li><strong>Tách biệt dữ liệu PII và hệ thống ứng dụng:</strong> Hạn chế bề mặt truy cập dữ liệu nhạy cảm từ các service hướng Internet và thiết lập cảnh báo bất thường khi truy vấn khối lượng lớn.</li>
+</ol>
+</section>
+
+<section class="an-sec">
+<h2 id="nguon">7. Nguồn tham khảo</h2>
+<ul>
+  <li>Ryohin Keikaku — Thông cáo chính thức: <a href="https://www.ryohin-keikaku.jp/news/articles/2026_1104_02" target="_blank" rel="noopener">Báo cáo thứ 2 (04/11/2026)</a> · <a href="https://www.ryohin-keikaku.jp/news/articles/2026_1109_01" target="_blank" rel="noopener">Báo cáo thứ 4 (09/11/2026)</a>.</li>
+  <li>Báo chí Nhật Bản (Họp báo 12/11/2026): <a href="https://www.wwdjapan.com/articles/2550904" target="_blank" rel="noopener">WWD Japan (Card 16 chữ số không masking)</a> · <a href="https://www.wwdjapan.com/articles/2551414" target="_blank" rel="noopener">WWD Japan (Chính sách dữ liệu tối thiểu)</a> · <a href="https://news.yahoo.co.jp/articles/609b0148969803c6d632a6b1c992ceb4bef448dc" target="_blank" rel="noopener">ANN News</a> · <a href="https://news.yahoo.co.jp/articles/1f8417282207f974761eb4322545b233f54cd8f6" target="_blank" rel="noopener">FNN (1)</a> · <a href="https://news.yahoo.co.jp/articles/258d5301fe1ff16009677f92a0fd0e55f2e3b8a3" target="_blank" rel="noopener">FNN (2)</a> · <a href="https://news.web.nhk/newsweb/na/nd-20261112de74562" target="_blank" rel="noopener">NHK</a> · <a href="https://www.sankei.com/article/20261112-5NZJP3XINNIQBMKNWFOHMSKJWE/" target="_blank" rel="noopener">Sankei News</a> · <a href="https://www.asahi.com/articles/ASVCD247CVCDULFA00PM.html" target="_blank" rel="noopener">Asahi Shimbun</a> · <a href="https://www.japantimes.co.jp/business/2026/11/12/muji-credit-card-leak/" target="_blank" rel="noopener">The Japan Times</a>.</li>
+  <li>Tổng hợp kỹ thuật &amp; dòng thời gian: <a href="https://scan.netsecurity.ne.jp/article/2026/11/12/56758.html" target="_blank" rel="noopener">ScanNetSecurity</a> · <a href="https://incidentlog.jp/incidents/ryohin-keikaku-20261030" target="_blank" rel="noopener">IncidentLog</a> · <a href="https://westeria.jp/security-incidents/cases/ryohin-keikaku-muji-2026/" target="_blank" rel="noopener">Westeria Security Cases</a>.</li>
+</ul>
+</section>
