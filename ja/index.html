@@ -14,19 +14,19 @@ description: "月次のセキュリティインシデントおよび脆弱性レ
     <strong>フレームワーク</strong> (Next.js, Nuxt, Quasar, Laravel, Spring Boot)。
   </p>
   <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px;">
-    <span class="badge crit">緊急対応</span>
-    <span class="badge high">AWS / GCP インフラ</span>
-    <span class="badge med">定期アップデート</span>
-    <span class="badge low">Zero-Day Intel</span>
+    <a href="#incidents" class="badge crit" style="text-decoration: none;">🚨 {{ t.incidents }}</a>
+    <a href="#vulnerabilities" class="badge high" style="text-decoration: none;">🛡️ {{ t.vulnerabilities }}</a>
+    <a href="#monthly" class="badge med" style="text-decoration: none;">📅 {{ t.monthly }}</a>
   </div>
 </div>
 
 <!-- レポート一覧 - 最新のレポートを上に表示 -->
 <div class="reports-list">
-  <!-- Case nổi bật: lặp theo _data/featured -->
-  <h2 class="section-heading" id="featured">⭐ {{ t.featured }}</h2>
-  <p class="date">{{ t.featured_sub }}</p>
+  <!-- 1. セキュリティインシデント (Security Incidents: MUJI, GMO, Binance...) -->
+  <h2 class="section-heading" id="incidents">🚨 {{ t.incidents_heading }}</h2>
+  <p class="date">{{ t.incidents_sub }}</p>
   {%- for c in site.data.featured %}
+  {%- if c.category == 'incident' %}
   {%- unless c.archived %}
   <section class="card"{% if c.accent %} style="border-left: 4px solid var(--pirago-red);"{% endif %}>
     <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
@@ -42,14 +42,15 @@ description: "月次のセキュリティインシデントおよび脆弱性レ
     <a href="{{ home_url | append: c.path | relative_url }}" class="card-link-btn">{{ c.link[lang] }}</a>
   </section>
   {%- endunless %}
+  {%- endif %}
   {%- endfor %}
 
-  {%- assign archived_cases = site.data.featured | where: "archived", true %}
-  {%- if archived_cases.size > 0 %}
-  <div id="featured-archive" style="margin: 4px 0 24px;">
-    <h3 style="font-size: 15px; margin: 0 0 8px; color: var(--text-muted);">{{ t.featured_archive }}</h3>
+  {%- assign archived_incidents = site.data.featured | where: "category", "incident" | where: "archived", true %}
+  {%- if archived_incidents.size > 0 %}
+  <div id="incidents-archive" style="margin: 4px 0 32px;">
+    <h3 style="font-size: 15px; margin: 0 0 8px; color: var(--text-muted);">{{ t.incidents_archive }}</h3>
     <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px;">
-      {%- for c in archived_cases limit:5 %}
+      {%- for c in archived_incidents limit:5 %}
       <li style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
         <span class="badge {{ c.badge.sev }}">{{ c.badge.text }}</span>
         <a href="{{ home_url | append: c.path | relative_url }}">{{ c.icon }} {{ c.title[lang] }}</a>
@@ -59,7 +60,45 @@ description: "月次のセキュリティインシデントおよび脆弱性レ
   </div>
   {%- endif %}
 
-  <h2 class="section-heading" id="monthly">📅 {{ t.monthly }}</h2>
+  <!-- 2. 脆弱性・CVE (Vulnerabilities & CVEs: PostgreSQL, Apache, Linux, PHP...) -->
+  <h2 class="section-heading" id="vulnerabilities" style="margin-top: 36px;">🛡️ {{ t.vulnerabilities_heading }}</h2>
+  <p class="date">{{ t.vulnerabilities_sub }}</p>
+  {%- for c in site.data.featured %}
+  {%- if c.category == 'vulnerability' %}
+  {%- unless c.archived %}
+  <section class="card"{% if c.accent %} style="border-left: 4px solid var(--pirago-red);"{% endif %}>
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+      <h2>{{ c.icon }} {{ c.title[lang] }}</h2>
+      <span class="badge {{ c.badge.sev }}">{{ c.badge.text }}</span>
+    </div>
+    <p class="date">{{ c.date[lang] }}</p>
+    <ul>
+      {%- for it in c.items %}
+      <li><span class="badge {{ it.sev }}">{{ it.label[lang] }}</span> {{ it.text[lang] }}</li>
+      {%- endfor %}
+    </ul>
+    <a href="{{ home_url | append: c.path | relative_url }}" class="card-link-btn">{{ c.link[lang] }}</a>
+  </section>
+  {%- endunless %}
+  {%- endif %}
+  {%- endfor %}
+
+  {%- assign archived_vulns = site.data.featured | where: "category", "vulnerability" | where: "archived", true %}
+  {%- if archived_vulns.size > 0 %}
+  <div id="vulnerabilities-archive" style="margin: 4px 0 32px;">
+    <h3 style="font-size: 15px; margin: 0 0 8px; color: var(--text-muted);">{{ t.vulnerabilities_archive }}</h3>
+    <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px;">
+      {%- for c in archived_vulns limit:5 %}
+      <li style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+        <span class="badge {{ c.badge.sev }}">{{ c.badge.text }}</span>
+        <a href="{{ home_url | append: c.path | relative_url }}">{{ c.icon }} {{ c.title[lang] }}</a>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+  {%- endif %}
+
+  <h2 class="section-heading" id="monthly" style="margin-top: 36px;">📅 {{ t.monthly }}</h2>
   <!-- Báo cáo tháng: lặp theo _data/monthly, mới nhất xếp trên -->
   {%- for m in site.data.monthly reversed %}
   {%- assign d = m[1] %}

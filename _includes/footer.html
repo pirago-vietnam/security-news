@@ -41,12 +41,18 @@
           {%- for m in site.data.monthly reversed %}
           <li><a href="{{ home_url | append: 'monthly/' | append: m[0] | append: '/' | relative_url }}">{{ m[1].footer_label[lang] }}{% if forloop.first %} <span class="badge-mini">{{ t.new }}</span>{% endif %}</a></li>
           {%- endfor %}
+          <li style="margin-top: 8px; font-weight: 700; font-size: 11px; text-transform: uppercase; color: var(--text-muted); opacity: 0.85;">{{ t.incidents }}</li>
           {%- for c in site.data.featured %}
-          {%- unless c.archived %}
+          {%- if c.category == 'incident' %}
           <li><a href="{{ home_url | append: c.path | relative_url }}">{{ c.nav[lang] }}</a></li>
-          {%- endunless %}
+          {%- endif %}
           {%- endfor %}
-          <li><a href="{{ home_url | append: '#featured-archive' | relative_url }}">{{ t.featured_archive }}</a></li>
+          <li style="margin-top: 8px; font-weight: 700; font-size: 11px; text-transform: uppercase; color: var(--text-muted); opacity: 0.85;">{{ t.vulnerabilities }}</li>
+          {%- for c in site.data.featured %}
+          {%- if c.category == 'vulnerability' %}
+          <li><a href="{{ home_url | append: c.path | relative_url }}">{{ c.nav[lang] }}</a></li>
+          {%- endif %}
+          {%- endfor %}
         </ul>
       </div>
 

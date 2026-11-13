@@ -1,6 +1,7 @@
 # Các case nổi bật (sự cố lớn, phân tích lỗ hổng, runbook ứng phó). Thứ tự = thứ tự hiển thị.
 # `path` tính từ gốc ngôn ngữ (vi: "/", ja: "/ja/").
 - id: muji
+  category: incident
   path: "featured/muji/muji_security_incident_report/"
   icon: "🛍️"
   accent: true
@@ -24,6 +25,7 @@
       text: {vi: "Tạm ngừng Net Store từ 06/11 (chưa có lịch mở lại), chịu 100% phí đổi thẻ MUJI Card, bồi thường nếu có thiệt hại thực tế và chuyển sang thu thập dữ liệu 'tối thiểu'.", ja: "11月6日よりネットストア停止中（再開未定）。カード再発行手数料の全額負担・実害時の補償に加え、顧客データ収集を「最小限」へ方針転換。"}
 
 - id: apache-cve-2026-119618
+  category: vulnerability
   path: "featured/apache-cve-2026-119618/analysis/"
   icon: "🌐"
   accent: true
@@ -47,6 +49,7 @@
       text: {vi: "Nâng cấp Apache HTTP Server lên 2.4.71 trở lên (phát hành 11-11-2026), kiểm tra cấu hình và restart dịch vụ / rebuild image.", ja: "Apache HTTP Server を 2.4.71 以上（11月11日リリース）へ更新し、サービス再起動・コンテナ再ビルドを実施。"}
 
 - id: postgresql-cve-2026-6460
+  category: vulnerability
   path: "featured/postgresql-cve-2026-6460/analysis/"
   icon: "🐘"
   accent: true
@@ -70,6 +73,7 @@
       text: {vi: "PostgreSQL 14 chính thức hết hạn hỗ trợ (EOL) từ 12-11-2026 (bản 14.25 là cuối cùng); cần khẩn trương lập lộ trình nâng cấp lên PostgreSQL 15–18.", ja: "PostgreSQL 14 は 2026年11月12日をもって公式サポート終了（14.25 が最終版）。PostgreSQL 15〜18 への移行計画を至急策定。"}
 
 - id: binance
+  category: incident
   archived: true
   path: "featured/binance/binance_security_incident_report/"
   icon: "💸"
@@ -94,6 +98,7 @@
       text: {vi: "Đã đóng băng khoảng 3 tỷ USD (số liệu nguồn khác nhau), tạm dừng rút tiền để rà soát an ninh; sẽ công bố báo cáo đầy đủ sau.", ja: "約30億米ドルを凍結（情報源により数値が異なる）。出金を停止しセキュリティを見直し中。詳細レポートは後日公表予定。"}
 
 - id: gmo
+  category: incident
   archived: true
   path: "featured/gmo/gmo_onamae_security_incident_report/"
   icon: "🚨"
@@ -118,6 +123,7 @@
       text: {vi: "Bắt đầu liên hệ từng khách hàng từ 06/11 để bồi thường 100% tổn thất giao dịch thực tế + hỗ trợ thăm hỏi đặc biệt tới 3 triệu JPY; cập nhật số liệu tại buổi công bố KQKD 13/11.", ja: "11月6日より不正取引による実損の100%補償に向けた個別連絡を開始（特別見舞金最大300万円）。申請状況と業績影響の見通しは11月13日の決算説明会で案内予定。"}
 
 - id: linux-cve-2026-98432
+  category: vulnerability
   archived: true
   path: "featured/linux-cve-2026-98432/analysis/"
   icon: "🐧"
@@ -142,6 +148,7 @@
       text: {vi: "Cập nhật kernel và reboot. Tạm thời: tắt MPTCP (net.mptcp.enabled=0, GODEBUG=multipathtcp=0 cho Go), lọc IP options bằng nftables/iptables u32 hoặc AWS Network Firewall.", ja: "カーネル更新と再起動が恒久対策。暫定措置: MPTCP無効化（net.mptcp.enabled=0、Go向けGODEBUG=multipathtcp=0）、nftables/iptables u32またはAWS Network FirewallによるIPオプション遮断。"}
 
 - id: php2shell
+  category: vulnerability
   archived: true
   path: "featured/php-cve-2026-109618-109619/php2shell/"
   icon: "📘"

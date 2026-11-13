@@ -29,23 +29,52 @@
           </ul>
         </li>
         <li class="pirago-nav-item has-dropdown">
-          <a href="{{ home_url | append: '#featured' | relative_url }}" class="pirago-nav-link {% if page.url contains '/featured/' %}active{% endif %}">
+          <a href="{{ home_url | append: '#incidents' | relative_url }}" class="pirago-nav-link {% if page.url contains '/featured/muji/' or page.url contains '/featured/gmo/' or page.url contains '/featured/binance/' %}active{% endif %}">
             <svg class="icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-            {{ t.featured }}
+            {{ t.incidents }}
             <span class="dropdown-arrow">▾</span>
           </a>
           <ul class="pirago-dropdown">
             {%- for c in site.data.featured %}
+            {%- if c.category == 'incident' %}
             {%- unless c.archived %}
             <li><a href="{{ home_url | append: c.path | relative_url }}" class="{% if page.url contains c.path %}active{% endif %}">{{ c.nav[lang] }}</a></li>
             {%- endunless %}
+            {%- endif %}
             {%- endfor %}
-            {%- assign archived_cases = site.data.featured | where: "archived", true %}
-            {%- if archived_cases.size > 0 %}
+            {%- assign archived_incidents = site.data.featured | where: "category", "incident" | where: "archived", true %}
+            {%- if archived_incidents.size > 0 %}
             <li class="has-submenu">
-              <a href="{{ home_url | append: '#featured-archive' | relative_url }}">{{ t.featured_archive }} <span class="dropdown-arrow">▸</span></a>
+              <a href="{{ home_url | append: '#incidents-archive' | relative_url }}">{{ t.incidents_archive }} <span class="dropdown-arrow">▸</span></a>
               <ul class="pirago-submenu">
-                {%- for c in archived_cases limit:5 %}
+                {%- for c in archived_incidents limit:5 %}
+                <li><a href="{{ home_url | append: c.path | relative_url }}" class="{% if page.url contains c.path %}active{% endif %}">{{ c.nav[lang] }}</a></li>
+                {%- endfor %}
+              </ul>
+            </li>
+            {%- endif %}
+          </ul>
+        </li>
+        <li class="pirago-nav-item has-dropdown">
+          <a href="{{ home_url | append: '#vulnerabilities' | relative_url }}" class="pirago-nav-link {% if page.url contains '/featured/apache-' or page.url contains '/featured/postgresql-' or page.url contains '/featured/linux-' or page.url contains '/featured/php-' %}active{% endif %}">
+            <svg class="icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            {{ t.vulnerabilities }}
+            <span class="dropdown-arrow">▾</span>
+          </a>
+          <ul class="pirago-dropdown">
+            {%- for c in site.data.featured %}
+            {%- if c.category == 'vulnerability' %}
+            {%- unless c.archived %}
+            <li><a href="{{ home_url | append: c.path | relative_url }}" class="{% if page.url contains c.path %}active{% endif %}">{{ c.nav[lang] }}</a></li>
+            {%- endunless %}
+            {%- endif %}
+            {%- endfor %}
+            {%- assign archived_vulns = site.data.featured | where: "category", "vulnerability" | where: "archived", true %}
+            {%- if archived_vulns.size > 0 %}
+            <li class="has-submenu">
+              <a href="{{ home_url | append: '#vulnerabilities-archive' | relative_url }}">{{ t.vulnerabilities_archive }} <span class="dropdown-arrow">▸</span></a>
+              <ul class="pirago-submenu">
+                {%- for c in archived_vulns limit:5 %}
                 <li><a href="{{ home_url | append: c.path | relative_url }}" class="{% if page.url contains c.path %}active{% endif %}">{{ c.nav[lang] }}</a></li>
                 {%- endfor %}
               </ul>
