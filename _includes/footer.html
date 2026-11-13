@@ -39,18 +39,8 @@
         <ul class="footer-links">
           <li><a href="{{ home_url | relative_url }}">{{ t.reports_home }}</a></li>
           {%- for m in site.data.monthly reversed %}
+          {%- if forloop.index <= 3 %}
           <li><a href="{{ home_url | append: 'monthly/' | append: m[0] | append: '/' | relative_url }}">{{ m[1].footer_label[lang] }}{% if forloop.first %} <span class="badge-mini">{{ t.new }}</span>{% endif %}</a></li>
-          {%- endfor %}
-          <li style="margin-top: 8px; font-weight: 700; font-size: 11px; text-transform: uppercase; color: var(--text-muted); opacity: 0.85;">{{ t.incidents }}</li>
-          {%- for c in site.data.featured %}
-          {%- if c.category == 'incident' %}
-          <li><a href="{{ home_url | append: c.path | relative_url }}">{{ c.nav[lang] }}</a></li>
-          {%- endif %}
-          {%- endfor %}
-          <li style="margin-top: 8px; font-weight: 700; font-size: 11px; text-transform: uppercase; color: var(--text-muted); opacity: 0.85;">{{ t.vulnerabilities }}</li>
-          {%- for c in site.data.featured %}
-          {%- if c.category == 'vulnerability' %}
-          <li><a href="{{ home_url | append: c.path | relative_url }}">{{ c.nav[lang] }}</a></li>
           {%- endif %}
           {%- endfor %}
         </ul>
@@ -60,11 +50,12 @@
       <div class="footer-col footer-col-links">
         <h4 class="footer-heading">{{ t.col_services }}</h4>
         <ul class="footer-links">
-          <li><a href="https://pirago.vn/vn/service" target="_blank" rel="noopener noreferrer">{{ t.svc_1 }}</a></li>
-          <li><a href="https://pirago.vn/vn/service-labo" target="_blank" rel="noopener noreferrer">{{ t.svc_2 }}</a></li>
-          <li><a href="https://pirago.vn/vn/service-consultant" target="_blank" rel="noopener noreferrer">{{ t.svc_3 }}</a></li>
-          <li><a href="https://pirago.vn/vn/company" target="_blank" rel="noopener noreferrer">{{ t.svc_4 }}</a></li>
-          <li><a href="https://pirago.vn/vn/contact/spelling-verification" target="_blank" rel="noopener noreferrer">{{ t.svc_5 }}</a></li>
+          {% if lang == 'ja' %}{% assign p_lang = 'ja' %}{% else %}{% assign p_lang = 'vn' %}{% endif %}
+          <li><a href="https://pirago.vn/{{ p_lang }}/service" target="_blank" rel="noopener noreferrer">{{ t.svc_1 }}</a></li>
+          <li><a href="https://pirago.vn/{{ p_lang }}/service-labo" target="_blank" rel="noopener noreferrer">{{ t.svc_2 }}</a></li>
+          <li><a href="https://pirago.vn/{{ p_lang }}/service-consultant" target="_blank" rel="noopener noreferrer">{{ t.svc_3 }}</a></li>
+          <li><a href="https://pirago.vn/{{ p_lang }}/company" target="_blank" rel="noopener noreferrer">{{ t.svc_4 }}</a></li>
+          <li><a href="https://pirago.vn/{{ p_lang }}/contact/spelling-verification" target="_blank" rel="noopener noreferrer">{{ t.svc_5 }}</a></li>
         </ul>
       </div>
 
