@@ -2,8 +2,8 @@ title:
   vi: Báo cáo bảo mật tháng 11/2026
   ja: 2026年11月 セキュリティレポート
 description:
-  vi: 'Tổng hợp các rủi ro, lỗ hổng bảo mật và việc cần làm tháng 11/2026: Apache HTTP Server RCE (CVE-2026-119618), Visual Studio Code RCE (CVE-2026-120779), Zero-Day Google Chrome (CVE-2026-125350), Microsoft Patch Tuesday cho .NET & Visual Studio, Apache Tomcat, Next.js, Linux kernel TCP UAF, và an toàn chuỗi cung ứng AI agent.'
-  ja: '2026年11月のリスク、脆弱性、対応事項のまとめ：Apache HTTP Server RCE（CVE-2026-119618）、Visual Studio Code RCE（CVE-2026-120779）、Google Chrome ゼロデイ（CVE-2026-125350）、Microsoft Patch Tuesday（.NET & Visual Studio）、Apache Tomcat、Next.js、Linux kernel TCP UAF、およびAIエージェントのサプライチェーンセキュリティ。'
+  vi: 'Tổng hợp các rủi ro, lỗ hổng bảo mật và việc cần làm tháng 11/2026: Đợt phát hành bảo mật PostgreSQL với 52 CVEs (CVE-2026-6460 RCE, PostgreSQL 14 EOL), Apache HTTP Server RCE (CVE-2026-119618), Visual Studio Code RCE (CVE-2026-120779), Zero-Day Google Chrome (CVE-2026-125350), Microsoft Patch Tuesday cho .NET & Visual Studio, Apache Tomcat, Next.js, Linux kernel TCP UAF, và an toàn chuỗi cung ứng AI agent.'
+  ja: '2026年11月のリスク、脆弱性、対応事項のまとめ：PostgreSQL 52件の脆弱性修正（型混乱RCE CVE-2026-6460、PostgreSQL 14 EOL）、Apache HTTP Server RCE（CVE-2026-119618）、Visual Studio Code RCE（CVE-2026-120779）、Google Chrome ゼロデイ（CVE-2026-125350）、Microsoft Patch Tuesday（.NET & Visual Studio）、Apache Tomcat、Next.js、Linux kernel TCP UAF、およびAIエージェントのサプライチェーンセキュリティ。'
 nav:
   vi: Tháng 11/2026
   ja: 2026年11月
@@ -14,23 +14,28 @@ h1:
   vi: Báo cáo bảo mật tháng 11/2026
   ja: 2026年11月 セキュリティレポート
 sub:
-  vi: 'Số liệu tính đến <strong>2026-11-12</strong> (cập nhật theo đợt phát hành Patch Tuesday Microsoft, Chrome Zero-Day, Apache HTTP Server 2.4.71 và các bản tin an ninh định kỳ).'
-  ja: '<strong>2026年11月12日</strong>時点の情報です（Microsoft Patch Tuesday、Chrome ゼロデイ緊急リリース、Apache HTTP Server 2.4.71 および定期セキュリティ情報に対応）。'
+  vi: 'Số liệu tính đến <strong>2026-11-13</strong> (cập nhật đợt phát hành bảo mật PostgreSQL 52 CVEs, Patch Tuesday Microsoft, Chrome Zero-Day, Apache HTTP Server 2.4.71 và các bản tin an ninh định kỳ).'
+  ja: '<strong>2026年11月13日</strong>時点の情報です（PostgreSQL 52件の脆弱性修正リリース、Microsoft Patch Tuesday、Chrome ゼロデイ緊急リリース、Apache HTTP Server 2.4.71 および定期セキュリティ情報に対応）。'
 placeholder:
-  vi: '🔍 Tìm kiếm CVE, framework, thư viện (vd: VS Code, Chrome, .NET, Tomcat, Next.js, AWS)...'
-  ja: '🔍 CVE、フレームワーク、ライブラリで検索（例: VS Code, Chrome, .NET, Tomcat, Next.js, AWS）...'
+  vi: '🔍 Tìm kiếm CVE, framework, thư viện (vd: PostgreSQL, VS Code, Chrome, .NET, Tomcat, Next.js, AWS)...'
+  ja: '🔍 CVE、フレームワーク、ライブラリで検索（例: PostgreSQL, VS Code, Chrome, .NET, Tomcat, Next.js, AWS）...'
 scope:
-  vi: '<strong>Phạm vi rà soát:</strong> Công cụ &amp; Môi trường phát triển (VS Code, Visual Studio, GitHub Actions) · Trình duyệt (Chrome/V8) · Ngôn ngữ &amp; Runtimes (.NET, Linux, NodeJS, PHP, Java) · Frameworks (Next.js, Nuxt, Laravel, Spring Boot, Tomcat, Quasar) · Hạ tầng &amp; Chuỗi cung ứng (AWS, GCP, npm, PyPI, Composer).'
-  ja: '<strong>調査範囲:</strong> 開発ツール・IDE環境（VS Code、Visual Studio、GitHub Actions） · ブラウザ（Chrome/V8） · 言語・ランタイム（.NET、Linux、NodeJS、PHP、Java） · フレームワーク（Next.js、Nuxt、Laravel、Spring Boot、Tomcat、Quasar） · クラウド・サプライチェーン（AWS、GCP、npm、PyPI、Composer）。'
+  vi: '<strong>Phạm vi rà soát:</strong> Cơ sở dữ liệu (PostgreSQL) · Công cụ &amp; Môi trường phát triển (VS Code, Visual Studio, GitHub Actions) · Trình duyệt (Chrome/V8) · Ngôn ngữ &amp; Runtimes (.NET, Linux, NodeJS, PHP, Java) · Frameworks (Next.js, Nuxt, Laravel, Spring Boot, Tomcat, Quasar) · Hạ tầng &amp; Chuỗi cung ứng (AWS, GCP, npm, PyPI, Composer).'
+  ja: '<strong>調査範囲:</strong> データベース（PostgreSQL） · 開発ツール・IDE環境（VS Code、Visual Studio、GitHub Actions） · ブラウザ（Chrome/V8） · 言語・ランタイム（.NET、Linux、NodeJS、PHP、Java） · フレームワーク（Next.js、Nuxt、Laravel、Spring Boot、Tomcat、Quasar） · クラウド・サプライチェーン（AWS、GCP、npm、PyPI、Composer）。'
 
 card:
   title:
     vi: Báo cáo tháng 11/2026
     ja: 2026年11月レポート
   date:
-    vi: Cập nhật đến 2026-11-12 · Định kỳ hàng tháng
-    ja: 2026年11月12日 時点 · 月次定期レポート
+    vi: Cập nhật đến 2026-11-13 · Định kỳ hàng tháng
+    ja: 2026年11月13日 時点 · 月次定期レポート
   items:
+  - sev: high
+    label: PostgreSQL (RDBMS)
+    text:
+      vi: 'Đợt cập nhật bảo mật lớn vá 52 CVEs (32 lỗi CVSS 8.8, gồm CVE-2026-6460 RCE qua Type Confusion). Nâng cấp ngay lên 18.7/17.12/16.16/15.20/14.25; PostgreSQL 14 chính thức EOL.'
+      ja: '52件のCVEを修正する大規模セキュリティリリース（型混乱RCE CVE-2026-6460など32件がCVSS 8.8）。直ちに 18.7/17.12/16.16/15.20/14.25 へ更新、PostgreSQL 14 は公式 EOL。'
   - sev: crit
     label: Apache HTTP Server
     text:
@@ -84,6 +89,13 @@ sections:
     due:
       vi: Ngay lập tức (toàn bộ máy trạm &amp; thiết bị duyệt web)
       ja: 即時（全クライアント端末およびWebブラウザ環境）
+  - task:
+      vi: 'Nâng cấp <strong>PostgreSQL</strong> lên các phiên bản vá <strong>18.7 / 17.12 / 16.16 / 15.20 / 14.25</strong> (khắc phục 52 CVEs, trong đó 32 lỗi CVSS 8.8 gồm RCE do Type Confusion <strong>CVE-2026-6460</strong>); thực hiện <strong>REINDEX</strong> các chỉ mục bị ảnh hưởng, tạo ngay bản <strong>Full Backup</strong> mới nếu dùng incremental backup, và lập lộ trình nâng cấp khẩn cấp đối với <strong>PostgreSQL 14</strong> (đã chính thức EOL từ 12-11-2026). Xem <a href="@home@featured/postgresql-cve-2026-6460/analysis/">hướng dẫn chi tiết</a>'
+      ja: '<strong>PostgreSQL</strong> を修正済みバージョン <strong>18.7 / 17.12 / 16.16 / 15.20 / 14.25</strong> へアップグレードする（型混乱 RCE <strong>CVE-2026-6460</strong> を含む32件の CVSS 8.8 を含む計52件のCVEを修正）。影響を受けるインデックスの <strong>REINDEX</strong>、増分バックアップ運用時の新規 <strong>フルバックアップ</strong> 取得、および公式 EOL となった <strong>PostgreSQL 14</strong> からの移行を速やかに実施（<a href="@home@featured/postgresql-cve-2026-6460/analysis/">詳細ガイド</a>）'
+    sev: high
+    due:
+      vi: Trước 20-11-2026 (ngay lập tức với cluster mở cho nhiều user hoặc chạy PostgreSQL 14)
+      ja: 2026年11月20日まで（複数ユーザー利用環境および PostgreSQL 14 稼働環境は即時対応）
   - task:
       vi: 'Nâng cấp <strong>Next.js</strong> lên <strong>16.4.5 / 15.5.29</strong> (vá lỗi RCE liên quan đến <code>use cache</code> và xử lý ảnh SVG) và <strong>Nuxt</strong> lên <strong>4.6.3</strong>'
       ja: '<strong>Next.js</strong> を <strong>16.4.5 / 15.5.29</strong> にアップグレードし（<code>use cache</code> および SVG 処理関連の RCE 修正）、<strong>Nuxt</strong> を <strong>4.6.3</strong> へ更新する'
@@ -350,8 +362,25 @@ sections:
       ja: '<code>@quasar/app-vite</code> を <strong>v3.3.0</strong>、Quasar コアパッケージを <strong>v2.32.2 以上</strong>にアップグレードしてください。'
 
 - title:
-    vi: '6. Hạ tầng đám mây (Infrastructure: AWS &amp; GCP)'
-    ja: '6. クラウドインフラ（Infrastructure: AWS &amp; GCP）'
+    vi: '6. Cơ sở dữ liệu (Databases: PostgreSQL)'
+    ja: '6. データベース（Databases: PostgreSQL）'
+  type: component
+  rows:
+  - name: PostgreSQL (RDBMS)
+    sev: high
+    summary:
+      vi: '<strong>Đợt phát hành bảo mật quý 4/2026 ngày 12-11 vá 52 CVEs</strong>: Đáng chú ý có 32 lỗ hổng đạt mức <strong>CVSS 8.8 (High)</strong>, tiêu biểu là <strong>CVE-2026-6460</strong> (lỗi Type Confusion khi thực thi DDL như <code>ALTER TABLE ... ALTER COLUMN ... SET DATA TYPE</code> hoặc chuỗi lệnh DDL dẫn đến RCE với quyền tiến trình postgres). Ngoài ra vá các lỗi memory corruption / type confusion trong PL/Perl, PL/Tcl, tìm kiếm văn bản (<code>ts_rank_cd()</code>), logical replication, dblink, và các công cụ client: <code>pg_dump</code> (SQL injection qua tên not-null constraint và command injection trong file tar restore), <code>reindexdb</code> (lỗi trích dẫn tên index).'
+      ja: '<strong>2026年11月12日の定期セキュリティリリースにて52件のCVEを修正</strong>：うち32件が <strong>CVSS 8.8（High）</strong> に達し、代表的な <strong>CVE-2026-6460</strong> では <code>ALTER TABLE ... ALTER COLUMN ... SET DATA TYPE</code> 等のDDL実行やDDL連鎖時に型混乱（Type Confusion）が生じ、postgres プロセス権限での任意コード実行（RCE）に至るリスク。さらに PL/Perl、PL/Tcl、全文検索（<code>ts_rank_cd()</code>）、ロジカルレプリケーション、dblink のメモリ破壊・型混乱、およびクライアントツール（<code>pg_dump</code> の not-null 制約名 SQLi / tar リストア時のコマンド注入、<code>reindexdb</code> のインデックス名エスケープ不備）を修正。'
+    impact:
+      vi: 'Mọi hệ thống sử dụng PostgreSQL tự host, container Docker/K8s (CloudNativePG) hoặc dịch vụ cơ sở dữ liệu đám mây (AWS RDS/Aurora PostgreSQL, GCP Cloud SQL). Đặc biệt nguy cơ cao với các cơ sở dữ liệu cho phép nhiều người dùng/role ứng dụng thực hiện thao tác DDL hoặc sử dụng công cụ client <code>pg_dump</code> với cơ sở dữ liệu có đối tượng do bên thứ ba đặt tên. <strong>Lưu ý đặc biệt:</strong> PostgreSQL 14 đã chính thức <strong>End-of-Life (EOL)</strong> từ ngày 12-11-2026 (bản 14.25 là bản phát hành cuối cùng, sẽ không nhận thêm bất kỳ bản vá nào).'
+      ja: 'セルフホスト環境、Docker/K8sコンテナ（CloudNativePG）、およびマネージドデータベース（AWS RDS/Aurora PostgreSQL、GCP Cloud SQL）を利用する全システム。複数ユーザー/アプリロールにDDL実行権限がある環境、または第三者が命名したDBオブジェクトに対して <code>pg_dump</code> を実行する環境で重大。<strong>特記事項:</strong> PostgreSQL 14 は 2026年11月12日をもって公式に <strong>サポート終了（EOL）</strong> となりました（14.25 が最終リリースであり以降の修正は提供されません）。'
+    fix:
+      vi: '<strong>(1) Nâng cấp server:</strong> Cập nhật cụm máy chủ PostgreSQL lên phiên bản tương ứng: <strong>18.7, 17.12, 16.16, 15.20, hoặc 14.25</strong>. <strong>(2) Cập nhật client tools:</strong> Nâng cấp đồng bộ các công cụ client (<code>pg_dump</code>, <code>reindexdb</code>, <code>psql</code>). <strong>(3) Bảo trì sau nâng cấp:</strong> Thực hiện <code>REINDEX</code> các GIN index nghi ngờ bị lỗi, GiST index của <code>pg_trgm</code> (<code>gist_trgm_ops</code>), B-tree index trên cột <code>bpchar</code> không độ dài, và chạy <code>REINDEX TABLE</code> nếu gặp lỗi "missing chunk number". <strong>(4) Chụp Full Backup ngay:</strong> Nếu đang dùng cơ chế incremental backup, bắt buộc chụp ngay bản full backup mới để tránh bản sao lưu bị hỏng ngầm. <strong>(5) Di chuyển khỏi PostgreSQL 14:</strong> Lập kế hoạch nâng cấp khẩn cấp các database đang chạy bản 14 lên phiên bản được hỗ trợ (PostgreSQL 15–18). Xem <a href="@home@featured/postgresql-cve-2026-6460/analysis/">hướng dẫn chi tiết</a>.'
+      ja: '<strong>(1) サーバー更新:</strong> PostgreSQL クラスタを該当バージョン（<strong>18.7、17.12、16.16、15.20、14.25</strong>）へアップグレード。<strong>(2) クライアントツール更新:</strong> <code>pg_dump</code>、<code>reindexdb</code>、<code>psql</code> 等のクライアントバイナリも同期して更新。<strong>(3) 更新後メンテナンス:</strong> 破損の疑いがある GIN インデックス、<code>pg_trgm</code> の GiST インデックス（<code>gist_trgm_ops</code>）、長さ指定のない <code>bpchar</code> 列の B-tree インデックスの <code>REINDEX</code>、および "missing chunk number" エラー発生テーブルでの <code>REINDEX TABLE</code> を実施。<strong>(4) 即時フルバックアップ:</strong> 増分バックアップ運用中の環境では破損連鎖を防ぐため直ちに新規フルバックアップを取得。<strong>(5) PostgreSQL 14 の移行:</strong> EOL となったバージョン 14 の環境はサポート対象（PostgreSQL 15〜18）への移行計画を至急策定・推進。<a href="@home@featured/postgresql-cve-2026-6460/analysis/">詳細ガイド</a>を参照。'
+
+- title:
+    vi: '7. Hạ tầng đám mây (Infrastructure: AWS &amp; GCP)'
+    ja: '7. クラウドインフラ（Infrastructure: AWS &amp; GCP）'
   type: provider
   rows:
   - name: AWS
@@ -378,10 +407,12 @@ sections:
       ja: 'Cloud Run / Vertex AI にデプロイするカスタムコンテナを最新のベースイメージで再ビルドしてください。機密性の高いワークロードでは Confidential Computing / Confidential VMs の有効化を検討してください。'
 
 - title:
-    vi: 7. Ghi chú về độ tin cậy &amp; Nguồn tham khảo
-    ja: 7. 情報の信頼性に関する注記 &amp; 参考情報
+    vi: 8. Ghi chú về độ tin cậy &amp; Nguồn tham khảo
+    ja: 8. 情報の信頼性に関する注記 &amp; 参考情報
   type: list
   items:
+  - vi: '<strong>Đối chiếu nguồn chính thức PostgreSQL &amp; Help Net Security:</strong> Ngày 12-11-2026, PostgreSQL Global Development Group phát hành bản cập nhật bảo mật định kỳ quý 4/2026 vá 52 CVEs cho tất cả các nhánh hỗ trợ (18.7, 17.12, 16.16, 15.20, 14.25), trong đó có 32 lỗi CVSS 8.8 (tiêu biểu là CVE-2026-6460 RCE qua Type Confusion), đồng thời công bố phiên bản 14.25 là bản phát hành cuối cùng đánh dấu PostgreSQL 14 chính thức End-of-Life (EOL).'
+    ja: '<strong>PostgreSQL 公式および Help Net Security との照合済み:</strong> 2026年11月12日、PostgreSQL Global Development Group はサポート対象ブランチ（18.7、17.12、16.16、15.20、14.25）に対して計52件のCVEを修正する定期セキュリティリリースを公開。32件が CVSS 8.8（代表例：型混乱 RCE CVE-2026-6460）に達し、同時にバージョン 14.25 が最終リリースとなり、PostgreSQL 14 が公式に EOL（サポート終了）となったことを発表。'
   - vi: '<strong>Đối chiếu nguồn chính thức Apache HTTP Server &amp; CVE.org (CVE-2026-119618):</strong> Lỗi đồng bộ trong <code>mod_http2</code> (<code>assign_headers()</code>) do Anthropic OSS Scanner và Google Cloud Vulnerability Research phát hiện, đã được Apache Software Foundation xác nhận và vá trong bản phát hành Apache HTTP Server 2.4.71 ngày 11-11-2026.'
     ja: '<strong>Apache HTTP Server &amp; CVE.org 公式ソースとの照合済み（CVE-2026-119618）:</strong> <code>mod_http2</code>（<code>assign_headers()</code>）の競合状態は Anthropic OSS Scanner および Google Cloud Vulnerability Research により報告され、Apache Software Foundation により2026年11月11日リリースの Apache HTTP Server 2.4.71 で修正されました。'
   - vi: '<strong>Đối chiếu nguồn chính thức Microsoft MSRC &amp; Patch Tuesday:</strong> CVE-2026-120779, CVE-2026-120780 (Visual Studio Code), CVE-2026-118746 (.NET), CVE-2026-114146/47 (ASP.NET Core) và CVE-2026-114151 (Visual Studio) được công bố trong bản tin bảo mật Patch Tuesday tháng 11/2026.'
@@ -390,5 +421,5 @@ sections:
     ja: '<strong>Google Chrome ゼロデイ警告（CVE-2026-125350）:</strong> XML パーサーの Use-After-Free 脆弱性は Google により実環境での悪用（in the wild）が確認済み。Stable および Extended Stable チャンネルにて緊急アップデートが配信されています。'
   - vi: '<strong>Cảnh báo chuỗi cung ứng công cụ AI Coding:</strong> Các chiến dịch mã độc mạo danh máy chủ Model Context Protocol (MCP) và công cụ mở rộng IDE đang gia tăng; khuyến nghị toàn bộ kỹ sư áp dụng nguyên tắc kiểm tra mã nguồn và xác minh tính toàn vẹn của lockfile trước khi tích hợp vào môi trường làm việc.'
     ja: '<strong>AIコーディングツールのサプライチェーン警戒:</strong> Model Context Protocol（MCP）サーバーやIDE拡張ツールを騙る悪意あるパッケージが増加しています。全エンジニアは作業環境に組み込む前にソースコードの監査およびロックファイルの整合性検証を徹底してください。'
-  - vi: '<strong>Liên kết tham khảo:</strong> <a href="https://httpd.apache.org/security/vulnerabilities_24.html" target="_blank" rel="noopener noreferrer">Apache HTTP Server 2.4 Security</a> · <a href="https://www.cve.org/CVERecord?id=CVE-2026-119618" target="_blank" rel="noopener noreferrer">CVE-2026-119618</a> · <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://chromereleases.googleblog.com/" target="_blank" rel="noopener noreferrer">Chrome Releases Blog</a> · <a href="https://spring.io/security/cve" target="_blank" rel="noopener noreferrer">Spring Security Advisories</a> · <a href="https://tomcat.apache.org/security.html" target="_blank" rel="noopener noreferrer">Apache Tomcat Security</a> · <a href="@home@featured/apache-cve-2026-119618/analysis/">PiraGo Analysis: Apache CVE-2026-119618</a> · <a href="@home@featured/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a> · <a href="@home@featured/php-cve-2026-109618-109619/php2shell/">PiraGo Guide: PHP2Shell</a>.'
-    ja: '<strong>参考リンク:</strong> <a href="https://httpd.apache.org/security/vulnerabilities_24.html" target="_blank" rel="noopener noreferrer">Apache HTTP Server 2.4 Security</a> · <a href="https://www.cve.org/CVERecord?id=CVE-2026-119618" target="_blank" rel="noopener noreferrer">CVE-2026-119618</a> · <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://chromereleases.googleblog.com/" target="_blank" rel="noopener noreferrer">Chrome Releases Blog</a> · <a href="https://spring.io/security/cve" target="_blank" rel="noopener noreferrer">Spring Security Advisories</a> · <a href="https://tomcat.apache.org/security.html" target="_blank" rel="noopener noreferrer">Apache Tomcat Security</a> · <a href="@home@featured/apache-cve-2026-119618/analysis/">PiraGo Analysis: Apache CVE-2026-119618</a> · <a href="@home@featured/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a> · <a href="@home@featured/php-cve-2026-109618-109619/php2shell/">PiraGo Guide: PHP2Shell</a>。'
+  - vi: '<strong>Liên kết tham khảo:</strong> <a href="https://www.postgresql.org/about/news/" target="_blank" rel="noopener noreferrer">PostgreSQL Release Announcement</a> · <a href="https://www.helpnetsecurity.com/2026/11/13/postgresql-security-update-november-2026/" target="_blank" rel="noopener noreferrer">Help Net Security PostgreSQL Advisory</a> · <a href="@home@featured/postgresql-cve-2026-6460/analysis/">PiraGo Analysis: PostgreSQL Security Update Nov 2026</a> · <a href="https://httpd.apache.org/security/vulnerabilities_24.html" target="_blank" rel="noopener noreferrer">Apache HTTP Server 2.4 Security</a> · <a href="https://www.cve.org/CVERecord?id=CVE-2026-119618" target="_blank" rel="noopener noreferrer">CVE-2026-119618</a> · <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://chromereleases.googleblog.com/" target="_blank" rel="noopener noreferrer">Chrome Releases Blog</a> · <a href="https://spring.io/security/cve" target="_blank" rel="noopener noreferrer">Spring Security Advisories</a> · <a href="https://tomcat.apache.org/security.html" target="_blank" rel="noopener noreferrer">Apache Tomcat Security</a> · <a href="@home@featured/apache-cve-2026-119618/analysis/">PiraGo Analysis: Apache CVE-2026-119618</a> · <a href="@home@featured/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a> · <a href="@home@featured/php-cve-2026-109618-109619/php2shell/">PiraGo Guide: PHP2Shell</a>.'
+    ja: '<strong>参考リンク:</strong> <a href="https://www.postgresql.org/about/news/" target="_blank" rel="noopener noreferrer">PostgreSQL Release Announcement</a> · <a href="https://www.helpnetsecurity.com/2026/11/13/postgresql-security-update-november-2026/" target="_blank" rel="noopener noreferrer">Help Net Security PostgreSQL Advisory</a> · <a href="@home@featured/postgresql-cve-2026-6460/analysis/">PiraGo Analysis: PostgreSQL Security Update Nov 2026</a> · <a href="https://httpd.apache.org/security/vulnerabilities_24.html" target="_blank" rel="noopener noreferrer">Apache HTTP Server 2.4 Security</a> · <a href="https://www.cve.org/CVERecord?id=CVE-2026-119618" target="_blank" rel="noopener noreferrer">CVE-2026-119618</a> · <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://chromereleases.googleblog.com/" target="_blank" rel="noopener noreferrer">Chrome Releases Blog</a> · <a href="https://spring.io/security/cve" target="_blank" rel="noopener noreferrer">Spring Security Advisories</a> · <a href="https://tomcat.apache.org/security.html" target="_blank" rel="noopener noreferrer">Apache Tomcat Security</a> · <a href="@home@featured/apache-cve-2026-119618/analysis/">PiraGo Analysis: Apache CVE-2026-119618</a> · <a href="@home@featured/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a> · <a href="@home@featured/php-cve-2026-109618-109619/php2shell/">PiraGo Guide: PHP2Shell</a>。'

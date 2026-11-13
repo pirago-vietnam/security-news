@@ -46,6 +46,29 @@
       label: {vi: "Triệt để", ja: "恒久対策"}
       text: {vi: "Nâng cấp Apache HTTP Server lên 2.4.71 trở lên (phát hành 11-11-2026), kiểm tra cấu hình và restart dịch vụ / rebuild image.", ja: "Apache HTTP Server を 2.4.71 以上（11月11日リリース）へ更新し、サービス再起動・コンテナ再ビルドを実施。"}
 
+- id: postgresql-cve-2026-6460
+  path: "featured/postgresql-cve-2026-6460/analysis/"
+  icon: "🐘"
+  accent: true
+  badge: {sev: high, text: "HIGH"}
+  nav: {vi: "PostgreSQL 52 CVEs", ja: "PostgreSQL 52件のCVE"}
+  title: {vi: "PostgreSQL vá 52 CVEs (CVSS 8.8) — RCE qua Type Confusion DDL (CVE-2026-6460) & PostgreSQL 14 EOL", ja: "PostgreSQL 52件のCVE修正（CVSS 8.8）— 型混乱 DDL RCE（CVE-2026-6460）および PostgreSQL 14 EOL"}
+  date: {vi: "Cập nhật đến 2026-11-13 · 52 CVEs · Bản vá 18.7/17.12/16.16/15.20/14.25 · PostgreSQL 14 chính thức EOL", ja: "2026年11月13日 時点 · 52件のCVE · 18.7/17.12/16.16/15.20/14.25 リリース · PostgreSQL 14 公式 EOL"}
+  link: {vi: "Xem phân tích & hướng dẫn REINDEX/Backup →", ja: "分析・REINDEX/バックアップ対策ガイドを見る →"}
+  items:
+    - sev: high
+      label: {vi: "Nguy cơ", ja: "リスク"}
+      text: {vi: "52 CVEs với 32 lỗi CVSS 8.8; tiêu biểu là CVE-2026-6460 Type Confusion qua lệnh DDL (ALTER COLUMN SET DATA TYPE) dẫn tới RCE quyền postgres.", ja: "52件中32件がCVSS 8.8。代表例 CVE-2026-6460 では DDL操作（ALTER COLUMN SET DATA TYPE）時の型混乱により postgres 権限でのRCEに至る恐れ。"}
+    - sev: high
+      label: {vi: "Phạm vi", ja: "影響範囲"}
+      text: {vi: "Mọi phiên bản PostgreSQL trước 18.7, 17.12, 16.16, 15.20, 14.25. Client tools pg_dump, reindexdb cũng bị lỗi tiêm mã SQL/command injection.", ja: "18.7、17.12、16.16、15.20、14.25 未満の全バージョン。クライアントツール（pg_dump、reindexdb）の SQLi / コマンド注入も含む。"}
+    - sev: med
+      label: {vi: "Bảo trì", ja: "保守作業"}
+      text: {vi: "Bắt buộc REINDEX các chỉ mục GIN, GiST (pg_trgm) và bpchar bị nghi ngờ lỗi; chụp ngay bản Full Backup mới nếu đang dùng incremental backup.", ja: "破損が疑われる GIN、GiST（pg_trgm）、bpchar インデックスの REINDEX が必須。増分バックアップ運用時は直ちに新規フルバックアップを取得。"}
+    - sev: low
+      label: {vi: "PG14 EOL", ja: "PG14 EOL"}
+      text: {vi: "PostgreSQL 14 chính thức hết hạn hỗ trợ (EOL) từ 12-11-2026 (bản 14.25 là cuối cùng); cần khẩn trương lập lộ trình nâng cấp lên PostgreSQL 15–18.", ja: "PostgreSQL 14 は 2026年11月12日をもって公式サポート終了（14.25 が最終版）。PostgreSQL 15〜18 への移行計画を至急策定。"}
+
 - id: binance
   archived: true
   path: "featured/binance/binance_security_incident_report/"
