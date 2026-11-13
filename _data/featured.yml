@@ -8,21 +8,21 @@
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
   nav: {vi: "Sự cố MUJI", ja: "無印良品 インシデント"}
   title: {vi: "無印良品 (MUJI / Ryohin Keikaku) — Rò rỉ tối đa 27,26 triệu tài khoản & 1,09 triệu số thẻ MUJI Card", ja: "無印良品（良品計画）— 最大2,726万件の会員情報 & MUJI Card 約109万件流出の恐れ"}
-  date: {vi: "Cập nhật đến 2026-11-12 · Họp báo Chủ tịch Satoshi Shimizu · MUJI Net Store vẫn tạm ngừng", ja: "2026年11月12日 時点 · 清水智社長会見 · ネットストア再開時期未定"}
+  date: {vi: "Cập nhật đến 2026-11-13 · Net Store ngày thứ 8 ngừng hoạt động · Credit Saison hỗ trợ đổi thẻ miễn phí", ja: "2026年11月13日 時点 · ネットストア停止8日目継続 · クレディセゾン無料再発行対応"}
   link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
   items:
     - sev: crit
       label: {vi: "Quy mô", ja: "規模"}
-      text: {vi: "Tối đa ~27,26 triệu tài khoản (gồm người đã hủy), ~750.000 họ tên/địa chỉ/SĐT, ~1,09 triệu số thẻ MUJI Card đầy đủ và ~440.000 người nhận COD.", ja: "最大約2,726万件（退会者含む）、氏名・住所等約75万件、MUJI Card カード番号全桁約109万件、代引き受取先約44万件に影響の恐れ。"}
+      text: {vi: "Tối đa ~27,26 triệu tài khoản (gồm người đã hủy), ~750.000 họ tên/địa chỉ/SĐT, ~1,09 triệu số thẻ MUJI Card 16 chữ số (~345.000 thẻ còn hiệu lực) và ~440.000 người nhận COD.", ja: "最大約2,726万件（退会者含む）、氏名・住所等約75万件、MUJI Card 16桁全桁約109万件（有効約34.5万件）、代引き受取先約44万件に影響の恐れ。"}
     - sev: high
       label: {vi: "Nguyên nhân", ja: "原因"}
-      text: {vi: "Lỗ hổng hệ thống + không xóa dữ liệu thẻ cũ và tài khoản đã hủy; kết hợp tấn công credential stuffing vào Net Store (~270.000 tài khoản).", ja: "システム脆弱性に加え、破棄すべきカード番号や退会者情報の削除漏れ。ネットストアではリスト型攻撃（約27万件）も判明。"}
+      text: {vi: "Lỗ hổng hệ thống + để tồn đọng 16 số thẻ không che suốt 5 năm từ 07/2021 và không xóa tài khoản đã hủy; kết hợp credential stuffing (~270.000 tài khoản).", ja: "システム脆弱性に加え、2021年7月以降5年間マスクなし放置されたカード番号・退会者の削除漏れ。ネットストアでのリスト型攻撃（約27万件）も判明。"}
     - sev: med
-      label: {vi: "Lưu trữ thẻ", ja: "カード保管"}
-      text: {vi: "Lưu 16 chữ số thẻ MUJI Card không masking từ hệ thống ưu đãi trước 07/2021 (lẽ ra phải xóa 5 năm trước); chưa công bố chi tiết mã hóa DB.", ja: "2021年7月以前の特典付与システムから16桁のカード番号をマスキングせず残存（5年前に削除すべきだったと認める）。DB暗号化詳細は非公表。"}
+      label: {vi: "Tài chính & Quản lý", ja: "金融・監督官庁"}
+      text: {vi: "Credit Saison siết chặt giám sát gian lận dải BIN và miễn phí đổi thẻ; PPC yêu cầu nộp báo cáo giải trình chính thức (確報); METI điều tra tuân thủ Credit Card Security Guidelines.", ja: "クレディセゾンがBIN監視強化と無料再発行対応。PPCが正式確報を要求、経産省がセキュリティガイドライン違反を調査。"}
     - sev: low
       label: {vi: "Ứng phó & Bồi thường", ja: "対応・補償"}
-      text: {vi: "Tạm ngừng Net Store từ 06/11 (chưa có lịch mở lại), chịu 100% phí đổi thẻ MUJI Card, bồi thường nếu có thiệt hại thực tế và chuyển sang thu thập dữ liệu 'tối thiểu'.", ja: "11月6日よりネットストア停止中（再開未定）。カード再発行手数料の全額負担・実害時の補償に加え、顧客データ収集を「最小限」へ方針転換。"}
+      text: {vi: "Net Store bước sang ngày thứ 8 tạm đóng hoàn toàn; Ryohin Keikaku chi trả 100% phí đổi thẻ, cam kết bồi thường mọi thiệt hại thực tế và chuyển hướng sang chiến lược 'Data Minimization'.", ja: "ネットストア完全停止は8日目に突入。良品計画が再発行手数料全額負担・実損全額補償を表明し、データ収集方針を「最小限」へ全面転換。"}
 
 - id: apache-cve-2026-119618
   category: vulnerability

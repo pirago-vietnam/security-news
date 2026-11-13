@@ -2,111 +2,152 @@
 layout: default
 lang: ja
 title: "無印良品（良品計画）— 最大2,726万件の会員情報 & MUJI Card 約109万件流出の恐れ"
-description: "2026年10月末に発覚したMUJIアプリ・ネットストアへの不正アクセス事案の経緯、影響範囲、原因（カード番号の削除漏れ・リスト型攻撃）、11月12日記者会見とPiraGoからの推奨事項"
+description: "2026年11月13日最新動向：清水智社長会見後の影響、クレディセゾンによる無料再発行・監視強化、5年間放置されたマスクなしカード番号問題とPiraGo推奨事項"
 category: "セキュリティインシデント"
 permalink: /ja/featured/muji/muji_security_incident_report/
 ---
 <style>
   .an-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
-  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--border); }
+  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--line); color: var(--text-muted); }
+  .an-nav a:hover { color: var(--pirago-blue); border-color: var(--pirago-blue); text-decoration: none; }
   .an-sec { margin: 0 0 40px; }
-  .an-sec h2 { font-size: 21px; margin: 24px 0 12px; scroll-margin-top: 90px; }
+  .an-sec h2 { font-size: 21px; margin: 28px 0 14px; scroll-margin-top: 90px; }
   .an-sec h3 { font-size: 17px; margin: 20px 0 8px; }
   .an-sec ul, .an-sec ol { padding-left: 22px; }
-  .an-sec li { margin: 4px 0; }
-  .an-sec .table-wrap { overflow-x: auto; }
+  .an-sec li { margin: 6px 0; }
+  .an-sec .table-wrap { overflow-x: auto; margin: 14px 0 20px; }
   .an-sec code { word-break: break-all; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 20px 0 24px; }
+  .kpi-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); }
+  .kpi-num { font-size: 22px; font-weight: 800; font-family: var(--font-mono); color: var(--pirago-navy); line-height: 1.2; margin-bottom: 4px; }
+  html[data-theme="dark"] .kpi-num { color: #5ab0e8; }
+  .kpi-num.crit { color: var(--crit); }
+  .kpi-num.high { color: var(--high); }
+  .kpi-label { font-size: 12.5px; color: var(--text-muted); line-height: 1.4; }
 </style>
 
 <div class="report-header">
   <h1>無印良品（良品計画）— 最大2,726万件の会員情報 &amp; MUJI Card 約109万件流出の恐れ</h1>
-  <p class="sub"><strong>2026年11月12日 時点</strong>（清水智社長の記者会見反映）。ステータス: <strong>進行中</strong>、無印良品ネットストアは再開時期未定。月次レポート: <a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月 セキュリティレポート</a>。</p>
+  <p class="sub"><strong>2026年11月13日 時点</strong>（ネットストア停止8日目継続、クレディセゾンによる無料再発行受付・不正検知強化、PPC・経産省対応）。ステータス: <strong>進行中</strong>。月次レポート: <a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月 セキュリティレポート</a>。</p>
 </div>
 
 <blockquote class="callout">
-  <p><strong>非エンジニア向け要約:</strong> 2026年10月末、無印良品の公式アプリ「MUJIアプリ」および「無印良品ネットストア」が外部からの不正アクセスを受け、退会者を含む<strong>最大約2,726万件</strong>の会員情報と、<strong>約109万件</strong>のMUJI Cardクレジットカード番号などが流出した恐れがあります。11月12日の会見で同社は、システムの脆弱性に加え、本来破棄すべきカード情報や退会者データを削除せず保管していた管理不備と、ネットストアへのリスト型攻撃（不正ログイン）を認めました。現在もネットストアは停止中です。</p>
+  <p><strong>非エンジニア向け要約:</strong> 2026年10月末、株式会社良品計画が運営する「MUJIアプリ」および「無印良品ネットストア」が外部からの不正アクセスを受け、退会者を含む<strong>最大約2,726万件</strong>の会員情報と、<strong>約109万件</strong>のMUJI Cardクレジットカード番号（うち有効カード約34.5万件）が流出した恐れがあります。11月12日の記者会見で同社は、システムの脆弱性に加え、2021年7月のシステム刷新時に破棄すべきだった16桁のカード番号をマスキングせず5年間放置していたこと、退会者データを削除していなかったこと、およびネットストアへのリスト型攻撃（不正ログイン）を認めました。11月13日現在もネットストアは停止8日目を迎えており、クレディセゾンが専用窓口を開設してカード再発行手数料の全額無償対応を行っています。</p>
 </blockquote>
 
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-num crit">約2,726万件</div>
+    <div class="kpi-label">流出恐れのある会員データ（退会者含む最大件数）</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num crit">約109万件</div>
+    <div class="kpi-label">MUJI Card 16桁全桁カード番号（非マスキング保管）</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num high">約34.5万件</div>
+    <div class="kpi-label">現在も有効な MUJI Card 会員数</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num high">約75万件</div>
+    <div class="kpi-label">氏名・住所・電話番号を含む詳細データ</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num">約27万件</div>
+    <div class="kpi-label">リスト型攻撃による不正ログイン疑い件数</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num">停止8日目</div>
+    <div class="kpi-label">ネットストア完全停止継続（11/6 16:00〜11/13現在）</div>
+  </div>
+</div>
+
 <nav class="an-nav" aria-label="目次">
-  <a href="#tom-tat">1. 概要</a>
-  <a href="#dien-bien">2. 経緯・タイムライン</a>
-  <a href="#pham-vi">3. 影響範囲と件数</a>
-  <a href="#nguyen-nhan">4. 原因とデータ保管上の問題</a>
-  <a href="#ung-pho">5. 対応状況と利用者への案内</a>
-  <a href="#bai-hoc">6. PiraGo からの推奨事項</a>
+  <a href="#tom-tat">1. 概要と被害規模</a>
+  <a href="#dien-bien">2. 経緯・タイムライン（11/13更新）</a>
+  <a href="#pham-vi">3. 影響範囲と件数詳細</a>
+  <a href="#nguyen-nhan">4. 原因分析と技術的課題</a>
+  <a href="#ung-pho">5. 対応状況・補償・監督官庁の動向</a>
+  <a href="#bai-hoc">6. PiraGo からの技術推奨事項</a>
   <a href="#nguon">7. 出典・参考リンク</a>
 </nav>
 
 <section class="an-sec">
-<h2 id="tom-tat">1. 概要</h2>
+<h2 id="tom-tat">1. 概要と被害規模</h2>
 <ul>
   <li><strong>事案:</strong> 2026年10月29日、株式会社良品計画が「MUJIアプリ」および「無印良品ネットストア」関連システムへの外部からの不正アクセスを検知 <span class="badge low">公式発表</span>。</li>
-  <li><strong>規模:</strong> メールアドレス・生年月日・性別・会員IDが最大<strong>約2,726万件</strong>（うち氏名・住所・電話番号を含むものが<strong>約75万件</strong>）、MUJI Card カード番号全桁が<strong>約109万件</strong>、代金引換の配送先情報が<strong>約44万件</strong>など <span class="badge low">公式発表</span>。</li>
-  <li><strong>11月12日の記者会見:</strong> 清水智社長が都内で謝罪会見を行い、破棄すべきカード番号や退会者情報が残存していたことを認めた上で、ネットストアの再開時期は「安全最優先で現時点で言えない」と説明 <span class="badge med">国内報道</span>。</li>
+  <li><strong>影響規模:</strong> メールアドレス・生年月日・性別・会員IDが最大<strong>約2,726万件</strong>（退会者含む）、氏名・住所・電話番号を含む詳細情報が<strong>約75万件</strong>、MUJI Card の16桁クレジットカード番号全桁が<strong>約109万件</strong>（有効カードは約34.5万件）、代引き受取先情報が<strong>約44万件</strong>など <span class="badge low">公式発表</span>。</li>
+  <li><strong>11月12日の記者会見:</strong> 清水智社長および宮澤高浩執行役員が都内で謝罪会見を実施。5年前に破棄すべきだったカード番号や退会者情報が残存していた管理不備を認め、「今振り返れば、初動でより早くネットストアを止めるべきだった」と陳謝。安全確保を最優先としネットストア再開時期は未定と説明 <span class="badge med">国内報道</span>。</li>
+  <li><strong>11月13日の最新動向:</strong> 提携カード会社である<strong>クレディセゾン</strong>が専用窓口を開設し、対象顧客へのカード番号変更・無料再発行手続きを開始。個人情報保護委員会（PPC）および経済産業省（METI）への正式報告（確報）に向けた原因究明が進められる中、東京株式市場では良品計画株（東証プライム 7453）が軟調に推移。</li>
   <li><strong>補足:</strong> 11月2日には別件として、オーダーカーテン注文情報（2018年4月〜2022年1月、約2万件）の流出恐れも公表されています。</li>
 </ul>
 </section>
 
 <section class="an-sec">
-<h2 id="dien-bien">2. 経緯・タイムライン</h2>
+<h2 id="dien-bien">2. 経緯・タイムライン（2026年11月13日 更新）</h2>
 <div class="table-wrap">
 <table id="timeline">
-  <thead><tr><th>日時</th><th>出来事</th><th>出典</th></tr></thead>
+  <thead><tr><th>日時</th><th>出来事</th><th>出典・ステータス</th></tr></thead>
   <tbody>
-    <tr><td>2026/10/29</td><td>外部からの不正アクセスを検知。該当箇所へのアクセス遮断および修正を実施。</td><td><span class="badge low">良品計画</span></td></tr>
+    <tr><td>2026/10/29</td><td>外部からの不正アクセスを検知。海外IP遮断および暫定的な修正パッチを適用。</td><td><span class="badge low">良品計画</span></td></tr>
     <tr><td>2026/10/30</td><td><strong>第一報:</strong> MUJIアプリ利用者のメールアドレス等、最大約2,726万件の流出可能性を公表。</td><td><span class="badge low">良品計画</span></td></tr>
-    <tr><td>2026/11/02</td><td>クレディセゾンに対し、MUJI Card のカード番号が対象となった可能性を報告。</td><td><span class="badge med">報道</span></td></tr>
+    <tr><td>2026/11/02</td><td>クレディセゾンに対し MUJI Card 番号流出の可能性を報告。別件のカーテン注文情報（約2万件）も公表。</td><td><span class="badge med">報道・発表</span></td></tr>
     <tr><td>2026/11/04</td><td><strong>第二報:</strong> ネットストア会員（アプリ未利用者含む）や氏名・住所・電話番号の一部、MUJI Card 約109万件の流出可能性を追加公表。</td><td><span class="badge low">良品計画</span></td></tr>
-    <tr><td>2026/11/06 16:00</td><td><strong>第三報:</strong> セキュリティ強化のためネットストアを一時停止、MUJIアプリも会員証バーコード表示以外の機能を停止（当初1〜2日以内の再開を予定）。</td><td><span class="badge low">良品計画</span></td></tr>
-    <tr><td>2026/11/09</td><td><strong>第四報:</strong> ネットストアでリスト型攻撃による不正ログインの可能性を確認し、再開延期を発表。購入履歴等約27万件、氏名等含む件数約75万件、代引き受取先約44万件への影響を公表。</td><td><span class="badge low">良品計画</span></td></tr>
-    <tr><td>2026/11/10〜</td><td>対象となる顧客へメールおよび郵送による個別連絡を開始。</td><td><span class="badge low">良品計画</span></td></tr>
-    <tr><td>2026/11/12</td><td><strong>記者会見:</strong> 清水智社長が陳謝。破棄すべきカード番号・退会者情報の残存を認め、ネットストア再開は未定と説明。個人情報保護委員会（PPC）および経済産業省（METI）へ報告済み。</td><td><span class="badge med">NHK / 産経 / 朝日 / Japan Times</span></td></tr>
+    <tr><td>2026/11/06 16:00</td><td><strong>第三報:</strong> セキュリティ総点検のためネットストアを一時停止、MUJIアプリも店舗レジ用バーコード表示以外を停止（当初1〜2日以内の再開を予定）。</td><td><span class="badge low">良品計画</span></td></tr>
+    <tr><td>2026/11/09</td><td><strong>第四報:</strong> ネットストアでリスト型攻撃（Credential Stuffing）による不正ログインを確認し再開を無期限延期。購入履歴等約27万件、氏名等含む件数約75万件、代引き受取先約44万件への影響を公表。</td><td><span class="badge low">良品計画</span></td></tr>
+    <tr><td>2026/11/10〜</td><td>対象となる顧客へメールおよび郵送による個別連絡を開始。問い合わせ窓口が混雑。</td><td><span class="badge low">良品計画</span></td></tr>
+    <tr><td>2026/11/12</td><td><strong>都内記者会見:</strong> 清水智社長と宮澤高浩役員が陳謝。2021年7月以降に破棄すべきだった16桁カード番号の非マスキング残存を認める。ネットストア停止まで8日間要した初動の遅れを反省し、データ収集を最小限に見直す「データミニマム方針」を表明。</td><td><span class="badge med">NHK / 産経 / 朝日 / Japan Times / WWD</span></td></tr>
+    <tr><td>2026/11/13</td><td><strong>ネットストア停止8日目・最新動向:</strong><br>
+      • <strong>クレディセゾン:</strong> MUJI Card 会員向け専用窓口を開設、不正検知システムを最高レベルに引き上げ常時監視。カード再発行手数料は全額無償（良品計画負担）。<br>
+      • <strong>監督官庁:</strong> 個人情報保護委員会（PPC）が改正法に基づく確報提出を要求、経産省がクレジットカード・セキュリティガイドライン遵守状況を調査。<br>
+      • <strong>事業影響:</strong> ネットストア停止が長期化、実店舗は通常営業。良品計画の株式が売られるなど市場への波紋が拡大。</td><td><span class="badge med">各社報道・金融市場</span></td></tr>
   </tbody>
 </table>
 </div>
 </section>
 
 <section class="an-sec">
-<h2 id="pham-vi">3. 影響範囲と件数</h2>
+<h2 id="pham-vi">3. 影響範囲と件数詳細</h2>
 <div class="table-wrap">
 <table>
-  <thead><tr><th>対象区分</th><th>最大件数</th><th>対象項目</th><th>備考</th></tr></thead>
+  <thead><tr><th>対象区分</th><th>最大件数</th><th>対象項目</th><th>リスク特性・備考</th></tr></thead>
   <tbody>
     <tr>
       <td>MUJIアプリ・ネットストア会員（退会者含む）</td>
       <td>約2,726万件</td>
       <td>メールアドレス、生年月日、性別、会員ID 等</td>
-      <td>退会済みの利用者データも含まれる。</td>
+      <td>過去に退会したユーザーのデータも削除されず残存し流出対象に。</td>
     </tr>
     <tr>
       <td>上記のうち詳細情報を含む対象</td>
       <td>約75万件</td>
-      <td>氏名、住所、電話番号</td>
-      <td>11月9日の第四報で件数が更新。</td>
+      <td>氏名、住所、電話番号（上記情報に加えて）</td>
+      <td>第四報（11/9）にてDB精査の結果、対象件数が大幅に上方修正。</td>
     </tr>
     <tr>
       <td>リスト型攻撃による不正ログイン疑い</td>
       <td>約27万件</td>
-      <td>購入履歴、ポイント情報の閲覧可能性</td>
-      <td>ネットストアで確認。</td>
+      <td>購入履歴、ポイント情報（MUJIマイル・ショッピングポイント）の閲覧可能性</td>
+      <td>他社漏えいパスワードを用いた機械的ログインにより閲覧された恐れ。</td>
     </tr>
     <tr>
       <td><strong>MUJI Card</strong> 会員（2021年7月までに入会）</td>
       <td>約109万件</td>
-      <td><strong>クレジットカード番号（全桁）</strong>、MUJI Card ID、生年月日</td>
-      <td>有効カードは約34.5万件。名義・有効期限・セキュリティコードは含まれない。</td>
+      <td><strong>クレジットカード番号（16桁全桁）</strong>、MUJI Card ID、生年月日</td>
+      <td>うち<strong>約34.5万件が現在も有効</strong>。カード名義、有効期限、セキュリティコード（CVV）は含まれないが、ソーシャルエンジニアリングや一部ECでの不正利用リスクが存在。</td>
     </tr>
     <tr>
       <td>アプリ・ネットストアでの登録カード</td>
       <td>約120件</td>
       <td>カード番号（先頭6桁＋下2桁）、カード名義</td>
-      <td>一部マスキングされた形式。</td>
+      <td>一部マスキング済み形式で保管されていたもの。</td>
     </tr>
     <tr>
       <td>代金引換配送の受取先（2020/01/02〜2025/02/10受注）</td>
       <td>約44万件</td>
       <td>配送先氏名、配送先郵便番号</td>
-      <td>11月9日の第四報で追加公表。</td>
+      <td>5年以上前の古い注文データがアーカイブ・削除されず保管されていた。</td>
     </tr>
   </tbody>
 </table>
@@ -114,53 +155,158 @@ permalink: /ja/featured/muji/muji_security_incident_report/
 </section>
 
 <section class="an-sec">
-<h2 id="nguyen-nhan">4. 原因とデータ保管上の問題</h2>
-<h3>4.1. 確認された攻撃手法</h3>
-<ul>
-  <li><strong>システム脆弱性を突いた不正アクセス:</strong> システムの一部に存在した脆弱性を通じ、外部から顧客データベース領域へ不正アクセスされた（具体的な侵入経路・脆弱性詳細は非公表）。</li>
-  <li><strong>リスト型攻撃（Credential Stuffing）:</strong> 他社等から流出したとみられる ID・パスワードの組み合わせを用いた不正ログインがネットストアで試行され、購入履歴やポイントが閲覧された可能性が判明。</li>
-</ul>
+<h2 id="nguyen-nhan">4. 原因分析と技術的課題</h2>
 
-<h3>4.2. 平文・マスキングなしでの保管問題</h3>
+<h3>4.1. 攻撃経路1: システム脆弱性と孤立レガシーDBテーブル</h3>
 <ul>
-  <li><strong>5年前（2021年7月）に削除すべき16桁番号をマスクなしで保管（FNN・WWD Japan）:</strong> 良品計画は2021年7月まで独自特典の付与を目的に MUJI Card の番号を取得していましたが、同月のシステム変更後に取得を停止した際、<strong>既存データを削除せず放置</strong>していました。11月12日の会見で宮澤高浩役員は<em>「マスクをしない状態で保管していたところが一番の課題。2021年7月に対策を行って削除するべきだった」</em>と説明しています。</li>
-  <li><strong>DB暗号化方式の公表状況:</strong> DB内の具体的な暗号化方式の詳細は公表されていませんが、16桁のカード番号をマスキングせず残存させ、退会者情報も削除できていなかったことから、不正アクセス時に可読な状態で外部流出し得る状態にあったと評価されます。</li>
-  <li><strong>初動対応の遅れへの反省（FNN）:</strong> 10月29日の検知からネットストア停止（11月6日）までの判断について、清水智社長は<em>「今振り返ってみれば、より早く対応していればよかった」</em>と述べています。</li>
-</ul>
-</section>
-
-<section class="an-sec">
-<h2 id="ung-pho">5. 対応状況・補償・今後のデータ方針</h2>
-<ul>
-  <li><strong>良品計画の対応:</strong> 海外からの不正通信遮断、システム修正、監視強化、ネットストアおよびアプリ主要機能の停止。11月10日より対象者へ順次個別通知を開始。個人情報保護委員会（PPC）および経済産業省（METI）へ報告済み。</li>
-  <li><strong>カード再発行手数料の負担と補償（ANN・WWD Japan・FNN）:</strong> 対象となる MUJI Card の<strong>再発行手数料は全額同社が負担</strong>する方針。現時点で実害は確認されていないものの、今後不正利用などの被害が判明した場合は<strong>一件ずつ丁寧に対応し補償する</strong>としています。</li>
-  <li><strong>顧客データ収集を「最小限」へ転換（WWD Japan）:</strong> 清水社長は従来のパーソナライズ戦略から一転し、顧客データの扱いを「一度ゼロに戻して考える」と表明。<em>「まずは一定の安全性を担保するため、情報を持たないことが最優先。その次に利便性がくるべき」</em>と述べ、今期・来期を問わず必要なセキュリティ投資をためらわず行う姿勢を示しました。</li>
-  <li><strong>パスワード再設定:</strong> ネットストア再開時に全会員へパスワードの再設定を求める方針。</li>
-  <li><strong>利用者への注意喚起:</strong>
+  <li><strong>16桁カード番号の非マスキング保管（5年間の放置）:</strong> 良品計画は2021年7月以前、自社独自の会員特典（MUJIマイル連携等）の付与判定のために MUJI Card の16桁番号を収集・保管していました。しかし2021年7月のシステム刷新時にカード番号の新規収集を取りやめたものの、<strong>過去の保管データを削除・パージするスクリプトを実行せず放置</strong>していました。</li>
+  <li><strong>役員の会見証言:</strong> 宮澤高浩役員は会見で<em>「マスクをしない状態で保管していたところが一番の課題。2021年7月に対策を行って削除するべきだった」</em>と説明。16桁の平文PANが5年以上にわたり社内DBの遺留テーブル内にそのまま残存していました。</li>
+  <li><strong>PCI-DSS およびガイドライン違反:</strong>
     <ul>
-      <li>カード利用明細（特に MUJI Card）を確認し、身に覚えのない請求があればカード会社へ連絡すること。</li>
-      <li>他サービスと異なるパスワードを設定すること。</li>
-      <li>良品計画を装ったフィッシングメール・電話（パスワードやカード番号の聞き取り）に注意すること。</li>
+      <li><strong>PCI-DSS 要件3.2:</strong> 承認処理後のカードデータ保持制限、および不要になったカードデータの定期パージ（データ保持ポリシーの策定・運用）が義務付けられています。</li>
+      <li><strong>クレジットカード・セキュリティガイドライン:</strong> 日本国内のEC加盟店に対して「カード情報の非保持化」または「PCI-DSS完全準拠」を義務付けており、非マスキングのまま放置されていた状態は明白なガバナンス不備と評価されます。</li>
     </ul>
   </li>
 </ul>
+
+<h3>4.2. 攻撃経路2: リスト型攻撃（Credential Stuffing）</h3>
+<ul>
+  <li><strong>攻撃の手口:</strong> 外部の別サービス等から流出したと推測される ID・パスワードのリスト（コンボリスト）を用いた自動化ボットによる機械的な大量ログイン試行が、無印良品ネットストアの認証エンドポイントに対して実行されました。</li>
+  <li><strong>防御側の不備:</strong>
+    <ul>
+      <li>WAFレベルでのボット対策（Bot Management / Invisible CAPTCHA）や、IP/アカウントごとのレート制限（Rate Limiting）が不十分でした。</li>
+      <li>不審なアクセス元からのログインに対する二要素認証（2FA/MFA）の導入がなされていませんでした。</li>
+      <li>漏えい済みパスワードの利用を検知・拒否するメカニズム（HaveIBeenPwned 連携等）が存在しませんでした。</li>
+    </ul>
+  </li>
+  <li><strong>結果:</strong> 約27万件のアカウントで不正ログインが成立し、購入履歴やポイント情報の閲覧につながりました。</li>
+</ul>
+
+<h3>4.3. データライフサイクルの不備（退会者情報とCOD履歴の残存）</h3>
+<ul>
+  <li><strong>退会者データの論理削除（Soft Delete）放置:</strong> アカウント退会処理時にフラグ更新（論理削除）のみを行い、法定保存期間経過後の物理削除（Hard Purge）や個人情報マスク処理を自動化していなかったため、退会済みの顧客情報が流出対象に含まれました。</li>
+  <li><strong>COD配送データの長期保持:</strong> 2020年1月からの代金引換注文受取先データ約44万件が削除されず保持されていました。</li>
+</ul>
+
+<h3>4.4. 初動対応の遅れ（8日間のタイムラグ）</h3>
+<ul>
+  <li>10月29日に最初の不正アクセスを検知してから、ネットストアを完全に停止した11月6日まで<strong>8日間</strong>を要しました。</li>
+  <li>清水社長は<em>「今振り返ってみれば、より早く対応していればよかった」</em>と会見で述べており、早期のサービス切り離しを行わなかったことでリスト型攻撃などの二次被害を拡大させた要因となりました。</li>
+</ul>
 </section>
 
 <section class="an-sec">
-<h2 id="bai-hoc">6. PiraGo からの推奨事項</h2>
+<h2 id="ung-pho">5. 対応状況・補償・監督官庁の動向</h2>
+
+<h3>5.1. 良品計画の対応状況</h3>
+<ul>
+  <li><strong>サービス停止措置:</strong> 11月6日よりネットストアを全面停止（11月13日現在も再開時期未定）。MUJIアプリは店舗での会員コード提示以外の機能を停止。</li>
+  <li><strong>第三者フォレンジック調査:</strong> 外部の専門セキュリティ機関と連携し、ソースコード全般、DBアクセス権限、WAFログの包括的なフォレンジック調査を実施中。</li>
+  <li><strong>個別通知と強制パスワード再設定:</strong> 11月10日よりメール・郵送での通知を継続。ネットストア再開時には<strong>全会員に対する強制パスワード再設定</strong>を実施予定。</li>
+</ul>
+
+<h3>5.2. クレディセゾンの対応とカード無料再発行</h3>
+<ul>
+  <li><strong>専用相談窓口の設置:</strong> クレディセゾンは MUJI Card 保有者向けの専用ダイヤルを開設。</li>
+  <li><strong>再発行手数料の全額無償化:</strong> 対象となる会員からのカード再発行・番号変更依頼に対し、<strong>手数料を全額良品計画負担（顧客無料）</strong>で対応。有効カード約34.5万件を対象に順次切り替えを促進。</li>
+  <li><strong>不正検知システムの強化:</strong> MUJI Card の BIN 範囲に対する24時間365日のモニタリングを強化し、不審な取引を自動ブロック。</li>
+  <li><strong>実害発生時の全額補償:</strong> 現時点で実害は確認されていませんが、万が一不正利用被害が発生した場合は、調査の上で<strong>一件ずつ丁寧に全額補償する</strong>方針を表明。</li>
+</ul>
+
+<h3>5.3. 監督官庁（個人情報保護委員会・経産省）の動向</h3>
+<ul>
+  <li><strong>個人情報保護委員会（PPC）:</strong> 改正個人情報保護法第26条に基づく速報を受理。現在、技術的詳細および是正措置計画を網羅した正式報告書（確報）の提出を求めています。</li>
+  <li><strong>経済産業省（METI）:</strong> クレジットカード・セキュリティガイドラインに定められた非保持化基準への抵触について報告を徴収し、業界全体への注意喚起を検討中。</li>
+</ul>
+
+<h3>5.4. データ収集「最小限」への戦略転換（WWD Japan）</h3>
+<ul>
+  <li>清水智社長は会見で、従来のパーソナライズ重視からデータガバナンスの根本的見直しを表明：<em>「まずは一定の安全性を担保するため、情報を持たないことが最優先。その次に利便性がくるべき」</em>。</li>
+  <li>顧客データ収集方針をゼロベースで再設計し、今期・来期にわたり必要なセキュリティ投資を聖域なく実行する方針を示しました。</li>
+</ul>
+
+<h3>5.5. 利用者側での対策</h3>
+<ul>
+  <li><strong>カード利用明細の確認:</strong> MUJI Card を含むクレジットカードのWEB明細を定期的に確認し、身に覚えのない請求があれば直ちにカード会社へ連絡すること。</li>
+  <li><strong>同一パスワードの使い回し停止:</strong> MUJI ネットストアと同じパスワードを設定している他サービス（金融、SNS、他社EC）のパスワードを直ちに変更すること。</li>
+  <li><strong>フィッシング詐欺への警戒:</strong> 良品計画やクレディセゾンを騙り、パスワードや暗証番号、セキュリティコードを聞き出す不審なメール・SMS・電話に注意すること（公式からこれらを尋ねることはありません）。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="bai-hoc">6. PiraGo からの技術推奨事項（エンジニア向け）</h2>
+<p>本インシデントは、ECサイトや会員基盤を開発・運用する PiraGo のエンジニアにとって極めて重大な教訓を含んでいます：</p>
+
 <ol>
-  <li><strong>カード情報の非保持化・トークン化（PCI-DSS）:</strong> クレジットカード番号の全桁を自社DBやログに絶対に残さず、決済代行会社のトークン決済を徹底する。</li>
-  <li><strong>データ保持期限と退会者データの確実な削除:</strong> 退会者情報や過去の配送先・決済データはライフサイクルポリシーに基づき自動パージ／匿名化し、定期監査を行う。</li>
-  <li><strong>リスト型攻撃対策:</strong> レート制限、WAF/Bot対策、漏えいパスワード照合、重要操作時の多要素認証（MFA）を導入する。</li>
-  <li><strong>権限分離と異常検知:</strong> 個人情報を扱うDBへのアクセス経路を最小化し、大量取得や海外からの異常アクセスを即時遮断・検知する体制を維持する。</li>
+  <li><strong>決済情報の非保持化・トークン決済の徹底（Zero PAN Storage）:</strong>
+    <ul>
+      <li>クレジットカード番号（PAN）を自社サーバー・DBに絶対に通過・保存させない設計を徹底する。</li>
+      <li>Stripe Elements、GMOペイメントゲートウェイ Hosted Fields、SBペイメントサービス等のトークン決済SDKを採用し、DBには決済代行会社から返戻された <code>payment_token</code> や <code>customer_id</code> のみを保存する。</li>
+      <li>会員特典（ロイヤルティプログラム）等の判定で決済情報と紐付ける場合も、カード番号ではなく会員UUIDやトークン化されたハッシュ値を用いて結合する。</li>
+    </ul>
+  </li>
+  <li><strong>データライフサイクルの完全自動化（TTL &amp; Hard-Purge）:</strong>
+    <ul>
+      <li><strong>論理削除の長期放置の禁止:</strong> 退会ユーザーのデータは論理削除（soft delete）後、監査・照合に必要な一定期間（例: 30〜90日）経過後に、自動パージジョブ（PostgreSQL <code>pg_cron</code>、AWS DynamoDB TTL、Scheduled Lambda 等）で<strong>物理削除（Hard Delete）または完全匿名化（Anonymization）</strong>を行う。</li>
+      <li><strong>過去の取引データのマスク:</strong> 一定期間が経過した配送先情報や注文履歴内の個人情報は、氏名・住所・電話番号を順次マスキング・破棄する。</li>
+    </ul>
+  </li>
+  <li><strong>リスト型攻撃に対する多層防御アーキテクチャ:</strong>
+    <ul>
+      <li><strong>ボット検知の導入:</strong> ログイン・会員登録画面に Cloudflare Turnstile、AWS WAF Bot Control、Google reCAPTCHA v3 などを導入する。</li>
+      <li><strong>適応型レート制限（Adaptive Rate Limiting）:</strong> IP単位・サブネット単位・アカウント単位での連続失敗に対する一時ロックアウトまたは指数関数的待機時間（Exponential Backoff）を強制する。</li>
+      <li><strong>漏えいパスワード検知:</strong> パスワード設定・変更時に Have I Been Pwned API（k-Anonymity）等を用いて、既知の漏えいパスワードの使用を遮断する。</li>
+      <li><strong>パスキー（Passkeys）/ 多要素認証（MFA）の導入:</strong> WebAuthn によるパスキーやAuthenticatorアプリによる二要素認証を重要操作（会員情報変更・ポイント利用時等）に段階的に導入する。</li>
+    </ul>
+  </li>
+  <li><strong>インシデント封じ込めSLAと緊急メンテナンス基準の策定:</strong>
+    <ul>
+      <li>DBからの不正エクス取出しや機械的大量アタックを検知した際の「封じ込めSLA」をあらかじめ定義し、被害拡大を防ぐために即座に<strong>メンテナンスモードへ切り替える権限</strong>と判断基準をインシデント対応規程（IR Playbook）に明記する。</li>
+    </ul>
+  </li>
+  <li><strong>システム移行時のレガシースキーマ・遺留データ監査:</strong>
+    <ul>
+      <li>システムの機能刷新やテーブル移行を実施した際は、移行完了チェックリストに「旧テーブルの Drop」「不要カラムの Truncate」「バックアップおよびステージング環境からの機密データ除去」を必須項目として組み込む。</li>
+    </ul>
+  </li>
 </ol>
 </section>
 
 <section class="an-sec">
 <h2 id="nguon">7. 出典・参考リンク</h2>
 <ul>
-  <li>株式会社良品計画 公式発表: <a href="https://www.ryohin-keikaku.jp/news/articles/2026_1104_02" target="_blank" rel="noopener">第二報（2026/11/04）</a> · <a href="https://www.ryohin-keikaku.jp/news/articles/2026_1109_01" target="_blank" rel="noopener">第四報（2026/11/09）</a>。</li>
-  <li>国内報道（11/12 記者会見）: <a href="https://www.wwdjapan.com/articles/2550904" target="_blank" rel="noopener">WWD Japan（マスクなし放置）</a> · <a href="https://www.wwdjapan.com/articles/2551414" target="_blank" rel="noopener">WWD Japan（データ最小限方針）</a> · <a href="https://news.yahoo.co.jp/articles/609b0148969803c6d632a6b1c992ceb4bef448dc" target="_blank" rel="noopener">ANNニュース</a> · <a href="https://news.yahoo.co.jp/articles/1f8417282207f974761eb4322545b233f54cd8f6" target="_blank" rel="noopener">FNN（1）</a> · <a href="https://news.yahoo.co.jp/articles/258d5301fe1ff16009677f92a0fd0e55f2e3b8a3" target="_blank" rel="noopener">FNN（2）</a> · <a href="https://news.web.nhk/newsweb/na/nd-20261112de74562" target="_blank" rel="noopener">NHK</a> · <a href="https://www.sankei.com/article/20261112-5NZJP3XINNIQBMKNWFOHMSKJWE/" target="_blank" rel="noopener">産経ニュース</a> · <a href="https://www.asahi.com/articles/ASVCD247CVCDULFA00PM.html" target="_blank" rel="noopener">朝日新聞</a> · <a href="https://www.japantimes.co.jp/business/2026/11/12/muji-credit-card-leak/" target="_blank" rel="noopener">The Japan Times</a>。</li>
-  <li>技術・経緯まとめ: <a href="https://scan.netsecurity.ne.jp/article/2026/11/12/56758.html" target="_blank" rel="noopener">ScanNetSecurity</a> · <a href="https://incidentlog.jp/incidents/ryohin-keikaku-20261030" target="_blank" rel="noopener">IncidentLog</a> · <a href="https://westeria.jp/security-incidents/cases/ryohin-keikaku-muji-2026/" target="_blank" rel="noopener">Westeria</a>。</li>
+  <li>株式会社良品計画 公式発表:
+    <ul>
+      <li><a href="https://www.ryohin-keikaku.jp/news/articles/2026_1104_02" target="_blank" rel="noopener">第二報（2026/11/04）— ネットストアおよびMUJI Card情報流出の可能性</a></li>
+      <li><a href="https://www.ryohin-keikaku.jp/news/articles/2026_1109_01" target="_blank" rel="noopener">第四報（2026/11/09）— リスト型攻撃の確認およびネットストア再開延期</a></li>
+    </ul>
+  </li>
+  <li>11月12日 記者会見関連 国内報道:
+    <ul>
+      <li><a href="https://www.wwdjapan.com/articles/2550904" target="_blank" rel="noopener">WWD Japan — 16桁カード番号をマスクなし放置、5年前の削除漏れ認める</a></li>
+      <li><a href="https://www.wwdjapan.com/articles/2551414" target="_blank" rel="noopener">WWD Japan — 清水智社長「持たないことを最優先」データミニマムへ転換</a></li>
+      <li><a href="https://news.yahoo.co.jp/articles/609b0148969803c6d632a6b1c992ceb4bef448dc" target="_blank" rel="noopener">ANNニュース — MUJI Card の再発行手数料を全額負担と表明</a></li>
+      <li><a href="https://news.yahoo.co.jp/articles/1f8417282207f974761eb4322545b233f54cd8f6" target="_blank" rel="noopener">FNNプライムオンライン — 初動の遅れ認め謝罪「より早く対応していれば」</a></li>
+      <li><a href="https://news.yahoo.co.jp/articles/258d5301fe1ff16009677f92a0fd0e55f2e3b8a3" target="_blank" rel="noopener">FNNプライムオンライン — 最大2726万件情報流出か、役員ら会見で陳謝</a></li>
+      <li><a href="https://news.web.nhk/newsweb/na/nd-20261112de74562" target="_blank" rel="noopener">NHK ニュース — 良品計画 都内で記者会見、データ流出の経緯説明</a></li>
+      <li><a href="https://www.sankei.com/article/20261112-5NZJP3XINNIQBMKNWFOHMSKJWE/" target="_blank" rel="noopener">産経ニュース — 良品計画社長が陳謝、ネットストア再開未定</a></li>
+      <li><a href="https://www.asahi.com/articles/ASVCD247CVCDULFA00PM.html" target="_blank" rel="noopener">朝日新聞 — 無印良品の大規模情報流出、再発防止策と今後の影響</a></li>
+      <li><a href="https://www.japantimes.co.jp/business/2026/11/12/muji-credit-card-leak/" target="_blank" rel="noopener">The Japan Times — MUJI operator apologizes for massive data leak affecting credit cards</a></li>
+    </ul>
+  </li>
+  <li>提携金融機関および監督官庁:
+    <ul>
+      <li>株式会社クレディセゾン — MUJI Card 会員向け専用窓口の開設と無料再発行手続きのご案内</li>
+      <li>個人情報保護委員会（PPC） — 改正個人情報保護法に基づく漏えい等事案の報告基準</li>
+      <li>経済産業省（METI） — クレジットカード・セキュリティガイドライン【5.0版】</li>
+    </ul>
+  </li>
+  <li>セキュリティ専門ポータル・技術まとめ:
+    <ul>
+      <li><a href="https://scan.netsecurity.ne.jp/article/2026/11/12/56758.html" target="_blank" rel="noopener">ScanNetSecurity — 良品計画 不正アクセス事案の時系列と公表内容まとめ</a></li>
+      <li><a href="https://incidentlog.jp/incidents/ryohin-keikaku-20261030" target="_blank" rel="noopener">IncidentLog — 良品計画インシデント詳細ログ（2026-10-30）</a></li>
+      <li><a href="https://westeria.jp/security-incidents/cases/ryohin-keikaku-muji-2026/" target="_blank" rel="noopener">Westeria Security Cases — 脆弱性とリスト型攻撃の複合リスク分析</a></li>
+    </ul>
+  </li>
 </ul>
 </section>
