@@ -23,11 +23,16 @@ category: "Sự cố an ninh"
   .kpi-num.crit { color: var(--crit); }
   .kpi-num.high { color: var(--high); }
   .kpi-label { font-size: 12.5px; color: var(--text-muted); line-height: 1.4; }
+  .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
+  .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
+  .fig .mut { fill: var(--text-muted); }
+  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
 </style>
 
 <div class="report-header">
   <h1>無印良品 (MUJI / Ryohin Keikaku) — Rò rỉ tối đa 27,26 triệu tài khoản &amp; 1,09 triệu số thẻ MUJI Card</h1>
-  <p class="sub">Cập nhật <strong>2026-11-13</strong> (MUJI Net Store bước sang ngày thứ 8 tạm ngừng; Credit Saison siết chặt giám sát gian lận và triển khai đổi thẻ miễn phí). Trạng thái: <strong>đang diễn biến</strong>. Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a>.</p>
+  <p class="sub">Cập nhật <strong>2026-11-14</strong> (chưa có thông cáo chính thức mới; số liệu tính đến 13/11:MUJI Net Store bước sang ngày thứ 8 tạm ngừng; Credit Saison siết chặt giám sát gian lận và triển khai đổi thẻ miễn phí). Trạng thái: <strong>đang diễn biến</strong>. Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a>.</p>
 </div>
 
 <blockquote class="callout">
@@ -46,14 +51,6 @@ category: "Sự cố an ninh"
   <div class="kpi-card">
     <div class="kpi-num high">~345.000</div>
     <div class="kpi-label">Thẻ MUJI Card đang còn hiệu lực hoạt động</div>
-  </div>
-  <div class="kpi-card">
-    <div class="kpi-num high">~750.000</div>
-    <div class="kpi-label">Hồ sơ lộ cả họ tên, địa chỉ, số điện thoại</div>
-  </div>
-  <div class="kpi-card">
-    <div class="kpi-num">~270.000</div>
-    <div class="kpi-label">Tài khoản bị xâm nhập qua Credential Stuffing</div>
   </div>
   <div class="kpi-card">
     <div class="kpi-num">Ngày thứ 8</div>
@@ -77,13 +74,35 @@ category: "Sự cố an ninh"
   <li><strong>Sự việc:</strong> Ngày 29/10/2026, Công ty Ryohin Keikaku (đơn vị vận hành chuỗi bán lẻ 無印良品 / MUJI) phát hiện truy cập trái phép từ bên ngoài vào hệ thống liên quan đến <strong>MUJI App</strong> và <strong>MUJI Net Store</strong> <span class="badge low">Công ty xác nhận</span>.</li>
   <li><strong>Quy mô ảnh hưởng:</strong> Tối đa khoảng <strong>27,26 triệu</strong> tài khoản có nguy cơ lộ email, ngày sinh, giới tính, ID thành viên; khoảng <strong>750.000</strong> hồ sơ gồm cả họ tên, địa chỉ, số điện thoại; khoảng <strong>1,09 triệu</strong> số thẻ tín dụng MUJI Card (đầy đủ 16 chữ số, trong đó có khoảng <strong>345.000 thẻ còn hiệu lực</strong>); và khoảng <strong>440.000</strong> thông tin người nhận hàng COD <span class="badge low">Công ty xác nhận</span>.</li>
   <li><strong>Họp báo ngày 12/11/2026 tại Tokyo:</strong> Chủ tịch <strong>Satoshi Shimizu (清水智)</strong> cùng Giám đốc điều hành <strong>Takahiro Miyazawa (宮澤高浩)</strong> cúi đầu xin lỗi công khai, thừa nhận công ty đã lưu giữ dữ liệu thẻ tín dụng không che suốt hơn 5 năm và không xóa dữ liệu người dùng đã hủy tài khoản, đồng thời xác nhận chưa thể ấn định ngày mở lại Net Store do ưu tiên an toàn tuyệt đối <span class="badge med">Báo chí Nhật Bản</span>.</li>
-  <li><strong>Động thái ngày 13/11/2026:</strong> Đối tác tài chính <strong>Credit Saison</strong> thiết lập đường dây nóng tư vấn đổi thẻ riêng cho hội viên MUJI Card, siết chặt thuật toán giám sát giao dịch gian lận trên dải BIN thẻ MUJI Card, cam kết phát hành lại thẻ miễn phí toàn bộ với chi phí do Ryohin Keikaku chi trả; Ủy ban Bảo vệ Thông tin Cá nhân (PPC) và Bộ Kinh tế, Thương mại và Công nghiệp Nhật Bản (METI) giám sát sát sao việc tuân thủ quy chuẩn an ninh dữ liệu thẻ thanh toán.</li>
-  <li><strong>Ghi chú sự cố tách biệt:</strong> Ngày 02/11/2026, Ryohin Keikaku cũng công bố một sự cố riêng liên quan đến dữ liệu đặt hàng rèm cửa theo yêu cầu (giai đoạn 04/2018–01/2022, khoảng 20.000 hồ sơ).</li>
 </ul>
 </section>
 
 <section class="an-sec">
 <h2 id="dien-bien">2. Diễn biến &amp; Cập nhật ngày 13/11/2026</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 170" role="img" aria-label="timeline">
+<rect x="40" y="74" width="352" height="12" rx="6" fill="var(--crit)" opacity=".25"/>
+<text x="216" y="102" text-anchor="middle" font-size="11" font-weight="700" fill="var(--crit)">8 ngày chưa cô lập hệ thống</text>
+<line x1="40" y1="80" x2="700" y2="80" stroke="var(--line)" stroke-width="2"/>
+<line x1="40" y1="80" x2="40" y2="56" stroke="var(--pirago-blue)"/><circle cx="40" cy="80" r="5" fill="var(--pirago-blue)"/>
+<text x="40" y="40" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">29/10</text><text x="40" y="54" text-anchor="middle" font-size="11" class="mut">Phát hiện</text>
+<line x1="84" y1="80" x2="84" y2="118" stroke="var(--pirago-blue)"/><circle cx="84" cy="80" r="5" fill="var(--pirago-blue)"/>
+<text x="84" y="140" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">30/10</text><text x="84" y="154" text-anchor="middle" font-size="11" class="mut">Báo cáo 1</text>
+<line x1="216" y1="80" x2="216" y2="56" stroke="var(--pirago-blue)"/><circle cx="216" cy="80" r="5" fill="var(--pirago-blue)"/>
+<text x="216" y="40" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">02/11</text><text x="216" y="54" text-anchor="middle" font-size="11" class="mut">Đối tác thẻ</text>
+<line x1="304" y1="80" x2="304" y2="118" stroke="var(--pirago-blue)"/><circle cx="304" cy="80" r="5" fill="var(--pirago-blue)"/>
+<text x="304" y="140" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">04/11</text><text x="304" y="154" text-anchor="middle" font-size="11" class="mut">Báo cáo 2</text>
+<line x1="392" y1="80" x2="392" y2="56" stroke="var(--crit)"/><circle cx="392" cy="80" r="5" fill="var(--crit)"/>
+<text x="392" y="40" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">06/11</text><text x="392" y="54" text-anchor="middle" font-size="11" class="mut">Đóng Net Store</text>
+<line x1="524" y1="80" x2="524" y2="118" stroke="var(--pirago-blue)"/><circle cx="524" cy="80" r="5" fill="var(--pirago-blue)"/>
+<text x="524" y="140" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">09/11</text><text x="524" y="154" text-anchor="middle" font-size="11" class="mut">Báo cáo 4</text>
+<line x1="656" y1="80" x2="656" y2="56" stroke="var(--pirago-blue)"/><circle cx="656" cy="80" r="5" fill="var(--pirago-blue)"/>
+<text x="656" y="40" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">12/11</text><text x="656" y="54" text-anchor="middle" font-size="11" class="mut">Họp báo</text>
+<line x1="700" y1="80" x2="700" y2="118" stroke="var(--pirago-blue)"/><circle cx="700" cy="80" r="5" fill="var(--pirago-blue)"/>
+<text x="700" y="140" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">13/11</text><text x="700" y="154" text-anchor="middle" font-size="11" class="mut">Credit Saison</text>
+</svg>
+<figcaption>Dòng thời gian 29/10 – 13/11/2026: 8 ngày từ lúc phát hiện đến khi đóng Net Store.</figcaption>
+</figure>
 <div class="table-wrap">
 <table id="timeline">
   <thead><tr><th>Thời điểm</th><th>Sự kiện</th><th>Nguồn / Trạng thái</th></tr></thead>
@@ -100,6 +119,7 @@ category: "Sự cố an ninh"
       • <strong>Credit Saison:</strong> Thiết lập cổng tiếp nhận riêng cho khách hàng MUJI Card, siết chặt hệ thống giám sát gian lận tự động (Fraud Detection System) trên toàn bộ dải BIN thẻ MUJI Card; hỗ trợ đổi thẻ miễn phí 100% (chi phí do MUJI chi trả).<br>
       • <strong>Cơ quan quản lý:</strong> PPC yêu cầu nộp báo cáo giải trình chính thức (確報); METI chỉ đạo rà soát việc tuân thủ quy chuẩn Credit Card Security Guidelines.<br>
       • <strong>Hệ thống:</strong> Net Store tiếp tục đóng cửa; cửa hàng vật lý duy trì bình thường; cổ phiếu Ryohin Keikaku (TSE: 7453) chịu áp lực điều chỉnh trên sàn Tokyo.</td><td><span class="badge med">Báo chí Nhật / Phân tích tài chính</span></td></tr>
+    <tr><td>14/11/2026</td><td><strong>Rà soát cập nhật:</strong> Chưa ghi nhận thông cáo chính thức nào mới hơn Báo cáo thứ 4 (09/11); Net Store vẫn đóng cửa, chưa công bố ngày mở lại. Đường dây tư vấn của Ryohin Keikaku (<code>0120-36-0470</code>, 9:30–17:00 hằng ngày, đến hết 26/12/2026) vẫn hoạt động. Credit Saison và MUJI cho biết chưa xác nhận dữ liệu bị đăng bán trên dark web hay gian lận tăng bất thường. Một số con số theo từng dịch vụ vẫn chênh lệch giữa các nguồn báo chí.</td><td><span class="badge med">PR Times / NHK / Nikkei</span></td></tr>
   </tbody>
 </table>
 </div>
@@ -107,6 +127,29 @@ category: "Sự cố an ninh"
 
 <section class="an-sec">
 <h2 id="pham-vi">3. Phạm vi dữ liệu bị ảnh hưởng</h2>
+<figure class="fig">
+<svg viewBox="0 0 720 250" role="img" aria-label="data scope">
+<text x="0" y="27" font-size="12.5" fill="currentColor">Tài khoản App &amp; Net Store</text>
+<rect x="250" y="10" width="360" height="24" rx="4" fill="var(--crit)"/>
+<text x="618" y="27" font-size="12.5" font-weight="700" fill="currentColor">~27,26 triệu</text>
+<text x="0" y="65" font-size="12.5" fill="currentColor">Số thẻ MUJI Card (16 số)</text>
+<rect x="250" y="48" width="14" height="24" rx="4" fill="var(--crit)"/>
+<text x="272" y="65" font-size="12.5" font-weight="700" fill="currentColor">~1,09 triệu</text>
+<text x="0" y="103" font-size="12.5" fill="currentColor">Hồ sơ có họ tên/địa chỉ/SĐT</text>
+<rect x="250" y="86" width="10" height="24" rx="4" fill="var(--high)"/>
+<text x="268" y="103" font-size="12.5" font-weight="700" fill="currentColor">~750.000</text>
+<text x="0" y="141" font-size="12.5" fill="currentColor">Người nhận hàng COD</text>
+<rect x="250" y="124" width="6" height="24" rx="4" fill="var(--high)"/>
+<text x="264" y="141" font-size="12.5" font-weight="700" fill="currentColor">~440.000</text>
+<text x="0" y="179" font-size="12.5" fill="currentColor">Thẻ còn hiệu lực</text>
+<rect x="250" y="162" width="5" height="24" rx="4" fill="var(--high)"/>
+<text x="263" y="179" font-size="12.5" font-weight="700" fill="currentColor">~345.000</text>
+<text x="0" y="217" font-size="12.5" fill="currentColor">Bị nhồi thông tin đăng nhập</text>
+<rect x="250" y="200" width="4" height="24" rx="4" fill="var(--pirago-blue)"/>
+<text x="262" y="217" font-size="12.5" font-weight="700" fill="currentColor">~270.000</text>
+</svg>
+<figcaption>Quy mô tối đa theo từng nhóm dữ liệu (thang tuyến tính; các nhóm có thể chồng lấn nhau).</figcaption>
+</figure>
 <div class="table-wrap">
 <table>
   <thead><tr><th>Nhóm đối tượng</th><th>Số lượng (tối đa)</th><th>Trường dữ liệu có nguy cơ bị lộ</th><th>Đặc điểm &amp; Mức độ rủi ro</th></tr></thead>
@@ -154,6 +197,22 @@ category: "Sự cố an ninh"
 
 <section class="an-sec">
 <h2 id="nguyen-nhan">4. Phân tích nguyên nhân &amp; Kiến trúc kỹ thuật</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 290" role="img" aria-label="attack flow"><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs>
+<rect class="box" x="0" y="20" width="210" height="66" rx="8" style="stroke:var(--crit)"/><text x="105.0" y="46" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Truy cập trái phép (29/10)</text><text x="105.0" y="66" text-anchor="middle" font-size="11" class="mut">Lỗ hổng ứng dụng</text>
+<line x1="210" y1="53" x2="265" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#ah)"/>
+<rect class="box" x="270" y="20" width="200" height="66" rx="8" style="stroke:var(--crit)"/><text x="370.0" y="46" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">CSDL legacy chưa xóa</text><text x="370.0" y="66" text-anchor="middle" font-size="11" class="mut">PAN 16 số không che (từ 07/2021)</text>
+<line x1="470" y1="53" x2="525" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#ah)"/>
+<rect class="box" x="530" y="20" width="210" height="66" rx="8" style="stroke:var(--crit)"/><text x="635.0" y="46" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">~1,09 triệu số thẻ</text><text x="635.0" y="66" text-anchor="middle" font-size="11" class="mut">~27,26 triệu tài khoản</text>
+<rect class="box" x="0" y="120" width="210" height="66" rx="8" style="stroke:var(--high)"/><text x="105.0" y="146" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Credential stuffing</text><text x="105.0" y="166" text-anchor="middle" font-size="11" class="mut">Mật khẩu rò rỉ từ nơi khác</text>
+<line x1="210" y1="153" x2="265" y2="153" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#ah)"/>
+<rect class="box" x="270" y="120" width="200" height="66" rx="8" style="stroke:var(--high)"/><text x="370.0" y="146" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Đăng nhập Net Store</text><text x="370.0" y="166" text-anchor="middle" font-size="11" class="mut">Vượt qua trang đăng nhập</text>
+<line x1="470" y1="153" x2="525" y2="153" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#ah)"/>
+<rect class="box" x="530" y="120" width="210" height="66" rx="8" style="stroke:var(--high)"/><text x="635.0" y="146" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">~270.000 tài khoản</text><text x="635.0" y="166" text-anchor="middle" font-size="11" class="mut">Lịch sử mua hàng, điểm</text>
+<rect x="0" y="222" width="740" height="46" rx="8" fill="var(--crit)" opacity=".12"/><text x="370" y="250" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Gốc rễ: không xóa dữ liệu hết hạn · thiếu bot mitigation / MFA · phản ứng chậm 8 ngày</text>
+</svg>
+<figcaption>Hai hướng xâm nhập và nguyên nhân gốc rễ.</figcaption>
+</figure>
 
 <h3>4.1. Vectơ 1: Lỗ hổng ứng dụng &amp; CSDL Legacy mồ côi (Orphaned Table)</h3>
 <ul>
@@ -277,6 +336,7 @@ category: "Sự cố an ninh"
     <ul>
       <li><a href="https://www.ryohin-keikaku.jp/news/articles/2026_1104_02" target="_blank" rel="noopener">Báo cáo thứ 2 (04/11/2026) — Mở rộng nguy cơ lộ số thẻ MUJI Card</a></li>
       <li><a href="https://www.ryohin-keikaku.jp/news/articles/2026_1109_01" target="_blank" rel="noopener">Báo cáo thứ 4 (09/11/2026) — Phát hiện Credential Stuffing &amp; Hoãn mở lại Net Store</a></li>
+      <li><a href="https://prtimes.jp/main/html/rd/p/000001882.000000987.html" target="_blank" rel="noopener">PR Times — Bản sao Báo cáo thứ 4 (09/11/2026), kèm đường dây tư vấn</a></li>
     </ul>
   </li>
   <li>Báo chí Nhật Bản về buổi họp báo ngày 12/11/2026:
@@ -301,6 +361,8 @@ category: "Sự cố an ninh"
   </li>
   <li>Chuyên trang kỹ thuật &amp; Theo dõi sự cố an ninh:
     <ul>
+      <li><a href="https://piyolog.hatenadiary.jp/entry/2026/11/13/162738" target="_blank" rel="noopener">piyolog — Tổng hợp diễn biến sự cố MUJI (13/11/2026)</a></li>
+      <li><a href="https://www.itmedia.co.jp/news/article/2610/30/2000002756/" target="_blank" rel="noopener">ITmedia — Công bố ban đầu về ~27,26 triệu tài khoản (30/10/2026)</a></li>
       <li><a href="https://scan.netsecurity.ne.jp/article/2026/11/12/56758.html" target="_blank" rel="noopener">ScanNetSecurity — Tổng hợp chi tiết dòng thời gian và các mốc công bố sự cố MUJI</a></li>
       <li><a href="https://incidentlog.jp/incidents/ryohin-keikaku-20261030" target="_blank" rel="noopener">IncidentLog — Hồ sơ sự cố Ryohin Keikaku (2026-10-30)</a></li>
       <li><a href="https://westeria.jp/security-incidents/cases/ryohin-keikaku-muji-2026/" target="_blank" rel="noopener">Westeria Security Cases — Phân tích kỹ thuật lỗ hổng và rủi ro credential stuffing</a></li>

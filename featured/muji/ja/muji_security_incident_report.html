@@ -25,6 +25,11 @@ permalink: /ja/featured/muji/muji_security_incident_report/
   .kpi-num.crit { color: var(--crit); }
   .kpi-num.high { color: var(--high); }
   .kpi-label { font-size: 12.5px; color: var(--text-muted); line-height: 1.4; }
+  .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
+  .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
+  .fig .mut { fill: var(--text-muted); }
+  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
 </style>
 
 <div class="report-header">
@@ -50,14 +55,6 @@ permalink: /ja/featured/muji/muji_security_incident_report/
     <div class="kpi-label">現在も有効な MUJI Card 会員数</div>
   </div>
   <div class="kpi-card">
-    <div class="kpi-num high">約75万件</div>
-    <div class="kpi-label">氏名・住所・電話番号を含む詳細データ</div>
-  </div>
-  <div class="kpi-card">
-    <div class="kpi-num">約27万件</div>
-    <div class="kpi-label">リスト型攻撃による不正ログイン疑い件数</div>
-  </div>
-  <div class="kpi-card">
     <div class="kpi-num">停止8日目</div>
     <div class="kpi-label">ネットストア完全停止継続（11/6 16:00〜11/13現在）</div>
   </div>
@@ -79,13 +76,35 @@ permalink: /ja/featured/muji/muji_security_incident_report/
   <li><strong>事案:</strong> 2026年10月29日、株式会社良品計画が「MUJIアプリ」および「無印良品ネットストア」関連システムへの外部からの不正アクセスを検知 <span class="badge low">公式発表</span>。</li>
   <li><strong>影響規模:</strong> メールアドレス・生年月日・性別・会員IDが最大<strong>約2,726万件</strong>（退会者含む）、氏名・住所・電話番号を含む詳細情報が<strong>約75万件</strong>、MUJI Card の16桁クレジットカード番号全桁が<strong>約109万件</strong>（有効カードは約34.5万件）、代引き受取先情報が<strong>約44万件</strong>など <span class="badge low">公式発表</span>。</li>
   <li><strong>11月12日の記者会見:</strong> 清水智社長および宮澤高浩執行役員が都内で謝罪会見を実施。5年前に破棄すべきだったカード番号や退会者情報が残存していた管理不備を認め、「今振り返れば、初動でより早くネットストアを止めるべきだった」と陳謝。安全確保を最優先としネットストア再開時期は未定と説明 <span class="badge med">国内報道</span>。</li>
-  <li><strong>11月13日の最新動向:</strong> 提携カード会社である<strong>クレディセゾン</strong>が専用窓口を開設し、対象顧客へのカード番号変更・無料再発行手続きを開始。個人情報保護委員会（PPC）および経済産業省（METI）への正式報告（確報）に向けた原因究明が進められる中、東京株式市場では良品計画株（東証プライム 7453）が軟調に推移。</li>
-  <li><strong>補足:</strong> 11月2日には別件として、オーダーカーテン注文情報（2018年4月〜2022年1月、約2万件）の流出恐れも公表されています。</li>
 </ul>
 </section>
 
 <section class="an-sec">
-<h2 id="dien-bien">2. 経緯・タイムライン（2026年11月13日 更新）</h2>
+<h2 id="dien-bien">2. 経緯・タイムライン（2026年11月14日 更新）</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 170" role="img" aria-label="timeline">
+<rect x="40" y="74" width="352" height="12" rx="6" fill="var(--crit)" opacity=".25"/>
+<text x="216" y="102" text-anchor="middle" font-size="11" font-weight="700" fill="var(--crit)">8日間 システム未遮断</text>
+<line x1="40" y1="80" x2="700" y2="80" stroke="var(--line)" stroke-width="2"/>
+<line x1="40" y1="80" x2="40" y2="56" stroke="var(--pirago-blue)"/><circle cx="40" cy="80" r="5" fill="var(--pirago-blue)"/>
+<text x="40" y="40" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">10/29</text><text x="40" y="54" text-anchor="middle" font-size="11" class="mut">検知</text>
+<line x1="84" y1="80" x2="84" y2="118" stroke="var(--pirago-blue)"/><circle cx="84" cy="80" r="5" fill="var(--pirago-blue)"/>
+<text x="84" y="140" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">10/30</text><text x="84" y="154" text-anchor="middle" font-size="11" class="mut">第一報</text>
+<line x1="216" y1="80" x2="216" y2="56" stroke="var(--pirago-blue)"/><circle cx="216" cy="80" r="5" fill="var(--pirago-blue)"/>
+<text x="216" y="40" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">11/02</text><text x="216" y="54" text-anchor="middle" font-size="11" class="mut">カード会社</text>
+<line x1="304" y1="80" x2="304" y2="118" stroke="var(--pirago-blue)"/><circle cx="304" cy="80" r="5" fill="var(--pirago-blue)"/>
+<text x="304" y="140" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">11/04</text><text x="304" y="154" text-anchor="middle" font-size="11" class="mut">第二報</text>
+<line x1="392" y1="80" x2="392" y2="56" stroke="var(--crit)"/><circle cx="392" cy="80" r="5" fill="var(--crit)"/>
+<text x="392" y="40" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">11/06</text><text x="392" y="54" text-anchor="middle" font-size="11" class="mut">ネット停止</text>
+<line x1="524" y1="80" x2="524" y2="118" stroke="var(--pirago-blue)"/><circle cx="524" cy="80" r="5" fill="var(--pirago-blue)"/>
+<text x="524" y="140" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">11/09</text><text x="524" y="154" text-anchor="middle" font-size="11" class="mut">第四報</text>
+<line x1="656" y1="80" x2="656" y2="56" stroke="var(--pirago-blue)"/><circle cx="656" cy="80" r="5" fill="var(--pirago-blue)"/>
+<text x="656" y="40" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">11/12</text><text x="656" y="54" text-anchor="middle" font-size="11" class="mut">記者会見</text>
+<line x1="700" y1="80" x2="700" y2="118" stroke="var(--pirago-blue)"/><circle cx="700" cy="80" r="5" fill="var(--pirago-blue)"/>
+<text x="700" y="140" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">11/13</text><text x="700" y="154" text-anchor="middle" font-size="11" class="mut">セゾン対応</text>
+</svg>
+<figcaption>2026年10月29日〜11月13日の経緯：検知からネットストア停止まで8日間。</figcaption>
+</figure>
 <div class="table-wrap">
 <table id="timeline">
   <thead><tr><th>日時</th><th>出来事</th><th>出典・ステータス</th></tr></thead>
@@ -102,6 +121,7 @@ permalink: /ja/featured/muji/muji_security_incident_report/
       • <strong>クレディセゾン:</strong> MUJI Card 会員向け専用窓口を開設、不正検知システムを最高レベルに引き上げ常時監視。カード再発行手数料は全額無償（良品計画負担）。<br>
       • <strong>監督官庁:</strong> 個人情報保護委員会（PPC）が改正法に基づく確報提出を要求、経産省がクレジットカード・セキュリティガイドライン遵守状況を調査。<br>
       • <strong>事業影響:</strong> ネットストア停止が長期化、実店舗は通常営業。良品計画の株式が売られるなど市場への波紋が拡大。</td><td><span class="badge med">各社報道・金融市場</span></td></tr>
+    <tr><td>2026/11/14</td><td><strong>最新状況の確認:</strong> 11月9日の第四報より新しい公式発表は確認できず。ネットストアは引き続き停止中で再開時期は未定。良品計画の問い合わせ窓口（<code>0120-36-0470</code>、毎日9:30〜17:00、2026年12月26日まで）は継続中。クレディセゾンと良品計画は、ダークウェブでの流通や不正利用の急増は確認されていないとしている。サービス別の件数は報道間で差異が残る。</td><td><span class="badge med">PR TIMES・NHK・日経</span></td></tr>
   </tbody>
 </table>
 </div>
@@ -109,6 +129,29 @@ permalink: /ja/featured/muji/muji_security_incident_report/
 
 <section class="an-sec">
 <h2 id="pham-vi">3. 影響範囲と件数詳細</h2>
+<figure class="fig">
+<svg viewBox="0 0 720 250" role="img" aria-label="data scope">
+<text x="0" y="27" font-size="12.5" fill="currentColor">アプリ・ネットストア会員</text>
+<rect x="250" y="10" width="360" height="24" rx="4" fill="var(--crit)"/>
+<text x="618" y="27" font-size="12.5" font-weight="700" fill="currentColor">約2,726万</text>
+<text x="0" y="65" font-size="12.5" fill="currentColor">MUJI Cardカード番号(16桁)</text>
+<rect x="250" y="48" width="14" height="24" rx="4" fill="var(--crit)"/>
+<text x="272" y="65" font-size="12.5" font-weight="700" fill="currentColor">約109万</text>
+<text x="0" y="103" font-size="12.5" fill="currentColor">氏名・住所・電話番号</text>
+<rect x="250" y="86" width="10" height="24" rx="4" fill="var(--high)"/>
+<text x="268" y="103" font-size="12.5" font-weight="700" fill="currentColor">約75万</text>
+<text x="0" y="141" font-size="12.5" fill="currentColor">代引き受取人情報</text>
+<rect x="250" y="124" width="6" height="24" rx="4" fill="var(--high)"/>
+<text x="264" y="141" font-size="12.5" font-weight="700" fill="currentColor">約44万</text>
+<text x="0" y="179" font-size="12.5" fill="currentColor">有効なカード</text>
+<rect x="250" y="162" width="5" height="24" rx="4" fill="var(--high)"/>
+<text x="263" y="179" font-size="12.5" font-weight="700" fill="currentColor">約34.5万</text>
+<text x="0" y="217" font-size="12.5" fill="currentColor">リスト型攻撃の対象</text>
+<rect x="250" y="200" width="4" height="24" rx="4" fill="var(--pirago-blue)"/>
+<text x="262" y="217" font-size="12.5" font-weight="700" fill="currentColor">約27万</text>
+</svg>
+<figcaption>データ区分ごとの最大件数（線形スケール。区分間で重複あり）。</figcaption>
+</figure>
 <div class="table-wrap">
 <table>
   <thead><tr><th>対象区分</th><th>最大件数</th><th>対象項目</th><th>リスク特性・備考</th></tr></thead>
@@ -156,6 +199,22 @@ permalink: /ja/featured/muji/muji_security_incident_report/
 
 <section class="an-sec">
 <h2 id="nguyen-nhan">4. 原因分析と技術的課題</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 290" role="img" aria-label="attack flow"><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs>
+<rect class="box" x="0" y="20" width="210" height="66" rx="8" style="stroke:var(--crit)"/><text x="105.0" y="46" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">不正アクセス（10/29）</text><text x="105.0" y="66" text-anchor="middle" font-size="11" class="mut">アプリの脆弱性</text>
+<line x1="210" y1="53" x2="265" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#ah)"/>
+<rect class="box" x="270" y="20" width="200" height="66" rx="8" style="stroke:var(--crit)"/><text x="370.0" y="46" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">旧DBの残存</text><text x="370.0" y="66" text-anchor="middle" font-size="11" class="mut">16桁カード番号（非マスク）</text>
+<line x1="470" y1="53" x2="525" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#ah)"/>
+<rect class="box" x="530" y="20" width="210" height="66" rx="8" style="stroke:var(--crit)"/><text x="635.0" y="46" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">約109万件のカード番号</text><text x="635.0" y="66" text-anchor="middle" font-size="11" class="mut">約2,726万件の会員</text>
+<rect class="box" x="0" y="120" width="210" height="66" rx="8" style="stroke:var(--high)"/><text x="105.0" y="146" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">リスト型攻撃</text><text x="105.0" y="166" text-anchor="middle" font-size="11" class="mut">他所で漏えいしたパスワード</text>
+<line x1="210" y1="153" x2="265" y2="153" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#ah)"/>
+<rect class="box" x="270" y="120" width="200" height="66" rx="8" style="stroke:var(--high)"/><text x="370.0" y="146" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">ネットストアへログイン</text><text x="370.0" y="166" text-anchor="middle" font-size="11" class="mut">ログイン画面を突破</text>
+<line x1="470" y1="153" x2="525" y2="153" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#ah)"/>
+<rect class="box" x="530" y="120" width="210" height="66" rx="8" style="stroke:var(--high)"/><text x="635.0" y="146" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">約27万アカウント</text><text x="635.0" y="166" text-anchor="middle" font-size="11" class="mut">購入履歴・ポイント</text>
+<rect x="0" y="222" width="740" height="46" rx="8" fill="var(--crit)" opacity=".12"/><text x="370" y="250" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">根本原因：期限切れデータ未削除・bot対策/MFA不足・初動8日遅延</text>
+</svg>
+<figcaption>2つの侵入経路と根本原因。</figcaption>
+</figure>
 
 <h3>4.1. 攻撃経路1: システム脆弱性と孤立レガシーDBテーブル</h3>
 <ul>
@@ -303,6 +362,8 @@ permalink: /ja/featured/muji/muji_security_incident_report/
   </li>
   <li>セキュリティ専門ポータル・技術まとめ:
     <ul>
+      <li><a href="https://piyolog.hatenadiary.jp/entry/2026/11/13/162738" target="_blank" rel="noopener">piyolog — MUJIインシデントの経緯まとめ（2026/11/13）</a></li>
+      <li><a href="https://prtimes.jp/main/html/rd/p/000001882.000000987.html" target="_blank" rel="noopener">PR TIMES — 第四報（2026/11/09）、問い合わせ窓口</a></li>
       <li><a href="https://scan.netsecurity.ne.jp/article/2026/11/12/56758.html" target="_blank" rel="noopener">ScanNetSecurity — 良品計画 不正アクセス事案の時系列と公表内容まとめ</a></li>
       <li><a href="https://incidentlog.jp/incidents/ryohin-keikaku-20261030" target="_blank" rel="noopener">IncidentLog — 良品計画インシデント詳細ログ（2026-10-30）</a></li>
       <li><a href="https://westeria.jp/security-incidents/cases/ryohin-keikaku-muji-2026/" target="_blank" rel="noopener">Westeria Security Cases — 脆弱性とリスト型攻撃の複合リスク分析</a></li>
