@@ -247,8 +247,8 @@ sections:
   - name: Node.js
     sev: med
     summary:
-      vi: 'Duy trì các bản vá bảo mật 26.12.1 / 24.22.1 / 22.23.4 (khắc phục lỗi Brotli CVE-2026-111497 và bypass xác thực tên miền chứng chỉ TLS). Tháng 11 không có đợt cập nhật kernel khẩn cấp cho Node.js core; tiếp tục chú trọng an toàn supply chain npm.'
-      ja: 'セキュリティリリース（26.12.1 / 24.22.1 / 22.23.4）の適用を維持（Brotli メモリ範囲外書き込み CVE-2026-111497 および TLS ホスト名検証バイパスの修正）。11月に Node.js コアの緊急リリースはなく、npm サプライチェーン監査を重点的に実施。'
+      vi: 'Duy trì các bản vá bảo mật 26.12.1 / 24.22.1 / 22.23.4 (khắc phục lỗi Brotli <a href="@home@featured/brotli-cve-2026-111497/analysis/">CVE-2026-111497</a> và bypass xác thực tên miền chứng chỉ TLS). Tháng 11 không có đợt cập nhật kernel khẩn cấp cho Node.js core; tiếp tục chú trọng an toàn supply chain npm.'
+      ja: 'セキュリティリリース（26.12.1 / 24.22.1 / 22.23.4）の適用を維持（Brotli メモリ範囲外書き込み <a href="@home@featured/brotli-cve-2026-111497/analysis/">CVE-2026-111497</a> および TLS ホスト名検証バイパスの修正）。11月に Node.js コアの緊急リリースはなく、npm サプライチェーン監査を重点的に実施。'
     impact:
       vi: 'Các ứng dụng backend, API, SSR (Next.js, Nuxt) và môi trường phát triển / CI pipeline.'
       ja: 'バックエンドアプリケーション、API、SSR（Next.js、Nuxt）、および開発環境・CIパイプライン。'

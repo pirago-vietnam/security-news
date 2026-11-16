@@ -24,6 +24,30 @@
       label: {vi: "Ứng phó & Bồi thường", ja: "対応・補償"}
       text: {vi: "Net Store bước sang ngày thứ 8 tạm đóng hoàn toàn; Ryohin Keikaku chi trả 100% phí đổi thẻ, cam kết bồi thường mọi thiệt hại thực tế và chuyển hướng sang chiến lược 'Data Minimization'.", ja: "ネットストア完全停止は8日目に突入。良品計画が再発行手数料全額負担・実損全額補償を表明し、データ収集方針を「最小限」へ全面転換。"}
 
+- id: postgresql-cve-2026-6460
+  category: vulnerability
+  path: "featured/postgresql-cve-2026-6460/analysis/"
+  icon: "🐘"
+  accent: true
+  badge: {sev: high, text: "HIGH"}
+  nav: {vi: "PostgreSQL 52 CVEs", ja: "PostgreSQL 52件のCVE"}
+  title: {vi: "PostgreSQL vá 52 CVEs (CVSS 8.8) — RCE qua Type Confusion DDL (CVE-2026-6460) & PostgreSQL 14 EOL", ja: "PostgreSQL 52件のCVE修正（CVSS 8.8）— 型混乱 DDL RCE（CVE-2026-6460）および PostgreSQL 14 EOL"}
+  date: {vi: "Cập nhật đến 2026-11-13 · 52 CVEs · Bản vá 18.7/17.12/16.16/15.20/14.25 · PostgreSQL 14 chính thức EOL", ja: "2026年11月13日 時点 · 52件のCVE · 18.7/17.12/16.16/15.20/14.25 リリース · PostgreSQL 14 公式 EOL"}
+  link: {vi: "Xem phân tích & hướng dẫn REINDEX/Backup →", ja: "分析・REINDEX/バックアップ対策ガイドを見る →"}
+  items:
+    - sev: high
+      label: {vi: "Nguy cơ", ja: "リスク"}
+      text: {vi: "52 CVEs với 32 lỗi CVSS 8.8; tiêu biểu là CVE-2026-6460 Type Confusion qua lệnh DDL (ALTER COLUMN SET DATA TYPE) dẫn tới RCE quyền postgres.", ja: "52件中32件がCVSS 8.8。代表例 CVE-2026-6460 では DDL操作（ALTER COLUMN SET DATA TYPE）時の型混乱により postgres 権限でのRCEに至る恐れ。"}
+    - sev: high
+      label: {vi: "Phạm vi", ja: "影響範囲"}
+      text: {vi: "Mọi phiên bản PostgreSQL trước 18.7, 17.12, 16.16, 15.20, 14.25. Client tools pg_dump, reindexdb cũng bị lỗi tiêm mã SQL/command injection.", ja: "18.7、17.12、16.16、15.20、14.25 未満の全バージョン。クライアントツール（pg_dump、reindexdb）の SQLi / コマンド注入も含む。"}
+    - sev: med
+      label: {vi: "Bảo trì", ja: "保守作業"}
+      text: {vi: "Bắt buộc REINDEX các chỉ mục GIN, GiST (pg_trgm) và bpchar bị nghi ngờ lỗi; chụp ngay bản Full Backup mới nếu đang dùng incremental backup.", ja: "破損が疑われる GIN、GiST（pg_trgm）、bpchar インデックスの REINDEX が必須。増分バックアップ運用時は直ちに新規フルバックアップを取得。"}
+    - sev: low
+      label: {vi: "PG14 EOL", ja: "PG14 EOL"}
+      text: {vi: "PostgreSQL 14 chính thức hết hạn hỗ trợ (EOL) từ 12-11-2026 (bản 14.25 là cuối cùng); cần khẩn trương lập lộ trình nâng cấp lên PostgreSQL 15–18.", ja: "PostgreSQL 14 は 2026年11月12日をもって公式サポート終了（14.25 が最終版）。PostgreSQL 15〜18 への移行計画を至急策定。"}
+
 - id: apache-cve-2026-119618
   category: vulnerability
   path: "featured/apache-cve-2026-119618/analysis/"
@@ -48,29 +72,26 @@
       label: {vi: "Triệt để", ja: "恒久対策"}
       text: {vi: "Nâng cấp Apache HTTP Server lên 2.4.71 trở lên (phát hành 11-11-2026), kiểm tra cấu hình và restart dịch vụ / rebuild image.", ja: "Apache HTTP Server を 2.4.71 以上（11月11日リリース）へ更新し、サービス再起動・コンテナ再ビルドを実施。"}
 
-- id: postgresql-cve-2026-6460
+- id: brotli-cve-2026-111497
   category: vulnerability
-  path: "featured/postgresql-cve-2026-6460/analysis/"
-  icon: "🐘"
+  path: "featured/brotli-cve-2026-111497/analysis/"
+  icon: "📦"
   accent: true
   badge: {sev: high, text: "HIGH"}
-  nav: {vi: "PostgreSQL 52 CVEs", ja: "PostgreSQL 52件のCVE"}
-  title: {vi: "PostgreSQL vá 52 CVEs (CVSS 8.8) — RCE qua Type Confusion DDL (CVE-2026-6460) & PostgreSQL 14 EOL", ja: "PostgreSQL 52件のCVE修正（CVSS 8.8）— 型混乱 DDL RCE（CVE-2026-6460）および PostgreSQL 14 EOL"}
-  date: {vi: "Cập nhật đến 2026-11-13 · 52 CVEs · Bản vá 18.7/17.12/16.16/15.20/14.25 · PostgreSQL 14 chính thức EOL", ja: "2026年11月13日 時点 · 52件のCVE · 18.7/17.12/16.16/15.20/14.25 リリース · PostgreSQL 14 公式 EOL"}
-  link: {vi: "Xem phân tích & hướng dẫn REINDEX/Backup →", ja: "分析・REINDEX/バックアップ対策ガイドを見る →"}
+  nav: {vi: "Brotli CVE-2026-111497", ja: "Brotli CVE-2026-111497"}
+  title: {vi: "Brotli CVE-2026-111497 — Lỗi bộ nhớ khi giải nén dữ liệu không đáng tin cậy", ja: "Brotli CVE-2026-111497 — 信頼できないデータ展開時のメモリ破壊"}
+  date: {vi: "Cập nhật 2026-11-16 · Brotli decoder · Bản vá phụ thuộc sản phẩm", ja: "2026年11月16日 時点 · Brotli デコーダー · 製品別に修正を確認"}
+  link: {vi: "Xem phân tích & hướng dẫn →", ja: "分析・対策ガイドを見る →"}
   items:
     - sev: high
       label: {vi: "Nguy cơ", ja: "リスク"}
-      text: {vi: "52 CVEs với 32 lỗi CVSS 8.8; tiêu biểu là CVE-2026-6460 Type Confusion qua lệnh DDL (ALTER COLUMN SET DATA TYPE) dẫn tới RCE quyền postgres.", ja: "52件中32件がCVSS 8.8。代表例 CVE-2026-6460 では DDL操作（ALTER COLUMN SET DATA TYPE）時の型混乱により postgres 権限でのRCEに至る恐れ。"}
+      text: {vi: "Dữ liệu Brotli độc hại được giải nén có thể gây hỏng bộ nhớ, gián đoạn dịch vụ, rò rỉ dữ liệu hoặc có khả năng thực thi mã.", ja: "細工された Brotli データの展開により、メモリ破壊、サービス停止、情報漏えいやコード実行の恐れ。"}
     - sev: high
       label: {vi: "Phạm vi", ja: "影響範囲"}
-      text: {vi: "Mọi phiên bản PostgreSQL trước 18.7, 17.12, 16.16, 15.20, 14.25. Client tools pg_dump, reindexdb cũng bị lỗi tiêm mã SQL/command injection.", ja: "18.7、17.12、16.16、15.20、14.25 未満の全バージョン。クライアントツール（pg_dump、reindexdb）の SQLi / コマンド注入も含む。"}
+      text: {vi: "Rà soát Brotli hệ thống và bản nhúng trong runtime, ứng dụng, trình duyệt và container; nguy cơ phụ thuộc đường giải nén dữ liệu không đáng tin cậy.", ja: "システムおよびランタイム・アプリ・ブラウザー・コンテナーに同梱された Brotli を確認。リスクは信頼できない入力の展開経路に依存。"}
     - sev: med
-      label: {vi: "Bảo trì", ja: "保守作業"}
-      text: {vi: "Bắt buộc REINDEX các chỉ mục GIN, GiST (pg_trgm) và bpchar bị nghi ngờ lỗi; chụp ngay bản Full Backup mới nếu đang dùng incremental backup.", ja: "破損が疑われる GIN、GiST（pg_trgm）、bpchar インデックスの REINDEX が必須。増分バックアップ運用時は直ちに新規フルバックアップを取得。"}
-    - sev: low
-      label: {vi: "PG14 EOL", ja: "PG14 EOL"}
-      text: {vi: "PostgreSQL 14 chính thức hết hạn hỗ trợ (EOL) từ 12-11-2026 (bản 14.25 là cuối cùng); cần khẩn trương lập lộ trình nâng cấp lên PostgreSQL 15–18.", ja: "PostgreSQL 14 は 2026年11月12日をもって公式サポート終了（14.25 が最終版）。PostgreSQL 15〜18 への移行計画を至急策定。"}
+      label: {vi: "Xử lý", ja: "対応"}
+      text: {vi: "Áp dụng bản vá hoặc backport theo nhà cung cấp, rebuild image và khởi động lại; hạn chế giải nén dữ liệu không đáng tin cậy trong lúc chờ vá.", ja: "ベンダーの修正またはバックポートを適用し、イメージ再ビルドと再起動を実施。修正まで信頼できないデータの展開を制限。"}
 
 - id: binance
   category: incident
@@ -122,31 +143,6 @@
       label: {vi: "Bồi thường", ja: "補償"}
       text: {vi: "Bắt đầu liên hệ từng khách hàng từ 06/11 để bồi thường 100% tổn thất giao dịch thực tế + hỗ trợ thăm hỏi đặc biệt tới 3 triệu JPY; cập nhật số liệu tại buổi công bố KQKD 13/11.", ja: "11月6日より不正取引による実損の100%補償に向けた個別連絡を開始（特別見舞金最大300万円）。申請状況と業績影響の見通しは11月13日の決算説明会で案内予定。"}
 
-- id: linux-cve-2026-98432
-  category: vulnerability
-  archived: true
-  path: "featured/linux-cve-2026-98432/analysis/"
-  icon: "🐧"
-  accent: true
-  badge: {sev: high, text: "HIGH"}
-  nav: {vi: "Linux kernel CVE-2026-98432", ja: "Linux カーネル CVE-2026-98432"}
-  title: {vi: "Linux kernel TCP IPv4 UAF (CVE-2026-98432) — Nguy cơ RCE/rò rỉ qua MPTCP", ja: "Linux カーネル TCP IPv4 UAF（CVE-2026-98432）— MPTCP 経由の RCE・情報漏えいリスク"}
-  date: {vi: "Cập nhật đến 2026-11-05 · Bản tin AWS 2026-160-AWS xác nhận nguy cơ MPTCP · CVSS 9.8", ja: "2026年11月5日 時点 · AWS速報 2026-160-AWS で MPTCP リスク公式確認 · CVSS 9.8"}
-  link: {vi: "Xem phân tích chi tiết →", ja: "詳細分析を見る →"}
-  items:
-    - sev: crit
-      label: {vi: "Nguy cơ", ja: "リスク"}
-      text: {vi: "Bản tin AWS 2026-160-AWS xác nhận bắt tay MPTCP nhận gói IPv4 TCP chứa IP options có thể dẫn tới rò rỉ dữ liệu hoặc thực thi mã. Chưa thấy khai thác thực tế diện rộng; một số repo GitHub tự nhận PoC chưa kiểm chứng.", ja: "AWS速報 2026-160-AWS により、IPオプション付きIPv4 TCPパケットによるMPTCPハンドシェイクで潜在的なコード実行やデータ漏えいが発生し得ることが公式確認。実際の悪用は未確認。"}
-    - sev: high
-      label: {vi: "Dễ bị tấn công", ja: "狙われやすい対象"}
-      text: {vi: "Máy mở cổng TCP internet trực tiếp, dịch vụ bật MPTCP (Go 1.24+ bật mặc định trên Linux), host sau NLB TCP pass-through, node Kubernetes chưa vá, máy Ubuntu (chưa có USN, gói vá vẫn ở -proposed ngày 5/11).", ja: "TCPポート直接公開ホスト、MPTCP有効環境（Go 1.24+ でLinux上デフォルト有効）、NLB TCPパススルー配下、未修正Kubernetesノード、Ubuntu（11月5日時点でもUSN未公開、-proposed継続）。"}
-    - sev: med
-      label: {vi: "Hạ tầng Cloud & Edge", ja: "クラウド & エッジ"}
-      text: {vi: "Hạ tầng AWS & Cloudflare: Edge/Ingress (ALB, CloudFront, Cloudflare Proxy/Tunnel) kết thúc TCP ở biên, che chắn backend (cần khóa Security Group về IP Cloudflare); Global Accelerator drop gói IP options ở data plane; DBs (RDS, Aurora) đã vá tầng host. AL2/AL2023 đã có bản vá, Ubuntu vẫn ở -proposed.", ja: "AWS & Cloudflare インフラ: Edge/Ingress（ALB、CloudFront、Cloudflare Proxy/Tunnel）はエッジでTCP終端しバックエンドを保護（Security Group制限必須）。Global Acceleratorはデータプレーンで破棄、マネージドDBはホスト層パッチ適用済み。AL2/AL2023修正済み、Ubuntuは -proposed。"}
-    - sev: low
-      label: {vi: "Xử lý", ja: "対処"}
-      text: {vi: "Cập nhật kernel và reboot. Tạm thời: tắt MPTCP (net.mptcp.enabled=0, GODEBUG=multipathtcp=0 cho Go), lọc IP options bằng nftables/iptables u32 hoặc AWS Network Firewall.", ja: "カーネル更新と再起動が恒久対策。暫定措置: MPTCP無効化（net.mptcp.enabled=0、Go向けGODEBUG=multipathtcp=0）、nftables/iptables u32またはAWS Network FirewallによるIPオプション遮断。"}
-
 - id: php2shell
   category: vulnerability
   archived: true
@@ -171,3 +167,28 @@
     - sev: low
       label: {vi: "Triệt để", ja: "恒久対策"}
       text: {vi: "Nâng lên 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35, restart, build lại image; lên kế hoạch rời PHP 8.1 trở xuống.", ja: "8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 へ更新して再起動、イメージ再ビルド。PHP 8.1 以下からの移行を計画。"}
+
+- id: linux-cve-2026-98432
+  category: vulnerability
+  archived: true
+  path: "featured/linux-cve-2026-98432/analysis/"
+  icon: "🐧"
+  accent: true
+  badge: {sev: high, text: "HIGH"}
+  nav: {vi: "Linux kernel CVE-2026-98432", ja: "Linux カーネル CVE-2026-98432"}
+  title: {vi: "Linux kernel TCP IPv4 UAF (CVE-2026-98432) — Nguy cơ RCE/rò rỉ qua MPTCP", ja: "Linux カーネル TCP IPv4 UAF（CVE-2026-98432）— MPTCP 経由の RCE・情報漏えいリスク"}
+  date: {vi: "Cập nhật đến 2026-11-05 · Bản tin AWS 2026-160-AWS xác nhận nguy cơ MPTCP · CVSS 9.8", ja: "2026年11月5日 時点 · AWS速報 2026-160-AWS で MPTCP リスク公式確認 · CVSS 9.8"}
+  link: {vi: "Xem phân tích chi tiết →", ja: "詳細分析を見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Nguy cơ", ja: "リスク"}
+      text: {vi: "Bản tin AWS 2026-160-AWS xác nhận bắt tay MPTCP nhận gói IPv4 TCP chứa IP options có thể dẫn tới rò rỉ dữ liệu hoặc thực thi mã. Chưa thấy khai thác thực tế diện rộng; một số repo GitHub tự nhận PoC chưa kiểm chứng.", ja: "AWS速報 2026-160-AWS により、IPオプション付きIPv4 TCPパケットによるMPTCPハンドシェイクで潜在的なコード実行やデータ漏えいが発生し得ることが公式確認。実際の悪用は未確認。"}
+    - sev: high
+      label: {vi: "Dễ bị tấn công", ja: "狙われやすい対象"}
+      text: {vi: "Máy mở cổng TCP internet trực tiếp, dịch vụ bật MPTCP (Go 1.24+ bật mặc định trên Linux), host sau NLB TCP pass-through, node Kubernetes chưa vá, máy Ubuntu (chưa có USN, gói vá vẫn ở -proposed ngày 5/11).", ja: "TCPポート直接公開ホスト、MPTCP有効環境（Go 1.24+ でLinux上デフォルト有効）、NLB TCPパススルー配下、未修正Kubernetesノード、Ubuntu（11月5日時点でもUSN未公開、-proposed継続）。"}
+    - sev: med
+      label: {vi: "Hạ tầng Cloud & Edge", ja: "クラウド & エッジ"}
+      text: {vi: "Hạ tầng AWS & Cloudflare: Edge/Ingress (ALB, CloudFront, Cloudflare Proxy/Tunnel) kết thúc TCP ở biên, che chắn backend (cần khóa Security Group về IP Cloudflare); Global Accelerator drop gói IP options ở data plane; DBs (RDS, Aurora) đã vá tầng host. AL2/AL2023 đã có bản vá, Ubuntu vẫn ở -proposed.", ja: "AWS & Cloudflare インフラ: Edge/Ingress（ALB、CloudFront、Cloudflare Proxy/Tunnel）はエッジでTCP終端しバックエンドを保護（Security Group制限必須）。Global Acceleratorはデータプレーンで破棄、マネージドDBはホスト層パッチ適用済み。AL2/AL2023修正済み、Ubuntuは -proposed。"}
+    - sev: low
+      label: {vi: "Xử lý", ja: "対処"}
+      text: {vi: "Cập nhật kernel và reboot. Tạm thời: tắt MPTCP (net.mptcp.enabled=0, GODEBUG=multipathtcp=0 cho Go), lọc IP options bằng nftables/iptables u32 hoặc AWS Network Firewall.", ja: "カーネル更新と再起動が恒久対策。暫定措置: MPTCP無効化（net.mptcp.enabled=0、Go向けGODEBUG=multipathtcp=0）、nftables/iptables u32またはAWS Network FirewallによるIPオプション遮断。"}

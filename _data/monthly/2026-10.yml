@@ -90,8 +90,8 @@ sections:
       vi: Trước 28-10-2026
       ja: 2026年10月28日まで
   - task:
-      vi: Nâng cấp <strong>Node.js</strong> lên 26.12.1 / 24.22.1 / 22.23.4 (4 lỗi mức cao, có 1 lỗi chiếm quyền qua Brotli)
-      ja: <strong>Node.js</strong> を 26.12.1 / 24.22.1 / 22.23.4 にアップグレードする（高レベルの脆弱性 4 件。うち 1 件は Brotli 経由の乗っ取りが可能）
+      vi: Nâng cấp <strong>Node.js</strong> lên 26.12.1 / 24.22.1 / 22.23.4 (4 lỗi mức cao, có 1 lỗi chiếm quyền qua Brotli). <a href="@home@featured/brotli-cve-2026-111497/analysis/">Chi tiết Brotli CVE-2026-111497</a>
+      ja: <strong>Node.js</strong> を 26.12.1 / 24.22.1 / 22.23.4 にアップグレードする（高レベルの脆弱性 4 件。うち 1 件は Brotli 経由の乗っ取りが可能）。<a href="@home@featured/brotli-cve-2026-111497/analysis/">Brotli CVE-2026-111497 の詳細</a>
     sev: high
     due:
       vi: Trước 06-11-2026
@@ -149,8 +149,8 @@ sections:
       ja: PHP を 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 にアップグレードしてください。CVE-2026-115560 の予防として、<code>php.ini</code> に <code>session.upload_progress.enabled = 0</code> も設定してください。<a href="@home@featured/php-cve-2026-109618-109619/php2shell/">社内対応ガイドの詳細</a>
   - name: Node.js
     summary:
-      vi: 'Bản phát hành 10-21: lỗi Brotli ghi ngoài vùng nhớ (có thể chiếm quyền, CVE-2026-111497); 2 lỗi bỏ qua kiểm tra tên miền của chứng chỉ TLS (CVE-2026-105483, -106069); lỗi <code>dns.resolve</code> (CVE-2026-105482). Thêm 6 lỗi nhẹ hơn.'
-      ja: 10月21日リリース：Brotli のメモリ範囲外書き込み（乗っ取りの可能性あり、CVE-2026-111497）、TLS 証明書のホスト名検証を回避される 2 件の脆弱性（CVE-2026-105483, -106069）、<code>dns.resolve</code> の脆弱性（CVE-2026-105482）。ほかに軽度の脆弱性 6 件。
+      vi: 'Bản phát hành 10-21: lỗi Brotli ghi ngoài vùng nhớ (có thể chiếm quyền, <a href="@home@featured/brotli-cve-2026-111497/analysis/">CVE-2026-111497</a>, công bố 21-10); 2 lỗi bỏ qua kiểm tra tên miền của chứng chỉ TLS (CVE-2026-105483, -106069); lỗi <code>dns.resolve</code> (CVE-2026-105482). Thêm 6 lỗi nhẹ hơn.'
+      ja: 10月21日リリース：Brotli のメモリ範囲外書き込み（乗っ取りの可能性あり、<a href="@home@featured/brotli-cve-2026-111497/analysis/">CVE-2026-111497</a>、10月21日公開）、TLS 証明書のホスト名検証を回避される 2 件の脆弱性（CVE-2026-105483, -106069）、<code>dns.resolve</code> の脆弱性（CVE-2026-105482）。ほかに軽度の脆弱性 6 件。
     sev: high
     impact:
       vi: Dịch vụ chạy Node.js 22.x, 24.x, 26.x (API, SSR, worker, Next.js, Nuxt). Client gọi HTTPS bằng Node có nguy cơ bị nghe lén.
@@ -392,8 +392,8 @@ sections:
   items:
   - vi: 'PHP: <a href="@home@featured/php-cve-2026-109618-109619/php2shell/">tổng quan nội bộ</a>, <a href="https://aws.amazon.com/security/security-bulletins/2026-143-aws/" target="_blank" rel="noopener noreferrer">AWS 2026-143</a>, <a href="https://www.php.net/archive/2026.php" target="_blank" rel="noopener noreferrer">php.net (2026 releases &amp; CVE-2026-115560)</a>'
     ja: 'PHP: <a href="@home@featured/php-cve-2026-109618-109619/php2shell/">社内概要</a>, <a href="https://aws.amazon.com/security/security-bulletins/2026-143-aws/" target="_blank" rel="noopener noreferrer">AWS 2026-143</a>, <a href="https://www.php.net/archive/2026.php" target="_blank" rel="noopener noreferrer">php.net (2026 releases &amp; CVE-2026-115560)</a>'
-  - vi: 'Node.js: <a href="https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" target="_blank" rel="noopener noreferrer">Security Releases 2026-10-21</a>'
-    ja: 'Node.js: <a href="https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" target="_blank" rel="noopener noreferrer">Security Releases 2026-10-21</a>'
+  - vi: 'Node.js: <a href="https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" target="_blank" rel="noopener noreferrer">Security Releases 2026-10-21</a>, <a href="@home@featured/brotli-cve-2026-111497/analysis/">Brotli CVE-2026-111497 (nội bộ)</a>'
+    ja: 'Node.js: <a href="https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" target="_blank" rel="noopener noreferrer">Security Releases 2026-10-21</a>, <a href="@home@featured/brotli-cve-2026-111497/analysis/">Brotli CVE-2026-111497（社内分析）</a>'
   - vi: 'Next.js: <a href="https://nextjs.org/blog/nextjs-security-update-october-14-2026" target="_blank" rel="noopener noreferrer">Security Update 2026-10-14</a>, <a href="https://github.com/vercel/next.js/security/advisories" target="_blank" rel="noopener noreferrer">GitHub Advisories</a>'
     ja: 'Next.js: <a href="https://nextjs.org/blog/nextjs-security-update-october-14-2026" target="_blank" rel="noopener noreferrer">Security Update 2026-10-14</a>, <a href="https://github.com/vercel/next.js/security/advisories" target="_blank" rel="noopener noreferrer">GitHub Advisories</a>'
   - vi: 'Laravel: <a href="https://github.com/laravel/framework/security/advisories/GHSA-f9x3-7vq9-cph6" target="_blank" rel="noopener noreferrer">CVE-2026-114509</a>, <a href="https://github.com/laravel/framework/security/advisories/GHSA-5wcm-3v2w-8362" target="_blank" rel="noopener noreferrer">CVE-2026-114508</a>, <a href="https://github.com/laravel/framework/releases" target="_blank" rel="noopener noreferrer">Laravel Releases</a>'
