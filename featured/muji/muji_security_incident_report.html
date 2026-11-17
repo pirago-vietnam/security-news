@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "無印良品 (MUJI / Ryohin Keikaku) — Rò rỉ tối đa 27,26 triệu tài khoản & 1,09 triệu số thẻ MUJI Card"
-description: "Diễn biến mới nhất ngày 13/11/2026: Tác động họp báo Chủ tịch Satoshi Shimizu, Credit Saison hỗ trợ đổi thẻ miễn phí, phân tích kỹ thuật lưu thẻ unmasked 5 năm, credential stuffing & khuyến cáo PiraGo"
+description: "Cập nhật trạng thái dịch vụ MUJI đến 16/11/2026, diễn biến sự cố, hỗ trợ đổi thẻ và khuyến cáo bảo vệ khách hàng"
 category: "Sự cố an ninh"
 ---
 <style>
@@ -32,7 +32,7 @@ category: "Sự cố an ninh"
 
 <div class="report-header">
   <h1>無印良品 (MUJI / Ryohin Keikaku) — Rò rỉ tối đa 27,26 triệu tài khoản &amp; 1,09 triệu số thẻ MUJI Card</h1>
-  <p class="sub">Cập nhật <strong>2026-11-14</strong> (chưa có thông cáo chính thức mới; số liệu tính đến 13/11:MUJI Net Store bước sang ngày thứ 8 tạm ngừng; Credit Saison siết chặt giám sát gian lận và triển khai đổi thẻ miễn phí). Trạng thái: <strong>đang diễn biến</strong>. Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a>.</p>
+  <p class="sub">Cập nhật tình trạng dịch vụ đến <strong>2026-11-16</strong>: Net Store vẫn ngừng hoạt động, chưa có lịch mở lại; MUJI App chỉ giữ chức năng hiển thị mã vạch thành viên. Trạng thái: <strong>đang diễn biến</strong>. Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a>.</p>
 </div>
 
 <blockquote class="callout">
@@ -53,14 +53,14 @@ category: "Sự cố an ninh"
     <div class="kpi-label">Thẻ MUJI Card đang còn hiệu lực hoạt động</div>
   </div>
   <div class="kpi-card">
-    <div class="kpi-num">Ngày thứ 8</div>
-    <div class="kpi-label">Net Store đóng cửa hoàn toàn (từ 06/11 đến 13/11/2026)</div>
+    <div class="kpi-num">Đang ngừng</div>
+    <div class="kpi-label">Net Store chưa có lịch mở lại (tình trạng đến 16/11/2026)</div>
   </div>
 </div>
 
 <nav class="an-nav" aria-label="Mục lục">
   <a href="#tom-tat">1. Tóm tắt &amp; Quy mô</a>
-  <a href="#dien-bien">2. Diễn biến &amp; Cập nhật 13/11</a>
+  <a href="#dien-bien">2. Diễn biến &amp; Cập nhật 16/11</a>
   <a href="#pham-vi">3. Phạm vi dữ liệu bị ảnh hưởng</a>
   <a href="#nguyen-nhan">4. Phân tích nguyên nhân &amp; Kiến trúc</a>
   <a href="#ung-pho">5. Ứng phó, Bồi thường &amp; Cơ quan quản lý</a>
@@ -78,7 +78,7 @@ category: "Sự cố an ninh"
 </section>
 
 <section class="an-sec">
-<h2 id="dien-bien">2. Diễn biến &amp; Cập nhật ngày 13/11/2026</h2>
+<h2 id="dien-bien">2. Diễn biến &amp; Cập nhật ngày 16/11/2026</h2>
 <figure class="fig">
 <svg viewBox="0 0 740 170" role="img" aria-label="timeline">
 <rect x="40" y="74" width="352" height="12" rx="6" fill="var(--crit)" opacity=".25"/>
@@ -120,6 +120,7 @@ category: "Sự cố an ninh"
       • <strong>Cơ quan quản lý:</strong> PPC yêu cầu nộp báo cáo giải trình chính thức (確報); METI chỉ đạo rà soát việc tuân thủ quy chuẩn Credit Card Security Guidelines.<br>
       • <strong>Hệ thống:</strong> Net Store tiếp tục đóng cửa; cửa hàng vật lý duy trì bình thường; cổ phiếu Ryohin Keikaku (TSE: 7453) chịu áp lực điều chỉnh trên sàn Tokyo.</td><td><span class="badge med">Báo chí Nhật / Phân tích tài chính</span></td></tr>
     <tr><td>14/11/2026</td><td><strong>Rà soát cập nhật:</strong> Chưa ghi nhận thông cáo chính thức nào mới hơn Báo cáo thứ 4 (09/11); Net Store vẫn đóng cửa, chưa công bố ngày mở lại. Đường dây tư vấn của Ryohin Keikaku (<code>0120-36-0470</code>, 9:30–17:00 hằng ngày, đến hết 26/12/2026) vẫn hoạt động. Credit Saison và MUJI cho biết chưa xác nhận dữ liệu bị đăng bán trên dark web hay gian lận tăng bất thường. Một số con số theo từng dịch vụ vẫn chênh lệch giữa các nguồn báo chí.</td><td><span class="badge med">PR Times / NHK / Nikkei</span></td></tr>
+    <tr><td>16/11/2026</td><td><strong>Kiểm tra tình trạng dịch vụ:</strong> Theo tổng hợp của Westeria, Net Store vẫn ngừng toàn bộ chức năng và chưa có lịch mở lại; MUJI App chỉ hiển thị mã vạch thẻ thành viên, cửa hàng vật lý hoạt động bình thường. Đây là xác nhận tình trạng dịch vụ, không phải thông cáo điều tra mới. <a href="https://westeria.jp/security-incidents/cases/ryohin-keikaku-muji-2026/" target="_blank" rel="noopener noreferrer">Nguồn tổng hợp</a> · <a href="https://www.muji.com/content/maintenance_s_20261111.html" target="_blank" rel="noopener noreferrer">Thông báo dịch vụ MUJI</a>.</td><td><span class="badge med">Westeria · 16/11</span></td></tr>
   </tbody>
 </table>
 </div>

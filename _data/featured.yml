@@ -8,7 +8,7 @@
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
   nav: {vi: "Sự cố MUJI", ja: "無印良品 インシデント"}
   title: {vi: "無印良品 (MUJI / Ryohin Keikaku) — Rò rỉ tối đa 27,26 triệu tài khoản & 1,09 triệu số thẻ MUJI Card", ja: "無印良品（良品計画）— 最大2,726万件の会員情報 & MUJI Card 約109万件流出の恐れ"}
-  date: {vi: "Cập nhật đến 2026-11-13 · Net Store ngày thứ 8 ngừng hoạt động · Credit Saison hỗ trợ đổi thẻ miễn phí", ja: "2026年11月13日 時点 · ネットストア停止8日目継続 · クレディセゾン無料再発行対応"}
+  date: {vi: "Trạng thái đến 2026-11-16 · Net Store vẫn ngừng · Chưa có lịch mở lại", ja: "2026年11月16日時点 · ネットストア停止継続 · 再開時期未定"}
   link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
   items:
     - sev: crit
@@ -22,7 +22,7 @@
       text: {vi: "Credit Saison siết chặt giám sát gian lận dải BIN và miễn phí đổi thẻ; PPC yêu cầu nộp báo cáo giải trình chính thức (確報); METI điều tra tuân thủ Credit Card Security Guidelines.", ja: "クレディセゾンがBIN監視強化と無料再発行対応。PPCが正式確報を要求、経産省がセキュリティガイドライン違反を調査。"}
     - sev: low
       label: {vi: "Ứng phó & Bồi thường", ja: "対応・補償"}
-      text: {vi: "Net Store bước sang ngày thứ 8 tạm đóng hoàn toàn; Ryohin Keikaku chi trả 100% phí đổi thẻ, cam kết bồi thường mọi thiệt hại thực tế và chuyển hướng sang chiến lược 'Data Minimization'.", ja: "ネットストア完全停止は8日目に突入。良品計画が再発行手数料全額負担・実損全額補償を表明し、データ収集方針を「最小限」へ全面転換。"}
+      text: {vi: "Đến 16/11, Net Store vẫn ngừng và MUJI App chỉ giữ mã vạch thành viên; Credit Saison hỗ trợ đổi thẻ miễn phí.", ja: "11月16日時点でネットストアは停止中、MUJIアプリは会員証バーコード表示以外を停止。クレディセゾンはカードを無料再発行。"}
 
 - id: postgresql-cve-2026-6460
   category: vulnerability
@@ -127,7 +127,7 @@
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
   nav: {vi: "Sự cố GMO Onamae", ja: "GMOお名前.com インシデント"}
   title: {vi: "GMO Onamae Desktop Cloud — Chiếm quyền 26.739 VPS Windows, rò rỉ MT4/MT5", ja: "GMO お名前.com デスクトップクラウド — Windows VPS 26,739台乗っ取り・MT4/MT5情報漏えい"}
-  date: {vi: "Cập nhật đến 2026-11-12 · 16 thông cáo, IR 06/11, Tổ điều tra liên ngành NPA & 890 tin Bounty", ja: "2026年11月12日 時点 · 16件の続報・11/6 IR開示・警察庁長官指示の合同捜査本部 & 懸賞金890件"}
+  date: {vi: "Cập nhật 2026-11-18 · Công bố KQKD 13/11 · 1.041 tin Bounty đến 17/11", ja: "2026年11月18日更新 · 11/13決算説明 · 情報提供1,041件（11/17時点）"}
   link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
   items:
     - sev: crit
@@ -135,13 +135,13 @@
       text: {vi: "Chiếm quyền 26.739 máy chủ VPS Windows, rò rỉ thông tin đăng nhập MT4/MT5 tác động hơn 70 sàn chứng khoán & FX.", ja: "Windows VPSサーバー26,739台が乗っ取られ、MT4/MT5のログイン情報が漏えい。70以上の証券・FX会社に影響。"}
     - sev: high
       label: {vi: "Tống tiền", ja: "恐喝"}
-      text: {vi: "Tin tặc đòi 50 triệu USD tiền chuộc; GMO kiên quyết từ chối và lập Quỹ Bounty 1 triệu USD (đã nhận 890 tin báo lũy kế tính đến 11/11).", ja: "ハッカーが身代金5,000万米ドルを要求。GMOは断固として拒否し、100万米ドルの懸賞金基金を設立（11月11日時点で累計890件の情報提供）。"}
+      text: {vi: "GMO từ chối yêu cầu 50 triệu USD và lập Quỹ Bounty tối đa 1 triệu USD; ghi nhận 1.041 tin báo đến 18:00 ngày 17/11, chưa đồng nghĩa với manh mối được xác minh.", ja: "GMOは5,000万米ドルの要求を拒否し、最大100万米ドルの懸賞金基金を設立。11月17日18時時点で情報提供は1,041件（有力情報の確定件数ではない）。"}
     - sev: med
       label: {vi: "Điều tra & Phòng thủ", ja: "捜査・防御"}
       text: {vi: "Takedown tên miền rò rỉ sau 15,5 giờ; ngày 06/11 Tổng cục trưởng Cảnh sát Quốc gia Nhật Bản (NPA) chỉ thị lập Tổ điều tra liên ngành tại Sở Cảnh sát Tokyo.", ja: "流出ドメインを15.5時間でテイクダウン。11月6日、警察庁長官が警察法第61条の3に基づき警視庁への合同捜査本部設置を指示。"}
     - sev: low
       label: {vi: "Bồi thường", ja: "補償"}
-      text: {vi: "Bắt đầu liên hệ từng khách hàng từ 06/11 để bồi thường 100% tổn thất giao dịch thực tế + hỗ trợ thăm hỏi đặc biệt tới 3 triệu JPY; cập nhật số liệu tại buổi công bố KQKD 13/11.", ja: "11月6日より不正取引による実損の100%補償に向けた個別連絡を開始（特別見舞金最大300万円）。申請状況と業績影響の見通しは11月13日の決算説明会で案内予定。"}
+      text: {vi: "Đến 12/11, 2.943 tài khoản yêu cầu bồi thường khoảng 2,998 tỷ JPY; chi phí trực tiếp dự kiến 3,05 tỷ JPY, chưa phải số tiền chi trả đã xác nhận.", ja: "11月12日時点の損失補償申請は2,943口座・約29.98億円。直接費用は約30.5億円を見込むが、確定した支払額ではない。"}
 
 - id: php2shell
   category: vulnerability
