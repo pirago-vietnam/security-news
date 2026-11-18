@@ -2,8 +2,8 @@
   <div class="pirago-header-inner">
     <div class="pirago-brand">
       <a href="{{ home_url | relative_url }}" class="pirago-brand-link" title="{{ t.home_title }}">
-        <img src="{{ '/assets/images/logo.webp' | relative_url }}" alt="PiraGo Logo" class="pirago-logo logo-light" width="124" height="33">
-        <img src="{{ '/assets/images/logo_footer.webp' | relative_url }}" alt="PiraGo Logo" class="pirago-logo logo-dark" width="124" height="33">
+        <img src="{{ '/assets/images/logo.webp' | relative_url }}?v={{ site.time | date: '%s' }}" alt="PiraGo Logo" class="pirago-logo logo-light" width="124" height="33">
+        <img src="{{ '/assets/images/logo_footer.webp' | relative_url }}?v={{ site.time | date: '%s' }}" alt="PiraGo Logo" class="pirago-logo logo-dark" width="124" height="33">
         <span class="pirago-brand-badge">Security News</span>
       </a>
     </div>

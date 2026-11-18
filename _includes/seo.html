@@ -36,8 +36,8 @@
   <link rel="alternate" hreflang="vi" href="{{ vi_abs }}">
   <link rel="alternate" hreflang="ja" href="{{ ja_abs }}">
   <link rel="alternate" hreflang="x-default" href="{{ vi_abs }}">
-  <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/images/favicon.png' | relative_url }}">
-  <link rel="apple-touch-icon" href="{{ '/assets/images/favicon.png' | relative_url }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/images/favicon.png' | relative_url }}?v={{ site.time | date: '%s' }}">
+  <link rel="apple-touch-icon" href="{{ '/assets/images/favicon.png' | relative_url }}?v={{ site.time | date: '%s' }}">
 
   <!-- Open Graph -->
   <meta property="og:type" content="{% if is_home %}website{% else %}article{% endif %}">

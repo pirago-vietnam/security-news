@@ -4,13 +4,13 @@
       <!-- Cột 1: Thông tin công ty & văn phòng -->
       <div class="footer-col footer-col-company">
         <a href="https://pirago.vn" class="footer-brand" target="_blank" rel="noopener noreferrer">
-          <img src="{{ '/assets/images/logo_footer.webp' | relative_url }}" alt="PiraGo Logo" width="124" height="33" class="footer-logo">
+          <img src="{{ '/assets/images/logo_footer.webp' | relative_url }}?v={{ site.time | date: '%s' }}" alt="PiraGo Logo" width="124" height="33" class="footer-logo">
         </a>
         <p class="footer-slogan">Turn ideas Into Reality, <span class="highlight-red">{{ t.footer_slogan_suffix }}</span></p>
 
         <div class="office-box">
           <div class="office-title">
-            <img src="{{ '/assets/images/vi_flag.webp' | relative_url }}" alt="{{ t.vn_name }}" width="18" height="18" class="flag-icon">
+            <img src="{{ '/assets/images/vi_flag.webp' | relative_url }}?v={{ site.time | date: '%s' }}" alt="{{ t.vn_name }}" width="18" height="18" class="flag-icon">
             <strong>PiraGo Việt Nam</strong>
           </div>
           <p class="office-desc">{{ t.vn_address }}</p>
@@ -22,7 +22,7 @@
 
         <div class="office-box">
           <div class="office-title">
-            <img src="{{ '/assets/images/ja_flag.webp' | relative_url }}" alt="Japan" width="18" height="18" class="flag-icon">
+            <img src="{{ '/assets/images/ja_flag.webp' | relative_url }}?v={{ site.time | date: '%s' }}" alt="Japan" width="18" height="18" class="flag-icon">
             <strong>PiraGo Japan</strong>
           </div>
           <p class="office-desc">{{ t.jp_address }}</p>
