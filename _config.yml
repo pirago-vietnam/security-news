@@ -5,6 +5,7 @@ baseurl: ""
 lang: "vi"
 author: "PiraGo"
 logo: "/assets/images/logo.webp"
+og_image: "/assets/images/og-image.png"
 permalink: pretty
 
 # Exclude files from Jekyll processing
