@@ -27,8 +27,16 @@ category: "Sự cố an ninh"
   .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
   .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
   .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
-  .fig .mut { fill: currentColor; opacity: .85; }
-  .fig .box { fill: var(--card); stroke: var(--line-strong); }
+  .fig .mut { fill: var(--text-muted); }
+  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
+  .fig .box[style*="--crit"] { fill: var(--crit-bg); }
+  .fig .box[style*="--high"] { fill: var(--high-bg); }
+  .fig rect[stroke="var(--low)"] { fill: var(--low-bg); }
+  .fig rect[fill="var(--line)"] { fill: #cbd5e1; }
+  html[data-theme="dark"] .fig .box[style*="--crit"] { fill: rgba(239,68,68,.32); }
+  html[data-theme="dark"] .fig .box[style*="--high"] { fill: rgba(245,158,11,.32); }
+  html[data-theme="dark"] .fig rect[stroke="var(--low)"] { fill: rgba(16,185,129,.28); }
+  html[data-theme="dark"] .fig rect[fill="var(--line)"] { fill: #64748b; }
 </style>
 
 <div class="report-header">
@@ -74,16 +82,16 @@ category: "Sự cố an ninh"
 <figure class="fig">
 <svg viewBox="0 0 720 170" role="img" aria-label="dòng thời gian">
 <defs><marker id="ah1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs>
-<line x1="40" y1="70" x2="690" y2="70" stroke="var(--line-strong)" stroke-width="5" stroke-linecap="round"/>
-<circle cx="90" cy="70" r="12" fill="var(--high)" stroke="currentColor" stroke-width="2"/><circle cx="420" cy="70" r="12" fill="var(--crit)" stroke="currentColor" stroke-width="2"/><circle cx="550" cy="70" r="12" fill="var(--pirago-blue)" stroke="currentColor" stroke-width="2"/>
+<line x1="40" y1="70" x2="690" y2="70" stroke="var(--line)" stroke-width="3"/>
+<circle cx="90" cy="70" r="11" fill="var(--high)"/><circle cx="420" cy="70" r="11" fill="var(--crit)"/><circle cx="550" cy="70" r="11" fill="var(--pirago-blue)"/>
 <text x="90" y="40" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">11/11</text>
 <text x="420" y="40" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">16/11</text>
 <text x="550" y="40" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">17/11</text>
 <text x="90" y="104" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">Có thể rò rỉ</text><text x="90" y="122" text-anchor="middle" font-size="11.5" class="mut">Môi trường test</text>
 <text x="420" y="104" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">Phát hiện</text><text x="420" y="122" text-anchor="middle" font-size="11.5" class="mut">Chặn truy cập & sửa</text>
 <text x="550" y="104" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">Công bố</text><text x="550" y="122" text-anchor="middle" font-size="11.5" class="mut">Xin lỗi, báo chí đưa tin</text>
-<text x="255" y="62" text-anchor="middle" font-size="12.5" font-weight="800" fill="currentColor">5 ngày</text>
-<text x="485" y="62" text-anchor="middle" font-size="12" font-weight="800" fill="currentColor">1 ngày</text>
+<text x="255" y="62" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--high)">5 ngày</text>
+<text x="485" y="62" text-anchor="middle" font-size="12" font-weight="700" fill="var(--pirago-blue)">1 ngày</text>
 </svg>
 <figcaption>Dòng thời gian (tháng 11/2026). Khoảng cách 5 ngày giữa thời điểm có thể rò rỉ và lúc phát hiện chưa được thông báo giải thích.</figcaption>
 </figure>
@@ -106,11 +114,11 @@ category: "Sự cố an ninh"
 <figure class="fig">
 <svg viewBox="0 0 720 150" role="img" aria-label="quy mô">
 <text x="0" y="27" font-size="12.5" fill="currentColor">Tổng tài khoản (tham chiếu)</text>
-<rect x="250" y="10" width="360" height="24" rx="4" fill="var(--text-muted)" fill-opacity=".45" stroke="var(--text-muted)" stroke-width="1.5"/><text x="618" y="27" font-size="12.5" font-weight="700" fill="currentColor">15M+</text>
+<rect x="250" y="10" width="360" height="24" rx="4" fill="var(--line)"/><text x="618" y="27" font-size="12.5" font-weight="700" fill="currentColor">15M+</text>
 <text x="0" y="67" font-size="12.5" fill="currentColor">Mã chi nhánh, mã KH, ID</text>
-<rect x="250" y="50" width="270" height="24" rx="4" fill="var(--crit)" stroke="currentColor" stroke-width="1.5"/><text x="528" y="67" font-size="12.5" font-weight="700" fill="currentColor">~11,25M</text>
+<rect x="250" y="50" width="270" height="24" rx="4" fill="var(--crit)"/><text x="528" y="67" font-size="12.5" font-weight="700" fill="currentColor">~11,25M</text>
 <text x="0" y="107" font-size="12.5" fill="currentColor">+ Thông tin cá nhân & tài chính</text>
-<rect x="250" y="90" width="107" height="24" rx="4" fill="var(--high)" stroke="currentColor" stroke-width="1.5"/><text x="365" y="107" font-size="12.5" font-weight="700" fill="currentColor">~4,47M</text>
+<rect x="250" y="90" width="107" height="24" rx="4" fill="var(--high)"/><text x="365" y="107" font-size="12.5" font-weight="700" fill="currentColor">~4,47M</text>
 </svg>
 <figcaption>Quy mô tối đa (thang tuyến tính, đơn vị triệu tài khoản). Công bố liệt kê hai nhóm riêng biệt, không nên cộng gộp; 15 triệu là số tổng theo NHK tại 02/11.</figcaption>
 </figure>
@@ -140,13 +148,13 @@ category: "Sự cố an ninh"
 <h2 id="bai-hoc">5. Khuyến cáo từ PiraGo</h2>
 
 <figure class="fig">
-<svg viewBox="-2 0 744 200" role="img" aria-label="sơ đồ rủi ro môi trường test">
-<defs><marker id="ah2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
-<rect class="box" x="0" y="16" width="150" height="74" rx="8" style="stroke:var(--high);stroke-width:3"/><text x="75" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Dữ liệu thật</text><text x="75" y="68" text-anchor="middle" font-size="11" class="mut">(khách hàng, tài sản)</text><rect class="box" x="197" y="16" width="150" height="74" rx="8" style="stroke:var(--crit);stroke-width:3"/><text x="272" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Môi trường test</text><text x="272" y="68" text-anchor="middle" font-size="11" class="mut">kiểm soát yếu hơn?</text><rect class="box" x="394" y="16" width="150" height="74" rx="8" style="stroke:var(--crit);stroke-width:3"/><text x="469" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Truy cập trái phép</text><text x="469" y="68" text-anchor="middle" font-size="11" class="mut">bên thứ ba</text><rect class="box" x="590" y="16" width="150" height="74" rx="8" style="stroke:var(--crit);stroke-width:3"/><text x="665" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Lộ dữ liệu</text><text x="665" y="68" text-anchor="middle" font-size="11" class="mut">cá nhân + tài chính</text>
-<line x1="150" y1="53" x2="195" y2="53" stroke="currentColor" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#ah2)"/>
-<line x1="544" y1="53" x2="588" y2="53" stroke="currentColor" stroke-width="2.5" marker-end="url(#ah2)"/>
-<line x1="347" y1="53" x2="392"  y2="53" stroke="currentColor" stroke-width="2.5" marker-end="url(#ah2)"/>
-<rect x="0" y="130" width="740" height="56" rx="8" fill="var(--low-bg)" stroke="var(--low)" stroke-width="2.5" stroke-dasharray="6 4"/>
+<svg viewBox="0 0 740 200" role="img" aria-label="sơ đồ rủi ro môi trường test">
+<defs><marker id="ah2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs>
+<rect class="box" x="0" y="16" width="150" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="75" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Dữ liệu thật</text><text x="75" y="68" text-anchor="middle" font-size="11" class="mut">(khách hàng, tài sản)</text><rect class="box" x="197" y="16" width="150" height="74" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="272" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Môi trường test</text><text x="272" y="68" text-anchor="middle" font-size="11" class="mut">kiểm soát yếu hơn?</text><rect class="box" x="394" y="16" width="150" height="74" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="469" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Truy cập trái phép</text><text x="469" y="68" text-anchor="middle" font-size="11" class="mut">bên thứ ba</text><rect class="box" x="590" y="16" width="150" height="74" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="665" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Lộ dữ liệu</text><text x="665" y="68" text-anchor="middle" font-size="11" class="mut">cá nhân + tài chính</text>
+<line x1="150" y1="53" x2="195" y2="53" stroke="var(--text-muted)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ah2)"/>
+<line x1="544" y1="53" x2="588" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#ah2)"/>
+<line x1="347" y1="53" x2="392"  y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#ah2)"/>
+<rect x="0" y="130" width="740" height="56" rx="8" fill="none" stroke="var(--low)" stroke-width="1.5" stroke-dasharray="6 4"/>
 <text x="16" y="152" font-size="12.5" font-weight="700" fill="currentColor">Khuyến cáo PiraGo:</text>
 <text x="16" y="170" font-size="11.5" class="mut">• Dữ liệu tổng hợp/masking, MFA & VPN cho test</text>
 </svg>
