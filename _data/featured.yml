@@ -1,5 +1,29 @@
 # Các case nổi bật (sự cố lớn, phân tích lỗ hổng, runbook ứng phó). Thứ tự = thứ tự hiển thị.
 # `path` tính từ gốc ngôn ngữ (vi: "/", ja: "/ja/").
+- id: rakuten-sec
+  category: incident
+  path: "featured/rakuten-sec/rakuten_securities_security_incident_report/"
+  icon: "📈"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL INCIDENT"}
+  nav: {vi: "Sự cố Rakuten Securities", ja: "楽天証券 インシデント"}
+  title: {vi: "楽天証券 (Rakuten Securities) — Có thể lộ tối đa 11,25 triệu tài khoản từ môi trường test", ja: "楽天証券 — テスト環境から最大1,125万口座の情報流出の恐れ"}
+  date: {vi: "Cập nhật 2026-11-18 · Công bố 17/11 · Nguyên nhân đang điều tra", ja: "2026年11月18日更新 · 11/17公表 · 原因調査中"}
+  link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Quy mô", ja: "規模"}
+      text: {vi: "Tối đa ~11,25 triệu tài khoản (mã chi nhánh, mã khách hàng, ID đăng nhập); trong đó tối đa ~4,47 triệu tài khoản lộ thêm họ tên, địa chỉ, SĐT, email, tài khoản rút tiền, thu nhập và tài sản (gồm người đã rút tài khoản).", ja: "最大約1,125万口座（部店・お客様コード、ログインID）。うち最大約447万口座は氏名・住所・電話・メール・出金先口座・年収・金融資産等も対象（退会者含む）。"}
+    - sev: high
+      label: {vi: "Nguyên nhân", ja: "原因"}
+      text: {vi: "Truy cập trái phép của bên thứ ba, phát hiện 16/11; thông tin trong môi trường test có thể bị rò rỉ từ 11/11. Nguyên nhân và đường xâm nhập đang điều tra.", ja: "第三者による不正アクセスを11月16日に検知、テスト環境の情報が11月11日に漏えいしたおそれ。原因・経緯は調査中。"}
+    - sev: med
+      label: {vi: "Chưa xác nhận lộ", ja: "未確認事項"}
+      text: {vi: "Mật khẩu đăng nhập, mã PIN và thông tin giao dịch chưa xác nhận bị lộ; chưa ghi nhận giao dịch trái phép liên quan.", ja: "パスワード・暗証番号など取引に必要な情報の漏えいは未確認。本件起因の不正取引も確認されていません。"}
+    - sev: low
+      label: {vi: "Ứng phó", ja: "対応"}
+      text: {vi: "Đã xác định xong khách hàng bị ảnh hưởng và thông báo riêng; cảnh báo phishing, khuyến nghị passkey, có thể tạm khóa giao dịch/rút tiền.", ja: "対象のお客様の特定は完了、個別に報告。フィッシング注意、パスキー推奨、取引・出金の一時停止設定が可能。"}
+
 - id: muji
   category: incident
   path: "featured/muji/muji_security_incident_report/"

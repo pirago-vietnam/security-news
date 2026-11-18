@@ -1,0 +1,134 @@
+---
+layout: default
+title: "楽天証券 (Rakuten Securities) — Có thể lộ tối đa 11,25 triệu tài khoản từ môi trường test"
+description: "Cập nhật sự cố rò rỉ thông tin khách hàng từ môi trường test của Rakuten Securities (công bố 17/11/2026): phạm vi, dữ liệu bị ảnh hưởng, ứng phó và khuyến cáo"
+image: "/featured/rakuten-sec/rakuten-securities-og.png"
+category: "Sự cố an ninh"
+---
+<style>
+  .an-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
+  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--line); color: var(--text-muted); }
+  .an-nav a:hover { color: var(--pirago-blue); border-color: var(--pirago-blue); text-decoration: none; }
+  .an-sec { margin: 0 0 40px; }
+  .an-sec h2 { font-size: 21px; margin: 28px 0 14px; scroll-margin-top: 90px; }
+  .an-sec h3 { font-size: 17px; margin: 20px 0 8px; }
+  .an-sec ul, .an-sec ol { padding-left: 22px; }
+  .an-sec li { margin: 6px 0; }
+  .an-sec .table-wrap { overflow-x: auto; margin: 14px 0 20px; }
+  .an-sec code { word-break: break-all; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 20px 0 24px; }
+  .kpi-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); }
+  .kpi-num { font-size: 22px; font-weight: 800; font-family: var(--font-mono); color: var(--pirago-navy); line-height: 1.2; margin-bottom: 4px; }
+  html[data-theme="dark"] .kpi-num { color: #5ab0e8; }
+  .kpi-num.crit { color: var(--crit); }
+  .kpi-num.high { color: var(--high); }
+  .kpi-label { font-size: 12.5px; color: var(--text-muted); line-height: 1.4; }
+  .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
+  .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
+  .fig .mut { fill: var(--text-muted); }
+  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
+</style>
+
+<div class="report-header">
+  <h1>楽天証券 (Rakuten Securities) — Có thể lộ tối đa 11,25 triệu tài khoản từ môi trường test</h1>
+  <p class="sub">Cập nhật đến <strong>2026-11-18</strong>: công ty công bố ngày 17/11 rằng một phần thông tin trong <strong>môi trường test</strong> có thể đã bị rò rỉ ra ngoài; nguyên nhân và đường xâm nhập <strong>vẫn đang điều tra</strong>. Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a>.</p>
+</div>
+
+<blockquote class="callout">
+  <p><strong>Tóm tắt nhanh (Non-tech):</strong> Rakuten Securities (công ty chứng khoán trực tuyến của Rakuten Group, hơn 15 triệu tài khoản) xác nhận ngày 11/11/2026 rằng một phần thông tin quản lý trong hệ thống môi trường test có thể đã bị rò rỉ. Ngày 16/11 công ty phát hiện khả năng bên thứ ba truy cập trái phép, đã chặn truy cập và khắc phục các điểm bị ảnh hưởng, rồi công bố và xin lỗi ngày 17/11. Có thể ảnh hưởng tối đa <strong>khoảng 11,25 triệu tài khoản</strong> (mã chi nhánh, mã khách hàng, ID đăng nhập) và trong đó tối đa <strong>khoảng 4,47 triệu tài khoản</strong> bị lộ thêm thông tin cá nhân và tài chính. Công ty cho biết mật khẩu đăng nhập, mã PIN và thông tin cần để giao dịch <strong>chưa xác nhận bị lộ</strong>, và chưa ghi nhận giao dịch trái phép liên quan.</p>
+</blockquote>
+
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-num crit">~11,25M</div><div class="kpi-label">Tài khoản có thể lộ mã chi nhánh, mã khách hàng, ID đăng nhập (tối đa)</div></div>
+  <div class="kpi-card"><div class="kpi-num crit">~4,47M</div><div class="kpi-label">Tài khoản có thể lộ thêm thông tin cá nhân &amp; tài chính (tối đa)</div></div>
+  <div class="kpi-card"><div class="kpi-num high">Test env</div><div class="kpi-label">Nguồn rò rỉ: môi trường test, gồm cả khách hàng đã rút tài khoản</div></div>
+  <div class="kpi-card"><div class="kpi-num">Đang điều tra</div><div class="kpi-label">Nguyên nhân và đường xâm nhập chưa được công bố</div></div>
+</div>
+
+<nav class="an-nav" aria-label="Mục lục">
+  <a href="#tom-tat">1. Tóm tắt</a>
+  <a href="#dien-bien">2. Diễn biến</a>
+  <a href="#pham-vi">3. Dữ liệu bị ảnh hưởng</a>
+  <a href="#ung-pho">4. Ứng phó &amp; Khuyến cáo người dùng</a>
+  <a href="#bai-hoc">5. Khuyến cáo từ PiraGo</a>
+  <a href="#nguon">6. Nguồn tham khảo</a>
+</nav>
+
+<section class="an-sec">
+<h2 id="tom-tat">1. Tóm tắt</h2>
+<ul>
+  <li><strong>Đơn vị:</strong> Rakuten Securities (楽天証券), không phải toàn bộ Rakuten Group <span class="badge low">Công ty xác nhận</span>.</li>
+  <li><strong>Nguồn rò rỉ:</strong> hệ thống môi trường test; NHK mô tả chung là "hệ thống nội bộ", trong khi thông báo của công ty ghi rõ "môi trường test".</li>
+  <li><strong>Phát hiện:</strong> thông báo ghi là truy cập trái phép của bên thứ ba vào hệ thống của công ty.</li>
+  <li><strong>Nguyên nhân:</strong> chưa công bố (đang điều tra) <span class="badge med">Chưa xác minh</span>.</li>
+  <li><strong>Lưu ý số liệu:</strong> một số tiêu đề báo ghi "tối đa 15,72 triệu tài khoản" là phép cộng hai con số trên, không phải số liệu chính thức. Thông báo gốc liệt kê hai nhóm tách biệt (tối đa ~447 vạn và ~1.125 vạn tài khoản), không nêu rõ quan hệ tập con.</li>
+  <li><strong>Vụ việc khác, không nhầm lẫn:</strong> thông báo ngày 31/10/2026 về thông tin của 362 người mua trái phiếu doanh nghiệp quyền lợi số có thể bị lộ qua hệ thống bên thứ ba (nhà thầu phụ của NTT Data). Công ty cho biết hệ thống của mình không bị truy cập.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="dien-bien">2. Diễn biến</h2>
+<div class="table-wrap">
+<table id="timeline">
+  <thead><tr><th>Ngày (2026)</th><th>Sự kiện</th></tr></thead>
+  <tbody>
+    <tr><td>11/11 (Thứ Tư)</td><td>Điều tra xác nhận một phần thông tin quản lý trong môi trường test có thể đã bị rò rỉ ra ngoài.</td></tr>
+    <tr><td>16/11 (Thứ Hai)</td><td>Phát hiện khả năng bên thứ ba truy cập trái phép vào một số hệ thống; đã chặn truy cập và khắc phục điểm bị ảnh hưởng.</td></tr>
+    <tr><td>17/11 (Thứ Ba)</td><td>Công bố chính thức và xin lỗi; NHK World đưa tin.</td></tr>
+    <tr><td>18/11</td><td>Chưa thấy cập nhật mới trong các nguồn đã rà soát.</td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section class="an-sec">
+<h2 id="pham-vi">3. Dữ liệu bị ảnh hưởng</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Nhóm</th><th>Số lượng (tối đa)</th><th>Trường dữ liệu có nguy cơ bị lộ</th></tr></thead>
+  <tbody>
+    <tr><td>Nhóm 1</td><td>~11,25 triệu tài khoản</td><td>Mã chi nhánh, mã khách hàng, ID đăng nhập (khác với Rakuten ID).</td></tr>
+    <tr><td>Nhóm 2</td><td>~4,47 triệu tài khoản</td><td>Các mục của nhóm 1 cùng họ tên, tên kana, ngày sinh, địa chỉ, số điện thoại, email, nơi làm việc, thông tin tài khoản rút tiền (ngân hàng, số tài khoản, tên chủ tài khoản), thu nhập hằng năm tự khai, thông tin tài sản tài chính, tài sản theo sản phẩm, ngày đăng nhập gần nhất. Gồm cả khách hàng đã rút tài khoản.</td></tr>
+  </tbody>
+</table>
+</div>
+<p><strong>Không bị lộ (theo công ty, "chưa xác nhận bị lộ"):</strong> mật khẩu đăng nhập, mã PIN và thông tin cần thiết để giao dịch. Chưa xác nhận truy cập hoặc giao dịch trái phép liên quan đến sự cố này. Cụm "chưa xác nhận" khác với "đã xác nhận không bị lộ".</p>
+</section>
+
+<section class="an-sec">
+<h2 id="ung-pho">4. Ứng phó &amp; Khuyến cáo người dùng</h2>
+<ul>
+  <li>Công ty xin lỗi, đã <strong>hoàn tất việc xác định</strong> khách hàng bị ảnh hưởng và sẽ thông báo riêng; tiếp tục điều tra nguyên nhân, phạm vi và tăng cường bảo mật.</li>
+  <li>Cảnh giác email, SMS, cuộc gọi và thư giả mạo Rakuten Securities. Công ty cho biết email của họ không chứa URL và không gọi điện hỏi thông tin cá nhân hay đăng nhập.</li>
+  <li>Khuyến nghị bật xác thực passkey. Khách hàng có thể tạm khóa giao dịch và rút tiền trong trang cài đặt bảo mật. Hotline: 0120-862-274. Một blog thứ cấp (AliasFleet) cho biết passkey sẽ trở thành bắt buộc; thông báo gốc chưa xác nhận điều này.</li>
+  <li><strong>Cơ quan quản lý:</strong> thông báo không nhắc đến cảnh sát hay Ủy ban Bảo vệ Thông tin Cá nhân (PPC); tình trạng báo cáo chưa được công bố.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="bai-hoc">5. Khuyến cáo từ PiraGo</h2>
+<ol>
+  <li><strong>Không đưa dữ liệu production vào môi trường test:</strong> dùng dữ liệu tổng hợp hoặc dữ liệu đã ẩn danh hóa (masking) có kiểm soát; cấm sao chép nguyên bản DB production xuống staging/test.</li>
+  <li><strong>Coi môi trường test/staging là bề mặt tấn công thật:</strong> áp dụng cùng chuẩn xác thực (SSO + MFA), giới hạn mạng (VPN/IP allowlist), ghi log và giám sát như production.</li>
+  <li><strong>Kiểm kê và xóa định kỳ:</strong> rà soát dữ liệu cá nhân tồn đọng trong các môi trường phụ, gồm dữ liệu của người dùng đã hủy tài khoản, theo chính sách retention.</li>
+  <li><strong>Chuẩn bị kênh thông báo khách hàng:</strong> khi có sự cố, nêu rõ dữ liệu nào lộ, dữ liệu nào chưa xác nhận, nhắc phòng chống phishing và khuyến khích passkey/MFA.</li>
+</ol>
+</section>
+
+<section class="an-sec">
+<h2 id="nguon">6. Nguồn tham khảo</h2>
+<ul>
+  <li><a href="https://www3.nhk.or.jp/nhkworld/news/20261117de77429/" target="_blank" rel="noopener">NHK WORLD — Tin ngày 17/11/2026</a></li>
+  <li><a href="https://www.rakuten-sec.co.jp/web/info/info20261117-02.html" target="_blank" rel="noopener">Rakuten Securities — Thông báo chính thức (17/11/2026)</a></li>
+  <li><a href="https://www.rakuten-sec.co.jp/web/company/newsrelease/pdf/press2026111702.pdf" target="_blank" rel="noopener">Rakuten Securities — Thông cáo báo chí (PDF)</a></li>
+  <li><a href="https://www.itmedia.co.jp/news/article/2611/17/2000003275/" target="_blank" rel="noopener">ITmedia NEWS (17/11/2026)</a></li>
+  <li><a href="https://www.itkisyakai.com/entry/2026/11/17/201314" target="_blank" rel="noopener">ITkisyakai — Bản sao thông báo</a></li>
+  <li><a href="https://cybersecurity-jp.com/news/118606" target="_blank" rel="noopener">Cybersecurity-jp</a></li>
+  <li><a href="https://internet.watch.impress.co.jp/docs/news/2157218.html" target="_blank" rel="noopener">Impress Internet Watch</a></li>
+  <li><a href="https://www.aliasfleet.com/blog/rakuten-securities-data-breach" target="_blank" rel="noopener">AliasFleet (nguồn thứ cấp)</a></li>
+  <li><a href="https://www.rakuten-sec.co.jp/web/info/info20261031-01.html" target="_blank" rel="noopener">Rakuten Securities — Thông báo 31/10/2026 (vụ việc riêng)</a></li>
+</ul>
+<p><small>Nội dung đã đối chiếu với thông báo chính thức ngày 17/11/2026 của Rakuten Securities (ảnh chụp trang) và báo chí.</small></p>
+</section>
