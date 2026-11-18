@@ -24,6 +24,30 @@
       label: {vi: "Ứng phó & Bồi thường", ja: "対応・補償"}
       text: {vi: "Đến 16/11, Net Store vẫn ngừng và MUJI App chỉ giữ mã vạch thành viên; Credit Saison hỗ trợ đổi thẻ miễn phí.", ja: "11月16日時点でネットストアは停止中、MUJIアプリは会員証バーコード表示以外を停止。クレディセゾンはカードを無料再発行。"}
 
+- id: java-cve-2026-114938
+  category: vulnerability
+  path: "featured/java-cve-2026-114938/analysis/"
+  icon: "☕"
+  accent: true
+  badge: {sev: high, text: "HIGH"}
+  nav: {vi: "Java4Shell CVE-2026-114938", ja: "Java4Shell CVE-2026-114938"}
+  title: {vi: "Java4Shell (CVE-2026-114938) — Tràn heap ở Base64 decoder của Java 17+ (x86-64 AVX-512), nguy cơ RCE", ja: "Java4Shell（CVE-2026-114938）— Java 17+ Base64 デコーダーのヒープ破壊（x86-64 AVX-512）、RCE の恐れ"}
+  date: {vi: "Cập nhật 2026-11-18 · CVSS 8.1 · Bản vá 17.0.21.1 / 21.0.13.1 / 25.0.5.1 / 27.0.1.1 · Chưa thấy khai thác thực tế", ja: "2026年11月18日更新 · CVSS 8.1 · 17.0.21.1 / 21.0.13.1 / 25.0.5.1 / 27.0.1.1 で修正 · 実環境での悪用は未確認"}
+  link: {vi: "Xem phân tích & hướng dẫn →", ja: "分析・対策ガイドを見る →"}
+  items:
+    - sev: high
+      label: {vi: "Nguy cơ", ja: "リスク"}
+      text: {vi: "Ghi lạm heap trong intrinsic AVX-512 của java.util.Base64; Calif trình diễn RCE trên Keycloak, Jira, Confluence, Jenkins... Wiz tạo PoC trong ~2 giờ.", ja: "java.util.Base64 の AVX-512 イントリンシックでヒープ範囲外書き込み。Calif が Keycloak、Jira、Confluence、Jenkins 等で RCE を実証、Wiz は約2時間で PoC 作成と報道。"}
+    - sev: high
+      label: {vi: "Phạm vi", ja: "影響範囲"}
+      text: {vi: "Java 17.0.6+, 21, 25, 27 trên CPU x86-64 có AVX-512 VBMI. ARM64, Java 8/11 chuẩn không bị.", ja: "AVX-512 VBMI 対応 x86-64 上の Java 17.0.6+、21、25、27。ARM64 と標準 Java 8/11 は対象外。"}
+    - sev: med
+      label: {vi: "Tạm thời", ja: "暫定対策"}
+      text: {vi: "Không chính thức: -XX:-UseBASE64Intrinsics hoặc -XX:UseAVX=2 (x86-64) rồi restart JVM; Oracle chưa công bố workaround.", ja: "非公式：-XX:-UseBASE64Intrinsics または -XX:UseAVX=2（x86-64のみ）と JVM 再起動。Oracle は回避策未公表。"}
+    - sev: low
+      label: {vi: "Triệt để", ja: "恒久対策"}
+      text: {vi: "Nâng JDK (Corretto 17.0.21.1.2), restart toàn bộ tiến trình Java, rebuild image. Temurin/distro chưa xác nhận bản vá.", ja: "JDK 更新（Corretto 17.0.21.1.2）、全 Java プロセス再起動、イメージ再ビルド。Temurin/ディストリビューションは修正未確認。"}
+
 - id: postgresql-cve-2026-6460
   category: vulnerability
   path: "featured/postgresql-cve-2026-6460/analysis/"
