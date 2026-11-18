@@ -1101,3 +1101,6 @@ html[lang="ja"] body {
     align-items: flex-start;
   }
 }
+
+/* highlight.js: keep the page's own dark <pre> background and spacing */
+pre code.hljs { background: transparent; padding: 0; }
