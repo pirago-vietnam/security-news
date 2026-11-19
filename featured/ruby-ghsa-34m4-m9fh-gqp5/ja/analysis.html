@@ -37,7 +37,7 @@ permalink: /ja/featured/ruby-ghsa-34m4-m9fh-gqp5/analysis/
 </blockquote>
 
 <nav class="an-nav" aria-label="nav">
-  <a href="#non-tech">かんたん解説</a>
+  <a href="#non-tech">TL;DR</a>
   <a href="#tom-tat">技術概要</a>
   <a href="#pham-vi">影響範囲</a>
   <a href="#kiem-tra">確認方法</a>
@@ -47,7 +47,7 @@ permalink: /ja/featured/ruby-ghsa-34m4-m9fh-gqp5/analysis/
 </nav>
 
 <section class="an-sec">
-<h2 id="non-tech">非エンジニア／PM 向けの要点</h2>
+<h2 id="non-tech">TL;DR（かんたん解説）</h2>
 <ul>
   <li><strong>何が起きた？</strong> 一部の古い 1 バイト文字コードで「ß」を大文字にすると「SS」の 2 バイトになりますが、Ruby の空き容量チェックが 1 バイト分しかなく、バッファ境界を 1 バイト超えて書き込みます。</li>
   <li><strong>どれくらい危険？</strong> Ruby 側は「一部のシナリオで <strong>リモートコード実行（RCE）</strong> に至る PoC を把握している」としています。Veria Labs によれば Rails と Sinatra（classic）は既定設定で影響を受けます。</li>

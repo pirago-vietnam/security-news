@@ -35,7 +35,7 @@ category: "Phân tích lỗ hổng"
 </blockquote>
 
 <nav class="an-nav" aria-label="nav">
-  <a href="#non-tech">Giải thích dễ hiểu</a>
+  <a href="#non-tech">TL;DR</a>
   <a href="#tom-tat">Tóm tắt kỹ thuật</a>
   <a href="#pham-vi">Phạm vi ảnh hưởng</a>
   <a href="#kiem-tra">Kiểm tra nhanh</a>
@@ -45,7 +45,7 @@ category: "Phân tích lỗ hổng"
 </nav>
 
 <section class="an-sec">
-<h2 id="non-tech">Giải thích nhanh cho Non-tech / PM</h2>
+<h2 id="non-tech">TL;DR (dễ hiểu)</h2>
 <ul>
   <li><strong>Chuyện gì xảy ra?</strong> Khi Ruby đổi chữ "ß" (chữ s đức) sang chữ hoa trong một số bảng mã cũ, kết quả dài hơn dữ liệu gốc ("SS") nhưng Ruby kiểm tra chỗ trống chưa đủ, nên ghi tràn 1 byte ra ngoài vùng nhớ. Với đủ nhiều ký tự ß, kẻ tấn công có thể điều khiển được phần bộ nhớ bị ghi đè.</li>
   <li><strong>Nguy hiểm thế nào?</strong> Ruby cho biết đã có PoC chứng minh có thể dẫn đến <strong>thực thi mã từ xa (RCE) trong một số tình huống</strong>. Rails và Sinatra (classic) bị ảnh hưởng ngay ở cấu hình mặc định theo Veria Labs.</li>

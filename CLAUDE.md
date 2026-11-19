@@ -45,6 +45,16 @@ When creating or modifying security reports, strictly follow `monthly/RULES.md`:
 
 3. **Cross-File Synchronization**: none needed by hand. The header dropdown, footer links and the summary cards on `index.html` / `ja/index.html` loop over `site.data.monthly` (newest first, newest gets the "new" badge). Fill the `card` block in the data file for the homepage summary.
 
+## Fetching Public Sources
+
+If a fetch of a public page returns HTTP `403 Forbidden`, retry the URL with headless Chrome using `--headless --dump-dom '<public-url>'` to capture the rendered HTML. Choose the installed browser executable for the current OS:
+
+- **Linux:** use `google-chrome`, `google-chrome-stable`, `chromium`, or `chromium-browser`, whichever is available on `PATH`.
+- **macOS:** use the executable inside the installed Chrome or Chromium app bundle (for example, `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"` for a standard Chrome install).
+- **Windows:** use the installed `chrome.exe` or `chromium.exe`. In PowerShell, invoke a quoted executable path with `&`, for example `& $chromePath --headless --dump-dom '<public-url>'` after setting `$chromePath` to the installed executable.
+
+Verify that the output contains the expected content, not an error, login, or challenge page. If access is still blocked or requires authentication, use another public source rather than trying to bypass the restriction.
+
 ## Deployment & Common Commands
 
 - **Check Working Tree**:

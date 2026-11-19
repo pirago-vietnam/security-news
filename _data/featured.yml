@@ -1,5 +1,29 @@
 # Các case nổi bật (sự cố lớn, phân tích lỗ hổng, runbook ứng phó). Thứ tự = thứ tự hiển thị.
 # `path` tính từ gốc ngôn ngữ (vi: "/", ja: "/ja/").
+- id: database-rce-narrow-grants
+  category: vulnerability
+  path: "featured/database-rce-narrow-grants/analysis/"
+  icon: "🗄️"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL"}
+  nav: {vi: "RCE database (PG/MySQL/Oracle)", ja: "DB の RCE（PG/MySQL/Oracle）"}
+  title: {vi: "Lỗ hổng database cho phép chiếm máy chủ chỉ với tài khoản quyền thấp — PostgreSQL, MySQL, Oracle, ClickHouse", ja: "権限の低い DB アカウントだけでサーバー乗っ取りが可能に — PostgreSQL・MySQL・Oracle・ClickHouse の脆弱性"}
+  date: {vi: "Cập nhật đến 2026-11-19 · PostgreSQL CVE-2026-116331 · MySQL CVE-2026-101786 · Oracle CVE-2026-114819 + ORDS CVE-2026-91609 · ClickHouse chưa có CVE", ja: "2026年11月19日 時点 · PostgreSQL CVE-2026-116331 · MySQL CVE-2026-101786 · Oracle CVE-2026-114819 ＋ ORDS CVE-2026-91609 · ClickHouse は CVE なし"}
+  link: {vi: "Xem phân tích & hướng dẫn →", ja: "分析・対策ガイドを見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Nguy cơ", ja: "リスク"}
+      text: {vi: "Quyền SQL thấp (TEMPORARY, CREATE TEMPORARY TABLES) vẫn chạm tới lỗi bộ nhớ trong engine C/C++ → chạy mã với quyền OS user của DB. Oracle Text CVSS 9.9; Depthfirst cho biết chuỗi qua ORDS lộ ra ngoài chạy được trước khi đăng nhập.", ja: "低い SQL 権限（TEMPORARY、CREATE TEMPORARY TABLES）でも C/C++ エンジンのメモリ破壊に到達し、DB の OS ユーザー権限でコード実行。Oracle Text は CVSS 9.9。Depthfirst は外部公開 ORDS 経由の連鎖でログイン前に実行可能と主張。"}
+    - sev: high
+      label: {vi: "Phạm vi", ja: "影響範囲"}
+      text: {vi: "PostgreSQL 14–18 trước 18.7/17.12/16.16/15.20/14.25; MySQL Server/Cluster 26.7.0–26.7.1 (đánh số theo lịch YY.M.P từ 7/2026, không phải 8.x); Oracle DB 19.3–19.32, 21.3–21.24, 23.4.0–23.26.3; ORDS 24.2.0–26.2.1; ClickHouse (thử trên 26.7.5.10).", ja: "18.7/17.12/16.16/15.20/14.25 未満の PostgreSQL 14〜18、MySQL Server/Cluster 26.7.0〜26.7.1（2026年7月からのカレンダー方式 YY.M.P、8.x ではない）、Oracle DB 19.3〜19.32・21.3〜21.24・23.4.0〜23.26.3、ORDS 24.2.0〜26.2.1、ClickHouse（26.7.5.10 で検証）。"}
+    - sev: med
+      label: {vi: "Triệt để", ja: "恒久対策"}
+      text: {vi: "Áp Oracle CSPU 11/2026 + ORDS CPU 10/2026, MySQL bản sau 26.7.1, PostgreSQL bản 12-11; ClickHouse khóa format_binary_max_string_size bằng constraints. Thu hồi TEMPORARY / CREATE TEMPORARY TABLES không cần thiết.", ja: "Oracle 2026年11月 CSPU ＋ ORDS 2026年10月 CPU、MySQL は 26.7.1 より新しい版、PostgreSQL は 11/12 リリースを適用。ClickHouse は constraints で format_binary_max_string_size を固定。不要な TEMPORARY / CREATE TEMPORARY TABLES を剥奪。"}
+    - sev: low
+      label: {vi: "Lưu ý", ja: "注意"}
+      text: {vi: "Chưa ghi nhận khai thác ngoài thực tế, chưa có PoC đầy đủ công khai. Mức quyền theo nhà cung cấp và nhà nghiên cứu khác nhau; ClickHouse chưa có CVE và bản sửa xác nhận.", ja: "実環境での悪用は未確認、完全な PoC は未公開。ベンダーと研究者で必要権限の評価が異なる。ClickHouse は CVE・修正版とも未確認。"}
+
 - id: ruby-ghsa-34m4-m9fh-gqp5
   category: vulnerability
   path: "featured/ruby-ghsa-34m4-m9fh-gqp5/analysis/"
@@ -275,7 +299,7 @@
   badge: {sev: crit, text: "CRITICAL"}
   nav: {vi: "PHP CVE-2026-109618", ja: "PHP CVE-2026-109618"}
   title: {vi: "PHP2Shell (CVE-2026-109618 / 109619) — RCE không cần xác thực trong lõi PHP", ja: "PHP2Shell（CVE-2026-109618 / 109619）— PHP コアの認証不要 RCE"}
-  date: {vi: "Lỗ hổng RCE PHP · Tổng quan cho non-tech & hướng dẫn xử lý cho kỹ sư PiraGo", ja: "PHP の RCE 脆弱性 · 非エンジニア向け概要 & PiraGo エンジニア向け対応ガイド"}
+  date: {vi: "Lỗ hổng RCE PHP · TL;DR dễ hiểu & hướng dẫn xử lý cho kỹ sư PiraGo", ja: "PHP の RCE 脆弱性 · TL;DR（かんたん解説）& PiraGo エンジニア向け対応ガイド"}
   link: {vi: "Xem hướng dẫn đầy đủ →", ja: "ガイド全文を見る →"}
   items:
     - sev: crit
