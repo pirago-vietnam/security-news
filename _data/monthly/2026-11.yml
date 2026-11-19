@@ -41,6 +41,11 @@ card:
     text:
       vi: 'CVE-2026-119618: Lỗ hổng Race Condition trong mod_http2 dẫn đến heap corruption &amp; RCE (Critical). Nâng cấp ngay lên 2.4.71+ hoặc tạm tắt mod_http2.'
       ja: 'CVE-2026-119618: mod_http2 の競合状態によるヒープ破壊・RCE脆弱性（Critical）。直ちに 2.4.71+ へ更新、または一時的に mod_http2 を無効化。'
+  - sev: crit
+    label: nginx (HTTP/2)
+    text:
+      vi: 'CVE-2026-123007 (nginx2root, CVSS 9.2 theo NetSPI): hỏng bộ nhớ trong HTTP/2 flow control, có thể RCE không cần xác thực (1.9.5–1.31.8). Nâng cấp lên 1.30.7 / 1.31.9 và restart, hoặc tạm tắt HTTP/2. Xem <a href="@home@featured/nginx-cve-2026-123007/analysis/">phân tích</a>.'
+      ja: 'CVE-2026-123007（nginx2root、NetSPI による CVSS 9.2）：HTTP/2 フロー制御のメモリ破壊で認証不要 RCE の恐れ（1.9.5〜1.31.8）。1.30.7 / 1.31.9 へ更新し再起動、または一時的に HTTP/2 を無効化。<a href="@home@featured/nginx-cve-2026-123007/analysis/">分析</a>を参照。'
   - sev: high
     label: Java (Oracle JDK / OpenJDK)
     text:
@@ -80,6 +85,19 @@ sections:
     due:
       vi: Ngay lập tức (toàn bộ web server &amp; reverse proxy dùng Apache httpd 2.4.55–2.4.70)
       ja: 即時（Apache httpd 2.4.55〜2.4.70 を利用する全Webサーバー・リバースプロキシ）
+  - task:
+      vi: 'Nâng cấp <strong>nginx</strong> lên <strong>1.30.7 / 1.31.9 trở lên</strong> (NGINX Plus 37.3.0.1 / 37.0.8.1) để vá <strong>CVE-2026-123007</strong> (hỏng bộ nhớ HTTP/2, nguy cơ RCE) rồi <strong>restart</strong>; nếu chưa thể nâng cấp, tắt HTTP/2. Xem <a href="@home@featured/nginx-cve-2026-123007/analysis/">hướng dẫn chi tiết</a>'
+      ja: '<strong>nginx</strong> を <strong>1.30.7 / 1.31.9 以上</strong>（NGINX Plus は 37.3.0.1 / 37.0.8.1）へ更新し、<strong>CVE-2026-123007</strong>（HTTP/2 メモリ破壊、RCE の恐れ）を修正して<strong>再起動</strong>。更新が困難な場合は HTTP/2 を無効化（<a href="@home@featured/nginx-cve-2026-123007/analysis/">詳細ガイド</a>）'
+    sev: crit
+    due:
+      vi: Ngay lập tức (toàn bộ nginx 1.9.5–1.31.8 có bật HTTP/2, gồm container &amp; ingress)
+      ja: 即時（HTTP/2 を有効にした nginx 1.9.5〜1.31.8 すべて。コンテナ・ingress 含む）
+    impact:
+      vi: 'Web server, reverse proxy, load balancer, Docker image và ingress dùng nginx có bật HTTP/2.'
+      ja: 'HTTP/2 を有効にした nginx を使う Webサーバー、リバースプロキシ、ロードバランサー、Docker イメージ、ingress。'
+    fix:
+      vi: 'Nâng cấp lên 1.30.7 / 1.31.9 và restart (reload không đủ); tạm thời đặt <code>http2 off;</code>.'
+      ja: '1.30.7 / 1.31.9 へ更新して再起動（reload では不十分）。暫定的に <code>http2 off;</code> を設定。'
   - task:
       vi: 'Nâng cấp <strong>Visual Studio Code</strong> lên <strong>1.145.3 trở lên</strong> (khắc phục lỗ hổng RCE nghiêm trọng CVE-2026-120779 và CVE-2026-120780); bật <strong>Workspace Trust</strong> khi mở mã nguồn bên ngoài'
       ja: '<strong>Visual Studio Code</strong> を <strong>1.145.3 以上</strong>にアップグレードする（重大なRCE脆弱性 CVE-2026-120779 および CVE-2026-120780 を修正）。外部コードを開く際は <strong>Workspace Trust</strong> を必ず有効化'
@@ -332,6 +350,17 @@ sections:
     fix:
       vi: 'Nâng cấp ngay Apache HTTP Server lên phiên bản <strong>2.4.71 trở lên</strong> (phát hành ngày 11-11-2026). Nếu chưa thể nâng cấp ngay, tạm thời vô hiệu hóa <code>mod_http2</code> (tắt <code>LoadModule http2_module</code> hoặc loại bỏ <code>h2</code>/<code>h2c</code> khỏi chỉ thị <code>Protocols</code>). Xem <a href="@home@featured/apache-cve-2026-119618/analysis/">trang phân tích &amp; hướng dẫn chi tiết</a>.'
       ja: '直ちに Apache HTTP Server を <strong>2.4.71 以上</strong>（2026年11月11日リリース）へアップグレードしてください。即時適用が困難な場合の一時対策として、<code>mod_http2</code> を無効化（<code>LoadModule http2_module</code> の停止、または <code>Protocols</code> ディレクティブから <code>h2</code>/<code>h2c</code> を除外）してください。<a href="@home@featured/apache-cve-2026-119618/analysis/">詳細分析・対策ガイド</a>を参照。'
+  - name: nginx (HTTP/2)
+    sev: crit
+    summary:
+      vi: '<strong>CVE-2026-123007 "nginx2root" (Critical)</strong>: hỏng bộ nhớ trong xử lý flow control của HTTP/2, tồn tại khoảng 10 năm, có thể dẫn đến RCE không cần xác thực. Cùng đợt vá có <strong>CVE-2026-123633</strong> (use-after-free HTTP/2). Trạng thái PoC/khai thác: các nguồn mâu thuẫn, chưa có trong CISA KEV.'
+      ja: '<strong>CVE-2026-123007「nginx2root」（Critical）</strong>：約10年存在した HTTP/2 フロー制御処理のメモリ破壊で、認証不要の RCE に至る恐れ。同時に <strong>CVE-2026-123633</strong>（HTTP/2 の use-after-free）も修正。PoC・悪用状況は情報源により食い違い、CISA KEV には未掲載。'
+    impact:
+      vi: 'nginx OSS <strong>1.9.5–1.31.8</strong> có bật HTTP/2; NGINX Plus R34–R36, 37.0.0–37.2.0.1. Ubuntu, OpenResty, ingress-nginx chưa có bản vá lúc đưa tin.'
+      ja: 'HTTP/2 を有効にした nginx OSS <strong>1.9.5〜1.31.8</strong>、NGINX Plus R34〜R36・37.0.0〜37.2.0.1。報道時点で Ubuntu、OpenResty、ingress-nginx は未修正。'
+    fix:
+      vi: 'Nâng cấp lên <strong>1.30.7 / 1.31.9</strong> (Plus 37.3.0.1 / 37.0.8.1) và restart. Tạm thời: <code>http2 off;</code> (hoặc bỏ <code>http2</code> khỏi <code>listen</code> nếu &lt;1.25.1). Xem <a href="@home@featured/nginx-cve-2026-123007/analysis/">phân tích &amp; hướng dẫn</a>.'
+      ja: '<strong>1.30.7 / 1.31.9</strong>（Plus 37.3.0.1 / 37.0.8.1）へ更新して再起動。暫定：<code>http2 off;</code>（1.25.1 未満は <code>listen</code> から <code>http2</code> を削除）。<a href="@home@featured/nginx-cve-2026-123007/analysis/">分析・対策ガイド</a>を参照。'
   - name: Apache Tomcat
     sev: high
     summary:

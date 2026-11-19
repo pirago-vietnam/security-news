@@ -1,5 +1,29 @@
 # Các case nổi bật (sự cố lớn, phân tích lỗ hổng, runbook ứng phó). Thứ tự = thứ tự hiển thị.
 # `path` tính từ gốc ngôn ngữ (vi: "/", ja: "/ja/").
+- id: nginx-cve-2026-123007
+  category: vulnerability
+  path: "featured/nginx-cve-2026-123007/analysis/"
+  icon: "🧩"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL"}
+  nav: {vi: "nginx CVE-2026-123007", ja: "nginx CVE-2026-123007"}
+  title: {vi: "nginx HTTP/2 RCE \"nginx2root\" (CVE-2026-123007) — Lỗi hỏng bộ nhớ trong flow control tồn tại 10 năm", ja: "nginx HTTP/2 RCE「nginx2root」（CVE-2026-123007）— 約10年存在したフロー制御のメモリ破壊"}
+  date: {vi: "Cập nhật đến 2026-11-19 · Ảnh hưởng 1.9.5–1.31.8 · Đã vá ở 1.30.7 / 1.31.9", ja: "2026年11月19日 時点 · 1.9.5〜1.31.8 が対象 · 1.30.7 / 1.31.9 で修正済み"}
+  link: {vi: "Xem phân tích & hướng dẫn →", ja: "分析・対策ガイドを見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Nguy cơ", ja: "リスク"}
+      text: {vi: "Hỏng bộ nhớ trong HTTP/2 flow control của nginx, có thể dẫn đến RCE không cần xác thực (NetSPI: CVSS v4.0 9.2; nginx.org: \"major\").", ja: "nginx の HTTP/2 フロー制御におけるメモリ破壊で、認証不要の RCE に至る恐れ（NetSPI：CVSS v4.0 9.2、nginx.org：\"major\"）。"}
+    - sev: high
+      label: {vi: "Phạm vi", ja: "影響範囲"}
+      text: {vi: "nginx OSS 1.9.5–1.31.8 có bật HTTP/2; NGINX Plus R34–R36, 37.0.0–37.2.0.1. Một số distro/image (Ubuntu, OpenResty) chưa có bản vá lúc đưa tin.", ja: "HTTP/2 を有効にした nginx OSS 1.9.5〜1.31.8、NGINX Plus R34〜R36・37.0.0〜37.2.0.1。報道時点で Ubuntu・OpenResty 等は未修正。"}
+    - sev: med
+      label: {vi: "Tạm thời", ja: "暫定対策"}
+      text: {vi: "Tắt HTTP/2 (http2 off; hoặc bỏ http2 khỏi listen với nginx <1.25.1) trong lúc chờ nâng cấp.", ja: "更新までの間 HTTP/2 を無効化（http2 off;、1.25.1 未満は listen から http2 を削除）。"}
+    - sev: low
+      label: {vi: "Triệt để", ja: "恒久対策"}
+      text: {vi: "Nâng cấp lên nginx 1.30.7 / 1.31.9 (Plus 37.3.0.1 / 37.0.8.1) và restart; reload không thay binary.", ja: "nginx 1.30.7 / 1.31.9（Plus 37.3.0.1 / 37.0.8.1）へ更新して再起動。reload ではバイナリは置換されません。"}
+
 - id: rakuten-sec
   category: incident
   path: "featured/rakuten-sec/rakuten_securities_security_incident_report/"
