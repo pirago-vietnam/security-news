@@ -40,7 +40,7 @@ permalink: /ja/featured/php-security-release-2026-11-19/advisory/
 <nav class="an-nav" aria-label="nav">
   <a href="#tom-tat">概要</a>
   <a href="#cve-list">17 件の CVE</a>
-  <a href="#cve">CVE-2026-115560</a>
+  <a href="#kiem-tra">確認と暫定策</a>
   <a href="#hanh-dong">対応事項</a>
   <a href="#chua-ro">未検証の事項</a>
   <a href="#nguon">参考情報</a>
@@ -62,7 +62,7 @@ permalink: /ja/featured/php-security-release-2026-11-19/advisory/
 <section class="an-sec">
 <h2 id="cve-list">2. 今回修正された CVE 一覧</h2>
 <p>スコアは php-src の GitHub アドバイザリにある CVSS 4.0。「実際の影響」は各 GitHub アドバイザリ原文（影響と前提条件）の要約です。多くは前提条件が揃った場合のみ悪用可能なため、自環境の設定と照らし合わせてください。右端は修正版があるブランチ（8.6 は 8.6.0）です。</p>
-<div class="table-wrap"><table><thead><tr><th>CVE</th><th>CVSS 4.0</th><th>コンポーネント／概要</th><th>実際の影響</th><th>修正ブランチ</th></tr></thead><tbody><tr><td><code>CVE-2026-115560</code></td><td><span class="badge crit">9.2</span></td><td>ext/session: シリアライザ不一致＋upload progress → RCE</td><td>RCE、ファイル変更、セッション破損、DoS。前提：upload progress 有効、php_binary/php_serialize で書かれたセッションを php シリアライザで読む（serialize_handler の実行時変更、またはアプリ/プール/vhost/CLI 間で設定が異なる共有セッション）、およびガジェットチェーンの存在。アドバイザリは 8.2.35〜8.5.12 で Guzzle と Monolog のガジェットによるコマンド実行を再現したと記載。</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-129496</code></td><td><span class="badge crit">9.2</span></td><td>ext/date: タイムゾーンキャッシュの UAF（RCE）</td><td>認証不要のリモート攻撃者がワーカーをクラッシュさせ得る。コード実行は FPM と Apache mod_php でローカルかつ既知のメモリアドレスと追加の設定前提のもとで実証。起動時の警告と初期リクエストの警告（例：max_input_vars 超過）がファイル形式の error_log に書かれることが必要。</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-129289</code></td><td><span class="badge crit">9.2</span></td><td>PHP-FPM: 未読ボディ経由のリクエストスマグリング → PHP コード実行</td><td>1 リクエストで PHP コードをワーカー権限で実行でき、非デフォルトの PHP 設定は不要。フロントエンドが永続バックエンド接続（nginx fastcgi_keep_conn on、mod_proxy_fcgi enablereuse=on、HAProxy など）を有効にしており、php://input を最後まで読まずに開くコードパスがあることが必要。リクエストごとに接続を閉じる標準の nginx/Apache 構成は実証された攻撃の影響を受けない。</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-126714</code></td><td><span class="badge crit">9.2</span></td><td>ext/session: セッションファイル部分上書き → デシリアライズ/RCE</td><td>攻撃者がセッションデータに影響を与え、書き込みが途中で中断され、アプリにガジェットチェーンがあればワーカー権限でコード実行。セッション状態の破損も起こり得る。files ハンドラ（デフォルト）が対象で、他のストレージ実装はこのファイル書き込み欠陥の影響を受けない。中断はスレッド版 PHP で他スレッドのメモリ上限エラーにより起こり得る。</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-129481</code></td><td><span class="badge crit">9.2</span></td><td>ext/session: セッション終了中断後の UAF</td><td>メモリ破壊、または再利用されるワーカーのクラッシュ。RCE の可能性はあるが未実証。セッション終了処理のコールバックが失敗すること（例：ユーザー定義ストリームラッパーの stream_close() での fatal エラー）が必要。8.3 以降のみ。</td><td>8.3–8.6</td></tr><tr><td><code>CVE-2026-129474</code></td><td><span class="badge crit">9.2</span></td><td>エンジン: __call/__callStatic のバックトレースの UAF</td><td>8.5 で RCE が確認済み。fatal_error_backtraces=1（8.5 のデフォルト）と zend.exception_ignore_args=0、__call/__callStatic の呼び出し経路、適切なタイミングの fatal エラー、十分なリクエストデータの制御、利用可能なメモリアドレスの把握が必要。php.ini-production は exception_ignore_args=1 のためこの攻撃経路を防ぐ。8.5 のみ影響。</td><td>8.5, 8.6</td></tr><tr><td><code>CVE-2026-129182</code></td><td><span class="badge crit">9.2</span></td><td>エンジン: シャットダウン後の last_fatal_error_backtrace 再設定時の UAF</td><td>メモリ破壊で RCE の可能性。これらの入口経由の RCE は未実証（UAF とワーカークラッシュは実証済み）。管理者設定（max_memory_limit をグローバルとパス別の両方に設定、またはパス別の zlib.output_compression/ob_gzhandler）と、後続リクエストでの早期警告（FPM の PHP_VALUE/PHP_ADMIN_VALUE、Apache のディレクトリ別設定）が必要。8.5 のみ影響。</td><td>8.5, 8.6</td></tr><tr><td><code>CVE-2026-129291</code></td><td><span class="badge high">8.8</span></td><td>PHP-FPM: epoll UAF → FPM マスターへの権限昇格（ローカル）</td><td>ローカル：FPM ワーカーで PHP コードを実行できる者が、FPM マスター（通常 root）の権限でコマンドを実行可能。プールで catch_workers_output が有効（デフォルトは no だが公式 PHP-FPM Docker イメージは有効）、epoll バックエンド、継承パイプの保持が必要。8.5.12 の Docker イメージで www-data から root を再現。メモリ配置とタイミングに依存。</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-127960</code></td><td><span class="badge high">8.7</span></td><td>HTTP ストリームラッパー: 折り返しヘッダーによる CPU DoS</td><td>CPU 消費による DoS。機密性・完全性への影響なし。PHP 組み込みの HTTP(S) ストリームラッパーで取得する HTTP レスポンスを攻撃者が制御でき、多数の継続行に分割されたヘッダーを含むことが必要。2 ワーカーの FPM プールを占有できることを実証。</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-128064</code></td><td><span class="badge high">8.2</span></td><td>大文字小文字混在の HTTPS/FTPS URL が平文で送信される</td><td>接続を観測できる攻撃者に、Basic 認証情報、ベアラートークン、Cookie、POST データ、FTP ログイン情報、ファイル内容が平文で露出する。アプリの大文字小文字を区別しないスキーム検証を通過する大文字 S 入り URL（HTTPS://、FTPS://）が、直接またはリダイレクト経由でストリームラッパーに到達することが必要。</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-128090</code></td><td><span class="badge high">7.7</span></td><td>ext/phar: アルゴリズムダウングレードによる OpenSSL 署名回避</td><td>改ざんされた phar が署名検証を通過し、読み込み時に攻撃者の PHP コードがプロセス権限で実行される。信頼できる経路で公開鍵を導入した OpenSSL 署名 phar にアプリが依存し、攻撃者が phar は改変・差し替えできるが公開鍵は変更できず、アプリがその phar を読み込むことが必要。</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-129538</code></td><td><span class="badge med">6.9</span></td><td>php-cgi: PATH_INFO 補正時の境界外読み書き</td><td>認証不要の 1 リクエストで php-cgi をクラッシュ、PATH_INFO/PATH_TRANSLATED へのメモリ漏えい（アプリがこの値を出力する場合）、またはメモリ上書き（RCE は主張されたが未確認）。php-cgi（CGI/FastCGI）で cgi.fix_pathinfo=1（デフォルト）かつ特定の Web サーバーマッピングの場合のみ。PHP-FPM と mod_php は影響なし。</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-129506</code></td><td><span class="badge med">6.3</span></td><td>ext/soap: DTD エンティティ参照処理の UAF</td><td>ワーカーのクラッシュ、繰り返しのリクエストでサービス妨害。メモリ漏えいと RCE は未確認。ext/soap と、攻撃者が制御する SOAP XML/WSDL/スキーマを処理するアプリが必要。認証前にリクエストを解析する場合、認証では防げない。</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-15353</code></td><td><span class="badge med">6.3</span></td><td>ext/soap: 不正な arraySize による未初期化ヒープ漏えい</td><td>アプリがデコード済み配列を公開する場合に限定的な情報漏えい。RCE は未実証。ext/soap と、空・空白のみ・非数値の arraySize が SOAP エンドポイントに送られること、または SoapClient が悪意あるサーバーの応答を受け取ることが必要。</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-129501</code></td><td><span class="badge med">6.3</span></td><td>ext/dom: XML シリアライズ時の double free</td><td>メモリ破壊とクラッシュによる DoS。RCE への発展は未実証。攻撃者が制御する XML/HTML を新しい DOM API（Dom\XMLDocument、Dom\HTMLDocument）で解析し saveXml() でシリアライズするアプリが必要。8.4 以降のみ。</td><td>8.4–8.6</td></tr><tr><td><code>CVE-2026-129438</code></td><td><span class="badge med">6.3</span></td><td>ext/uri: 約 2 GiB 入力での RFC 3986 シリアライズ誤り</td><td>比較・検証・ルーティングの誤判定や不完全な URI の保存、メモリ枯渇やプロセス終了も起こり得る。約 2 GiB の URI が Uri\Rfc3986\Uri に渡されることが必要で、通常のアプリ側 URI 長制限で防げる。parse_url() と Uri\WhatWg\Url は影響なし。8.5 以降のみ。</td><td>8.5, 8.6</td></tr><tr><td><code>CVE-2026-129292</code></td><td><span class="badge med">5.3</span></td><td>PHP-FPM: ステータスページの XSS</td><td>ステータスページのオリジンで JavaScript が実行され、リクエスト URI/クエリ文字列や（同一オリジンなら）HttpOnly でない Cookie が漏えい。ステータスエンドポイントが有効で、ユーザー/ツールが HTML 形式の全ステータスを表示することが必要。ステータスページのアクセス制限だけでは、別のアプリリクエスト経由でペイロードを仕込まれるため防げない。</td><td>8.2–8.6</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>CVE</th><th>CVSS 4.0</th><th>コンポーネント／概要</th><th>実際の影響</th><th>修正ブランチ</th></tr></thead><tbody><tr><td><a href="#c-115560"><code>CVE-2026-115560</code></a></td><td><span class="badge crit">9.2</span></td><td>ext/session: シリアライザ不一致＋upload progress → RCE</td><td>RCE、ファイル変更、セッション破損、DoS。前提：upload progress 有効、php_binary/php_serialize で書かれたセッションを php シリアライザで読む（serialize_handler の実行時変更、またはアプリ/プール/vhost/CLI 間で設定が異なる共有セッション）、およびガジェットチェーンの存在。アドバイザリは 8.2.35〜8.5.12 で Guzzle と Monolog のガジェットによるコマンド実行を再現したと記載。</td><td>8.2–8.6</td></tr><tr><td><a href="#c-129496"><code>CVE-2026-129496</code></a></td><td><span class="badge crit">9.2</span></td><td>ext/date: タイムゾーンキャッシュの UAF（RCE）</td><td>認証不要のリモート攻撃者がワーカーをクラッシュさせ得る。コード実行は FPM と Apache mod_php でローカルかつ既知のメモリアドレスと追加の設定前提のもとで実証。起動時の警告と初期リクエストの警告（例：max_input_vars 超過）がファイル形式の error_log に書かれることが必要。</td><td>8.2–8.6</td></tr><tr><td><a href="#c-129289"><code>CVE-2026-129289</code></a></td><td><span class="badge crit">9.2</span></td><td>PHP-FPM: 未読ボディ経由のリクエストスマグリング → PHP コード実行</td><td>1 リクエストで PHP コードをワーカー権限で実行でき、非デフォルトの PHP 設定は不要。フロントエンドが永続バックエンド接続（nginx fastcgi_keep_conn on、mod_proxy_fcgi enablereuse=on、HAProxy など）を有効にしており、php://input を最後まで読まずに開くコードパスがあることが必要。リクエストごとに接続を閉じる標準の nginx/Apache 構成は実証された攻撃の影響を受けない。</td><td>8.2–8.6</td></tr><tr><td><a href="#c-126714"><code>CVE-2026-126714</code></a></td><td><span class="badge crit">9.2</span></td><td>ext/session: セッションファイル部分上書き → デシリアライズ/RCE</td><td>攻撃者がセッションデータに影響を与え、書き込みが途中で中断され、アプリにガジェットチェーンがあればワーカー権限でコード実行。セッション状態の破損も起こり得る。files ハンドラ（デフォルト）が対象で、他のストレージ実装はこのファイル書き込み欠陥の影響を受けない。中断はスレッド版 PHP で他スレッドのメモリ上限エラーにより起こり得る。</td><td>8.2–8.6</td></tr><tr><td><a href="#c-129481"><code>CVE-2026-129481</code></a></td><td><span class="badge crit">9.2</span></td><td>ext/session: セッション終了中断後の UAF</td><td>メモリ破壊、または再利用されるワーカーのクラッシュ。RCE の可能性はあるが未実証。セッション終了処理のコールバックが失敗すること（例：ユーザー定義ストリームラッパーの stream_close() での fatal エラー）が必要。8.3 以降のみ。</td><td>8.3–8.6</td></tr><tr><td><a href="#c-129474"><code>CVE-2026-129474</code></a></td><td><span class="badge crit">9.2</span></td><td>エンジン: __call/__callStatic のバックトレースの UAF</td><td>8.5 で RCE が確認済み。fatal_error_backtraces=1（8.5 のデフォルト）と zend.exception_ignore_args=0、__call/__callStatic の呼び出し経路、適切なタイミングの fatal エラー、十分なリクエストデータの制御、利用可能なメモリアドレスの把握が必要。php.ini-production は exception_ignore_args=1 のためこの攻撃経路を防ぐ。8.5 のみ影響。</td><td>8.5, 8.6</td></tr><tr><td><a href="#c-129182"><code>CVE-2026-129182</code></a></td><td><span class="badge crit">9.2</span></td><td>エンジン: シャットダウン後の last_fatal_error_backtrace 再設定時の UAF</td><td>メモリ破壊で RCE の可能性。これらの入口経由の RCE は未実証（UAF とワーカークラッシュは実証済み）。管理者設定（max_memory_limit をグローバルとパス別の両方に設定、またはパス別の zlib.output_compression/ob_gzhandler）と、後続リクエストでの早期警告（FPM の PHP_VALUE/PHP_ADMIN_VALUE、Apache のディレクトリ別設定）が必要。8.5 のみ影響。</td><td>8.5, 8.6</td></tr><tr><td><a href="#c-129291"><code>CVE-2026-129291</code></a></td><td><span class="badge high">8.8</span></td><td>PHP-FPM: epoll UAF → FPM マスターへの権限昇格（ローカル）</td><td>ローカル：FPM ワーカーで PHP コードを実行できる者が、FPM マスター（通常 root）の権限でコマンドを実行可能。プールで catch_workers_output が有効（デフォルトは no だが公式 PHP-FPM Docker イメージは有効）、epoll バックエンド、継承パイプの保持が必要。8.5.12 の Docker イメージで www-data から root を再現。メモリ配置とタイミングに依存。</td><td>8.2–8.6</td></tr><tr><td><a href="#c-127960"><code>CVE-2026-127960</code></a></td><td><span class="badge high">8.7</span></td><td>HTTP ストリームラッパー: 折り返しヘッダーによる CPU DoS</td><td>CPU 消費による DoS。機密性・完全性への影響なし。PHP 組み込みの HTTP(S) ストリームラッパーで取得する HTTP レスポンスを攻撃者が制御でき、多数の継続行に分割されたヘッダーを含むことが必要。2 ワーカーの FPM プールを占有できることを実証。</td><td>8.2–8.6</td></tr><tr><td><a href="#c-128064"><code>CVE-2026-128064</code></a></td><td><span class="badge high">8.2</span></td><td>大文字小文字混在の HTTPS/FTPS URL が平文で送信される</td><td>接続を観測できる攻撃者に、Basic 認証情報、ベアラートークン、Cookie、POST データ、FTP ログイン情報、ファイル内容が平文で露出する。アプリの大文字小文字を区別しないスキーム検証を通過する大文字 S 入り URL（HTTPS://、FTPS://）が、直接またはリダイレクト経由でストリームラッパーに到達することが必要。</td><td>8.2–8.6</td></tr><tr><td><a href="#c-128090"><code>CVE-2026-128090</code></a></td><td><span class="badge high">7.7</span></td><td>ext/phar: アルゴリズムダウングレードによる OpenSSL 署名回避</td><td>改ざんされた phar が署名検証を通過し、読み込み時に攻撃者の PHP コードがプロセス権限で実行される。信頼できる経路で公開鍵を導入した OpenSSL 署名 phar にアプリが依存し、攻撃者が phar は改変・差し替えできるが公開鍵は変更できず、アプリがその phar を読み込むことが必要。</td><td>8.2–8.6</td></tr><tr><td><a href="#c-129538"><code>CVE-2026-129538</code></a></td><td><span class="badge med">6.9</span></td><td>php-cgi: PATH_INFO 補正時の境界外読み書き</td><td>認証不要の 1 リクエストで php-cgi をクラッシュ、PATH_INFO/PATH_TRANSLATED へのメモリ漏えい（アプリがこの値を出力する場合）、またはメモリ上書き（RCE は主張されたが未確認）。php-cgi（CGI/FastCGI）で cgi.fix_pathinfo=1（デフォルト）かつ特定の Web サーバーマッピングの場合のみ。PHP-FPM と mod_php は影響なし。</td><td>8.2–8.6</td></tr><tr><td><a href="#c-129506"><code>CVE-2026-129506</code></a></td><td><span class="badge med">6.3</span></td><td>ext/soap: DTD エンティティ参照処理の UAF</td><td>ワーカーのクラッシュ、繰り返しのリクエストでサービス妨害。メモリ漏えいと RCE は未確認。ext/soap と、攻撃者が制御する SOAP XML/WSDL/スキーマを処理するアプリが必要。認証前にリクエストを解析する場合、認証では防げない。</td><td>8.2–8.6</td></tr><tr><td><a href="#c-15353"><code>CVE-2026-15353</code></a></td><td><span class="badge med">6.3</span></td><td>ext/soap: 不正な arraySize による未初期化ヒープ漏えい</td><td>アプリがデコード済み配列を公開する場合に限定的な情報漏えい。RCE は未実証。ext/soap と、空・空白のみ・非数値の arraySize が SOAP エンドポイントに送られること、または SoapClient が悪意あるサーバーの応答を受け取ることが必要。</td><td>8.2–8.6</td></tr><tr><td><a href="#c-129501"><code>CVE-2026-129501</code></a></td><td><span class="badge med">6.3</span></td><td>ext/dom: XML シリアライズ時の double free</td><td>メモリ破壊とクラッシュによる DoS。RCE への発展は未実証。攻撃者が制御する XML/HTML を新しい DOM API（Dom\XMLDocument、Dom\HTMLDocument）で解析し saveXml() でシリアライズするアプリが必要。8.4 以降のみ。</td><td>8.4–8.6</td></tr><tr><td><a href="#c-129438"><code>CVE-2026-129438</code></a></td><td><span class="badge med">6.3</span></td><td>ext/uri: 約 2 GiB 入力での RFC 3986 シリアライズ誤り</td><td>比較・検証・ルーティングの誤判定や不完全な URI の保存、メモリ枯渇やプロセス終了も起こり得る。約 2 GiB の URI が Uri\Rfc3986\Uri に渡されることが必要で、通常のアプリ側 URI 長制限で防げる。parse_url() と Uri\WhatWg\Url は影響なし。8.5 以降のみ。</td><td>8.5, 8.6</td></tr><tr><td><a href="#c-129292"><code>CVE-2026-129292</code></a></td><td><span class="badge med">5.3</span></td><td>PHP-FPM: ステータスページの XSS</td><td>ステータスページのオリジンで JavaScript が実行され、リクエスト URI/クエリ文字列や（同一オリジンなら）HttpOnly でない Cookie が漏えい。ステータスエンドポイントが有効で、ユーザー/ツールが HTML 形式の全ステータスを表示することが必要。ステータスページのアクセス制限だけでは、別のアプリリクエスト経由でペイロードを仕込まれるため防げない。</td><td>8.2–8.6</td></tr></tbody></table></div>
 <p>このほか 8.5.13／8.6.0 の changelog には <code>CVE-2026-48841</code>（uriparser 1.0.3 への更新）がありますが、CVSS は未検証です。</p>
 <figure class="fig">
 <svg viewBox="0 0 740 234" role="img" aria-label="影響バージョンと修正版の範囲"><text x="0" y="16" font-size="11" class="mut">PHP ブランチ</text><text x="170" y="16" font-size="11" class="mut">修正版</text><rect class="box" x="0" y="26" width="740" height="28" rx="6"/><rect x="0" y="26" width="6" height="28" rx="3" fill="var(--low)"/><text x="18" y="45" font-size="12.5" font-weight="700" fill="currentColor">8.5</text><text x="170" y="45" font-size="12.5" font-weight="700" fill="currentColor" style="font-family:'JetBrains Mono',monospace">8.5.13</text><text x="300" y="45" font-size="11.5" class="mut">17 件すべて（8.5 のみの 3 件を含む）</text><rect class="box" x="0" y="60" width="740" height="28" rx="6"/><rect x="0" y="60" width="6" height="28" rx="3" fill="var(--low)"/><text x="18" y="79" font-size="12.5" font-weight="700" fill="currentColor">8.4</text><text x="170" y="79" font-size="12.5" font-weight="700" fill="currentColor" style="font-family:'JetBrains Mono',monospace">8.4.28</text><text x="300" y="79" font-size="11.5" class="mut">8.5 以降のみの 3 件を除きすべて</text><rect class="box" x="0" y="94" width="740" height="28" rx="6"/><rect x="0" y="94" width="6" height="28" rx="3" fill="var(--low)"/><text x="18" y="113" font-size="12.5" font-weight="700" fill="currentColor">8.3</text><text x="170" y="113" font-size="12.5" font-weight="700" fill="currentColor" style="font-family:'JetBrains Mono',monospace">8.3.37</text><text x="300" y="113" font-size="11.5" class="mut">8.4／8.5 以降のみの件を除きすべて</text><rect class="box" x="0" y="128" width="740" height="28" rx="6"/><rect x="0" y="128" width="6" height="28" rx="3" fill="var(--low)"/><text x="18" y="147" font-size="12.5" font-weight="700" fill="currentColor">8.2</text><text x="170" y="147" font-size="12.5" font-weight="700" fill="currentColor" style="font-family:'JetBrains Mono',monospace">8.2.36</text><text x="300" y="147" font-size="11.5" class="mut">8.3 以降のみの件を除きすべて</text><rect class="box" x="0" y="162" width="740" height="28" rx="6"/><rect x="0" y="162" width="6" height="28" rx="3" fill="var(--med)"/><text x="18" y="181" font-size="12.5" font-weight="700" fill="currentColor">8.6</text><text x="170" y="181" font-size="12.5" font-weight="700" fill="currentColor" style="font-family:'JetBrains Mono',monospace">8.6.0（GA）</text><text x="300" y="181" font-size="11.5" class="mut">同日公開。修正を含む</text><rect class="box" x="0" y="196" width="740" height="28" rx="6"/><rect x="0" y="196" width="6" height="28" rx="3" fill="var(--crit)"/><text x="18" y="215" font-size="12.5" font-weight="700" fill="currentColor">8.1 以前</text><text x="170" y="215" font-size="12.5" font-weight="700" fill="currentColor" style="font-family:'JetBrains Mono',monospace">なし</text><text x="300" y="215" font-size="11.5" class="mut">サポート終了・修正なし（影響を受ける可能性あり）。ブランチ更新が必須</text></svg>
@@ -71,21 +71,173 @@ permalink: /ja/featured/php-security-release-2026-11-19/advisory/
 </section>
 
 <section class="an-sec">
-<h2 id="cve">3. CVE-2026-115560（セッション upload progress）</h2>
-<ul>
-  <li><strong>タイトル（cve.org）：</strong>「Session serializer mismatch can lead to remote code execution」。CVSS 4.0 9.2（<code>AV:N/AC:H/AT:P/PR:N/UI:N</code>、機密性・完全性・可用性への影響大）。</li>
-  <li><strong>仕組み（概要）：</strong>upload progress が有効だと、攻撃者が制御するデータが <code>php_binary</code> または <code>php_serialize</code> ハンドラで書かれるセッションキーに入り得ます。そのセッションが後で <code>php</code> ハンドラで読まれると（<code>session.serialize_handler</code> の実行時変更、またはセッションストアを共有するアプリ間の不一致）、unserialize が実行され、オブジェクト注入、ガジェットチェーンがあれば RCE、あるいはセッション破損／DoS に至ります。</li>
-  <li><strong>修正版：</strong>8.2.36、8.3.37、8.4.28、8.5.13、8.6.0。影響範囲は 8.2.0〜8.2.35、8.3.0〜8.3.36、8.4.0〜8.4.27、8.5.0〜8.5.12。</li>
-</ul>
-<h3>暫定緩和策（すぐ更新できない場合）</h3>
+<h2 id="kiem-tra">3. CVE ごとの確認方法と暫定緩和策</h2>
+<p>以下のコマンドは読み取り専用の目安です。「該当なし」の結果が安全を保証するものではなく、CLI の <code>php</code> は FPM／Apache と別の <code>php.ini</code> を使う場合があります（実際の設定は <code>php-fpm -tt</code> や社内限定の <code>phpinfo()</code> で確認）。<code>/etc/php*</code>、<code>/etc/nginx</code> などのパスはディストリにより異なります。暫定策は<strong>攻撃面を減らすだけ</strong>で、根本対策は <strong>8.2.36 / 8.3.37 / 8.4.28 / 8.5.13（または 8.6.0）</strong> への更新と再起動です。</p>
+<h3>共通の確認（バージョン・設定・拡張）</h3>
+<pre><code class="language-bash">php -v                       # CLI
+php-fpm -v                   # (または php-fpm8.x -v) FPM
+docker run --rm &lt;image&gt; php -v
+php-fpm -tt 2&gt;&amp;1 | grep -E "catch_workers_output|status_path|php_(admin_)?value"   # FPM の実効設定
+php -m | grep -iE "soap|dom|phar|session"   # 読み込み済み拡張</code></pre>
+<h3 id="c-115560">CVE-2026-115560 (session upload progress)</h3>
+<p><code>upload_progress.enabled=1</code> かつセッションストアを共有するアプリ間で <code>serialize_handler</code> が異なる場合にリスクがあります。</p>
+<h4>確認コマンド</h4>
+<pre><code class="language-bash">php -r 'echo ini_get("session.upload_progress.enabled"), PHP_EOL, ini_get("session.serialize_handler"), PHP_EOL;'
+grep -RInE "ini_set\(\s*['\"]session\.serialize_handler|session_set_save_handler" --include=*.php .
+grep -RInE "session\.serialize_handler" /etc/php* /usr/local/etc/php* 2&gt;/dev/null</code></pre>
+<h4>暫定緩和策</h4><ul><li><code>php.ini</code>／FPM プールで upload progress を無効化（<code>ini_set()</code> や <code>.user.ini</code> は使わない）し、ワーカーを再起動。</li><li>セッションストアを共有する全アプリ／プール／vhost／CLI で <code>session.serialize_handler</code> を統一し、実行時の <code>ini_set('session.serialize_handler')</code> を廃止。</li><li>アプリごとにセッションストア（プレフィックス／DB）を分離。</li></ul>
 <pre><code class="language-ini">session.upload_progress.enabled = 0
 ; PHP-FPM pool:
 php_admin_value[session.upload_progress.enabled] = 0</code></pre>
-<p><code>php.ini</code>／FPM プール／サーバー設定に記述してワーカーを再起動します。<code>ini_set()</code> や <code>.user.ini</code> は<strong>使わないでください</strong>。簡易確認：</p>
-<pre><code class="language-bash">php -r 'echo ini_get("session.upload_progress.enabled"), PHP_EOL, ini_get("session.serialize_handler"), PHP_EOL;'
-grep -RInE "ini_set\(\s*['\"]session\.serialize_handler" --include=*.php .</code></pre>
-<p>これは CVE-2026-115560 のみの緩和です。ほかの CVSS 9.2 の脆弱性はバージョン更新でしか解消できません。</p>
-</section>
+<h3 id="c-129496">CVE-2026-129496 (ext/date UAF)</h3>
+<p>悪用には警告がファイル形式の <code>error_log</code> に書き込まれることが前提です。</p>
+<h4>確認コマンド</h4>
+<pre><code class="language-bash">php -r 'foreach(["error_log","log_errors","display_errors","max_input_vars"] as $k) echo $k,"=",ini_get($k),PHP_EOL;'
+php-fpm -tt 2&gt;&amp;1 | grep -E "error_log|max_input_vars"</code></pre>
+<h4>暫定緩和策</h4><ul><li><code>error_log</code> をファイルではなく <code>syslog</code> または stderr（コンテナ）に変更。<code>display_errors=0</code> を維持。</li><li>リバースプロキシ／WAF で過大なパラメータ数（<code>max_input_vars</code> 付近以上）のリクエストを遮断し、ボディ／クエリサイズを制限。</li><li>攻撃面を減らすだけで脆弱性は残るため、バージョン更新は必須。</li></ul>
+<pre><code class="language-ini">error_log = syslog
+log_errors = 1
+display_errors = 0</code></pre>
+<h3 id="c-129289">CVE-2026-129289 (PHP-FPM request smuggling)</h3>
+<p>フロントエンドが FPM へのバックエンド接続を維持し、かつ <code>php://input</code> を最後まで読まないコードがある場合にリスクがあります。</p>
+<h4>確認コマンド</h4>
+<pre><code class="language-bash">grep -RInE "fastcgi_keep_conn" /etc/nginx            # on = リスクあり
+grep -RInE "enablereuse" /etc/apache2 /etc/httpd 2&gt;/dev/null   # on = リスクあり
+grep -RInE "fcgi|fastcgi" /etc/haproxy 2&gt;/dev/null
+grep -RIn "php://input" --include=*.php .</code></pre>
+<h4>暫定緩和策</h4><ul><li>nginx: <code>fastcgi_keep_conn off;</code>（デフォルト）にして reload。</li><li>Apache <code>mod_proxy_fcgi</code>: <code>enablereuse=off</code>。HAProxy: FastCGI 接続の再利用を無効化。</li><li><code>php://input</code> を使う場合はボディを最後まで読む（<code>stream_get_contents</code>）か、<code>$_POST</code>／フレームワークのリクエストを使用。</li><li>FPM を信頼できるネットワーク外に公開しない（unix ソケット／127.0.0.1 のみ）。</li></ul>
+<pre><code class="language-bash"># nginx
+fastcgi_keep_conn off;
+# Apache
+ProxyPass "/" "fcgi://127.0.0.1:9000/" enablereuse=off</code></pre>
+<h3 id="c-126714">CVE-2026-126714 (セッションファイルの部分上書き)</h3>
+<p><code>files</code> ハンドラ（デフォルト）のみ影響。マルチスレッド PHP（ZTS）でリスクが高まります。</p>
+<h4>確認コマンド</h4>
+<pre><code class="language-bash">php -r 'echo ini_get("session.save_handler"), PHP_EOL, ini_get("session.save_path"), PHP_EOL, ini_get("memory_limit"), PHP_EOL;'
+php -i | grep -E "Thread Safety|Server API"        # ZTS=enabled はリスク高
+grep -RInE "unserialize\(" --include=*.php . | grep -v vendor/ | head</code></pre>
+<h4>暫定緩和策</h4><ul><li><code>session.save_handler</code> を Redis／Memcached／DB に変更（他のハンドラはこのファイル書き込みの欠陥なし）。事前に十分テスト。</li><li>ZTS ではなく NTS（FPM／prefork）を使い、<code>memory_limit</code> を十分に確保して途中中断を避ける。</li><li>生のユーザーデータをセッションに入れない。ガジェットチェーンを点検（<code>composer audit</code>、Guzzle／Monolog 等の更新）。</li></ul>
+<pre><code class="language-ini">session.save_handler = redis
+session.save_path = "tcp://127.0.0.1:6379"</code></pre>
+<h3 id="c-129481">CVE-2026-129481 (セッション shutdown 時の UAF)</h3>
+<p>8.3 以降のみ影響。独自ストリームラッパーの <code>stream_close()</code> など、セッション終了処理で fatal error が起きる場合。</p>
+<h4>確認コマンド</h4>
+<pre><code class="language-bash">php -r 'echo PHP_VERSION, PHP_EOL;'      # 8.3 以降のみ
+grep -RInE "stream_wrapper_register|session_set_save_handler|SessionHandlerInterface" --include=*.php . | grep -v vendor/</code></pre>
+<h4>暫定緩和策</h4><ul><li>自作のストリームラッパー／セッションハンドラを点検し、<code>close()</code>／<code>stream_close()</code> 内のエラーを捕捉して fatal error を防ぐ。</li><li>自作ハンドラを標準ハンドラ（files／redis）に一時的に置き換える。</li><li>この欠陥を無効化する設定はなく、バージョン更新が主な対策です。</li></ul>
+<h3 id="c-129474">CVE-2026-129474 (Engine UAF（__call のバックトレース）)</h3>
+<p>8.5 のみ影響。<code>fatal_error_backtraces=1</code> かつ <code>zend.exception_ignore_args=0</code> が前提。</p>
+<h4>確認コマンド</h4>
+<pre><code class="language-bash">php -r 'echo PHP_VERSION, PHP_EOL, "fatal_error_backtraces=", ini_get("fatal_error_backtraces"), PHP_EOL, "exception_ignore_args=", ini_get("zend.exception_ignore_args"), PHP_EOL;'
+php-fpm -tt 2&gt;&amp;1 | grep -E "exception_ignore_args|fatal_error_backtraces"</code></pre>
+<h4>暫定緩和策</h4><ul><li><code>zend.exception_ignore_args=1</code> に設定（<code>php.ini-production</code> の値）。</li><li><code>fatal_error_backtraces=0</code> に設定（8.5 のデフォルトは 1）。</li><li>本番で <code>php.ini-development</code> を使わない。</li></ul>
+<pre><code class="language-ini">zend.exception_ignore_args = 1
+fatal_error_backtraces = 0</code></pre>
+<h3 id="c-129182">CVE-2026-129182 (Engine UAF（last_fatal_error_backtrace）)</h3>
+<p>8.5 のみ影響。パス別の特殊設定（max_memory_limit、zlib.output_compression／ob_gzhandler）と PHP_VALUE／PHP_ADMIN_VALUE またはディレクトリ別設定の併用が前提。</p>
+<h4>確認コマンド</h4>
+<pre><code class="language-bash">php -r 'echo PHP_VERSION, PHP_EOL;'      # 8.5 のみ
+grep -RInE "PHP_VALUE|PHP_ADMIN_VALUE|php_value|php_admin_value|fastcgi_param +PHP_" /etc/nginx /etc/apache2 /etc/httpd /etc/php* /usr/local/etc/php* 2&gt;/dev/null
+find . -name .htaccess -o -name .user.ini | xargs grep -nE "max_memory_limit|zlib\.output_compression" 2&gt;/dev/null
+grep -RInE "ob_gzhandler|max_memory_limit" --include=*.php . | grep -v vendor/</code></pre>
+<h4>暫定緩和策</h4><ul><li>パス別の <code>max_memory_limit</code>／<code>zlib.output_compression</code>／<code>ob_gzhandler</code> 設定をやめ、グローバル値に統一。</li><li>Web サーバーから動的に <code>PHP_VALUE</code>／<code>PHP_ADMIN_VALUE</code> を渡さない。<code>.htaccess</code> を制限（<code>AllowOverride None</code>）。</li><li>さらに <code>fatal_error_backtraces=0</code> で範囲を絞る。</li></ul>
+<pre><code class="language-ini">fatal_error_backtraces = 0
+; Apache
+AllowOverride None</code></pre>
+<h3 id="c-129291">CVE-2026-129291 (PHP-FPM epoll → マスターへの権限昇格)</h3>
+<p>ローカル脆弱性：ワーカー内で PHP コードを実行できることが前提。公式 PHP-FPM Docker イメージは <code>docker.conf</code> で <code>catch_workers_output</code> を有効化しています。</p>
+<h4>確認コマンド</h4>
+<pre><code class="language-bash">php-fpm -tt 2&gt;&amp;1 | grep -E "catch_workers_output|^\[.*pool|user =|events.mechanism"
+grep -RIn "catch_workers_output" /etc/php* /usr/local/etc/php-fpm.d 2&gt;/dev/null
+ps -o user,pid,cmd -C php-fpm,php-fpm8.5     # master の実行ユーザー</code></pre>
+<h4>暫定緩和策</h4><ul><li>プールで <code>catch_workers_output = no</code> に設定（ワーカーの stdout／stderr は失われるため、アプリ側の <code>error_log</code> で記録）。</li><li>コンテナ：可能なら FPM マスターを非 root ユーザーで実行。</li><li>アプリごとにプール／コンテナを分離し、信頼できないコードには <code>disable_functions</code> を適用して最初のコード実行を困難にする。</li></ul>
+<pre><code class="language-bash">; /usr/local/etc/php-fpm.d/zz-hardening.conf
+[www]
+catch_workers_output = no</code></pre>
+<h3 id="c-127960">CVE-2026-127960 (HTTP ラッパーの折り返しヘッダー DoS)</h3>
+<p>アプリが信頼できない URL を PHP の HTTP(S) ストリームラッパーで取得する場合にリスクがあります。</p>
+<h4>確認コマンド</h4>
+<pre><code class="language-bash">php -r 'echo "allow_url_fopen=", ini_get("allow_url_fopen"), PHP_EOL, "default_socket_timeout=", ini_get("default_socket_timeout"), PHP_EOL;'
+grep -RInE "(file_get_contents|fopen|file|get_headers|copy)\(\s*['\"\$]?https?" --include=*.php . | grep -v vendor/ | head -30
+php-fpm -tt 2&gt;&amp;1 | grep -E "pm.max_children|request_terminate_timeout"</code></pre>
+<h4>暫定緩和策</h4><ul><li>不要なら <code>allow_url_fopen=0</code>。外部リクエストは cURL／Guzzle へ移行。</li><li><code>default_socket_timeout</code> を短くし、FPM プールに <code>request_terminate_timeout</code> を設定してワーカーの占有を防ぐ。</li><li>取得先をホストのホワイトリストに限定し、タイムアウト付きの egress プロキシを使用。</li></ul>
+<pre><code class="language-bash">allow_url_fopen = 0
+default_socket_timeout = 5
+; FPM pool
+request_terminate_timeout = 30s</code></pre>
+<h3 id="c-128064">CVE-2026-128064 (大文字 HTTPS/FTPS が平文送信)</h3>
+<p>アプリが大文字小文字を区別せずスキームを検証し、そのままストリームラッパーで開く場合（<code>HTTPS://</code>、<code>FTPS://</code>）。</p>
+<h4>確認コマンド</h4>
+<pre><code class="language-bash">grep -RInE "stripos\(.*https?://|strpos\(.*https?://|str_starts_with\(.*https?|FILTER_VALIDATE_URL" --include=*.php . | grep -v vendor/
+grep -RInE "(file_get_contents|fopen|copy)\(\s*\$" --include=*.php . | grep -v vendor/ | head -30</code></pre>
+<h4>暫定緩和策</h4><ul><li>URL を開く前にスキームを小文字へ正規化してホワイトリスト検証（コード参照）。</li><li>ストリームラッパーの代わりに cURL／Guzzle を使用（<code>CURLOPT_PROTOCOLS</code> を HTTPS のみに）。</li><li>機密性の高いサービスでは egress ファイアウォール／プロキシで外向き 80／21 を遮断。</li></ul>
+<pre><code class="language-php">$scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
+if ($scheme !== 'https') { throw new InvalidArgumentException('https only'); }
+// 正規化した URL のみ渡す: 'https' . substr($url, 5)</code></pre>
+<h3 id="c-128090">CVE-2026-128090 (phar: OpenSSL 署名のバイパス)</h3>
+<p>OpenSSL 署名付き phar を読み込み、攻撃者が phar を差し替えられる場合にリスクがあります。</p>
+<h4>確認コマンド</h4>
+<pre><code class="language-bash">php -r 'var_dump(extension_loaded("phar"), ini_get("phar.require_hash"), ini_get("phar.readonly"));'
+grep -RInE "new +Phar|Phar::|phar://" --include=*.php . | grep -v vendor/
+find / -name "*.phar" -not -path "*/proc/*" 2&gt;/dev/null | head -50
+find / -name "*.phar.pubkey" 2&gt;/dev/null</code></pre>
+<h4>暫定緩和策</h4><ul><li>読み込み前に、固定した SHA-256／GPG など外部手段で phar の完全性を検証（埋め込み署名のみに頼らない）。</li><li>phar と <code>.pubkey</code> を root 所有の読み取り専用にし、書き込み可能なディレクトリ外に配置。そこへのアップロードを遮断。</li><li>Web アプリで phar を使わないなら FPM の phar 拡張を無効化（Composer 利用の CLI は維持）。</li></ul>
+<pre><code class="language-bash">sha256sum tool.phar            # 信頼できる経路で公開された値と比較
+chmod 0444 tool.phar tool.phar.pubkey &amp;&amp; chown root: tool.phar tool.phar.pubkey</code></pre>
+<h3 id="c-129538">CVE-2026-129538 (php-cgi PATH_INFO OOB)</h3>
+<p>php-cgi（CGI／FastCGI）で <code>cgi.fix_pathinfo=1</code> の場合のみ。PHP-FPM と mod_php は影響なし。</p>
+<h4>確認コマンド</h4>
+<pre><code class="language-bash">which php-cgi; php-cgi -v
+ps aux | grep -E "[p]hp-cgi"
+php-cgi -i | grep -E "cgi.fix_pathinfo|Server API"
+grep -RInE "php-cgi|AddHandler.*cgi|SetHandler.*cgi|fastcgi_pass +unix:.*cgi" /etc/nginx /etc/apache2 /etc/httpd /etc/lighttpd 2&gt;/dev/null</code></pre>
+<h4>暫定緩和策</h4><ul><li>php-cgi から PHP-FPM（または mod_php）へ移行。</li><li>php-cgi を維持する場合：<code>cgi.fix_pathinfo=0</code>（ルーティングが PATH_INFO に依存しないか確認）とし、存在する .php のみ転送（<code>try_files $uri =404</code>）。</li><li>WAF で <code>.php/</code> の後に異常な PATH_INFO を含む URL を遮断。</li></ul>
+<pre><code class="language-bash">cgi.fix_pathinfo = 0
+# nginx
+location ~ \.php$ { try_files $uri =404; fastcgi_pass unix:/run/php/php-fpm.sock; include fastcgi_params; }</code></pre>
+<h3 id="c-129506">CVE-2026-129506 (ext/soap DTD エンティティ UAF)</h3>
+<p>攻撃者制御の XML／WSDL を ext/soap で処理する場合（認証前にパースすると認証は防御にならない）。</p>
+<h4>確認コマンド</h4>
+<pre><code class="language-bash">php -m | grep -i soap
+php-fpm -m 2&gt;/dev/null | grep -i soap
+grep -RInE "new +SoapServer|new +SoapClient|soap_version" --include=*.php . | grep -v vendor/
+grep -RInE "soap|\.wsdl|\.asmx" /var/log/nginx/access.log 2&gt;/dev/null | tail</code></pre>
+<h4>暫定緩和策</h4><ul><li>ext/soap を使わないなら無効化（<code>phpdismod soap</code> または <code>extension=soap</code> を削除）し、FPM を再起動。</li><li>Web サーバーで SOAP エンドポイントを IP／VPN／mTLS で制限。</li><li>WAF／プロキシで <code>&lt;!DOCTYPE</code>／<code>&lt;!ENTITY</code> を含む SOAP ボディを遮断。</li><li><code>SoapClient</code> は信頼できる WSDL／エンドポイントのみ。外部 URL ではなくローカルに保存した WSDL を使用。</li></ul>
+<pre><code class="language-bash">sudo phpdismod soap &amp;&amp; sudo systemctl restart php8.x-fpm</code></pre>
+<h3 id="c-15353">CVE-2026-15353 (ext/soap arraySize ヒープ漏えい)</h3>
+<p>CVE-2026-129506 と同じ ext/soap。<code>SoapClient</code> が悪意あるサーバーの応答を受ける場合も該当。</p>
+<h4>確認コマンド</h4>
+<pre><code class="language-bash">php -m | grep -i soap
+grep -RInE "new +SoapServer|new +SoapClient" --include=*.php . | grep -v vendor/</code></pre>
+<h4>暫定緩和策</h4><ul><li>ext/soap を使わないなら無効化。SOAP エンドポイントのアクセス制限は CVE-2026-129506 と同様。</li><li>デコードした SOAP 配列をそのままクライアントへのレスポンスに出さない。</li><li><code>SoapClient</code> は信頼できるサーバーのみに接続し、TLS を検証。</li></ul>
+<h3 id="c-129501">CVE-2026-129501 (ext/dom double free)</h3>
+<p>8.4 以降のみ。新 DOM API（<code>Dom\XMLDocument</code>、<code>Dom\HTMLDocument</code>）で信頼できない入力をパースし <code>saveXml()</code> を呼ぶ場合。</p>
+<h4>確認コマンド</h4>
+<pre><code class="language-bash">php -r 'echo PHP_VERSION, PHP_EOL;'      # 8.4 以降のみ
+grep -RInE "Dom\\\\(XMLDocument|HTMLDocument)|-&gt;saveXml\(" --include=*.php . | grep -v vendor/</code></pre>
+<h4>暫定緩和策</h4><ul><li>信頼できない入力には <code>Dom\XMLDocument</code>／<code>Dom\HTMLDocument</code> ではなく従来の <code>DOMDocument</code> を使用。検証のうえ <code>saveXml()</code> を <code>saveHtml()</code>／<code>C14N()</code> に置き換える。</li><li>入力サイズを制限し、<code>pm.max_requests</code> を有限にしてクラッシュ後に回復（影響は DoS）。</li></ul>
+<h3 id="c-129438">CVE-2026-129438 (ext/uri 約 2 GiB のシリアライズ)</h3>
+<p>8.5 以降のみ。約 2 GiB の URI を <code>Uri\Rfc3986\Uri</code> に渡す場合。<code>parse_url()</code> と <code>Uri\WhatWg\Url</code> は影響なし。</p>
+<h4>確認コマンド</h4>
+<pre><code class="language-bash">php -r 'echo PHP_VERSION, PHP_EOL;'      # 8.5 以降のみ
+grep -RInE "Uri\\\\Rfc3986\\\\Uri" --include=*.php . | grep -v vendor/
+grep -RInE "large_client_header_buffers|client_max_body_size|LimitRequestLine" /etc/nginx /etc/apache2 /etc/httpd 2&gt;/dev/null</code></pre>
+<h4>暫定緩和策</h4><ul><li><code>Uri\Rfc3986\Uri</code> を作る前に URI／入力の長さを制限（例：<code>strlen($uri) &lt;= 8192</code>）。</li><li>nginx（<code>large_client_header_buffers</code>、<code>client_max_body_size</code>）または Apache（<code>LimitRequestLine</code>）でリクエストライン／ヘッダー／ボディを制限。</li><li>信頼できない入力には一時的に <code>parse_url()</code> または <code>Uri\WhatWg\Url</code> を使用。</li></ul>
+<pre><code class="language-bash"># nginx
+large_client_header_buffers 4 8k;
+client_max_body_size 10m;</code></pre>
+<h3 id="c-129292">CVE-2026-129292 (PHP-FPM status ページ XSS)</h3>
+<p>status ページが有効で、HTML 版を開く人／ツールがある場合。アクセス制限だけでは不十分（他のアプリ経由で payload を仕込めるため）。</p>
+<h4>確認コマンド</h4>
+<pre><code class="language-bash">grep -RInE "pm\.status_(path|listen)" /etc/php* /usr/local/etc/php-fpm.d 2&gt;/dev/null
+grep -RInE "pm_status|fastcgi_pass.*status|location.*status" /etc/nginx /etc/apache2 /etc/httpd 2&gt;/dev/null
+curl -si http://127.0.0.1/status | head -5     # 200 + HTML = 有効</code></pre>
+<h4>暫定緩和策</h4><ul><li>未使用なら status ページを無効化：プールの <code>pm.status_path</code> をコメントアウトし FPM を reload。</li><li>監視が必要なら <code>?json</code>（または <code>?openmetrics</code>）のみ使用し、ブラウザで HTML 版を開かない。Web サーバーで <code>?html</code> を遮断。</li><li>status の location に <code>Content-Security-Policy: default-src 'none'</code> と <code>X-Content-Type-Options: nosniff</code> を付与し、アプリと Cookie を共有しない専用オリジンに配置。</li></ul>
+<pre><code class="language-bash">; php-fpm pool
+;pm.status_path = /status
+# nginx
+location = /status { allow 127.0.0.1; deny all; add_header Content-Security-Policy "default-src 'none'" always; add_header X-Content-Type-Options nosniff always; include fastcgi_params; fastcgi_pass unix:/run/php/php-fpm.sock; }</code></pre>
+<p>CVE-2026-129481 のように設定で完全に無効化できない脆弱性もあり、根本対策はバージョン更新のみです。</p></section>
 
 <section class="an-sec">
 <h2 id="hanh-dong">4. 対応事項</h2>
