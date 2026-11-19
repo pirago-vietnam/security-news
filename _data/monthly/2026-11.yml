@@ -42,6 +42,11 @@ card:
       vi: 'CVE-2026-119618: Lỗ hổng Race Condition trong mod_http2 dẫn đến heap corruption &amp; RCE (Critical). Nâng cấp ngay lên 2.4.71+ hoặc tạm tắt mod_http2.'
       ja: 'CVE-2026-119618: mod_http2 の競合状態によるヒープ破壊・RCE脆弱性（Critical）。直ちに 2.4.71+ へ更新、または一時的に mod_http2 を無効化。'
   - sev: crit
+    label: PHP (cảnh báo trước)
+    text:
+      vi: 'PHP.net báo trước bản vá bảo mật mức CRITICAL cho mọi nhánh được hỗ trợ, dự kiến 14:00–14:30 UTC 19-11 (21:00–21:30 ICT, UTC+7). Theo Aikido gồm CVE-2026-115560 (session upload progress); chưa có phiên bản chính thức. Tạm thời đặt session.upload_progress.enabled=0 + restart. Xem <a href="@home@featured/php-security-release-2026-11-19/advisory/">cảnh báo</a>.'
+      ja: 'PHP.net が全サポートブランチ対象の CRITICAL 級セキュリティ修正版を予告。11/19 14:00〜14:30 UTC（JST 23:00〜23:30, UTC+9）予定。Aikido によれば CVE-2026-115560（セッション upload progress）を含む。正式なバージョンは未公開。暫定的に session.upload_progress.enabled=0 ＋再起動を。<a href="@home@featured/php-security-release-2026-11-19/advisory/">事前警告</a>を参照。'
+  - sev: crit
     label: nginx (HTTP/2)
     text:
       vi: 'CVE-2026-123007 (nginx2root, CVSS 9.2 theo NetSPI): hỏng bộ nhớ trong HTTP/2 flow control, có thể RCE không cần xác thực (1.9.5–1.31.8). Nâng cấp lên 1.30.7 / 1.31.9 và restart, hoặc tạm tắt HTTP/2. Xem <a href="@home@featured/nginx-cve-2026-123007/analysis/">phân tích</a>.'
@@ -78,6 +83,19 @@ sections:
     ja: 1. 今すぐ対応すべき事項
   type: actions
   rows:
+  - task:
+      vi: 'Chuẩn bị vá <strong>PHP</strong>: kiểm kê PHP (host, container, image), xác định dịch vụ lộ internet và đặt cửa sổ bảo trì cho đợt phát hành bảo mật mức <strong>CRITICAL</strong> của PHP.net (14:00–14:30 UTC 19-11-2026). Xem <a href="@home@featured/php-security-release-2026-11-19/advisory/">cảnh báo trước</a>'
+      ja: '<strong>PHP</strong> の更新準備：PHP（ホスト・コンテナ・イメージ）を棚卸しし、公開面を特定、PHP.net の <strong>CRITICAL</strong> 級セキュリティリリース（2026-11-19 14:00〜14:30 UTC）に備えてメンテナンス枠を確保（<a href="@home@featured/php-security-release-2026-11-19/advisory/">事前警告</a>）'
+    sev: crit
+    due:
+      vi: Ngay trong ngày 19-11-2026 (chuẩn bị trước 21:00 ICT, UTC+7; vá ngay sau khi PHP.net công bố phiên bản)
+      ja: 2026-11-19 当日（JST 23:00 までに準備、PHP.net の公表直後に更新）
+    impact:
+      vi: 'Mọi ứng dụng PHP (PHP-FPM, mod_php, FrankenPHP, Laravel, WordPress), Docker image <code>php:*</code>, hosting managed.'
+      ja: 'すべての PHP アプリケーション（PHP-FPM、mod_php、FrankenPHP、Laravel、WordPress）、<code>php:*</code> イメージ、マネージドホスティング。'
+    fix:
+      vi: 'Sau khi có bản vá: nâng PHP, restart (reload không đủ), rebuild image. PHP 8.1 trở xuống dự kiến không có bản vá, cần nâng nhánh.'
+      ja: '修正版公開後：PHP を更新して再起動（reload では不十分）、イメージ再ビルド。PHP 8.1 以下は修正版が出ない見込みのためブランチ移行が必要。'
   - task:
       vi: 'Nâng cấp <strong>Apache HTTP Server</strong> lên <strong>2.4.71 trở lên</strong> (vá lỗ hổng RCE nghiêm trọng <strong>CVE-2026-119618</strong> trong <code>mod_http2</code>); nếu chưa thể nâng cấp ngay, tạm thời vô hiệu hóa <code>mod_http2</code> / giao thức <code>h2</code>. Xem <a href="@home@featured/apache-cve-2026-119618/analysis/">hướng dẫn chi tiết</a>'
       ja: '<strong>Apache HTTP Server</strong> を <strong>2.4.71 以上</strong>にアップグレードし、<code>mod_http2</code> の重大な RCE 脆弱性 <strong>CVE-2026-119618</strong> を修正する。即時更新が困難な場合は一時的に <code>mod_http2</code> / <code>h2</code> を無効化（<a href="@home@featured/apache-cve-2026-119618/analysis/">詳細ガイド</a>）'
