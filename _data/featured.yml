@@ -1,5 +1,29 @@
 # Các case nổi bật (sự cố lớn, phân tích lỗ hổng, runbook ứng phó). Thứ tự = thứ tự hiển thị.
 # `path` tính từ gốc ngôn ngữ (vi: "/", ja: "/ja/").
+- id: ruby-ghsa-34m4-m9fh-gqp5
+  category: vulnerability
+  path: "featured/ruby-ghsa-34m4-m9fh-gqp5/analysis/"
+  icon: "💎"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL"}
+  nav: {vi: "Ruby ruby2ßhell", ja: "Ruby ruby2ßhell"}
+  title: {vi: "Ruby \"ruby2ßhell\" (GHSA-34m4-m9fh-gqp5) — Heap overflow khi upcase ký tự ß, có thể dẫn đến RCE", ja: "Ruby「ruby2ßhell」（GHSA-34m4-m9fh-gqp5）— ß の大文字化でヒープオーバーフロー、RCE の恐れ"}
+  date: {vi: "Cập nhật đến 2026-11-19 · Ảnh hưởng Ruby 2.4.0–4.0.9 · Đã vá ở 3.3.14 / 3.4.13 / 4.0.10 · Chưa có CVE", ja: "2026年11月19日 時点 · Ruby 2.4.0〜4.0.9 が対象 · 3.3.14 / 3.4.13 / 4.0.10 で修正済み · CVE 未割り当て"}
+  link: {vi: "Xem phân tích & hướng dẫn →", ja: "分析・対策ガイドを見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Nguy cơ", ja: "リスク"}
+      text: {vi: "Tràn heap 1 byte khi upcase/swapcase/casecmp? chuỗi bảng mã 1 byte cũ; Ruby xác nhận có PoC dẫn đến RCE trong một số tình huống. Rails và Sinatra classic bị ảnh hưởng mặc định.", ja: "旧 1 バイト文字コードの upcase/swapcase/casecmp? で 1 バイトのヒープオーバーフロー。Ruby は一部で RCE に至る PoC を確認。Rails と Sinatra classic は既定で影響。"}
+    - sev: high
+      label: {vi: "Phạm vi", ja: "影響範囲"}
+      text: {vi: "Ruby 2.4.0–3.3.13, 3.4.0–3.4.12, 4.0.0–4.0.9; 3.2 trở xuống đã EOL, không có bản vá. Cả Ruby đóng gói trong GitLab, GHES, Mastodon, Discourse...", ja: "Ruby 2.4.0〜3.3.13、3.4.0〜3.4.12、4.0.0〜4.0.9。3.2 以下は EOL で修正なし。GitLab、GHES、Mastodon、Discourse などの同梱 Ruby も対象。"}
+    - sev: med
+      label: {vi: "Triệt để", ja: "恒久対策"}
+      text: {vi: "Nâng Ruby lên 3.3.14 / 3.4.13 / 4.0.10, rebuild image và restart; không có workaround.", ja: "Ruby を 3.3.14 / 3.4.13 / 4.0.10 へ更新し、イメージ再ビルドと再起動。回避策なし。"}
+    - sev: low
+      label: {vi: "Lưu ý", ja: "注意"}
+      text: {vi: "Veria Labs dự kiến công bố PoC khoảng 1 tuần sau (~26-11); CVE đang chờ cấp. Chưa ghi nhận khai thác ngoài thực tế.", ja: "Veria Labs は約 1 週間後（〜11/26）に PoC 公開予定。CVE は申請中。実環境での悪用は未確認。"}
+
 - id: php-security-release-2026-11-19
   category: vulnerability
   path: "featured/php-security-release-2026-11-19/advisory/"

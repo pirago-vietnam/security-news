@@ -1,0 +1,149 @@
+---
+layout: default
+title: "Ruby ruby2ßhell (GHSA-34m4-m9fh-gqp5) — Heap overflow khi upcase ký tự ß, có thể dẫn đến RCE trên Rails/Sinatra"
+description: "Tóm tắt GHSA-34m4-m9fh-gqp5 (ruby2ßhell): heap overflow 1 byte trong chuyển đổi chữ hoa/thường của Ruby 2.4.0–4.0.9, bản vá 3.3.14 / 3.4.13 / 4.0.10, cách kiểm tra và khắc phục."
+image: "/featured/ruby-ghsa-34m4-m9fh-gqp5/ruby2shell-og.png"
+category: "Phân tích lỗ hổng"
+---
+<style>
+  .an-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
+  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--border); }
+  .an-sec { margin: 0 0 40px; }
+  .an-sec h2 { font-size: 21px; margin: 24px 0 12px; scroll-margin-top: 90px; }
+  .an-sec h3 { font-size: 17px; margin: 24px 0 8px; }
+  .an-sec pre { background: #0f172a; color: #e2e8f0; padding: 14px 16px; border-radius: var(--radius-md); overflow-x: auto; font-size: 13px; }
+  .an-sec pre code { background: none; border: 0; padding: 0; color: inherit; }
+  .an-sec ul, .an-sec ol { padding-left: 22px; }
+  .an-sec li { margin: 4px 0; }
+  .an-sec .table-wrap { overflow-x: auto; }
+  .an-sec td code { white-space: nowrap; }
+  .an-sec td, .an-sec th { overflow-wrap: normal; word-break: keep-all; }
+  .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
+  .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
+  .fig .mut { fill: var(--text-muted); }
+  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
+</style>
+
+<div class="report-header">
+  <h1>Ruby "ruby2ßhell" (GHSA-34m4-m9fh-gqp5) — Heap overflow khi upcase ký tự ß, có thể dẫn đến RCE</h1>
+  <p class="sub">Trạng thái tại <strong>2026-11-19</strong> (ruby-lang.org ngày 2026-11-18, Veria Labs, Cyber Security News). Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a>. Mức độ: <span class="badge crit">Nghiêm trọng (Critical)</span> theo GitHub Advisory (chưa có điểm CVSS).</p>
+</div>
+
+<blockquote class="callout">
+  <p><strong>Đọc trước:</strong> nâng cấp Ruby lên <strong>3.3.14 / 3.4.13 / 4.0.10</strong> (hoặc chuyển sang nhánh còn hỗ trợ nếu đang dùng 3.2 trở xuống), rồi <strong>rebuild image / restart ứng dụng</strong>. Không có biện pháp tạm thời. Trang này không chứa mã khai thác.</p>
+</blockquote>
+
+<nav class="an-nav" aria-label="nav">
+  <a href="#non-tech">Giải thích dễ hiểu</a>
+  <a href="#tom-tat">Tóm tắt kỹ thuật</a>
+  <a href="#pham-vi">Phạm vi ảnh hưởng</a>
+  <a href="#kiem-tra">Kiểm tra nhanh</a>
+  <a href="#khac-phuc">Khắc phục</a>
+  <a href="#do-tin-cay">Độ tin cậy thông tin</a>
+  <a href="#nguon">Nguồn</a>
+</nav>
+
+<section class="an-sec">
+<h2 id="non-tech">Giải thích nhanh cho Non-tech / PM</h2>
+<ul>
+  <li><strong>Chuyện gì xảy ra?</strong> Khi Ruby đổi chữ "ß" (chữ s đức) sang chữ hoa trong một số bảng mã cũ, kết quả dài hơn dữ liệu gốc ("SS") nhưng Ruby kiểm tra chỗ trống chưa đủ, nên ghi tràn 1 byte ra ngoài vùng nhớ. Với đủ nhiều ký tự ß, kẻ tấn công có thể điều khiển được phần bộ nhớ bị ghi đè.</li>
+  <li><strong>Nguy hiểm thế nào?</strong> Ruby cho biết đã có PoC chứng minh có thể dẫn đến <strong>thực thi mã từ xa (RCE) trong một số tình huống</strong>. Rails và Sinatra (classic) bị ảnh hưởng ngay ở cấu hình mặc định theo Veria Labs.</li>
+  <li><strong>Dự án nào bị ảnh hưởng?</strong> Mọi hệ thống chạy Ruby từ 2.4.0 đến 3.3.13 / 3.4.12 / 4.0.9, kể cả Ruby nằm sẵn trong Docker image hoặc sản phẩm tự host (GitLab, GitHub Enterprise Server, Mastodon, Discourse...).</li>
+  <li><strong>PM / Quản lý cần làm gì?</strong> Yêu cầu kỹ sư kiểm kê dịch vụ Ruby (kể cả Ruby đi kèm trong sản phẩm bên thứ ba), ưu tiên dịch vụ lộ internet, và lên lịch nâng cấp + triển khai lại. Veria Labs dự kiến công bố PoC khoảng 1 tuần sau công bố (ước tính ~2026-11-26) nên cần vá sớm.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="tom-tat">1. Tóm tắt kỹ thuật</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 170" role="img" aria-label="Chuỗi tấn công"><defs><marker id="r1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="16" width="167" height="70" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="83.5" y="49" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Văn bản không tin cậy</text><text x="83.5" y="67" text-anchor="middle" font-size="11" class="mut">bảng mã 1 byte cũ</text><line x1="167" y1="51" x2="189" y2="51" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r1)"/><rect class="box" x="191" y="16" width="167" height="70" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="274.5" y="49" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">upcase / casecmp?</text><text x="274.5" y="67" text-anchor="middle" font-size="11" class="mut">ß → "SS" (2 byte)</text><line x1="358" y1="51" x2="380" y2="51" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r1)"/><rect class="box" x="382" y="16" width="167" height="70" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="465.5" y="49" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Tràn heap 1 byte</text><text x="465.5" y="67" text-anchor="middle" font-size="11" class="mut">kiểm tra chỉ chừa 1 byte</text><line x1="549" y1="51" x2="571" y2="51" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r1)"/><rect class="box" x="573" y="16" width="167" height="70" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="656.5" y="49" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">RCE (có thể)</text><text x="656.5" y="67" text-anchor="middle" font-size="11" class="mut">PoC có, chưa công khai</text><rect x="0" y="112" width="740" height="40" rx="8" fill="var(--low)" opacity=".14"/><text x="370" y="137" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Chặn từ gốc: nâng Ruby 3.3.14 / 3.4.13 / 4.0.10 → rebuild + restart</text></svg>
+<figcaption>Sơ đồ khái quát chuỗi tấn công theo mô tả của advisory và Veria Labs; không phải chi tiết khai thác.</figcaption>
+</figure>
+<figure class="fig">
+<svg viewBox="0 0 740 230" role="img" aria-label="Minh hoạ tràn bộ đệm"><text x="0" y="16" font-size="12" font-weight="700" fill="currentColor">Đầu vào: nhiều ký tự ß (1 byte mỗi ký tự)</text><rect class="box" x="0" y="28" width="46" height="34" rx="5"/><text x="23" y="51" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor">ß</text><rect class="box" x="52" y="28" width="46" height="34" rx="5"/><text x="75" y="51" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor">ß</text><rect class="box" x="104" y="28" width="46" height="34" rx="5"/><text x="127" y="51" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor">ß</text><rect class="box" x="156" y="28" width="46" height="34" rx="5"/><text x="179" y="51" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor">ß</text><text x="214" y="51" font-size="12" class="mut">… ×21</text><text x="330" y="51" font-size="20" fill="currentColor">→ upcase →</text><text x="0" y="96" font-size="12" font-weight="700" fill="currentColor">Bộ đệm đầu ra = độ dài đầu vào + 20 byte</text><rect x="0" y="108" width="46" height="34" rx="5" fill="var(--bg-subtle)" stroke="var(--low)" stroke-width="1.6"/><text x="23" y="131" text-anchor="middle" font-size="15" font-weight="700" fill="currentColor">S</text><rect x="52" y="108" width="46" height="34" rx="5" fill="var(--bg-subtle)" stroke="var(--low)" stroke-width="1.6"/><text x="75" y="131" text-anchor="middle" font-size="15" font-weight="700" fill="currentColor">S</text><rect x="104" y="108" width="46" height="34" rx="5" fill="var(--bg-subtle)" stroke="var(--low)" stroke-width="1.6"/><text x="127" y="131" text-anchor="middle" font-size="15" font-weight="700" fill="currentColor">S</text><rect x="156" y="108" width="46" height="34" rx="5" fill="var(--bg-subtle)" stroke="var(--low)" stroke-width="1.6"/><text x="179" y="131" text-anchor="middle" font-size="15" font-weight="700" fill="currentColor">S</text><rect x="208" y="108" width="46" height="34" rx="5" fill="var(--bg-subtle)" stroke="var(--low)" stroke-width="1.6"/><text x="231" y="131" text-anchor="middle" font-size="15" font-weight="700" fill="currentColor">S</text><rect x="260" y="108" width="46" height="34" rx="5" fill="var(--bg-subtle)" stroke="var(--low)" stroke-width="1.6"/><text x="283" y="131" text-anchor="middle" font-size="15" font-weight="700" fill="currentColor">S</text><rect x="312" y="108" width="46" height="34" rx="5" fill="var(--bg-subtle)" stroke="var(--low)" stroke-width="1.6"/><text x="335" y="131" text-anchor="middle" font-size="15" font-weight="700" fill="currentColor">S</text><rect x="364" y="104" width="2" height="42" fill="var(--text-muted)"/><text x="356" y="160" text-anchor="end" font-size="11" class="mut">hết bộ đệm</text><rect x="372" y="108" width="46" height="34" rx="5" fill="var(--crit)" opacity=".18" stroke="var(--crit)" stroke-width="2" stroke-dasharray="4 3"/><text x="395" y="131" text-anchor="middle" font-size="15" font-weight="700" fill="var(--crit)">S</text><text x="395" y="160" text-anchor="middle" font-size="11" font-weight="700" fill="var(--crit)">+1 byte</text><text x="440" y="124" font-size="12" font-weight="700" fill="currentColor">21 ký tự ß</text><text x="440" y="142" font-size="11" class="mut">→ 42 byte cần ghi, chỉ kiểm tra 1</text><rect x="0" y="182" width="740" height="40" rx="8" fill="var(--high)" opacity=".14"/><text x="370" y="207" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Mỗi ß nở thành 2 byte nhưng vòng lặp chỉ kiểm tra còn chỗ cho 1 → ghi lệch 1 byte</text></svg>
+<figcaption>Minh hoạ đơn giản hoá theo mô tả của Veria Labs: byte tràn là "S" (upcase) hoặc "s" (case-fold), nằm ngay sau bộ đệm.</figcaption>
+</figure>
+<ul>
+  <li><strong>Bản chất:</strong> lỗi tràn bộ đệm heap 1 byte (CWE-193, off-by-one) trong vòng lặp chuyển đổi chữ hoa/thường của một số bảng mã 1 byte (nhóm ISO-8859 và Windows-125x; advisory nêu ISO-8859-1 và Windows-1252). Upcase "ß" ghi 2 byte ("SS") nhưng vòng lặp chỉ kiểm tra còn chỗ cho 1 byte. Bộ đệm đầu ra có kích thước = độ dài đầu vào + 20 nên 21 ký tự ß là tràn 1 byte. Lỗi tồn tại từ Ruby 2.4.0.</li>
+  <li><strong>Phương thức dẫn đến lỗi:</strong> <code>upcase</code>, <code>swapcase</code>, <code>downcase(:fold)</code>, <code>casecmp?</code>. Chuỗi UTF-8 đi đường code khác nên <strong>không</strong> bị ảnh hưởng.</li>
+  <li><strong>Mã định danh:</strong> GHSA-34m4-m9fh-gqp5; ruby-lang.org và GitHub ghi CVE đang chờ cấp. Mức "Critical" theo GitHub, chưa có CVSS.</li>
+  <li><strong>Cùng bản phát hành:</strong> 7 lỗi trong chuyển đổi chuỗi và engine Regexp được vá chung (GHSA-34m4-m9fh-gqp5, 7x2q-68qv-6p8x, 87fm-7w84-j2px, wpqw-5qxg-m68r, 3p8q-wmhx-vm2w, 7whj-cfh7-xgm4, pvgc-g7gj-pv6h). Nhiều lỗi trong số này có thể dẫn đến RCE (ví dụ double free khi compile regex từ dữ liệu do kẻ tấn công kiểm soát) nên cần nâng cấp toàn bộ, không chỉ xử lý riêng ß.</li>
+  <li><strong>Điều kiện khai thác:</strong> ứng dụng phải áp dụng các phép chuyển đổi trên đây lên văn bản không tin cậy đang ở bảng mã 1 byte cũ. Rails và Sinatra classic gặp điều kiện này theo mặc định (theo Veria Labs); Rack thuần không, nhưng code ứng dụng vẫn có thể tạo ra điều kiện đó.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="pham-vi">2. Phạm vi ảnh hưởng</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 234" role="img" aria-label="Phạm vi phiên bản"><text x="0" y="14" font-size="11" font-weight="700" class="mut">Nhánh</text><text x="250" y="14" font-size="11" font-weight="700" class="mut">Bị ảnh hưởng</text><text x="520" y="14" font-size="11" font-weight="700" class="mut">Bản vá</text><rect class="box" x="0" y="24" width="740" height="38" rx="6"/><rect x="0" y="24" width="6" height="38" rx="3" fill="var(--crit)"/><text x="16" y="48" font-size="13" font-weight="700" fill="currentColor">Ruby 3.2 trở xuống (EOL)</text><text x="250" y="48" font-size="12.5" fill="currentColor">tất cả, từ 2.4.0</text><text x="520" y="48" font-size="12.5" font-weight="700" fill="currentColor">Không có bản vá</text><rect class="box" x="0" y="70" width="740" height="38" rx="6"/><rect x="0" y="70" width="6" height="38" rx="3" fill="var(--high)"/><text x="16" y="94" font-size="13" font-weight="700" fill="currentColor">Ruby 3.3</text><text x="250" y="94" font-size="12.5" fill="currentColor">2.4.0 – 3.3.13</text><text x="520" y="94" font-size="12.5" font-weight="700" fill="currentColor">3.3.14</text><rect class="box" x="0" y="116" width="740" height="38" rx="6"/><rect x="0" y="116" width="6" height="38" rx="3" fill="var(--high)"/><text x="16" y="140" font-size="13" font-weight="700" fill="currentColor">Ruby 3.4</text><text x="250" y="140" font-size="12.5" fill="currentColor">3.4.0 – 3.4.12</text><text x="520" y="140" font-size="12.5" font-weight="700" fill="currentColor">3.4.13</text><rect class="box" x="0" y="162" width="740" height="38" rx="6"/><rect x="0" y="162" width="6" height="38" rx="3" fill="var(--high)"/><text x="16" y="186" font-size="13" font-weight="700" fill="currentColor">Ruby 4.0</text><text x="250" y="186" font-size="12.5" fill="currentColor">4.0.0 – 4.0.9</text><text x="520" y="186" font-size="12.5" font-weight="700" fill="currentColor">4.0.10</text></svg>
+<figcaption>Theo advisory GHSA-34m4-m9fh-gqp5 và Veria Labs. Ruby đóng gói trong container / sản phẩm bên thứ ba cần kiểm tra riêng.</figcaption>
+</figure>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Thành phần</th><th>Bị ảnh hưởng</th><th>Đã vá</th><th>Ghi chú</th></tr></thead>
+  <tbody>
+    <tr><td>Ruby 3.3</td><td><code>2.4.0</code> đến <code>3.3.13</code></td><td><strong><code>3.3.14</code></strong></td><td>Nhánh 3.3 ở giai đoạn security maintenance.</td></tr>
+    <tr><td>Ruby 3.4</td><td><code>3.4.0</code> đến <code>3.4.12</code></td><td><strong><code>3.4.13</code></strong></td><td></td></tr>
+    <tr><td>Ruby 4.0</td><td><code>4.0.0</code> đến <code>4.0.9</code></td><td><strong><code>4.0.10</code></strong></td><td></td></tr>
+    <tr><td>Ruby 3.2 trở xuống</td><td>Tất cả (EOL)</td><td>Không có bản vá</td><td>Phải chuyển sang nhánh còn hỗ trợ.</td></tr>
+    <tr><td>Rails / Sinatra (classic)</td><td>Ảnh hưởng ở cấu hình mặc định</td><td>Nâng cấp Ruby</td><td>Chưa thấy bản vá riêng của Rails/Sinatra.</td></tr>
+    <tr><td>GitLab</td><td>19.6.0 (Ruby 3.3.13)</td><td>Chưa xác minh</td><td>Theo Veria Labs / Aikido.</td></tr>
+    <tr><td>GitHub Enterprise Server</td><td>3.22.5 (Ruby 4.0.9)</td><td>Chưa xác minh</td><td>Theo Veria Labs / Aikido.</td></tr>
+    <tr><td>Mastodon / OpenProject</td><td>4.7.5 / 17.9.7 (Ruby 4.0.9)</td><td>4.7.6 / 17.9.8</td><td>Theo Veria Labs; chưa có xác nhận từ vendor.</td></tr>
+    <tr><td>Discourse</td><td>2026.10.1</td><td>Base image <code>2.0.20261119-0203</code></td><td>Theo Veria Labs.</td></tr>
+    <tr><td>Chatwoot</td><td>4.20.0</td><td>Chưa có bản phát hành</td><td>Issue #16730 yêu cầu nâng Ruby lên 3.4.13.</td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section class="an-sec">
+<h2 id="kiem-tra">3. Kiểm tra nhanh</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 230" role="img" aria-label="Cây quyết định"><defs><marker id="r4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="20" width="160" height="76" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="80" y="54" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Hệ thống có Ruby?</text><text x="80" y="73" text-anchor="middle" font-size="11" class="mut">host, container, sản phẩm</text><path d="M160 58 C 215 58 205 34 258 34" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r4)"/><text x="176" y="12" font-size="10.5" class="mut">EOL</text><rect class="box" x="262" y="8" width="478" height="56" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="278" y="32" font-size="12.5" font-weight="700" fill="currentColor">Ruby 3.2 trở xuống</text><text x="278" y="51" font-size="11" class="mut">EOL: chuyển sang 3.3 / 3.4 / 4.0 đã vá</text><path d="M160 58 C 215 58 205 106 258 106" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r4)"/><text x="176" y="100" font-size="10.5" class="mut">cũ hơn</text><rect class="box" x="262" y="80" width="478" height="56" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="278" y="104" font-size="12.5" font-weight="700" fill="currentColor">Ruby 3.3–4.0 chưa đạt bản vá</text><text x="278" y="123" font-size="11" class="mut">nâng 3.3.14 / 3.4.13 / 4.0.10, rebuild image, restart</text><path d="M160 58 C 215 58 205 178 258 178" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r4)"/><text x="176" y="218" font-size="10.5" class="mut">đóng gói</text><rect class="box" x="262" y="152" width="478" height="56" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="278" y="176" font-size="12.5" font-weight="700" fill="currentColor">Ruby đi kèm sản phẩm (GitLab, GHES...)</text><text x="278" y="195" font-size="11" class="mut">cài bản build vendor, rồi kiểm tra lại ruby -v bên trong</text></svg>
+<figcaption>Cây quyết định nhanh để xác định hệ thống nào cần xử lý và theo cách nào.</figcaption>
+</figure>
+<p>Xác định phiên bản Ruby <strong>bên trong môi trường chạy thực tế</strong>. Nâng Ruby của host không đổi Ruby đóng gói trong container hoặc appliance.</p>
+<pre><code class="language-bash">ruby -v
+bundle exec ruby -v
+# Docker / Kubernetes
+docker ps -q | xargs -I{} sh -c 'docker exec {} ruby -v 2&gt;/dev/null'
+kubectl get pods -A -o custom-columns=NS:.metadata.namespace,POD:.metadata.name,IMAGES:.spec.containers[*].image | grep -Ei 'ruby|rails|gitlab|discourse|mastodon'
+# Ruby version trong repo
+grep -rEn 'ruby ["'"'"']|^ruby ' Gemfile .ruby-version .tool-versions mise.toml Dockerfile 2&gt;/dev/null</code></pre>
+<p>Rà soát code tự viết có gọi <code>upcase</code>/<code>swapcase</code>/<code>downcase(:fold)</code>/<code>casecmp?</code> trên chuỗi không tin cậy đang ở bảng mã cũ (<code>force_encoding</code> / <code>encode</code> sang ISO-8859-x, Windows-125x).</p>
+</section>
+
+<section class="an-sec">
+<h2 id="khac-phuc">4. Khắc phục</h2>
+<ol>
+  <li>Nâng Ruby lên <strong>3.3.14 / 3.4.13 / 4.0.10</strong>. Với Docker: cập nhật tag base image (<code>ruby:3.4.13</code>...), rebuild và rollout. Với 3.2 trở xuống: lên nhánh còn hỗ trợ.</li>
+  <li>Với sản phẩm tự host: cài bản build của vendor có Ruby đã vá, rồi xác nhận lại phiên bản Ruby trong môi trường đang chạy.</li>
+  <li>Restart tiến trình ứng dụng (Puma, Unicorn, Sidekiq...) và xác nhận bằng <code>ruby -v</code>.</li>
+  <li>Ưu tiên dịch vụ lộ internet và xử lý văn bản người dùng không cần xác thực.</li>
+</ol>
+<p><strong>Biện pháp tạm thời:</strong> ruby-lang.org không đưa ra workaround. Giảm rủi ro trong lúc chờ: hạn chế đưa dữ liệu bảng mã cũ vào các phép chuyển đổi chữ hoa/thường, và giám sát log lỗi crash/segfault bất thường của tiến trình Ruby.</p>
+</section>
+
+<section class="an-sec">
+<h2 id="do-tin-cay">5. Độ tin cậy thông tin</h2>
+<ul>
+  <li><strong>CVE:</strong> ruby-lang.org và GitHub ghi chưa cấp CVE. Một số nguồn thứ cấp nhắc <code>CVE-2026-132825</code> nhưng chưa xác minh được bản ghi; chưa nên dùng ID này làm tham chiếu chính.</li>
+  <li><strong>Khai thác:</strong> Ruby cho biết có PoC chứng minh RCE "trong một số tình huống", chưa công khai. Veria Labs dự kiến công bố khoảng 1 tuần sau (~2026-11-26, là ước tính). Chưa có nguồn nào ghi nhận khai thác ngoài thực tế.</li>
+  <li><strong>Đừng nhầm lẫn:</strong> CVE-2026-66066 (KindaRails2Shell, Rails Active Storage) là lỗi khác; CVE-2026-97229 (GitLab CI/CD regex) là lỗi khác và được báo cáo đang bị khai thác, không phải ruby2ßhell.</li>
+  <li><strong>Chưa xác minh:</strong> bản vá của GitLab, GHES, Chatwoot; Docker official image, Heroku, AWS; danh sách đầy đủ bảng mã bị ảnh hưởng; CVSS. Thông tin về Mastodon, OpenProject, Discourse chỉ đến từ Veria Labs.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="nguon">6. Nguồn tham khảo</h2>
+<ul>
+  <li><a href="https://cybersecuritynews.com/ruby2shell-rce/" target="_blank" rel="noopener noreferrer">Cyber Security News — ruby2ßhell</a></li>
+  <li><a href="https://verialabs.com/ruby2shell/" target="_blank" rel="noopener noreferrer">Veria Labs — Ruby2Shell</a></li>
+  <li><a href="https://www.ruby-lang.org/en/news/2026/11/18/multiple-vulnerabilities-in-regexp-and-string/" target="_blank" rel="noopener noreferrer">ruby-lang.org — Multiple vulnerabilities in Regexp and String</a></li>
+  <li><a href="https://github.com/ruby/ruby/security/advisories/GHSA-34m4-m9fh-gqp5" target="_blank" rel="noopener noreferrer">GitHub Advisory GHSA-34m4-m9fh-gqp5</a></li>
+  <li><a href="https://www.aikido.dev/blog/ruby2shell" target="_blank" rel="noopener noreferrer">Aikido — ruby2shell</a></li>
+  <li><a href="https://www.ruby-lang.org/en/news/2026/11/18/ruby-3-3-14-released/" target="_blank" rel="noopener noreferrer">Ruby 3.3.14</a> · <a href="https://www.ruby-lang.org/en/news/2026/11/18/ruby-3-4-13-released/" target="_blank" rel="noopener noreferrer">3.4.13</a> · <a href="https://www.ruby-lang.org/en/news/2026/11/18/ruby-4-0-10-released/" target="_blank" rel="noopener noreferrer">4.0.10</a></li>
+</ul>
+</section>
