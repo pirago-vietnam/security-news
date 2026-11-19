@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "PHP bản vá bảo mật CRITICAL 19-11-2026 (gồm CVE-2026-115560) — Cảnh báo trước & việc cần chuẩn bị"
-description: "PHP.net thông báo trước đợt phát hành bản vá bảo mật có mức cao nhất là CRITICAL, ảnh hưởng mọi nhánh PHP còn được hỗ trợ, dự kiến 14:00–14:30 UTC (21:00–21:30 ICT) ngày 19-11-2026. Theo Aikido, đợt này gồm CVE-2026-115560 (session upload progress). Danh sách việc cần chuẩn bị."
+title: "PHP bản vá bảo mật CRITICAL 19-11-2026: 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 vá 17 CVE (gồm CVE-2026-115560)"
+description: "PHP đã phát hành 8.5.13, 8.4.28, 8.3.37, 8.2.36 và 8.6.0 GA ngày 19-11-2026. Đợt vá sửa 17 lỗ hổng, 7 lỗi CVSS 9.2 (RCE/UAF), gồm CVE-2026-115560 (session upload progress). Danh sách CVE, phạm vi và việc cần làm."
 image: "/featured/php-security-release-2026-11-19/php-release-og.png"
 category: "Phân tích lỗ hổng"
 ---
@@ -24,92 +24,101 @@ category: "Phân tích lỗ hổng"
   .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
   .fig .mut { fill: var(--text-muted); }
   .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
-  .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
-  .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
-  .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
-  .fig .mut { fill: var(--text-muted); }
-  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
 </style>
 <div class="report-header">
-  <h1>PHP bản vá bảo mật CRITICAL 19-11-2026 (gồm CVE-2026-115560) — Cảnh báo trước & việc cần chuẩn bị</h1>
-  <p class="sub">Trạng thái tại <strong>2026-11-19 08:44 ICT (UTC+7)</strong>: bản vá <strong>chưa phát hành</strong>. Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a>. Mức độ: <span class="badge crit">Nghiêm trọng (Critical)</span> theo thông báo của PHP.net. Theo Aikido (nguồn thứ cấp), đợt vá bao gồm <code>CVE-2026-115560</code>.</p>
+  <h1>PHP bản vá bảo mật CRITICAL 19-11-2026: 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 vá 17 CVE</h1>
+  <p class="sub">Cập nhật <strong>2026-11-19 22:30 ICT (UTC+7)</strong>: PHP đã <strong>phát hành</strong> (GitHub advisory đăng 14:05–14:08 UTC). Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a>. Mức độ: <span class="badge crit">Nghiêm trọng (Critical)</span>, CVSS 4.0 cao nhất <strong>9.2</strong>.</p>
 </div>
 
 <blockquote class="callout">
-  <p><strong>Đọc trước:</strong> chưa có số phiên bản, mã CVE hay chi tiết kỹ thuật. Trang này sẽ được cập nhật ngay sau khi PHP công bố (dự kiến <strong>21:00–21:30 ICT tối nay</strong>). Trong lúc chờ, hãy kiểm kê PHP đang chạy và chuẩn bị cửa sổ bảo trì để vá + restart ngay trong ngày.</p>
+  <p><strong>Hành động:</strong> nâng PHP lên <strong>8.2.36 / 8.3.37 / 8.4.28 / 8.5.13</strong> (hoặc 8.6.0), restart PHP-FPM/Apache và rebuild image. Nhánh <strong>8.1 trở xuống không có bản vá</strong>. Chưa thể vá ngay: tắt <code>session.upload_progress.enabled</code> (chỉ giảm thiểu CVE-2026-115560, không che các lỗi khác). Chưa thấy nguồn nào báo khai thác ngoài thực tế.</p>
 </blockquote>
 
 <nav class="an-nav" aria-label="nav">
-  <a href="#biet">Đã biết gì</a>
-  <a href="#chua-biet">Chưa biết gì</a>
+  <a href="#tom-tat">Tóm tắt</a>
+  <a href="#cve-list">17 CVE</a>
   <a href="#cve">CVE-2026-115560</a>
-  <a href="#chuan-bi">Cần chuẩn bị</a>
+  <a href="#hanh-dong">Việc cần làm</a>
+  <a href="#chua-ro">Chưa xác minh</a>
   <a href="#nguon">Nguồn</a>
 </nav>
 
 <section class="an-sec">
-<h2 id="biet">1. Thông tin đã được xác nhận</h2>
+<h2 id="tom-tat">1. Tóm tắt phát hành</h2>
 <ul>
-  <li><strong>Thông báo chính thức:</strong> mục <em>“Upcoming Critical PHP Security Release”</em> trên PHP.net ngày 18-11-2026.</li>
-  <li><strong>Phạm vi:</strong> các bản phát hành sẽ vá lỗ hổng ảnh hưởng <strong>mọi phiên bản PHP còn được hỗ trợ</strong>.</li>
-  <li><strong>Mức độ:</strong> cao nhất là <strong>CRITICAL</strong>. PHP.net cho biết các lỗi CRITICAL <strong>cần cấu hình không mặc định hoặc thiết lập ít gặp</strong> mới bị khai thác.</li>
-  <li><strong>CVE-2026-115560 (nguồn thứ cấp):</strong> Aikido cho biết đợt vá này bao gồm <code>CVE-2026-115560</code>, liên quan <em>session upload progress</em> và được mô tả là vector RCE. PHP.net <strong>chưa</strong> liệt kê CVE nào tại thời điểm kiểm tra.</li>
-  <li><strong>Thời điểm:</strong> thứ Năm <strong>19-11-2026, 14:00–14:30 UTC</strong> (= 21:00–21:30 ICT, UTC+7, giờ Việt Nam). Chi tiết kỹ thuật và phiên bản được vá sẽ công bố cùng lúc.</li>
+  <li><strong>Phiên bản:</strong> PHP <code>8.5.13</code>, <code>8.4.28</code>, <code>8.3.37</code>, <code>8.2.36</code> (bản bảo mật) và <code>8.6.0</code> (GA, phát hành cùng ngày), theo PHP.net archive. Tag tương ứng đã có trên GitHub.</li>
+  <li><strong>Quy mô:</strong> 17 GHSA, trong đó <strong>7 lỗi CVSS 9.2 (Critical)</strong>: 4 lỗi UAF/bộ nhớ ở engine, ext/date, ext/session; 2 lỗi deserialization/RCE ở ext/session; 1 lỗi request smuggling ở PHP-FPM. 4 lỗi High, 6 lỗi Moderate. PHP.net lưu ý các lỗi CRITICAL <strong>cần cấu hình không mặc định hoặc thiết lập ít gặp</strong>.</li>
+  <li><strong>CVE-2026-115560</strong> là mục PHP đã hứa công bố đầy đủ ở bản này (advisory 23-10). cve.org: CNA PHP Group, CVSS 4.0 <strong>9.2</strong>, CWE-20 / CWE-502. Bản October (8.5.12…) <strong>không</strong> sửa lỗi này.</li>
+  <li><strong>Đính chính so với bản tin trước:</strong> đợt này <em>không</em> chỉ có một CVE. Thêm vào đó là 6 lỗi 9.2 khác; đáng chú ý <code>CVE-2026-129289</code> (PHP-FPM) và <code>CVE-2026-126714</code> (session).</li>
 </ul>
 <figure class="fig">
-<svg viewBox="0 0 740 106" role="img" aria-label="Dòng thời gian"><defs><marker id="p1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="83.5" y="51.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Hiện tại</text><text x="83.5" y="69.0" text-anchor="middle" font-size="11" class="mut">Chưa có bản vá</text><line x1="167" y1="53" x2="189" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#p1)"/><rect class="box" x="191" y="16" width="167" height="74" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="274.5" y="51.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">21:00–21:30 ICT</text><text x="274.5" y="69.0" text-anchor="middle" font-size="11" class="mut">PHP.net phát hành</text><line x1="358" y1="53" x2="380" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#p1)"/><rect class="box" x="382" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="465.5" y="51.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Ngay sau đó</text><text x="465.5" y="69.0" text-anchor="middle" font-size="11" class="mut">Xác định ảnh hưởng</text><line x1="549" y1="53" x2="571" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#p1)"/><rect class="box" x="573" y="16" width="167" height="74" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="656.5" y="51.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Trong ngày</text><text x="656.5" y="69.0" text-anchor="middle" font-size="11" class="mut">Vá · restart · rebuild</text></svg>
-<figcaption>Dòng thời gian tối nay (giờ Việt Nam, ICT UTC+7). Chỉ các mốc đã được PHP.net xác nhận; phần còn lại là khuyến nghị của PiraGo.</figcaption>
+<svg viewBox="0 0 740 106" role="img" aria-label="Chuỗi tấn công CVE-2026-115560"><defs><marker id="q1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="83.5" y="50.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Upload multipart</text><text x="83.5" y="68.0" text-anchor="middle" font-size="11" class="mut">upload progress bật</text><line x1="167" y1="53" x2="189" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q1)"/><rect class="box" x="191" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="274.5" y="50.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Ghi vào session</text><text x="274.5" y="68.0" text-anchor="middle" font-size="11" class="mut">php_binary/php_serialize</text><line x1="358" y1="53" x2="380" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q1)"/><rect class="box" x="382" y="16" width="167" height="74" rx="8" style="stroke:var(--med);stroke-width:1.6"/><text x="465.5" y="50.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Đọc bằng handler php</text><text x="465.5" y="68.0" text-anchor="middle" font-size="11" class="mut">ini_set hoặc app khác</text><line x1="549" y1="53" x2="571" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q1)"/><rect class="box" x="573" y="16" width="167" height="74" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="656.5" y="50.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">unserialize</text><text x="656.5" y="68.0" text-anchor="middle" font-size="11" class="mut">→ RCE (cần gadget)</text></svg>
+<figcaption>Chuỗi tấn công CVE-2026-115560 ở mức khái quát (theo mô tả cve.org). Cần đồng thời: upload progress bật, serializer bị đổi/lệch, và có gadget chain phù hợp. Không có chi tiết khai thác.</figcaption>
 </figure>
 </section>
 
 <section class="an-sec">
-<h2 id="chua-biet">2. Những điểm chưa rõ</h2>
-<ul>
-  <li>Số phiên bản vá của từng nhánh (8.2 / 8.3 / 8.4 / 8.5…), điểm CVSS, và danh sách CVE đầy đủ của đợt vá (ngoài <code>CVE-2026-115560</code>). Bản vá October (8.5.12 / 8.4.27 / 8.3.36 / 8.2.35) <strong>không</strong> sửa CVE này, theo Aikido.</li>
-  <li>Thành phần bị ảnh hưởng và cấu hình “không mặc định” cụ thể là gì; có PoC hay khai thác ngoài thực tế hay chưa.</li>
-  <li>Có đi kèm PHP 8.6.0 GA hay không. Một mục ngày 12-11 của PHP.net nêu kế hoạch 8.6.0 GA ngày 19-11, nhưng đây mới là <strong>suy luận</strong>, chưa được xác nhận.</li>
-  <li>Nhánh PHP 8.1 trở xuống đã hết hỗ trợ: dự kiến <strong>không có bản vá</strong> (cần nâng nhánh).</li>
-</ul>
+<h2 id="cve-list">2. Danh sách CVE của đợt vá</h2>
+<p>Điểm là CVSS 4.0 trên GitHub advisory của php-src. Cột cuối là các nhánh có bản vá (8.6 = 8.6.0).</p>
+<div class="table-wrap"><table><thead><tr><th>CVE</th><th>CVSS 4.0</th><th>Thành phần / mô tả</th><th>Nhánh được vá</th></tr></thead><tbody><tr><td><code>CVE-2026-115560</code></td><td><span class="badge crit">9.2</span></td><td>ext/session: lệch serializer + upload progress → RCE</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-129496</code></td><td><span class="badge crit">9.2</span></td><td>ext/date: UAF cache múi giờ (RCE)</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-129289</code></td><td><span class="badge crit">9.2</span></td><td>PHP-FPM: request smuggling qua body chưa đọc → thực thi mã PHP</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-126714</code></td><td><span class="badge crit">9.2</span></td><td>ext/session: file session bị ghi đè một phần → deserialization/RCE</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-129481</code></td><td><span class="badge crit">9.2</span></td><td>ext/session: UAF sau khi shutdown session bị ngắt</td><td>8.3–8.6</td></tr><tr><td><code>CVE-2026-129474</code></td><td><span class="badge crit">9.2</span></td><td>Engine: UAF trong backtrace của __call/__callStatic</td><td>8.5, 8.6</td></tr><tr><td><code>CVE-2026-129182</code></td><td><span class="badge crit">9.2</span></td><td>Engine: UAF khi last_fatal_error_backtrace được nạp lại sau shutdown</td><td>8.5, 8.6</td></tr><tr><td><code>CVE-2026-129291</code></td><td><span class="badge high">8.8</span></td><td>PHP-FPM: UAF epoll → leo thang đặc quyền lên FPM master (cục bộ)</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-127960</code></td><td><span class="badge high">8.7</span></td><td>HTTP stream wrapper: header gập dòng gây DoS CPU</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-128064</code></td><td><span class="badge high">8.2</span></td><td>URL HTTPS/FTPS viết hoa-thường lẫn lộn bị gửi không mã hóa</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-128090</code></td><td><span class="badge high">7.7</span></td><td>ext/phar: bypass chữ ký OpenSSL bằng hạ cấp thuật toán</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-129538</code></td><td><span class="badge med">6.9</span></td><td>php-cgi: đọc/ghi OOB khi hiệu chỉnh PATH_INFO</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-129506</code></td><td><span class="badge med">6.3</span></td><td>ext/soap: UAF khi xử lý DTD entity reference</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-15353</code></td><td><span class="badge med">6.3</span></td><td>ext/soap: lộ heap chưa khởi tạo qua arraySize sai định dạng</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-129501</code></td><td><span class="badge med">6.3</span></td><td>ext/dom: double free khi serialize XML</td><td>8.4–8.6</td></tr><tr><td><code>CVE-2026-129438</code></td><td><span class="badge med">6.3</span></td><td>ext/uri: serialize sai RFC 3986 với đầu vào gần 2 GiB</td><td>8.5, 8.6</td></tr><tr><td><code>CVE-2026-129292</code></td><td><span class="badge med">5.3</span></td><td>PHP-FPM: XSS ở trang status</td><td>8.2–8.6</td></tr></tbody></table></div>
+<p>Ngoài ra changelog 8.5.13 / 8.6.0 ghi <code>CVE-2026-48841</code> (nâng uriparser lên 1.0.3), chưa có điểm CVSS được xác minh.</p>
+<figure class="fig">
+<svg viewBox="0 0 740 234" role="img" aria-label="Phạm vi phiên bản và bản vá"><text x="0" y="16" font-size="11" class="mut">Nhánh PHP</text><text x="170" y="16" font-size="11" class="mut">Bản vá</text><rect class="box" x="0" y="26" width="740" height="28" rx="6"/><rect x="0" y="26" width="6" height="28" rx="3" fill="var(--low)"/><text x="18" y="45" font-size="12.5" font-weight="700" fill="currentColor">8.5</text><text x="170" y="45" font-size="12.5" font-weight="700" fill="currentColor" style="font-family:'JetBrains Mono',monospace">8.5.13</text><text x="300" y="45" font-size="11.5" class="mut">Đủ 17 CVE (gồm 2 lỗi UAF chỉ riêng 8.5)</text><rect class="box" x="0" y="60" width="740" height="28" rx="6"/><rect x="0" y="60" width="6" height="28" rx="3" fill="var(--low)"/><text x="18" y="79" font-size="12.5" font-weight="700" fill="currentColor">8.4</text><text x="170" y="79" font-size="12.5" font-weight="700" fill="currentColor" style="font-family:'JetBrains Mono',monospace">8.4.28</text><text x="300" y="79" font-size="11.5" class="mut">Đủ, trừ 3 mục chỉ có ở 8.5+</text><rect class="box" x="0" y="94" width="740" height="28" rx="6"/><rect x="0" y="94" width="6" height="28" rx="3" fill="var(--low)"/><text x="18" y="113" font-size="12.5" font-weight="700" fill="currentColor">8.3</text><text x="170" y="113" font-size="12.5" font-weight="700" fill="currentColor" style="font-family:'JetBrains Mono',monospace">8.3.37</text><text x="300" y="113" font-size="11.5" class="mut">Đủ, trừ các mục chỉ có ở 8.4+/8.5+</text><rect class="box" x="0" y="128" width="740" height="28" rx="6"/><rect x="0" y="128" width="6" height="28" rx="3" fill="var(--low)"/><text x="18" y="147" font-size="12.5" font-weight="700" fill="currentColor">8.2</text><text x="170" y="147" font-size="12.5" font-weight="700" fill="currentColor" style="font-family:'JetBrains Mono',monospace">8.2.36</text><text x="300" y="147" font-size="11.5" class="mut">Bản vá bảo mật cuối của nhánh này</text><rect class="box" x="0" y="162" width="740" height="28" rx="6"/><rect x="0" y="162" width="6" height="28" rx="3" fill="var(--med)"/><text x="18" y="181" font-size="12.5" font-weight="700" fill="currentColor">8.6</text><text x="170" y="181" font-size="12.5" font-weight="700" fill="currentColor" style="font-family:'JetBrains Mono',monospace">8.6.0 (GA)</text><text x="300" y="181" font-size="11.5" class="mut">Phát hành cùng ngày, đã gồm các bản sửa</text><rect class="box" x="0" y="196" width="740" height="28" rx="6"/><rect x="0" y="196" width="6" height="28" rx="3" fill="var(--crit)"/><text x="18" y="215" font-size="12.5" font-weight="700" fill="currentColor">8.1 trở xuống</text><text x="170" y="215" font-size="12.5" font-weight="700" fill="currentColor" style="font-family:'JetBrains Mono',monospace">Không có</text><text x="300" y="215" font-size="11.5" class="mut">Hết hỗ trợ, không có bản vá — phải nâng nhánh</text></svg>
+<figcaption>Phạm vi bản vá theo nhánh. Hai lỗi UAF của engine và lỗi ext/uri chỉ ảnh hưởng 8.5; các nhánh cũ hơn vẫn cần vá vì còn nhiều lỗi 9.2 khác.</figcaption>
+</figure>
 </section>
 
 <section class="an-sec">
-<h2 id="cve">3. CVE-2026-115560 (theo Aikido — chưa được PHP.net xác nhận)</h2>
+<h2 id="cve">3. CVE-2026-115560 (session upload progress)</h2>
 <ul>
-  <li><strong>Thành phần:</strong> tính năng session upload progress (<code>session.upload_progress</code>). Được mô tả là vector thực thi mã từ xa (RCE); nguyên nhân gốc chưa được giải thích.</li>
-  <li><strong>Điều kiện cần (cả hai):</strong> (1) <code>session.serialize_handler</code> là <code>php_binary</code> hoặc <code>php_serialize</code> và mã ứng dụng đổi sang <code>php</code> bằng <code>ini_set()</code> trước <code>session_start()</code>; (2) session upload progress đang bật (mặc định của PHP là bật).</li>
-  <li><strong>Lịch sử:</strong> PHP công bố advisory thông tin ngày 23-10-2026 (sau đợt PHP2Shell), hứa công bố đầy đủ ở bản phát hành kế tiếp. Các bản 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 <strong>không</strong> sửa CVE này.</li>
-  <li><strong>Chưa có:</strong> điểm CVSS, phiên bản vá từng nhánh, trạng thái PoC/khai thác (PHP chưa công bố mức điểm).</li>
+  <li><strong>Tiêu đề (cve.org):</strong> “Session serializer mismatch can lead to remote code execution”. CVSS 4.0 9.2 (<code>AV:N/AC:H/AT:P/PR:N/UI:N</code>, tác động C/I/A cao).</li>
+  <li><strong>Cơ chế (mức khái quát):</strong> khi upload progress bật, dữ liệu do kẻ tấn công kiểm soát có thể nằm trong khóa session ghi bằng handler <code>php_binary</code> hoặc <code>php_serialize</code>. Nếu session sau đó được đọc bằng handler <code>php</code> (do <code>session.serialize_handler</code> bị đổi lúc chạy, hoặc khác nhau giữa các ứng dụng dùng chung kho session), bộ unserialize bị kích hoạt: chèn object, có thể dẫn đến RCE nếu có gadget chain, hoặc làm hỏng session / DoS.</li>
+  <li><strong>Bản vá:</strong> 8.2.36, 8.3.37, 8.4.28, 8.5.13, 8.6.0. Ảnh hưởng: 8.2.0 đến trước 8.2.36, 8.3.0 đến trước 8.3.37, 8.4.0 đến trước 8.4.28, 8.5.0 đến trước 8.5.13.</li>
+  <li><strong>PoC:</strong> có một repo PoC công khai của bên thứ ba (nội dung ghi ngày 24-10, lúc chưa có bản vá). Chưa có nguồn nào xác nhận khai thác ngoài thực tế. Coi như mã khai thác đã tồn tại.</li>
 </ul>
-<h3>Giảm thiểu tạm thời (có thể làm ngay)</h3>
-<ul>
-  <li>Tắt upload progress ở cấp cấu hình hệ thống (<code>php.ini</code>, pool PHP-FPM hoặc cấu hình server), rồi restart worker. <strong>Không</strong> dùng <code>ini_set()</code> hay <code>.user.ini</code> vì cần có hiệu lực trước khi parse request:
+<h3>Giảm thiểu tạm thời (nếu chưa nâng được)</h3>
 <pre><code class="language-ini">session.upload_progress.enabled = 0
 ; PHP-FPM pool:
-php_admin_value[session.upload_progress.enabled] = 0</code></pre></li>
-  <li>Rà soát mã nguồn: ứng dụng không bao giờ đổi <code>session.serialize_handler</code> sang <code>php</code> lúc chạy thì không thỏa điều kiện (1) và có thể giữ upload progress bật.
+php_admin_value[session.upload_progress.enabled] = 0</code></pre>
+<p>Đặt ở <code>php.ini</code> / pool FPM / cấu hình server rồi restart worker; <strong>không</strong> dùng <code>ini_set()</code> hay <code>.user.ini</code>. Kiểm tra nhanh:</p>
 <pre><code class="language-bash">php -r 'echo ini_get("session.upload_progress.enabled"), PHP_EOL, ini_get("session.serialize_handler"), PHP_EOL;'
-grep -RInE "ini_set\(\s*['\"]session\.serialize_handler" --include=*.php .</code></pre></li>
-  <li>Khi PHP.net công bố: nâng PHP lên bản vá, restart, rebuild image.</li>
-</ul>
+grep -RInE "ini_set\(\s*['\"]session\.serialize_handler" --include=*.php .</code></pre>
+<p>Cách này chỉ giảm thiểu CVE-2026-115560. Các lỗi 9.2 còn lại chỉ được xử lý bằng cách nâng phiên bản.</p>
 </section>
 
 <section class="an-sec">
-<h2 id="chuan-bi">4. Việc cần chuẩn bị ngay hôm nay</h2>
+<h2 id="hanh-dong">4. Việc cần làm</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 190" role="img" aria-label="Cây quyết định xử lý"><defs><marker id="q3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="60" width="180" height="70" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="90.0" y="92.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Đang chạy PHP</text><text x="90.0" y="110.0" text-anchor="middle" font-size="11" class="mut">nhánh 8.2–8.6?</text><line x1="180" y1="80" x2="238" y2="34" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q3)"/><line x1="180" y1="110" x2="238" y2="156" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q3)"/><text x="196" y="46" font-size="11" class="mut" transform="rotate(-24 196 46)">Có</text><text x="196" y="160" font-size="11" class="mut" transform="rotate(24 196 160)">Không</text><rect class="box" x="240" y="0" width="240" height="68" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="360.0" y="31.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Nâng lên bản vá</text><text x="360.0" y="49.0" text-anchor="middle" font-size="11" class="mut">8.2.36 / 8.3.37 / 8.4.28 / 8.5.13</text><rect class="box" x="240" y="122" width="240" height="68" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="360.0" y="153.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Nhánh hết hỗ trợ (≤ 8.1)</text><text x="360.0" y="171.0" text-anchor="middle" font-size="11" class="mut">Không có bản vá</text><line x1="480" y1="34" x2="528" y2="34" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q3)"/><rect class="box" x="530" y="0" width="210" height="68" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="635.0" y="31.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Restart + rebuild</text><text x="635.0" y="49.0" text-anchor="middle" font-size="11" class="mut">Docker image, FPM, CI/CD</text><line x1="480" y1="156" x2="528" y2="156" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q3)"/><rect class="box" x="530" y="122" width="210" height="68" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="635.0" y="153.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Nâng nhánh ngay</text><text x="635.0" y="171.0" text-anchor="middle" font-size="11" class="mut">Tạm: tắt upload progress, WAF</text></svg>
+<figcaption>Quy trình xử lý. Nhánh 8.1 trở xuống không có bản vá nên phải nâng nhánh.</figcaption>
+</figure>
 <ol>
-  <li><strong>Kiểm kê PHP:</strong> liệt kê host, container, image, hosting managed đang chạy PHP; ghi rõ nhánh (8.1 trở xuống / 8.2–8.5) và SAPI (mod_php, PHP-FPM, FrankenPHP, CLI).</li>
-  <li><strong>Xác định bề mặt lộ ra internet:</strong> dịch vụ PHP nào truy cập được từ bên ngoài; các cấu hình tùy chỉnh trong <code>php.ini</code> / pool FPM (vì lỗi CRITICAL có thể cần cấu hình không mặc định).</li>
-  <li><strong>Chuẩn bị cửa sổ bảo trì:</strong> đặt lịch vá + restart (reload không thay tiến trình cũ), chuẩn bị rebuild Docker image và pipeline CI/CD.</li>
-  <li><strong>Kiểm tra bản vá từ distro / vendor:</strong> Ubuntu, Debian, RHEL, Amazon Linux, image <code>php:*</code> và nhà cung cấp hosting thường chậm hơn bản gốc vài giờ đến vài ngày.</li>
-  <li><strong>Nhánh hết hỗ trợ (8.1 trở xuống):</strong> lập kế hoạch nâng cấp; tạm thời thu hẹp truy cập và áp dụng WAF.</li>
-  <li><strong>Theo dõi:</strong> <a href="https://www.php.net/archive/2026.php" target="_blank" rel="noopener noreferrer">php.net/archive</a> và <a href="https://www.php.net/ChangeLog-8.php" target="_blank" rel="noopener noreferrer">ChangeLog-8</a> sau 21:00 ICT. Tham khảo thêm lần vá trước: <a href="{{ '/featured/php-cve-2026-109618-109619/php2shell/' | relative_url }}">PHP2Shell</a> (8.5.12 / 8.4.27 / 8.3.36 / 8.2.35).</li>
+  <li><strong>Ưu tiên theo mức lộ ra internet:</strong> PHP-FPM / mod_php công khai, ứng dụng nhận upload multipart, ứng dụng dùng chung kho session (Redis, file, DB).</li>
+  <li><strong>Nâng phiên bản:</strong> <code>8.2.36 / 8.3.37 / 8.4.28 / 8.5.13</code> (hoặc 8.6.0 nếu đã sẵn sàng). Image <code>php:*</code>: pull lại và kiểm tra <code>php -v</code>, vì chưa xác minh được thời điểm Docker official image cập nhật.</li>
+  <li><strong>Restart bắt buộc:</strong> reload không thay các worker đang chạy bản cũ; restart PHP-FPM / Apache, rebuild image, redeploy.</li>
+  <li><strong>Distro / hosting:</strong> Ubuntu, Debian, RHEL, Amazon Linux thường chậm hơn bản gốc; chưa có trạng thái bản vá đã xác minh (tracker Debian/Red Hat chưa có trang CVE tại thời điểm kiểm tra). Dùng bản build từ nguồn tin cậy hoặc mitigate trong lúc chờ.</li>
+  <li><strong>Nhánh hết hỗ trợ (8.1 trở xuống):</strong> lập kế hoạch nâng cấp; tạm thời thu hẹp truy cập, tắt upload progress, dùng WAF.</li>
+  <li><strong>Sau khi vá:</strong> kiểm tra log lỗi PHP-FPM và session bất thường; xoay vòng session nếu nghi ngờ bị chèn dữ liệu. Tham khảo đợt vá trước: <a href="{{ '/featured/php-cve-2026-109618-109619/php2shell/' | relative_url }}">PHP2Shell</a> (8.5.12 / 8.4.27 / 8.3.36 / 8.2.35).</li>
 </ol>
 </section>
 
 <section class="an-sec">
-<h2 id="nguon">5. Nguồn tham khảo</h2>
+<h2 id="chua-ro">5. Chưa xác minh</h2>
 <ul>
-  <li><a href="https://www.php.net/archive/2026.php#2026-11-18-1" target="_blank" rel="noopener noreferrer">PHP.net — Archive 2026 (mục 2026-11-18-1, “Upcoming Critical PHP Security Release”)</a></li>
-  <li><a href="https://www.aikido.dev/blog/php-security-release-19-november-2026-cve-2026-115560" target="_blank" rel="noopener noreferrer">Aikido — PHP security release 19 November 2026 (CVE-2026-115560)</a> (nguồn thứ cấp)</li>
-  <li><a href="https://www.php.net/releases/" target="_blank" rel="noopener noreferrer">PHP.net Releases</a></li>
+  <li><strong>Aikido:</strong> bài viết có tiêu đề/JSON-LD ghi <code>CVE-2026-129289</code> trong khi URL ghi <code>CVE-2026-115560</code>; hai nguồn chính (cve.org, PHP advisory) cho 115560 là lỗi session, 129289 là PHP-FPM. Dùng PHP.net / cve.org làm chuẩn.</li>
+  <li>Trang <a href="https://www.php.net/releases/" target="_blank" rel="noopener noreferrer">php.net/releases</a> và trang downloads bản đã lấy chưa hiển thị phiên bản mới (có thể là bản cache); archive và ChangeLog đã có.</li>
+  <li>NVD chưa có bản ghi CVE-2026-115560 lúc kiểm tra (có thể trễ ingest). Điểm CVSS của CVE-2026-48841 chưa xác minh.</li>
+  <li>Trạng thái bản vá của distro và Docker official image chưa xác minh.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="nguon">6. Nguồn tham khảo</h2>
+<ul>
+  <li><a href="https://www.php.net/archive/2026.php" target="_blank" rel="noopener noreferrer">PHP.net — Archive 2026</a> (18-11 thông báo trước; 19-11 phát hành 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 / 8.6.0)</li>
+  <li><a href="https://www.php.net/ChangeLog-8.php" target="_blank" rel="noopener noreferrer">PHP.net — ChangeLog 8</a></li>
+  <li><a href="https://github.com/php/php-src/security/advisories" target="_blank" rel="noopener noreferrer">GitHub php/php-src — Security advisories</a>, ví dụ <a href="https://github.com/php/php-src/security/advisories/GHSA-658j-r8rw-q6mx" target="_blank" rel="noopener noreferrer">GHSA-658j-r8rw-q6mx</a> (CVE-2026-115560)</li>
+  <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-115560" target="_blank" rel="noopener noreferrer">cve.org — CVE-2026-115560</a></li>
+  <li><a href="https://www.aikido.dev/blog/php-security-release-19-november-2026-cve-2026-115560" target="_blank" rel="noopener noreferrer">Aikido — PHP security release 19 November 2026</a> (nguồn thứ cấp)</li>
 </ul>
 </section>

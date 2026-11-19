@@ -53,27 +53,24 @@
   path: "featured/php-security-release-2026-11-19/advisory/"
   icon: "🐘"
   accent: true
-  badge: {sev: crit, text: "CRITICAL · ADVANCE NOTICE"}
+  badge: {sev: crit, text: "CRITICAL · 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36"}
   nav: {vi: "PHP bản vá 19/11", ja: "PHP 修正版 11/19"}
-  title: {vi: "PHP bản vá bảo mật CRITICAL 19-11 (gồm CVE-2026-115560) — Cảnh báo trước & việc cần chuẩn bị", ja: "PHP の CRITICAL 級セキュリティ修正版（CVE-2026-115560 を含む）— 事前警告と準備事項"}
-  date: {vi: "Cập nhật 2026-11-19 08:44 ICT (UTC+7) · Dự kiến phát hành 21:00–21:30 ICT · Chưa có số phiên bản / CVE", ja: "2026年11月19日 10:44（JST）更新 · 公開予定 23:00〜23:30（JST） · バージョン・CVE は未公開"}
-  link: {vi: "Xem cảnh báo & checklist chuẩn bị →", ja: "事前警告・準備チェックリストを見る →"}
+  title: {vi: "PHP bản vá bảo mật CRITICAL 19-11: vá 17 CVE (gồm CVE-2026-115560), 7 lỗi CVSS 9.2", ja: "PHP の CRITICAL 級セキュリティ修正版（11/19）：17 件の CVE を修正（CVE-2026-115560 含む、CVSS 9.2 が 7 件）"}
+  date: {vi: "Cập nhật 2026-11-19 22:30 ICT (UTC+7) · Đã phát hành · 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 + 8.6.0 GA", ja: "2026年11月20日 00:30（JST）更新 · 公開済み · 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 ＋ 8.6.0 GA"}
+  link: {vi: "Xem danh sách CVE & việc cần làm →", ja: "CVE 一覧・対応事項を見る →"}
   items:
     - sev: crit
       label: {vi: "Mức độ", ja: "重大度"}
-      text: {vi: "PHP.net báo trước: mức cao nhất là CRITICAL, ảnh hưởng mọi nhánh PHP còn được hỗ trợ; lỗi CRITICAL cần cấu hình không mặc định hoặc thiết lập ít gặp.", ja: "PHP.net の予告：最高重大度は CRITICAL、サポート中の全ブランチが対象。CRITICAL は非デフォルト設定または特殊な構成が前提。"}
-    - sev: high
-      label: {vi: "Thời điểm", ja: "時期"}
-      text: {vi: "Thứ Năm 19-11-2026, 14:00–14:30 UTC (21:00–21:30 ICT, UTC+7). Phiên bản vá và CVE sẽ công bố cùng lúc.", ja: "2026年11月19日（木）14:00〜14:30 UTC（日本時間 23:00〜23:30 JST, UTC+9）。修正版・CVE は同時公開予定。"}
+      text: {vi: "17 GHSA: 7 lỗi CVSS 9.2 (UAF engine/date/session, deserialization session, request smuggling PHP-FPM), 4 High, 6 Moderate. Lỗi CRITICAL cần cấu hình không mặc định hoặc thiết lập ít gặp.", ja: "GHSA 17 件：CVSS 9.2 が 7 件（エンジン/date/session の UAF、session デシリアライズ、PHP-FPM スマグリング）、High 4 件、Moderate 6 件。CRITICAL は非デフォルト設定または特殊な構成が前提。"}
+    - sev: low
+      label: {vi: "Bản vá", ja: "修正版"}
+      text: {vi: "Nâng lên 8.2.36 / 8.3.37 / 8.4.28 / 8.5.13 (hoặc 8.6.0), restart PHP-FPM/Apache và rebuild image. PHP 8.1 trở xuống không có bản vá.", ja: "8.2.36 / 8.3.37 / 8.4.28 / 8.5.13（または 8.6.0）へ更新し、PHP-FPM/Apache 再起動とイメージ再ビルド。8.1 以前は修正版なし。"}
     - sev: high
       label: {vi: "CVE-2026-115560", ja: "CVE-2026-115560"}
-      text: {vi: "Theo Aikido: liên quan session upload progress, mô tả là vector RCE; cần serialize_handler đổi sang php bằng ini_set() và upload progress bật. Tạm thời: session.upload_progress.enabled=0 ở php.ini/FPM rồi restart.", ja: "Aikido によれば：セッション upload progress 関連で RCE ベクター。ini_set() で serialize_handler を php に切替＋upload progress 有効が条件。暫定：php.ini/FPM で session.upload_progress.enabled=0 にして再起動。"}
+      text: {vi: "cve.org: CVSS 4.0 9.2 (CWE-502). Lệch serializer session + upload progress dẫn tới RCE nếu có gadget. Tạm thời: session.upload_progress.enabled=0 ở php.ini/FPM rồi restart (chỉ giảm thiểu lỗi này).", ja: "cve.org：CVSS 4.0 9.2（CWE-502）。セッションシリアライザ不一致＋upload progress でガジェットがあれば RCE。暫定：php.ini/FPM で session.upload_progress.enabled=0 にして再起動（この脆弱性のみの緩和）。"}
     - sev: med
-      label: {vi: "Chuẩn bị", ja: "準備"}
-      text: {vi: "Kiểm kê PHP (host, container, image), xác định dịch vụ lộ internet, đặt cửa sổ bảo trì vá + restart ngay trong ngày.", ja: "PHP（ホスト・コンテナ・イメージ）の棚卸し、公開面の特定、当日中の更新＋再起動のメンテナンス枠を確保。"}
-    - sev: low
-      label: {vi: "Lưu ý", ja: "注意"}
-      text: {vi: "PHP 8.1 trở xuống đã EOL: dự kiến không có bản vá. Trang sẽ được cập nhật khi có phiên bản và CVE thật.", ja: "サポート終了の PHP 8.1 以下は修正版が出ない見込み。バージョン・CVE 公開後に本ページを更新します。"}
+      label: {vi: "Khai thác", ja: "悪用状況"}
+      text: {vi: "Có PoC công khai của bên thứ ba cho CVE-2026-115560; chưa có nguồn xác nhận khai thác ngoài thực tế.", ja: "CVE-2026-115560 は第三者の公開 PoC あり。実環境での悪用を確認した情報源はなし。"}
 
 - id: nginx-cve-2026-123007
   category: vulnerability

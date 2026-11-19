@@ -1,8 +1,8 @@
 ---
 layout: default
 lang: ja
-title: "PHP の CRITICAL 級セキュリティ修正版（2026-11-19、CVE-2026-115560 を含む）— 事前警告と準備事項"
-description: "PHP.net が、サポート中の全 PHP ブランチに影響し最高重大度が CRITICAL となるセキュリティリリースを予告。公開予定は 2026年11月19日 14:00〜14:30 UTC（JST 23:00〜23:30）。Aikido によれば CVE-2026-115560（セッション upload progress）を含みます。準備事項をまとめます。"
+title: "PHP の CRITICAL 級セキュリティ修正版（2026-11-19）：8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 で 17 件の CVE を修正"
+description: "PHP は 2026年11月19日に 8.5.13・8.4.28・8.3.37・8.2.36 と 8.6.0 GA を公開しました。17 件の脆弱性（CVSS 9.2 が 7 件）を修正し、CVE-2026-115560（セッション upload progress）を含みます。CVE 一覧、影響範囲、対応手順。"
 image: "/featured/php-security-release-2026-11-19/php-release-og.png"
 category: "脆弱性分析"
 permalink: /ja/featured/php-security-release-2026-11-19/advisory/
@@ -26,92 +26,101 @@ permalink: /ja/featured/php-security-release-2026-11-19/advisory/
   .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
   .fig .mut { fill: var(--text-muted); }
   .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
-  .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
-  .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
-  .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
-  .fig .mut { fill: var(--text-muted); }
-  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
 </style>
 <div class="report-header">
-  <h1>PHP の CRITICAL 級セキュリティ修正版（2026-11-19、CVE-2026-115560 を含む）— 事前警告と準備事項</h1>
-  <p class="sub"><strong>2026-11-19 10:44（JST, UTC+9）</strong>時点：修正版は<strong>未公開</strong>です。月次レポート：<a href="{{ '/monthly/2026-11/' | relative_url }}">2026年11月レポート</a>。重大度：<span class="badge crit">緊急（Critical）</span>（PHP.net の予告による）。Aikido（二次情報）によれば <code>CVE-2026-115560</code> を含みます。</p>
+  <h1>PHP の CRITICAL 級セキュリティ修正版（2026-11-19）：8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 で 17 件の CVE を修正</h1>
+  <p class="sub"><strong>2026-11-19 00:30（JST, UTC+9、日付は 11/20）</strong>更新：PHP が修正版を<strong>公開済み</strong>です（GitHub アドバイザリは 14:05〜14:08 UTC に公開）。月次レポート：<a href="{{ '/monthly/2026-11/' | relative_url }}">2026年11月レポート</a>。重大度：<span class="badge crit">緊急（Critical）</span>、CVSS 4.0 最大 <strong>9.2</strong>。</p>
 </div>
 
 <blockquote class="callout">
-  <p><strong>最初にお読みください：</strong>バージョン番号・CVE・技術詳細は未公開です。公開後（<strong>日本時間 23:00〜23:30（JST）予定</strong>）に本ページを更新します。それまでに稼働中の PHP を棚卸しし、当日中に更新＋再起動できるメンテナンス枠を確保してください。</p>
+  <p><strong>対応：</strong>PHP を <strong>8.2.36 / 8.3.37 / 8.4.28 / 8.5.13</strong>（または 8.6.0）へ更新し、PHP-FPM／Apache の再起動とイメージ再ビルドを実施してください。<strong>8.1 以前は修正版なし</strong>。すぐに更新できない場合は <code>session.upload_progress.enabled</code> を無効化（CVE-2026-115560 のみの暫定策で、他の脆弱性は防げません）。実環境での悪用を報告した情報源は確認できていません。</p>
 </blockquote>
 
 <nav class="an-nav" aria-label="nav">
-  <a href="#biet">判明している事項</a>
-  <a href="#chua-biet">未確認の事項</a>
+  <a href="#tom-tat">概要</a>
+  <a href="#cve-list">17 件の CVE</a>
   <a href="#cve">CVE-2026-115560</a>
-  <a href="#chuan-bi">準備事項</a>
+  <a href="#hanh-dong">対応事項</a>
+  <a href="#chua-ro">未検証の事項</a>
   <a href="#nguon">参考情報</a>
 </nav>
 
 <section class="an-sec">
-<h2 id="biet">1. 確認済みの情報</h2>
+<h2 id="tom-tat">1. リリース概要</h2>
 <ul>
-  <li><strong>公式予告：</strong>PHP.net の 2026-11-18 付 <em>“Upcoming Critical PHP Security Release”</em>。</li>
-  <li><strong>範囲：</strong>サポート中の<strong>すべての PHP バージョン</strong>に影響する脆弱性を修正するリリース。</li>
-  <li><strong>重大度：</strong>最高は <strong>CRITICAL</strong>。PHP.net によれば CRITICAL の問題は<strong>非デフォルト設定または特殊な構成</strong>が前提です。</li>
-  <li><strong>CVE-2026-115560（二次情報）：</strong>Aikido によれば今回のリリースに <code>CVE-2026-115560</code>（セッション upload progress 関連、RCE ベクターと説明）が含まれます。確認時点で PHP.net は CVE を未掲載です。</li>
-  <li><strong>時期：</strong>2026年11月19日（木）<strong>14:00〜14:30 UTC</strong>（日本時間 23:00〜23:30 JST, UTC+9）。技術詳細と修正版は同時に公開予定。</li>
+  <li><strong>バージョン：</strong>PHP <code>8.5.13</code>、<code>8.4.28</code>、<code>8.3.37</code>、<code>8.2.36</code>（セキュリティリリース）と <code>8.6.0</code>（GA、同日公開）。PHP.net アーカイブによる。GitHub にも対応タグがあります。</li>
+  <li><strong>規模：</strong>GHSA 17 件、うち <strong>CVSS 9.2（Critical）が 7 件</strong>：エンジン／ext/date／ext/session のメモリ破壊（UAF）4 件、ext/session のデシリアライズ／RCE 2 件、PHP-FPM のリクエストスマグリング 1 件。High 4 件、Moderate 6 件。PHP.net は CRITICAL でも<strong>非デフォルト設定または稀な構成</strong>が必要としています。</li>
+  <li><strong>CVE-2026-115560</strong> は 10/23 のアドバイザリで「次のリリースで詳細公開」とされていた件です。cve.org：CNA は PHP Group、CVSS 4.0 <strong>9.2</strong>、CWE-20 / CWE-502。10 月のリリース（8.5.12 など）では<strong>修正されていません</strong>。</li>
+  <li><strong>前回記事の訂正：</strong>今回の修正は CVE 1 件ではありません。ほかに CVSS 9.2 が 6 件あり、特に <code>CVE-2026-129289</code>（PHP-FPM）と <code>CVE-2026-126714</code>（セッション）に注意してください。</li>
 </ul>
 <figure class="fig">
-<svg viewBox="0 0 740 106" role="img" aria-label="タイムライン"><defs><marker id="p1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="83.5" y="51.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">現在</text><text x="83.5" y="69.0" text-anchor="middle" font-size="11" class="mut">修正版なし</text><line x1="167" y1="53" x2="189" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#p1)"/><rect class="box" x="191" y="16" width="167" height="74" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="274.5" y="51.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">23:00〜23:30 JST</text><text x="274.5" y="69.0" text-anchor="middle" font-size="11" class="mut">PHP.net が公開</text><line x1="358" y1="53" x2="380" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#p1)"/><rect class="box" x="382" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="465.5" y="51.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">公開直後</text><text x="465.5" y="69.0" text-anchor="middle" font-size="11" class="mut">影響判定</text><line x1="549" y1="53" x2="571" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#p1)"/><rect class="box" x="573" y="16" width="167" height="74" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="656.5" y="51.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">当日中</text><text x="656.5" y="69.0" text-anchor="middle" font-size="11" class="mut">更新・再起動・再ビルド</text></svg>
-<figcaption>本日夜のタイムライン（日本時間 JST, UTC+9）。PHP.net が確認した時刻以外は PiraGo の推奨対応です。</figcaption>
+<svg viewBox="0 0 740 106" role="img" aria-label="CVE-2026-115560 の攻撃チェーン"><defs><marker id="q1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="83.5" y="50.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">multipart アップロード</text><text x="83.5" y="68.0" text-anchor="middle" font-size="11" class="mut">upload progress 有効</text><line x1="167" y1="53" x2="189" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q1)"/><rect class="box" x="191" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="274.5" y="50.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">セッションへ書込</text><text x="274.5" y="68.0" text-anchor="middle" font-size="11" class="mut">php_binary/php_serialize</text><line x1="358" y1="53" x2="380" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q1)"/><rect class="box" x="382" y="16" width="167" height="74" rx="8" style="stroke:var(--med);stroke-width:1.6"/><text x="465.5" y="50.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">php ハンドラで読込</text><text x="465.5" y="68.0" text-anchor="middle" font-size="11" class="mut">ini_set／別アプリ</text><line x1="549" y1="53" x2="571" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q1)"/><rect class="box" x="573" y="16" width="167" height="74" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="656.5" y="50.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">unserialize</text><text x="656.5" y="68.0" text-anchor="middle" font-size="11" class="mut">→ RCE（要ガジェット）</text></svg>
+<figcaption>CVE-2026-115560 の攻撃チェーン（cve.org の記述に基づく概要）。upload progress 有効、シリアライザの変更／不一致、適切なガジェットチェーンが同時に必要です。悪用手順は記載しません。</figcaption>
 </figure>
 </section>
 
 <section class="an-sec">
-<h2 id="chua-biet">2. 未確認の事項</h2>
-<ul>
-  <li>各ブランチ（8.2 / 8.3 / 8.4 / 8.5 など）の修正版番号、CVSS、および今回の CVE 全リスト（<code>CVE-2026-115560</code> 以外）。Aikido によれば 10月の修正版（8.5.12 / 8.4.27 / 8.3.36 / 8.2.35）にはこの CVE の修正は<strong>含まれません</strong>。</li>
-  <li>影響を受けるコンポーネントと「非デフォルト設定」の具体的内容、PoC や実環境での悪用の有無。</li>
-  <li>PHP 8.6.0 GA と同時になるか。PHP.net の 11/12 付エントリに 11/19 の 8.6.0 GA 予定がありますが、これは<strong>推測</strong>であり未確認です。</li>
-  <li>サポート終了の PHP 8.1 以下は<strong>修正版が出ない</strong>見込み（ブランチ移行が必要）。</li>
-</ul>
+<h2 id="cve-list">2. 今回修正された CVE 一覧</h2>
+<p>スコアは php-src の GitHub アドバイザリにある CVSS 4.0。右端は修正版があるブランチ（8.6 は 8.6.0）です。</p>
+<div class="table-wrap"><table><thead><tr><th>CVE</th><th>CVSS 4.0</th><th>コンポーネント／概要</th><th>修正ブランチ</th></tr></thead><tbody><tr><td><code>CVE-2026-115560</code></td><td><span class="badge crit">9.2</span></td><td>ext/session: シリアライザ不一致＋upload progress → RCE</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-129496</code></td><td><span class="badge crit">9.2</span></td><td>ext/date: タイムゾーンキャッシュの UAF（RCE）</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-129289</code></td><td><span class="badge crit">9.2</span></td><td>PHP-FPM: 未読ボディ経由のリクエストスマグリング → PHP コード実行</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-126714</code></td><td><span class="badge crit">9.2</span></td><td>ext/session: セッションファイル部分上書き → デシリアライズ/RCE</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-129481</code></td><td><span class="badge crit">9.2</span></td><td>ext/session: セッション終了中断後の UAF</td><td>8.3–8.6</td></tr><tr><td><code>CVE-2026-129474</code></td><td><span class="badge crit">9.2</span></td><td>エンジン: __call/__callStatic のバックトレースの UAF</td><td>8.5, 8.6</td></tr><tr><td><code>CVE-2026-129182</code></td><td><span class="badge crit">9.2</span></td><td>エンジン: シャットダウン後の last_fatal_error_backtrace 再設定時の UAF</td><td>8.5, 8.6</td></tr><tr><td><code>CVE-2026-129291</code></td><td><span class="badge high">8.8</span></td><td>PHP-FPM: epoll UAF → FPM マスターへの権限昇格（ローカル）</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-127960</code></td><td><span class="badge high">8.7</span></td><td>HTTP ストリームラッパー: 折り返しヘッダーによる CPU DoS</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-128064</code></td><td><span class="badge high">8.2</span></td><td>大文字小文字混在の HTTPS/FTPS URL が平文で送信される</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-128090</code></td><td><span class="badge high">7.7</span></td><td>ext/phar: アルゴリズムダウングレードによる OpenSSL 署名回避</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-129538</code></td><td><span class="badge med">6.9</span></td><td>php-cgi: PATH_INFO 補正時の境界外読み書き</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-129506</code></td><td><span class="badge med">6.3</span></td><td>ext/soap: DTD エンティティ参照処理の UAF</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-15353</code></td><td><span class="badge med">6.3</span></td><td>ext/soap: 不正な arraySize による未初期化ヒープ漏えい</td><td>8.2–8.6</td></tr><tr><td><code>CVE-2026-129501</code></td><td><span class="badge med">6.3</span></td><td>ext/dom: XML シリアライズ時の double free</td><td>8.4–8.6</td></tr><tr><td><code>CVE-2026-129438</code></td><td><span class="badge med">6.3</span></td><td>ext/uri: 約 2 GiB 入力での RFC 3986 シリアライズ誤り</td><td>8.5, 8.6</td></tr><tr><td><code>CVE-2026-129292</code></td><td><span class="badge med">5.3</span></td><td>PHP-FPM: ステータスページの XSS</td><td>8.2–8.6</td></tr></tbody></table></div>
+<p>このほか 8.5.13／8.6.0 の changelog には <code>CVE-2026-48841</code>（uriparser 1.0.3 への更新）がありますが、CVSS は未検証です。</p>
+<figure class="fig">
+<svg viewBox="0 0 740 234" role="img" aria-label="影響バージョンと修正版の範囲"><text x="0" y="16" font-size="11" class="mut">PHP ブランチ</text><text x="170" y="16" font-size="11" class="mut">修正版</text><rect class="box" x="0" y="26" width="740" height="28" rx="6"/><rect x="0" y="26" width="6" height="28" rx="3" fill="var(--low)"/><text x="18" y="45" font-size="12.5" font-weight="700" fill="currentColor">8.5</text><text x="170" y="45" font-size="12.5" font-weight="700" fill="currentColor" style="font-family:'JetBrains Mono',monospace">8.5.13</text><text x="300" y="45" font-size="11.5" class="mut">17 件すべて（8.5 のみの UAF 2 件を含む）</text><rect class="box" x="0" y="60" width="740" height="28" rx="6"/><rect x="0" y="60" width="6" height="28" rx="3" fill="var(--low)"/><text x="18" y="79" font-size="12.5" font-weight="700" fill="currentColor">8.4</text><text x="170" y="79" font-size="12.5" font-weight="700" fill="currentColor" style="font-family:'JetBrains Mono',monospace">8.4.28</text><text x="300" y="79" font-size="11.5" class="mut">8.5 以降のみの 3 件を除きすべて</text><rect class="box" x="0" y="94" width="740" height="28" rx="6"/><rect x="0" y="94" width="6" height="28" rx="3" fill="var(--low)"/><text x="18" y="113" font-size="12.5" font-weight="700" fill="currentColor">8.3</text><text x="170" y="113" font-size="12.5" font-weight="700" fill="currentColor" style="font-family:'JetBrains Mono',monospace">8.3.37</text><text x="300" y="113" font-size="11.5" class="mut">8.4／8.5 以降のみの件を除きすべて</text><rect class="box" x="0" y="128" width="740" height="28" rx="6"/><rect x="0" y="128" width="6" height="28" rx="3" fill="var(--low)"/><text x="18" y="147" font-size="12.5" font-weight="700" fill="currentColor">8.2</text><text x="170" y="147" font-size="12.5" font-weight="700" fill="currentColor" style="font-family:'JetBrains Mono',monospace">8.2.36</text><text x="300" y="147" font-size="11.5" class="mut">このブランチ最後のセキュリティ修正</text><rect class="box" x="0" y="162" width="740" height="28" rx="6"/><rect x="0" y="162" width="6" height="28" rx="3" fill="var(--med)"/><text x="18" y="181" font-size="12.5" font-weight="700" fill="currentColor">8.6</text><text x="170" y="181" font-size="12.5" font-weight="700" fill="currentColor" style="font-family:'JetBrains Mono',monospace">8.6.0（GA）</text><text x="300" y="181" font-size="11.5" class="mut">同日公開。修正を含む</text><rect class="box" x="0" y="196" width="740" height="28" rx="6"/><rect x="0" y="196" width="6" height="28" rx="3" fill="var(--crit)"/><text x="18" y="215" font-size="12.5" font-weight="700" fill="currentColor">8.1 以前</text><text x="170" y="215" font-size="12.5" font-weight="700" fill="currentColor" style="font-family:'JetBrains Mono',monospace">なし</text><text x="300" y="215" font-size="11.5" class="mut">サポート終了・修正なし。ブランチ更新が必須</text></svg>
+<figcaption>ブランチ別の修正範囲。エンジンの UAF 2 件と ext/uri は 8.5 のみ影響しますが、旧ブランチにも CVSS 9.2 の脆弱性が多数あり更新が必要です。</figcaption>
+</figure>
 </section>
 
 <section class="an-sec">
-<h2 id="cve">3. CVE-2026-115560（Aikido による情報・PHP.net 未確認）</h2>
+<h2 id="cve">3. CVE-2026-115560（セッション upload progress）</h2>
 <ul>
-  <li><strong>コンポーネント：</strong>セッションの upload progress 機能（<code>session.upload_progress</code>）。リモートコード実行（RCE）のベクターと説明されていますが、根本原因は未説明です。</li>
-  <li><strong>成立条件（両方）：</strong>(1) <code>session.serialize_handler</code> が <code>php_binary</code> または <code>php_serialize</code> で、アプリが <code>session_start()</code> 前に <code>ini_set()</code> で <code>php</code> に切り替える。(2) セッション upload progress が有効（PHP のデフォルトは有効）。</li>
-  <li><strong>経緯：</strong>PHP は 2026-10-23 に情報提供アドバイザリを公開（PHP2Shell の後）、完全な公開は次回リリースと予告。8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 ではこの CVE は<strong>修正されません</strong>。</li>
-  <li><strong>未確認：</strong>CVSS、ブランチ別修正版、PoC・悪用状況（PHP は深刻度スコアを未公表）。</li>
+  <li><strong>タイトル（cve.org）：</strong>「Session serializer mismatch can lead to remote code execution」。CVSS 4.0 9.2（<code>AV:N/AC:H/AT:P/PR:N/UI:N</code>、機密性・完全性・可用性への影響大）。</li>
+  <li><strong>仕組み（概要）：</strong>upload progress が有効だと、攻撃者が制御するデータが <code>php_binary</code> または <code>php_serialize</code> ハンドラで書かれるセッションキーに入り得ます。そのセッションが後で <code>php</code> ハンドラで読まれると（<code>session.serialize_handler</code> の実行時変更、またはセッションストアを共有するアプリ間の不一致）、unserialize が実行され、オブジェクト注入、ガジェットチェーンがあれば RCE、あるいはセッション破損／DoS に至ります。</li>
+  <li><strong>修正版：</strong>8.2.36、8.3.37、8.4.28、8.5.13、8.6.0。影響範囲は 8.2.0〜8.2.35、8.3.0〜8.3.36、8.4.0〜8.4.27、8.5.0〜8.5.12。</li>
+  <li><strong>PoC：</strong>第三者の公開 PoC リポジトリがあります（記述は修正版公開前の 10/24 付）。実環境での悪用を確認した情報源はありませんが、攻撃コードは存在するものとして扱ってください。</li>
 </ul>
-<h3>暫定緩和（今すぐ可能）</h3>
-<ul>
-  <li>システムレベルの設定（<code>php.ini</code>、PHP-FPM プール、サーバー設定）で upload progress を無効化し、ワーカーを再起動。リクエスト解析前に有効である必要があるため <code>ini_set()</code> や <code>.user.ini</code> は<strong>使用しない</strong>でください：
+<h3>暫定緩和策（すぐ更新できない場合）</h3>
 <pre><code class="language-ini">session.upload_progress.enabled = 0
 ; PHP-FPM pool:
-php_admin_value[session.upload_progress.enabled] = 0</code></pre></li>
-  <li>コード確認：実行時に <code>session.serialize_handler</code> を <code>php</code> に切り替えないアプリは条件(1)を満たさず、upload progress を有効のままにできます。
+php_admin_value[session.upload_progress.enabled] = 0</code></pre>
+<p><code>php.ini</code>／FPM プール／サーバー設定に記述してワーカーを再起動します。<code>ini_set()</code> や <code>.user.ini</code> は<strong>使わないでください</strong>。簡易確認：</p>
 <pre><code class="language-bash">php -r 'echo ini_get("session.upload_progress.enabled"), PHP_EOL, ini_get("session.serialize_handler"), PHP_EOL;'
-grep -RInE "ini_set\(\s*['\"]session\.serialize_handler" --include=*.php .</code></pre></li>
-  <li>PHP.net の公表後：PHP を修正版へ更新、再起動、イメージ再ビルド。</li>
-</ul>
+grep -RInE "ini_set\(\s*['\"]session\.serialize_handler" --include=*.php .</code></pre>
+<p>これは CVE-2026-115560 のみの緩和です。ほかの CVSS 9.2 の脆弱性はバージョン更新でしか解消できません。</p>
 </section>
 
 <section class="an-sec">
-<h2 id="chuan-bi">4. 本日中に準備すること</h2>
+<h2 id="hanh-dong">4. 対応事項</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 190" role="img" aria-label="対応の判断フロー"><defs><marker id="q3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="60" width="180" height="70" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="90.0" y="92.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">稼働中の PHP は</text><text x="90.0" y="110.0" text-anchor="middle" font-size="11" class="mut">8.2〜8.6 系?</text><line x1="180" y1="80" x2="238" y2="34" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q3)"/><line x1="180" y1="110" x2="238" y2="156" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q3)"/><text x="196" y="46" font-size="11" class="mut" transform="rotate(-24 196 46)">はい</text><text x="196" y="160" font-size="11" class="mut" transform="rotate(24 196 160)">いいえ</text><rect class="box" x="240" y="0" width="240" height="68" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="360.0" y="31.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">修正版へ更新</text><text x="360.0" y="49.0" text-anchor="middle" font-size="11" class="mut">8.2.36 / 8.3.37 / 8.4.28 / 8.5.13</text><rect class="box" x="240" y="122" width="240" height="68" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="360.0" y="153.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">サポート終了（≤ 8.1）</text><text x="360.0" y="171.0" text-anchor="middle" font-size="11" class="mut">修正版なし</text><line x1="480" y1="34" x2="528" y2="34" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q3)"/><rect class="box" x="530" y="0" width="210" height="68" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="635.0" y="31.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">再起動＋再ビルド</text><text x="635.0" y="49.0" text-anchor="middle" font-size="11" class="mut">Docker・FPM・CI/CD</text><line x1="480" y1="156" x2="528" y2="156" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q3)"/><rect class="box" x="530" y="122" width="210" height="68" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="635.0" y="153.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">直ちにブランチ更新</text><text x="635.0" y="171.0" text-anchor="middle" font-size="11" class="mut">暫定: upload progress 無効・WAF</text></svg>
+<figcaption>対応フロー。8.1 以前は修正版がないためブランチ更新が必要です。</figcaption>
+</figure>
 <ol>
-  <li><strong>PHP の棚卸し：</strong>PHP が動くホスト、コンテナ、イメージ、マネージドホスティングを洗い出し、ブランチ（8.1 以下／8.2〜8.5）と SAPI（mod_php、PHP-FPM、FrankenPHP、CLI）を記録。</li>
-  <li><strong>インターネット公開面の特定：</strong>外部からアクセス可能な PHP サービスと、<code>php.ini</code>／FPM プールのカスタム設定を確認（CRITICAL は非デフォルト設定が条件の可能性）。</li>
-  <li><strong>メンテナンス枠の確保：</strong>更新＋再起動（reload では旧プロセスは置き換わりません）、Docker イメージの再ビルドと CI/CD の準備。</li>
-  <li><strong>ディストリビューション／ベンダー修正の確認：</strong>Ubuntu、Debian、RHEL、Amazon Linux、<code>php:*</code> イメージ、ホスティング事業者は本家より数時間〜数日遅れることがあります。</li>
-  <li><strong>サポート終了ブランチ（8.1 以下）：</strong>移行計画を立て、当面はアクセス制限と WAF を適用。</li>
-  <li><strong>監視：</strong>23:00（JST）以降に <a href="https://www.php.net/archive/2026.php" target="_blank" rel="noopener noreferrer">php.net/archive</a> と <a href="https://www.php.net/ChangeLog-8.php" target="_blank" rel="noopener noreferrer">ChangeLog-8</a> を確認。前回の修正は <a href="{{ '/ja/featured/php-cve-2026-109618-109619/php2shell/' | relative_url }}">PHP2Shell</a>（8.5.12 / 8.4.27 / 8.3.36 / 8.2.35）を参照。</li>
+  <li><strong>インターネット公開度で優先順位付け：</strong>公開 PHP-FPM／mod_php、multipart アップロードを受けるアプリ、セッションストア（Redis・ファイル・DB）を共有するアプリ。</li>
+  <li><strong>バージョン更新：</strong><code>8.2.36 / 8.3.37 / 8.4.28 / 8.5.13</code>（準備ができていれば 8.6.0）。<code>php:*</code> イメージは再 pull して <code>php -v</code> を確認してください（公式 Docker イメージの更新時期は未検証）。</li>
+  <li><strong>再起動必須：</strong>reload では旧バージョンのワーカーが残ります。PHP-FPM／Apache を再起動し、イメージ再ビルドと再デプロイを行ってください。</li>
+  <li><strong>ディストリ／ホスティング：</strong>Ubuntu・Debian・RHEL・Amazon Linux は本家より遅れがちです。確認時点で修正パッケージの状況は未検証（Debian／Red Hat のトラッカーに CVE ページなし）。信頼できるビルドを使うか、待つ間は緩和策を。</li>
+  <li><strong>サポート終了ブランチ（8.1 以前）：</strong>更新計画を立て、当面はアクセス制限、upload progress 無効化、WAF を適用。</li>
+  <li><strong>更新後：</strong>PHP-FPM のエラーログと不審なセッションを確認し、注入の疑いがあればセッションを失効させます。前回の修正は <a href="{{ '/featured/php-cve-2026-109618-109619/php2shell/' | relative_url }}">PHP2Shell</a>（8.5.12 / 8.4.27 / 8.3.36 / 8.2.35）を参照。</li>
 </ol>
 </section>
 
 <section class="an-sec">
-<h2 id="nguon">5. 参考情報</h2>
+<h2 id="chua-ro">5. 未検証の事項</h2>
 <ul>
-  <li><a href="https://www.php.net/archive/2026.php#2026-11-18-1" target="_blank" rel="noopener noreferrer">PHP.net — Archive 2026（2026-11-18-1 “Upcoming Critical PHP Security Release”）</a></li>
-  <li><a href="https://www.aikido.dev/blog/php-security-release-19-november-2026-cve-2026-115560" target="_blank" rel="noopener noreferrer">Aikido — PHP security release 19 November 2026 (CVE-2026-115560)</a>（二次情報）</li>
-  <li><a href="https://www.php.net/releases/" target="_blank" rel="noopener noreferrer">PHP.net Releases</a></li>
+  <li><strong>Aikido：</strong>記事の見出し／JSON-LD は <code>CVE-2026-129289</code>、URL は <code>CVE-2026-115560</code> となっており不整合です。一次情報（cve.org、PHP アドバイザリ）では 115560 がセッション、129289 が PHP-FPM の件です。PHP.net／cve.org を基準にしてください。</li>
+  <li>取得した <a href="https://www.php.net/releases/" target="_blank" rel="noopener noreferrer">php.net/releases</a> と downloads ページには新バージョンが未反映でした（キャッシュの可能性）。アーカイブと ChangeLog には掲載済みです。</li>
+  <li>確認時点で NVD に CVE-2026-115560 のレコードはありません（取り込み遅延の可能性）。CVE-2026-48841 の CVSS は未検証です。</li>
+  <li>ディストリと公式 Docker イメージの修正状況は未検証です。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="nguon">6. 参考情報</h2>
+<ul>
+  <li><a href="https://www.php.net/archive/2026.php" target="_blank" rel="noopener noreferrer">PHP.net — Archive 2026</a>（11/18 予告、11/19 に 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 / 8.6.0 公開）</li>
+  <li><a href="https://www.php.net/ChangeLog-8.php" target="_blank" rel="noopener noreferrer">PHP.net — ChangeLog 8</a></li>
+  <li><a href="https://github.com/php/php-src/security/advisories" target="_blank" rel="noopener noreferrer">GitHub php/php-src — Security advisories</a>（例：<a href="https://github.com/php/php-src/security/advisories/GHSA-658j-r8rw-q6mx" target="_blank" rel="noopener noreferrer">GHSA-658j-r8rw-q6mx</a>、CVE-2026-115560）</li>
+  <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-115560" target="_blank" rel="noopener noreferrer">cve.org — CVE-2026-115560</a></li>
+  <li><a href="https://www.aikido.dev/blog/php-security-release-19-november-2026-cve-2026-115560" target="_blank" rel="noopener noreferrer">Aikido — PHP security release 19 November 2026</a>（二次情報）</li>
 </ul>
 </section>

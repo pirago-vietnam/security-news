@@ -47,10 +47,10 @@ card:
       vi: 'CVE-2026-119618: Lỗ hổng Race Condition trong mod_http2 dẫn đến heap corruption &amp; RCE (Critical). Nâng cấp ngay lên 2.4.71+ hoặc tạm tắt mod_http2.'
       ja: 'CVE-2026-119618: mod_http2 の競合状態によるヒープ破壊・RCE脆弱性（Critical）。直ちに 2.4.71+ へ更新、または一時的に mod_http2 を無効化。'
   - sev: crit
-    label: PHP (cảnh báo trước)
+    label: PHP (đã phát hành bản vá)
     text:
-      vi: 'PHP.net báo trước bản vá bảo mật mức CRITICAL cho mọi nhánh được hỗ trợ, dự kiến 14:00–14:30 UTC 19-11 (21:00–21:30 ICT, UTC+7). Theo Aikido gồm CVE-2026-115560 (session upload progress); chưa có phiên bản chính thức. Tạm thời đặt session.upload_progress.enabled=0 + restart. Xem <a href="@home@featured/php-security-release-2026-11-19/advisory/">cảnh báo</a>.'
-      ja: 'PHP.net が全サポートブランチ対象の CRITICAL 級セキュリティ修正版を予告。11/19 14:00〜14:30 UTC（JST 23:00〜23:30, UTC+9）予定。Aikido によれば CVE-2026-115560（セッション upload progress）を含む。正式なバージョンは未公開。暫定的に session.upload_progress.enabled=0 ＋再起動を。<a href="@home@featured/php-security-release-2026-11-19/advisory/">事前警告</a>を参照。'
+      vi: 'PHP đã phát hành 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 (và 8.6.0 GA) ngày 19-11, vá 17 CVE gồm 7 lỗi CVSS 9.2 và CVE-2026-115560 (session upload progress). Nâng phiên bản + restart; 8.1 trở xuống không có bản vá. Xem <a href="@home@featured/php-security-release-2026-11-19/advisory/">phân tích</a>.'
+      ja: 'PHP が 11/19 に 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36（および 8.6.0 GA）を公開。CVSS 9.2 が 7 件を含む 17 件の CVE（CVE-2026-115560 セッション upload progress を含む）を修正。更新＋再起動を。8.1 以前は修正版なし。<a href="@home@featured/php-security-release-2026-11-19/advisory/">分析</a>を参照。'
   - sev: crit
     label: nginx (HTTP/2)
     text:
@@ -89,12 +89,12 @@ sections:
   type: actions
   rows:
   - task:
-      vi: 'Chuẩn bị vá <strong>PHP</strong>: kiểm kê PHP (host, container, image), xác định dịch vụ lộ internet và đặt cửa sổ bảo trì cho đợt phát hành bảo mật mức <strong>CRITICAL</strong> của PHP.net (14:00–14:30 UTC 19-11-2026). Xem <a href="@home@featured/php-security-release-2026-11-19/advisory/">cảnh báo trước</a>'
-      ja: '<strong>PHP</strong> の更新準備：PHP（ホスト・コンテナ・イメージ）を棚卸しし、公開面を特定、PHP.net の <strong>CRITICAL</strong> 級セキュリティリリース（2026-11-19 14:00〜14:30 UTC）に備えてメンテナンス枠を確保（<a href="@home@featured/php-security-release-2026-11-19/advisory/">事前警告</a>）'
+      vi: 'Vá <strong>PHP</strong> lên <strong>8.2.36 / 8.3.37 / 8.4.28 / 8.5.13</strong> (hoặc 8.6.0): restart PHP-FPM/Apache, rebuild image; nhánh 8.1 trở xuống cần nâng nhánh. Xem <a href="@home@featured/php-security-release-2026-11-19/advisory/">phân tích</a>'
+      ja: '<strong>PHP</strong> を <strong>8.2.36 / 8.3.37 / 8.4.28 / 8.5.13</strong>（または 8.6.0）へ更新：PHP-FPM/Apache 再起動、イメージ再ビルド。8.1 以前はブランチ更新が必要（<a href="@home@featured/php-security-release-2026-11-19/advisory/">分析</a>）'
     sev: crit
     due:
-      vi: Ngay trong ngày 19-11-2026 (chuẩn bị trước 21:00 ICT, UTC+7; vá ngay sau khi PHP.net công bố phiên bản)
-      ja: 2026-11-19 当日（JST 23:00 までに準備、PHP.net の公表直後に更新）
+      vi: Ngay trong ngày 19-11-2026 (bản vá đã phát hành, vá + restart sớm nhất có thể)
+      ja: 2026-11-19 当日（修正版は公開済み。できるだけ早く更新＋再起動）
     impact:
       vi: 'Mọi ứng dụng PHP (PHP-FPM, mod_php, FrankenPHP, Laravel, WordPress), Docker image <code>php:*</code>, hosting managed.'
       ja: 'すべての PHP アプリケーション（PHP-FPM、mod_php、FrankenPHP、Laravel、WordPress）、<code>php:*</code> イメージ、マネージドホスティング。'
