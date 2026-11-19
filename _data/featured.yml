@@ -68,9 +68,6 @@
     - sev: high
       label: {vi: "CVE-2026-115560", ja: "CVE-2026-115560"}
       text: {vi: "cve.org: CVSS 4.0 9.2 (CWE-502). Lệch serializer session + upload progress dẫn tới RCE nếu có gadget. Tạm thời: session.upload_progress.enabled=0 ở php.ini/FPM rồi restart (chỉ giảm thiểu lỗi này).", ja: "cve.org：CVSS 4.0 9.2（CWE-502）。セッションシリアライザ不一致＋upload progress でガジェットがあれば RCE。暫定：php.ini/FPM で session.upload_progress.enabled=0 にして再起動（この脆弱性のみの緩和）。"}
-    - sev: med
-      label: {vi: "Khai thác", ja: "悪用状況"}
-      text: {vi: "Có PoC công khai của bên thứ ba cho CVE-2026-115560; chưa có nguồn xác nhận khai thác ngoài thực tế.", ja: "CVE-2026-115560 は第三者の公開 PoC あり。実環境での悪用を確認した情報源はなし。"}
 
 - id: nginx-cve-2026-123007
   category: vulnerability

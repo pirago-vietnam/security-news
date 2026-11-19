@@ -51,7 +51,6 @@ permalink: /ja/featured/php-security-release-2026-11-19/advisory/
   <li><strong>バージョン：</strong>PHP <code>8.5.13</code>、<code>8.4.28</code>、<code>8.3.37</code>、<code>8.2.36</code>（セキュリティリリース）と <code>8.6.0</code>（GA、同日公開）。PHP.net アーカイブによる。GitHub にも対応タグがあります。</li>
   <li><strong>規模：</strong>GHSA 17 件、うち <strong>CVSS 9.2（Critical）が 7 件</strong>：エンジン／ext/date／ext/session のメモリ破壊（UAF）4 件、ext/session のデシリアライズ／RCE 2 件、PHP-FPM のリクエストスマグリング 1 件。High 4 件、Moderate 6 件。PHP.net は CRITICAL でも<strong>非デフォルト設定または稀な構成</strong>が必要としています。</li>
   <li><strong>CVE-2026-115560</strong> は 10/23 のアドバイザリで「次のリリースで詳細公開」とされていた件です。cve.org：CNA は PHP Group、CVSS 4.0 <strong>9.2</strong>、CWE-20 / CWE-502。10 月のリリース（8.5.12 など）では<strong>修正されていません</strong>。</li>
-  <li><strong>前回記事の訂正：</strong>今回の修正は CVE 1 件ではありません。ほかに CVSS 9.2 が 6 件あり、特に <code>CVE-2026-129289</code>（PHP-FPM）と <code>CVE-2026-126714</code>（セッション）に注意してください。</li>
 </ul>
 <figure class="fig">
 <svg viewBox="0 0 740 106" role="img" aria-label="CVE-2026-115560 の攻撃チェーン"><defs><marker id="q1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="83.5" y="50.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">multipart アップロード</text><text x="83.5" y="68.0" text-anchor="middle" font-size="11" class="mut">upload progress 有効</text><line x1="167" y1="53" x2="189" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q1)"/><rect class="box" x="191" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="274.5" y="50.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">セッションへ書込</text><text x="274.5" y="68.0" text-anchor="middle" font-size="11" class="mut">php_binary/php_serialize</text><line x1="358" y1="53" x2="380" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q1)"/><rect class="box" x="382" y="16" width="167" height="74" rx="8" style="stroke:var(--med);stroke-width:1.6"/><text x="465.5" y="50.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">php ハンドラで読込</text><text x="465.5" y="68.0" text-anchor="middle" font-size="11" class="mut">ini_set／別アプリ</text><line x1="549" y1="53" x2="571" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q1)"/><rect class="box" x="573" y="16" width="167" height="74" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="656.5" y="50.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">unserialize</text><text x="656.5" y="68.0" text-anchor="middle" font-size="11" class="mut">→ RCE（要ガジェット）</text></svg>
@@ -76,7 +75,6 @@ permalink: /ja/featured/php-security-release-2026-11-19/advisory/
   <li><strong>タイトル（cve.org）：</strong>「Session serializer mismatch can lead to remote code execution」。CVSS 4.0 9.2（<code>AV:N/AC:H/AT:P/PR:N/UI:N</code>、機密性・完全性・可用性への影響大）。</li>
   <li><strong>仕組み（概要）：</strong>upload progress が有効だと、攻撃者が制御するデータが <code>php_binary</code> または <code>php_serialize</code> ハンドラで書かれるセッションキーに入り得ます。そのセッションが後で <code>php</code> ハンドラで読まれると（<code>session.serialize_handler</code> の実行時変更、またはセッションストアを共有するアプリ間の不一致）、unserialize が実行され、オブジェクト注入、ガジェットチェーンがあれば RCE、あるいはセッション破損／DoS に至ります。</li>
   <li><strong>修正版：</strong>8.2.36、8.3.37、8.4.28、8.5.13、8.6.0。影響範囲は 8.2.0〜8.2.35、8.3.0〜8.3.36、8.4.0〜8.4.27、8.5.0〜8.5.12。</li>
-  <li><strong>PoC：</strong>第三者の公開 PoC リポジトリがあります（記述は修正版公開前の 10/24 付）。実環境での悪用を確認した情報源はありませんが、攻撃コードは存在するものとして扱ってください。</li>
 </ul>
 <h3>暫定緩和策（すぐ更新できない場合）</h3>
 <pre><code class="language-ini">session.upload_progress.enabled = 0
@@ -107,7 +105,6 @@ grep -RInE "ini_set\(\s*['\"]session\.serialize_handler" --include=*.php .</code
 <section class="an-sec">
 <h2 id="chua-ro">5. 未検証の事項</h2>
 <ul>
-  <li><strong>Aikido：</strong>記事の見出し／JSON-LD は <code>CVE-2026-129289</code>、URL は <code>CVE-2026-115560</code> となっており不整合です。一次情報（cve.org、PHP アドバイザリ）では 115560 がセッション、129289 が PHP-FPM の件です。PHP.net／cve.org を基準にしてください。</li>
   <li>取得した <a href="https://www.php.net/releases/" target="_blank" rel="noopener noreferrer">php.net/releases</a> と downloads ページには新バージョンが未反映でした（キャッシュの可能性）。アーカイブと ChangeLog には掲載済みです。</li>
   <li>確認時点で NVD に CVE-2026-115560 のレコードはありません（取り込み遅延の可能性）。CVE-2026-48841 の CVSS は未検証です。</li>
   <li>ディストリと公式 Docker イメージの修正状況は未検証です。</li>
@@ -121,6 +118,5 @@ grep -RInE "ini_set\(\s*['\"]session\.serialize_handler" --include=*.php .</code
   <li><a href="https://www.php.net/ChangeLog-8.php" target="_blank" rel="noopener noreferrer">PHP.net — ChangeLog 8</a></li>
   <li><a href="https://github.com/php/php-src/security/advisories" target="_blank" rel="noopener noreferrer">GitHub php/php-src — Security advisories</a>（例：<a href="https://github.com/php/php-src/security/advisories/GHSA-658j-r8rw-q6mx" target="_blank" rel="noopener noreferrer">GHSA-658j-r8rw-q6mx</a>、CVE-2026-115560）</li>
   <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-115560" target="_blank" rel="noopener noreferrer">cve.org — CVE-2026-115560</a></li>
-  <li><a href="https://www.aikido.dev/blog/php-security-release-19-november-2026-cve-2026-115560" target="_blank" rel="noopener noreferrer">Aikido — PHP security release 19 November 2026</a>（二次情報）</li>
 </ul>
 </section>

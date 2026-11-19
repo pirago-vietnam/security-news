@@ -31,7 +31,7 @@ category: "Phân tích lỗ hổng"
 </div>
 
 <blockquote class="callout">
-  <p><strong>Hành động:</strong> nâng PHP lên <strong>8.2.36 / 8.3.37 / 8.4.28 / 8.5.13</strong> (hoặc 8.6.0), restart PHP-FPM/Apache và rebuild image. Nhánh <strong>8.1 trở xuống không có bản vá</strong>. Chưa thể vá ngay: tắt <code>session.upload_progress.enabled</code> (chỉ giảm thiểu CVE-2026-115560, không che các lỗi khác). Chưa thấy nguồn nào báo khai thác ngoài thực tế.</p>
+  <p><strong>Hành động:</strong> nâng PHP lên <strong>8.2.36 / 8.3.37 / 8.4.28 / 8.5.13</strong> (hoặc 8.6.0), restart PHP-FPM/Apache và rebuild image. Nhánh <strong>8.1 trở xuống không có bản vá</strong>. Chưa thể vá ngay: tắt <code>session.upload_progress.enabled</code> (chỉ giảm thiểu CVE-2026-115560, không che các lỗi khác).</p>
 </blockquote>
 
 <nav class="an-nav" aria-label="nav">
@@ -49,7 +49,6 @@ category: "Phân tích lỗ hổng"
   <li><strong>Phiên bản:</strong> PHP <code>8.5.13</code>, <code>8.4.28</code>, <code>8.3.37</code>, <code>8.2.36</code> (bản bảo mật) và <code>8.6.0</code> (GA, phát hành cùng ngày), theo PHP.net archive. Tag tương ứng đã có trên GitHub.</li>
   <li><strong>Quy mô:</strong> 17 GHSA, trong đó <strong>7 lỗi CVSS 9.2 (Critical)</strong>: 4 lỗi UAF/bộ nhớ ở engine, ext/date, ext/session; 2 lỗi deserialization/RCE ở ext/session; 1 lỗi request smuggling ở PHP-FPM. 4 lỗi High, 6 lỗi Moderate. PHP.net lưu ý các lỗi CRITICAL <strong>cần cấu hình không mặc định hoặc thiết lập ít gặp</strong>.</li>
   <li><strong>CVE-2026-115560</strong> là mục PHP đã hứa công bố đầy đủ ở bản này (advisory 23-10). cve.org: CNA PHP Group, CVSS 4.0 <strong>9.2</strong>, CWE-20 / CWE-502. Bản October (8.5.12…) <strong>không</strong> sửa lỗi này.</li>
-  <li><strong>Đính chính so với bản tin trước:</strong> đợt này <em>không</em> chỉ có một CVE. Thêm vào đó là 6 lỗi 9.2 khác; đáng chú ý <code>CVE-2026-129289</code> (PHP-FPM) và <code>CVE-2026-126714</code> (session).</li>
 </ul>
 <figure class="fig">
 <svg viewBox="0 0 740 106" role="img" aria-label="Chuỗi tấn công CVE-2026-115560"><defs><marker id="q1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="83.5" y="50.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Upload multipart</text><text x="83.5" y="68.0" text-anchor="middle" font-size="11" class="mut">upload progress bật</text><line x1="167" y1="53" x2="189" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q1)"/><rect class="box" x="191" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="274.5" y="50.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Ghi vào session</text><text x="274.5" y="68.0" text-anchor="middle" font-size="11" class="mut">php_binary/php_serialize</text><line x1="358" y1="53" x2="380" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q1)"/><rect class="box" x="382" y="16" width="167" height="74" rx="8" style="stroke:var(--med);stroke-width:1.6"/><text x="465.5" y="50.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Đọc bằng handler php</text><text x="465.5" y="68.0" text-anchor="middle" font-size="11" class="mut">ini_set hoặc app khác</text><line x1="549" y1="53" x2="571" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q1)"/><rect class="box" x="573" y="16" width="167" height="74" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="656.5" y="50.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">unserialize</text><text x="656.5" y="68.0" text-anchor="middle" font-size="11" class="mut">→ RCE (cần gadget)</text></svg>
@@ -74,7 +73,6 @@ category: "Phân tích lỗ hổng"
   <li><strong>Tiêu đề (cve.org):</strong> “Session serializer mismatch can lead to remote code execution”. CVSS 4.0 9.2 (<code>AV:N/AC:H/AT:P/PR:N/UI:N</code>, tác động C/I/A cao).</li>
   <li><strong>Cơ chế (mức khái quát):</strong> khi upload progress bật, dữ liệu do kẻ tấn công kiểm soát có thể nằm trong khóa session ghi bằng handler <code>php_binary</code> hoặc <code>php_serialize</code>. Nếu session sau đó được đọc bằng handler <code>php</code> (do <code>session.serialize_handler</code> bị đổi lúc chạy, hoặc khác nhau giữa các ứng dụng dùng chung kho session), bộ unserialize bị kích hoạt: chèn object, có thể dẫn đến RCE nếu có gadget chain, hoặc làm hỏng session / DoS.</li>
   <li><strong>Bản vá:</strong> 8.2.36, 8.3.37, 8.4.28, 8.5.13, 8.6.0. Ảnh hưởng: 8.2.0 đến trước 8.2.36, 8.3.0 đến trước 8.3.37, 8.4.0 đến trước 8.4.28, 8.5.0 đến trước 8.5.13.</li>
-  <li><strong>PoC:</strong> có một repo PoC công khai của bên thứ ba (nội dung ghi ngày 24-10, lúc chưa có bản vá). Chưa có nguồn nào xác nhận khai thác ngoài thực tế. Coi như mã khai thác đã tồn tại.</li>
 </ul>
 <h3>Giảm thiểu tạm thời (nếu chưa nâng được)</h3>
 <pre><code class="language-ini">session.upload_progress.enabled = 0
@@ -105,7 +103,6 @@ grep -RInE "ini_set\(\s*['\"]session\.serialize_handler" --include=*.php .</code
 <section class="an-sec">
 <h2 id="chua-ro">5. Chưa xác minh</h2>
 <ul>
-  <li><strong>Aikido:</strong> bài viết có tiêu đề/JSON-LD ghi <code>CVE-2026-129289</code> trong khi URL ghi <code>CVE-2026-115560</code>; hai nguồn chính (cve.org, PHP advisory) cho 115560 là lỗi session, 129289 là PHP-FPM. Dùng PHP.net / cve.org làm chuẩn.</li>
   <li>Trang <a href="https://www.php.net/releases/" target="_blank" rel="noopener noreferrer">php.net/releases</a> và trang downloads bản đã lấy chưa hiển thị phiên bản mới (có thể là bản cache); archive và ChangeLog đã có.</li>
   <li>NVD chưa có bản ghi CVE-2026-115560 lúc kiểm tra (có thể trễ ingest). Điểm CVSS của CVE-2026-48841 chưa xác minh.</li>
   <li>Trạng thái bản vá của distro và Docker official image chưa xác minh.</li>
@@ -119,6 +116,5 @@ grep -RInE "ini_set\(\s*['\"]session\.serialize_handler" --include=*.php .</code
   <li><a href="https://www.php.net/ChangeLog-8.php" target="_blank" rel="noopener noreferrer">PHP.net — ChangeLog 8</a></li>
   <li><a href="https://github.com/php/php-src/security/advisories" target="_blank" rel="noopener noreferrer">GitHub php/php-src — Security advisories</a>, ví dụ <a href="https://github.com/php/php-src/security/advisories/GHSA-658j-r8rw-q6mx" target="_blank" rel="noopener noreferrer">GHSA-658j-r8rw-q6mx</a> (CVE-2026-115560)</li>
   <li><a href="https://www.cve.org/CVERecord?id=CVE-2026-115560" target="_blank" rel="noopener noreferrer">cve.org — CVE-2026-115560</a></li>
-  <li><a href="https://www.aikido.dev/blog/php-security-release-19-november-2026-cve-2026-115560" target="_blank" rel="noopener noreferrer">Aikido — PHP security release 19 November 2026</a> (nguồn thứ cấp)</li>
 </ul>
 </section>
