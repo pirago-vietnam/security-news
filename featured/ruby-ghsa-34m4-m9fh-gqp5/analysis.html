@@ -101,7 +101,7 @@ category: "Phân tích lỗ hổng"
 <section class="an-sec">
 <h2 id="kiem-tra">3. Kiểm tra nhanh</h2>
 <figure class="fig">
-<svg viewBox="0 0 740 230" role="img" aria-label="Cây quyết định"><defs><marker id="r4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="20" width="160" height="76" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="80" y="54" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Hệ thống có Ruby?</text><text x="80" y="73" text-anchor="middle" font-size="11" class="mut">host, container, sản phẩm</text><path d="M160 58 C 215 58 205 34 258 34" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r4)"/><text x="176" y="12" font-size="10.5" class="mut">EOL</text><rect class="box" x="262" y="8" width="478" height="56" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="278" y="32" font-size="12.5" font-weight="700" fill="currentColor">Ruby 3.2 trở xuống</text><text x="278" y="51" font-size="11" class="mut">EOL: chuyển sang 3.3 / 3.4 / 4.0 đã vá</text><path d="M160 58 C 215 58 205 106 258 106" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r4)"/><text x="176" y="100" font-size="10.5" class="mut">cũ hơn</text><rect class="box" x="262" y="80" width="478" height="56" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="278" y="104" font-size="12.5" font-weight="700" fill="currentColor">Ruby 3.3–4.0 chưa đạt bản vá</text><text x="278" y="123" font-size="11" class="mut">nâng 3.3.14 / 3.4.13 / 4.0.10, rebuild image, restart</text><path d="M160 58 C 215 58 205 178 258 178" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r4)"/><text x="176" y="218" font-size="10.5" class="mut">đóng gói</text><rect class="box" x="262" y="152" width="478" height="56" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="278" y="176" font-size="12.5" font-weight="700" fill="currentColor">Ruby đi kèm sản phẩm (GitLab, GHES...)</text><text x="278" y="195" font-size="11" class="mut">cài bản build vendor, rồi kiểm tra lại ruby -v bên trong</text></svg>
+<svg viewBox="0 0 740 230" role="img" aria-label="Cây quyết định"><defs><marker id="r4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="20" width="160" height="76" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="80" y="54" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Hệ thống có Ruby?</text><text x="80" y="73" text-anchor="middle" font-size="11" class="mut">host, container, sản phẩm</text><path d="M160 58 C 215 58 205 34 258 34" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r4)"/><rect class="box" x="262" y="8" width="478" height="56" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="278" y="32" font-size="12.5" font-weight="700" fill="currentColor">Ruby 3.2 trở xuống</text><text x="278" y="51" font-size="11" class="mut">EOL: chuyển sang 3.3 / 3.4 / 4.0 đã vá</text><path d="M160 58 C 215 58 205 106 258 106" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r4)"/><rect class="box" x="262" y="80" width="478" height="56" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="278" y="104" font-size="12.5" font-weight="700" fill="currentColor">Ruby 3.3–4.0 chưa đạt bản vá</text><text x="278" y="123" font-size="11" class="mut">nâng 3.3.14 / 3.4.13 / 4.0.10, rebuild image, restart</text><path d="M160 58 C 215 58 205 178 258 178" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r4)"/><rect class="box" x="262" y="152" width="478" height="56" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="278" y="176" font-size="12.5" font-weight="700" fill="currentColor">Ruby đi kèm sản phẩm (GitLab, GHES...)</text><text x="278" y="195" font-size="11" class="mut">cài bản build vendor, rồi kiểm tra lại ruby -v bên trong</text></svg>
 <figcaption>Cây quyết định nhanh để xác định hệ thống nào cần xử lý và theo cách nào.</figcaption>
 </figure>
 <p>Xác định phiên bản Ruby <strong>bên trong môi trường chạy thực tế</strong>. Nâng Ruby của host không đổi Ruby đóng gói trong container hoặc appliance.</p>
@@ -116,14 +116,50 @@ grep -rEn 'ruby ["'"'"']|^ruby ' Gemfile .ruby-version .tool-versions mise.toml 
 </section>
 
 <section class="an-sec">
-<h2 id="khac-phuc">4. Khắc phục</h2>
+<h2 id="khac-phuc">4. Khắc phục triệt để &amp; Biện pháp tạm thời</h2>
+
+<h3>Cách 1: Nâng cấp Ruby lên bản đã vá (Khuyến nghị — cách duy nhất khắc phục triệt để)</h3>
 <ol>
-  <li>Nâng Ruby lên <strong>3.3.14 / 3.4.13 / 4.0.10</strong>. Với Docker: cập nhật tag base image (<code>ruby:3.4.13</code>...), rebuild và rollout. Với 3.2 trở xuống: lên nhánh còn hỗ trợ.</li>
-  <li>Với sản phẩm tự host: cài bản build của vendor có Ruby đã vá, rồi xác nhận lại phiên bản Ruby trong môi trường đang chạy.</li>
-  <li>Restart tiến trình ứng dụng (Puma, Unicorn, Sidekiq...) và xác nhận bằng <code>ruby -v</code>.</li>
-  <li>Ưu tiên dịch vụ lộ internet và xử lý văn bản người dùng không cần xác thực.</li>
+  <li><strong>Chọn bản đích theo nhánh đang dùng:</strong> 3.3.x → <strong>3.3.14</strong>; 3.4.x → <strong>3.4.13</strong>; 4.0.x → <strong>4.0.10</strong>. Ruby 3.2 trở xuống đã EOL và không có bản vá: lập kế hoạch chuyển sang 3.3 / 3.4 / 4.0 (cân nhắc nhảy thẳng lên nhánh còn hỗ trợ lâu nhất mà ứng dụng chạy được).</li>
+  <li><strong>Cập nhật khai báo phiên bản trong repo</strong> (<code>.ruby-version</code>, <code>.tool-versions</code>, <code>mise.toml</code>, dòng <code>ruby "x.y.z"</code> trong <code>Gemfile</code>, <code>Dockerfile</code>, cấu hình CI) để build và dev dùng cùng một bản; commit kèm <code>Gemfile.lock</code>.</li>
+  <li><strong>Cài Ruby mới</strong> theo cách đang dùng (xem bảng lệnh bên dưới), chạy <code>bundle install</code> và bộ test.</li>
+  <li><strong>Triển khai và restart:</strong> tiến trình Ruby đang chạy vẫn giữ binary cũ trong bộ nhớ cho đến khi restart (Puma, Unicorn, Passenger, Sidekiq, cron/rake worker...). Với container: rebuild image rồi rollout lại, không chỉ restart container cũ.</li>
+  <li><strong>Xác nhận</strong> bằng <code>ruby -v</code> <em>bên trong</em> môi trường chạy thật (container / pod / dyno), không chỉ trên máy build. Ghi lại dịch vụ nào đã xong.</li>
+  <li><strong>Sản phẩm bên thứ ba có Ruby đóng gói</strong> (GitLab, GitHub Enterprise Server, Mastodon, Discourse, OpenProject, Chatwoot...): chỉ nâng cấp được bằng bản phát hành của vendor; cập nhật Ruby của host không có tác dụng. Theo dõi advisory của vendor, cài bản có Ruby 3.3.14 / 3.4.13 / 4.0.10 và kiểm tra lại phiên bản Ruby bên trong.</li>
 </ol>
-<p><strong>Biện pháp tạm thời:</strong> ruby-lang.org không đưa ra workaround. Giảm rủi ro trong lúc chờ: hạn chế đưa dữ liệu bảng mã cũ vào các phép chuyển đổi chữ hoa/thường, và giám sát log lỗi crash/segfault bất thường của tiến trình Ruby.</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Cách cài đang dùng</th><th>Lệnh tham khảo</th><th>Lưu ý</th></tr></thead>
+  <tbody>
+    <tr><td>rbenv + ruby-build</td><td><code>brew upgrade ruby-build &amp;&amp; rbenv install 3.4.13</code></td><td>Cần cập nhật ruby-build để thấy bản mới.</td></tr>
+    <tr><td>mise / asdf</td><td><code>mise use ruby@3.4.13</code></td><td>Cập nhật file khai báo phiên bản trong repo.</td></tr>
+    <tr><td>RVM</td><td><code>rvm install 3.4.13</code></td><td></td></tr>
+    <tr><td>Docker</td><td><code>FROM ruby:3.4.13</code> rồi rebuild &amp; rollout</td><td>Chưa xác minh đã có image official rebuild; kiểm tra tag trên Docker Hub trước, nếu chưa có thì build Ruby từ source.</td></tr>
+    <tr><td>apt / dnf (Ruby của distro)</td><td><code>sudo apt-get install --only-upgrade ruby</code> hoặc <code>sudo dnf upgrade ruby</code></td><td>Distro có thể chưa có bản vá hoặc dùng backport; đọc changelog của gói và kiểm tra tracker của distro.</td></tr>
+    <tr><td>PaaS (Heroku...)</td><td>Đổi <code>ruby "3.4.13"</code> trong <code>Gemfile</code> rồi deploy</td><td>Chưa xác minh đã hỗ trợ bản mới trên từng nền tảng; xem release notes của nền tảng.</td></tr>
+  </tbody>
+</table>
+</div>
+<pre><code class="language-bash"># Sau khi triển khai: xác nhận bên trong môi trường chạy thật
+ruby -v
+docker exec &lt;container_name&gt; ruby -v
+kubectl exec -n &lt;namespace&gt; &lt;pod&gt; -- ruby -v</code></pre>
+<p><strong>Thứ tự ưu tiên:</strong> (1) dịch vụ lộ internet xử lý văn bản người dùng không cần xác thực (Rails/Sinatra API, form, upload, webhook); (2) sản phẩm tự host bên thứ ba lộ internet (GitLab, GHES, Discourse...); (3) dịch vụ nội bộ; (4) công cụ CI, batch job. Vì PoC dự kiến công bố khoảng ~2026-11-26, nên hoàn tất nhóm (1) và (2) trước thời điểm đó.</p>
+
+<h3>Cách 2: Biện pháp tạm thời (khi chưa thể nâng cấp ngay)</h3>
+<blockquote class="callout">
+  <p><strong>Quan trọng:</strong> ruby-lang.org và Veria Labs <strong>không đưa ra workaround chính thức</strong>. Các bước dưới đây chỉ nhằm giảm rủi ro và <strong>không thay thế</strong> việc nâng cấp. Chưa có nguồn nào xác nhận chúng chặn được hoàn toàn lỗi.</p>
+</blockquote>
+<ol>
+  <li><strong>Thu hẹp bề mặt tiếp xúc:</strong> đặt dịch vụ Ruby chưa vá sau VPN / allowlist IP / SSO ở tầng ingress hoặc ALB nếu dịch vụ không bắt buộc công khai; tạm tắt các endpoint nhận văn bản từ người dùng ẩn danh khi không cần thiết.</li>
+  <li><strong>Chuẩn hoá bảng mã về UTF-8 trước khi đổi chữ hoa/thường:</strong> lỗi nằm ở nhánh bảng mã 1 byte cũ, còn UTF-8 đi đường code khác nên không bị ảnh hưởng. Trong code tự viết, chuyển dữ liệu không tin cậy sang UTF-8 (ví dụ <code>str.encode("UTF-8", invalid: :replace, undef: :replace)</code>) trước khi gọi <code>upcase</code> / <code>swapcase</code> / <code>downcase(:fold)</code> / <code>casecmp?</code>, hoặc từ chối đầu vào ở bảng mã cũ. Lưu ý: chỉ bao phủ được code của bạn, không bao phủ gem hoặc framework (Veria Labs cho biết Rails và Sinatra classic bị ảnh hưởng mặc định).</li>
+  <li><strong>Rà soát code tự viết:</strong> tìm nơi gọi các phương thức trên cùng nơi dùng <code>force_encoding</code> / <code>encode</code> sang ISO-8859-x hoặc Windows-125x.
+    <pre><code class="language-bash">grep -rnE 'upcase|swapcase|downcase\(:fold\)|casecmp\?' app lib 2&gt;/dev/null
+grep -rnE 'force_encoding|ISO-8859|Windows-125' app lib config 2&gt;/dev/null</code></pre></li>
+  <li><strong>Giám sát:</strong> theo dõi log crash bất thường của tiến trình Ruby (segfault, "[BUG]", worker bị kill và restart liên tục), request chứa nhiều ký tự ß hoặc chuỗi lặp bất thường ở tham số văn bản; cảnh báo cho đội vận hành.</li>
+  <li><strong>Chuẩn bị sẵn để vá nhanh:</strong> build thử image Ruby mới trên staging, chạy test, chuẩn bị kế hoạch rollback và cửa sổ bảo trì ngay khi cần.</li>
+  <li><strong>Không nên coi WAF là biện pháp thay thế:</strong> ß có thể xuất hiện hợp lệ trong dữ liệu người dùng (tên, địa chỉ), và chưa có chữ ký tấn công nào được công bố.</li>
+</ol>
 </section>
 
 <section class="an-sec">

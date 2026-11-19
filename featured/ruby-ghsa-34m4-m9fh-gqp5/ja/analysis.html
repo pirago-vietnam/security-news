@@ -103,7 +103,7 @@ permalink: /ja/featured/ruby-ghsa-34m4-m9fh-gqp5/analysis/
 <section class="an-sec">
 <h2 id="kiem-tra">3. 確認方法</h2>
 <figure class="fig">
-<svg viewBox="0 0 740 230" role="img" aria-label="判断フロー"><defs><marker id="r4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="20" width="160" height="76" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="80" y="54" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Ruby を使っている？</text><text x="80" y="73" text-anchor="middle" font-size="11" class="mut">ホスト・コンテナ・製品</text><path d="M160 58 C 215 58 205 34 258 34" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r4)"/><text x="176" y="12" font-size="10.5" class="mut">EOL</text><rect class="box" x="262" y="8" width="478" height="56" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="278" y="32" font-size="12.5" font-weight="700" fill="currentColor">Ruby 3.2 以下</text><text x="278" y="51" font-size="11" class="mut">EOL：修正済みの 3.3 / 3.4 / 4.0 へ移行</text><path d="M160 58 C 215 58 205 106 258 106" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r4)"/><text x="176" y="100" font-size="10.5" class="mut">旧版</text><rect class="box" x="262" y="80" width="478" height="56" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="278" y="104" font-size="12.5" font-weight="700" fill="currentColor">Ruby 3.3〜4.0 で未修正</text><text x="278" y="123" font-size="11" class="mut">3.3.14 / 3.4.13 / 4.0.10 へ更新、再ビルド、再起動</text><path d="M160 58 C 215 58 205 178 258 178" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r4)"/><text x="176" y="218" font-size="10.5" class="mut">同梱</text><rect class="box" x="262" y="152" width="478" height="56" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="278" y="176" font-size="12.5" font-weight="700" fill="currentColor">製品に同梱の Ruby（GitLab、GHES など）</text><text x="278" y="195" font-size="11" class="mut">ベンダーのビルドを適用し、内部で ruby -v を再確認</text></svg>
+<svg viewBox="0 0 740 230" role="img" aria-label="判断フロー"><defs><marker id="r4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="20" width="160" height="76" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="80" y="54" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Ruby を使っている？</text><text x="80" y="73" text-anchor="middle" font-size="11" class="mut">ホスト・コンテナ・製品</text><path d="M160 58 C 215 58 205 34 258 34" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r4)"/><rect class="box" x="262" y="8" width="478" height="56" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="278" y="32" font-size="12.5" font-weight="700" fill="currentColor">Ruby 3.2 以下</text><text x="278" y="51" font-size="11" class="mut">EOL：修正済みの 3.3 / 3.4 / 4.0 へ移行</text><path d="M160 58 C 215 58 205 106 258 106" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r4)"/><rect class="box" x="262" y="80" width="478" height="56" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="278" y="104" font-size="12.5" font-weight="700" fill="currentColor">Ruby 3.3〜4.0 で未修正</text><text x="278" y="123" font-size="11" class="mut">3.3.14 / 3.4.13 / 4.0.10 へ更新、再ビルド、再起動</text><path d="M160 58 C 215 58 205 178 258 178" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r4)"/><rect class="box" x="262" y="152" width="478" height="56" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="278" y="176" font-size="12.5" font-weight="700" fill="currentColor">製品に同梱の Ruby（GitLab、GHES など）</text><text x="278" y="195" font-size="11" class="mut">ベンダーのビルドを適用し、内部で ruby -v を再確認</text></svg>
 <figcaption>対応が必要なシステムと方法を素早く判断するための簡易フロー。</figcaption>
 </figure>
 <p><strong>実際に稼働している環境の中で</strong> Ruby のバージョンを確認してください。ホストの Ruby を更新しても、コンテナやアプライアンスに同梱された Ruby は変わりません。</p>
@@ -118,14 +118,50 @@ grep -rEn 'ruby ["'"'"']|^ruby ' Gemfile .ruby-version .tool-versions mise.toml 
 </section>
 
 <section class="an-sec">
-<h2 id="khac-phuc">4. 対策</h2>
+<h2 id="khac-phuc">4. 恒久対策と暫定対策</h2>
+
+<h3>方法 1：修正版 Ruby へ更新（推奨・唯一の恒久対策）</h3>
 <ol>
-  <li>Ruby を <strong>3.3.14 / 3.4.13 / 4.0.10</strong> に更新。Docker はベースイメージのタグ更新（<code>ruby:3.4.13</code> など）、再ビルド、ロールアウト。3.2 以下はサポート中のブランチへ。</li>
-  <li>セルフホスト製品はベンダーの修正済みビルドを適用し、稼働環境の Ruby バージョンを再確認。</li>
-  <li>アプリのプロセス（Puma、Unicorn、Sidekiq など）を再起動し、<code>ruby -v</code> で確認。</li>
-  <li>インターネット公開かつ未認証で文字列を処理するサービスを優先。</li>
+  <li><strong>使用ブランチ別の更新先：</strong> 3.3.x → <strong>3.3.14</strong>、3.4.x → <strong>3.4.13</strong>、4.0.x → <strong>4.0.10</strong>。Ruby 3.2 以下は EOL で修正版がないため、3.3 / 3.4 / 4.0 への移行を計画してください（アプリが動作する範囲で、より長くサポートされるブランチを選択）。</li>
+  <li><strong>リポジトリ内のバージョン指定を更新：</strong> <code>.ruby-version</code>、<code>.tool-versions</code>、<code>mise.toml</code>、<code>Gemfile</code> の <code>ruby "x.y.z"</code>、<code>Dockerfile</code>、CI 設定。ビルドと開発で同じ版を使い、<code>Gemfile.lock</code> も一緒にコミットします。</li>
+  <li><strong>新しい Ruby をインストール</strong>（下表参照）し、<code>bundle install</code> とテストを実行。</li>
+  <li><strong>デプロイと再起動：</strong> 稼働中の Ruby プロセスは再起動するまで旧バイナリのままです（Puma、Unicorn、Passenger、Sidekiq、cron/rake ワーカーなど）。コンテナは旧コンテナの再起動ではなく、イメージを再ビルドしてロールアウトします。</li>
+  <li><strong>確認：</strong> ビルドマシンではなく、<em>実際の稼働環境（コンテナ／Pod／dyno）の内部</em>で <code>ruby -v</code> を実行。対応済みサービスを記録します。</li>
+  <li><strong>Ruby を同梱するサードパーティ製品</strong>（GitLab、GitHub Enterprise Server、Mastodon、Discourse、OpenProject、Chatwoot など）：ベンダーのリリースでのみ更新可能で、ホストの Ruby を更新しても効果はありません。ベンダーの advisory を確認し、Ruby 3.3.14 / 3.4.13 / 4.0.10 を含む版を適用後、内部の Ruby バージョンを再確認します。</li>
 </ol>
-<p><strong>暫定対策：</strong> ruby-lang.org は回避策を示していません。更新までの間は、旧文字コードのデータを大文字・小文字変換に渡さないようにし、Ruby プロセスの異常終了（segfault など）のログを監視してください。</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>インストール方法</th><th>コマンド例</th><th>備考</th></tr></thead>
+  <tbody>
+    <tr><td>rbenv + ruby-build</td><td><code>brew upgrade ruby-build &amp;&amp; rbenv install 3.4.13</code></td><td>新しい版を表示するには ruby-build の更新が必要。</td></tr>
+    <tr><td>mise / asdf</td><td><code>mise use ruby@3.4.13</code></td><td>リポジトリ内のバージョン指定も更新。</td></tr>
+    <tr><td>RVM</td><td><code>rvm install 3.4.13</code></td><td></td></tr>
+    <tr><td>Docker</td><td><code>FROM ruby:3.4.13</code> に変更して再ビルド・ロールアウト</td><td>公式イメージの再ビルドは未確認。Docker Hub のタグを事前に確認し、なければソースからビルド。</td></tr>
+    <tr><td>apt / dnf（ディストリビューションの Ruby）</td><td><code>sudo apt-get install --only-upgrade ruby</code> または <code>sudo dnf upgrade ruby</code></td><td>修正版が未提供、またはバックポートの場合あり。パッケージの changelog とディストリビューションの tracker を確認。</td></tr>
+    <tr><td>PaaS（Heroku など）</td><td><code>Gemfile</code> の <code>ruby "3.4.13"</code> を変更してデプロイ</td><td>各プラットフォームでの新版対応は未確認。リリースノートを確認。</td></tr>
+  </tbody>
+</table>
+</div>
+<pre><code class="language-bash"># デプロイ後：実際の稼働環境の内部で確認
+ruby -v
+docker exec &lt;container_name&gt; ruby -v
+kubectl exec -n &lt;namespace&gt; &lt;pod&gt; -- ruby -v</code></pre>
+<p><strong>優先順位：</strong> (1) インターネット公開かつ未認証でユーザー文字列を処理するサービス（Rails/Sinatra の API、フォーム、アップロード、Webhook）、(2) インターネット公開のサードパーティ製セルフホスト製品（GitLab、GHES、Discourse など）、(3) 社内サービス、(4) CI ツール・バッチジョブ。PoC が約 2026-11-26 に公開される予定のため、(1) と (2) はそれまでに完了させてください。</p>
+
+<h3>方法 2：暫定対策（すぐに更新できない場合）</h3>
+<blockquote class="callout">
+  <p><strong>重要：</strong> ruby-lang.org と Veria Labs は<strong>公式な回避策を示していません</strong>。以下はリスク低減のための措置であり、更新の<strong>代替にはなりません</strong>。脆弱性を完全に防げることを確認した情報源もありません。</p>
+</blockquote>
+<ol>
+  <li><strong>公開範囲の縮小：</strong> 公開が必須でないサービスは、Ingress／ALB で VPN・IP 許可リスト・SSO の背後に置く。不要な匿名の文字列入力エンドポイントは一時的に停止。</li>
+  <li><strong>大文字・小文字変換の前に UTF-8 へ正規化：</strong> 問題は旧 1 バイト文字コードの経路にあり、UTF-8 は別経路で影響を受けません。自作コードでは、<code>upcase</code> / <code>swapcase</code> / <code>downcase(:fold)</code> / <code>casecmp?</code> の前に信頼できない入力を UTF-8 に変換（例：<code>str.encode("UTF-8", invalid: :replace, undef: :replace)</code>）するか、旧文字コードの入力を拒否します。ただし対象は自作コードのみで、gem やフレームワーク内部は防げません（Veria Labs によれば Rails と Sinatra classic は既定で影響）。</li>
+  <li><strong>自作コードの棚卸し：</strong> 上記メソッドの呼び出し箇所と、ISO-8859-x／Windows-125x への <code>force_encoding</code>／<code>encode</code> の使用箇所を検索。
+    <pre><code class="language-bash">grep -rnE 'upcase|swapcase|downcase\(:fold\)|casecmp\?' app lib 2&gt;/dev/null
+grep -rnE 'force_encoding|ISO-8859|Windows-125' app lib config 2&gt;/dev/null</code></pre></li>
+  <li><strong>監視：</strong> Ruby プロセスの異常終了ログ（segfault、"[BUG]"、ワーカーの kill と再起動の繰り返し）、テキストパラメータ中の ß の大量出現や異常な繰り返しを監視し、運用チームへ通知。</li>
+  <li><strong>迅速に更新できる準備：</strong> ステージングで新しい Ruby イメージを試験ビルドしてテストし、ロールバック手順とメンテナンス枠を事前に確保。</li>
+  <li><strong>WAF を代替とみなさない：</strong> ß は氏名・住所など正当なデータにも含まれ、公開済みの攻撃シグネチャもありません。</li>
+</ol>
 </section>
 
 <section class="an-sec">
