@@ -14,8 +14,8 @@ h1:
   vi: Báo cáo bảo mật tháng 11/2026
   ja: 2026年11月 セキュリティレポート
 sub:
-  vi: 'Số liệu tính đến <strong>2026-11-13</strong> (cập nhật đợt phát hành bảo mật PostgreSQL 52 CVEs, Patch Tuesday Microsoft, Chrome Zero-Day, Apache HTTP Server 2.4.71 và các bản tin an ninh định kỳ).'
-  ja: '<strong>2026年11月13日</strong>時点の情報です（PostgreSQL 52件の脆弱性修正リリース、Microsoft Patch Tuesday、Chrome ゼロデイ緊急リリース、Apache HTTP Server 2.4.71 および定期セキュリティ情報に対応）。'
+  vi: 'Số liệu tính đến <strong>2026-11-17</strong> (cập nhật đợt phát hành bảo mật PostgreSQL 52 CVEs, Patch Tuesday Microsoft, Chrome Zero-Day, Apache HTTP Server 2.4.71 và các bản tin an ninh định kỳ).'
+  ja: '<strong>2026年11月17日</strong>時点の情報です（PostgreSQL 52件の脆弱性修正リリース、Microsoft Patch Tuesday、Chrome ゼロデイ緊急リリース、Apache HTTP Server 2.4.71 および定期セキュリティ情報に対応）。'
 placeholder:
   vi: '🔍 Tìm kiếm CVE, framework, thư viện (vd: PostgreSQL, VS Code, Chrome, .NET, Tomcat, Next.js, AWS)...'
   ja: '🔍 CVE、フレームワーク、ライブラリで検索（例: PostgreSQL, VS Code, Chrome, .NET, Tomcat, Next.js, AWS）...'
@@ -28,8 +28,8 @@ card:
     vi: Báo cáo tháng 11/2026
     ja: 2026年11月レポート
   date:
-    vi: Cập nhật đến 2026-11-13 · Định kỳ hàng tháng
-    ja: 2026年11月13日 時点 · 月次定期レポート
+    vi: Cập nhật đến 2026-11-17 · Định kỳ hàng tháng
+    ja: 2026年11月17日 時点 · 月次定期レポート
   items:
   - sev: high
     label: PostgreSQL (RDBMS)
@@ -64,8 +64,8 @@ card:
   - sev: crit
     label: Chrome / V8
     text:
-      vi: 'CVE-2026-125350: Lỗ hổng Zero-Day đang bị khai thác trong thực tế ở trình phân tích cú pháp XML. Cập nhật khẩn cấp Chrome lên 157.0.8103.50+ / 156.0.8078.96.'
-      ja: 'CVE-2026-125350: XMLパーサーにおける悪用確認済みのゼロデイ脆弱性。直ちに Chrome を 157.0.8103.50+ / 156.0.8078.96 へ緊急更新。'
+      vi: 'Chrome 158 vá 204 lỗi bảo mật, gồm 6 lỗi Critical. Cập nhật Stable lên 158.0.8127.36 (Linux) / 158.0.8127.36 hoặc .37 (Windows/macOS); tiếp tục lưu ý zero-day CVE-2026-125350 đã được vá trước đó.'
+      ja: 'Chrome 158 は Critical 6件を含む204件のセキュリティ修正を収録。Stable を Linux は 158.0.8127.36、Windows/macOS は 158.0.8127.36 または .37 に更新。以前修正されたゼロデイ CVE-2026-125350 にも引き続き注意。'
   - sev: high
     label: .NET &amp; Frameworks
     text:
@@ -124,8 +124,8 @@ sections:
       vi: Ngay lập tức (toàn bộ máy kỹ sư &amp; máy ảo)
       ja: 即時（全開発者マシンおよび仮想環境）
   - task:
-      vi: 'Cập nhật khẩn cấp <strong>Google Chrome</strong> lên <strong>157.0.8103.50+</strong> (hoặc 156.0.8078.96 trên kênh Extended Stable) để vá lỗ hổng <strong>Zero-Day CVE-2026-125350</strong> đang bị khai thác trong thực tế'
-      ja: '悪用が確認されている <strong>ゼロデイ脆弱性 CVE-2026-125350</strong> に対応するため、<strong>Google Chrome</strong> を <strong>157.0.8103.50+</strong>（Extended Stable は 156.0.8078.96）へ緊急アップデートする'
+      vi: 'Cập nhật <strong>Google Chrome Stable</strong> lên <strong>158.0.8127.36 trở lên</strong> để vá 204 lỗi bảo mật, gồm 6 lỗi Critical; khởi động lại trình duyệt. Với Extended Stable, theo dõi bản cập nhật riêng của Google.'
+      ja: '<strong>Google Chrome Stable</strong> を <strong>158.0.8127.36 以上</strong>に更新して Critical 6件を含む204件のセキュリティ修正を適用し、ブラウザを再起動する。Extended Stable は Google の別途提供する更新を確認する。'
     sev: crit
     due:
       vi: Ngay lập tức (toàn bộ máy trạm &amp; thiết bị duyệt web)
@@ -227,14 +227,14 @@ sections:
   - name: Google Chrome &amp; Chromium
     sev: crit
     summary:
-      vi: '<strong>CVE-2026-125350 (Zero-Day đang bị khai thác ngoài thực tế)</strong>: Lỗ hổng Use-After-Free trong component xử lý XML parser của Chromium cho phép kẻ tấn công làm hỏng bộ nhớ heap và thực thi mã tùy ý trong sandbox khi người dùng truy cập trang web hoặc tải nội dung XML/HTML độc hại. Google phát hành bản vá khẩn cấp ngày 09-11-2026.'
-      ja: '<strong>CVE-2026-125350（実環境で悪用が確認されたゼロデイ脆弱性）</strong>：Chromium の XML パーサーコンポーネントにおける Use-After-Free。悪意ある Web ページや XML/HTML コンテンツを閲覧させることで、ヒープ破壊を引き起こしブラウザサンドボックス内で任意コード実行に至るリスク。Google は2026年11月9日に緊急パッチを配信。'
+      vi: 'Ngày 17-11, Google phát hành <strong>Chrome 158</strong> với <strong>204 bản sửa bảo mật</strong>, gồm 6 lỗi Critical: <strong>CVE-2026-130963</strong> (use-after-free trong WebView), <strong>CVE-2026-131031</strong> (ghi ngoài phạm vi trong GPU), <strong>CVE-2026-131060</strong> (tràn bộ đệm trong Media), <strong>CVE-2026-131008</strong> (use-after-free trong GarbageCollection), <strong>CVE-2026-131054</strong> (ghi ngoài phạm vi trong ANGLE) và <strong>CVE-2026-130975</strong> (use-after-free trong WebAudio). Trước đó, Google đã vá zero-day <strong>CVE-2026-125350</strong> đang bị khai thác trong XML.'
+      ja: 'Google は11月17日、<strong>Chrome 158</strong> で <strong>204件のセキュリティ修正</strong>を公開。Critical は6件：<strong>CVE-2026-130963</strong>（WebView の use-after-free）、<strong>CVE-2026-131031</strong>（GPU の範囲外書き込み）、<strong>CVE-2026-131060</strong>（Media のバッファオーバーフロー）、<strong>CVE-2026-131008</strong>（GarbageCollection の use-after-free）、<strong>CVE-2026-131054</strong>（ANGLE の範囲外書き込み）、<strong>CVE-2026-130975</strong>（WebAudio の use-after-free）。以前には悪用が確認された XML のゼロデイ <strong>CVE-2026-125350</strong> も修正済み。'
     impact:
       vi: 'Toàn bộ người dùng duyệt web bằng Google Chrome, Microsoft Edge, Brave, Opera trên Windows, macOS và Linux. Các tiến trình headless Chromium / Puppeteer phục vụ render trang.'
       ja: 'Windows、macOS、Linux 上で Google Chrome、Microsoft Edge、Brave、Opera を利用する全ユーザー、およびページ描画処理を行うヘッドレス Chromium / Puppeteer 環境。'
     fix:
-      vi: 'Cập nhật ngay Google Chrome lên <strong>157.0.8103.50/.51</strong> (hoặc <strong>156.0.8078.96</strong> trên kênh Extended Stable) qua <strong>Settings &gt; About Google Chrome</strong> và khởi động lại trình duyệt. Cập nhật tương tự đối với Edge, Brave, Opera.'
-      ja: '<strong>Settings &gt; About Google Chrome</strong> より、Google Chrome を直ちに <strong>157.0.8103.50/.51</strong>（Extended Stable は <strong>156.0.8078.96</strong>）に更新しブラウザを再起動してください。Edge、Brave、Opera も同様に対応が必要です。'
+      vi: 'Cập nhật Chrome Stable qua <strong>Settings &gt; About Google Chrome</strong> lên <strong>158.0.8127.36</strong> (Linux) hoặc <strong>158.0.8127.36/.37</strong> (Windows/macOS), hoặc bản mới hơn, rồi khởi động lại. Google triển khai dần trong những ngày hoặc tuần tới; kiểm tra thông báo riêng cho Extended Stable và các trình duyệt Chromium khác.'
+      ja: '<strong>Settings &gt; About Google Chrome</strong> から Chrome Stable を Linux は <strong>158.0.8127.36</strong>、Windows/macOS は <strong>158.0.8127.36/.37</strong> 以降に更新し、再起動してください。Google は数日から数週間かけて順次配信します。Extended Stable および他の Chromium 系ブラウザは各提供元の情報を確認してください。'
   - name: npm &amp; PyPI (AI Coding Agent Supply Chain)
     sev: high
     summary:
@@ -469,6 +469,8 @@ sections:
     ja: '<strong>Apache HTTP Server &amp; CVE.org 公式ソースとの照合済み（CVE-2026-119618）:</strong> <code>mod_http2</code>（<code>assign_headers()</code>）の競合状態は Anthropic OSS Scanner および Google Cloud Vulnerability Research により報告され、Apache Software Foundation により2026年11月11日リリースの Apache HTTP Server 2.4.71 で修正されました。'
   - vi: '<strong>Đối chiếu nguồn chính thức Microsoft MSRC &amp; Patch Tuesday:</strong> CVE-2026-120779, CVE-2026-120780 (Visual Studio Code), CVE-2026-118746 (.NET), CVE-2026-114146/47 (ASP.NET Core) và CVE-2026-114151 (Visual Studio) được công bố trong bản tin bảo mật Patch Tuesday tháng 11/2026.'
     ja: '<strong>Microsoft MSRC &amp; Patch Tuesday 公式ソースとの照合済み:</strong> CVE-2026-120779、CVE-2026-120780（VS Code）、CVE-2026-118746（.NET）、CVE-2026-114146/47（ASP.NET Core）、CVE-2026-114151（Visual Studio）は 2026年11月 Patch Tuesday にて公開。'
+  - vi: '<strong>Chrome 158 ngày 17-11:</strong> Google công bố 204 bản sửa bảo mật, trong đó có 6 lỗi Critical; bản Stable được triển khai dần. Xem <a href="https://chromereleases.googleblog.com/2026/11/stable-channel-update-for-desktop_01699533288.html" target="_blank" rel="noopener noreferrer">thông báo chính thức của Google</a>.'
+    ja: '<strong>11月17日の Chrome 158:</strong> Google は Critical 6件を含む204件のセキュリティ修正を発表し、Stable を段階的に配信。<a href="https://chromereleases.googleblog.com/2026/11/stable-channel-update-for-desktop_01699533288.html" target="_blank" rel="noopener noreferrer">Google の公式発表</a>を参照。'
   - vi: '<strong>Cảnh báo Zero-Day Google Chrome (CVE-2026-125350):</strong> Lỗ hổng Use-After-Free trong trình phân tích XML đã được Google xác nhận có mã khai thác hoạt động thực tế (in the wild); bản vá khẩn cấp đã phát hành trên các kênh Stable và Extended Stable.'
     ja: '<strong>Google Chrome ゼロデイ警告（CVE-2026-125350）:</strong> XML パーサーの Use-After-Free 脆弱性は Google により実環境での悪用（in the wild）が確認済み。Stable および Extended Stable チャンネルにて緊急アップデートが配信されています。'
   - vi: '<strong>Cảnh báo chuỗi cung ứng công cụ AI Coding:</strong> Các chiến dịch mã độc mạo danh máy chủ Model Context Protocol (MCP) và công cụ mở rộng IDE đang gia tăng; khuyến nghị toàn bộ kỹ sư áp dụng nguyên tắc kiểm tra mã nguồn và xác minh tính toàn vẹn của lockfile trước khi tích hợp vào môi trường làm việc.'
