@@ -280,6 +280,15 @@ html[data-theme="dark"] .pirago-nav-link.active {
   z-index: 110;
 }
 
+.pirago-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 0;
+  right: 0;
+  height: 5px;
+}
+
 .pirago-nav-item.has-dropdown:hover .pirago-dropdown,
 .pirago-nav-item.has-dropdown:focus-within .pirago-dropdown {
   display: block;
