@@ -1,5 +1,29 @@
 # Các case nổi bật (sự cố lớn, phân tích lỗ hổng, runbook ứng phó). Thứ tự = thứ tự hiển thị.
 # `path` tính từ gốc ngôn ngữ (vi: "/", ja: "/ja/").
+- id: spring-security-cve-2026-59273
+  category: vulnerability
+  path: "featured/spring-security-cve-2026-59273/analysis/"
+  icon: "🍃"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL"}
+  nav: {vi: "Spring Security CVE-2026-59273", ja: "Spring Security CVE-2026-59273"}
+  title: {vi: "Spring Security CVE-2026-59273 — RCE nghiêm trọng (CVSS 9.8) qua ELRequestMatcher (SpEL)", ja: "Spring Security CVE-2026-59273 — ELRequestMatcher（SpEL）経由の重大な RCE（CVSS 9.8）"}
+  date: {vi: "Cập nhật đến 2026-11-20 · Ảnh hưởng 7.1.0–7.1.2, 7.0.0–7.0.8 và nhánh cũ · Đã vá ở 7.1.3 / 7.0.9", ja: "2026年11月20日 時点 · 7.1.0〜7.1.2、7.0.0〜7.0.8 と旧系統が対象 · 7.1.3 / 7.0.9 で修正済み"}
+  link: {vi: "Xem phân tích & hướng dẫn →", ja: "分析・対策ガイドを見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Nguy cơ", ja: "リスク"}
+      text: {vi: "ELRequestMatcher chạy SpEL với reflection đầy đủ; nếu input ngoài bind vào thuộc tính kiểu này thì kẻ tấn công chưa xác thực có thể RCE (CVSS 3.1 9.8, CWE-94).", ja: "ELRequestMatcher が完全なリフレクション付きで SpEL を評価。外部入力がこの型のプロパティにバインドされると未認証で RCE の恐れ（CVSS 3.1 9.8、CWE-94）。"}
+    - sev: high
+      label: {vi: "Phạm vi", ja: "影響範囲"}
+      text: {vi: "Spring Security 7.1.0–7.1.2, 7.0.0–7.0.8, 6.5.0–6.5.12, 6.4.0–6.4.19, 5.8.0–5.8.28, ≤5.7.26.", ja: "Spring Security 7.1.0〜7.1.2、7.0.0〜7.0.8、6.5.0〜6.5.12、6.4.0〜6.4.19、5.8.0〜5.8.28、5.7.26 以前。"}
+    - sev: med
+      label: {vi: "Tạm thời", ja: "暫定対策"}
+      text: {vi: "Advisory không nêu mitigation khác ngoài nâng cấp; trong lúc chờ, rà soát để không bind input ngoài vào ELRequestMatcher.", ja: "アドバイザリは更新以外の緩和策を示していない。更新までは外部入力が ELRequestMatcher にバインドされないか点検。"}
+    - sev: low
+      label: {vi: "Triệt để", ja: "恒久対策"}
+      text: {vi: "Nâng cấp lên 7.1.3 hoặc 7.0.9 (OSS); 6.5/6.4/5.8/5.7 chỉ có bản vá qua Enterprise Support.", ja: "7.1.3 または 7.0.9（OSS）へ更新。6.5/6.4/5.8/5.7 は Enterprise Support のみ。"}
+
 - id: database-rce-narrow-grants
   category: vulnerability
   path: "featured/database-rce-narrow-grants/analysis/"
