@@ -125,21 +125,21 @@
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
   nav: {vi: "Sự cố Rakuten Securities", ja: "楽天証券 インシデント"}
   title: {vi: "楽天証券 (Rakuten Securities) — Có thể lộ tối đa 11,25 triệu tài khoản từ môi trường test", ja: "楽天証券 — テスト環境から最大1,125万口座の情報流出の恐れ"}
-  date: {vi: "Cập nhật 2026-11-18 · Công bố 17/11 · Nguyên nhân đang điều tra", ja: "2026年11月18日更新 · 11/17公表 · 原因調査中"}
+  date: {vi: "Cập nhật 2026-11-20 · FSA ra lệnh báo cáo (19/11) · Miễn phí chuyển quỹ", ja: "2026年11月20日更新 · 金融庁が報告徴求命令（11/19） · 投信出庫手数料無料化"}
   link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
   items:
     - sev: crit
       label: {vi: "Quy mô", ja: "規模"}
-      text: {vi: "Tối đa ~11,25 triệu tài khoản (mã chi nhánh, mã khách hàng, ID đăng nhập); trong đó tối đa ~4,47 triệu tài khoản lộ thêm họ tên, địa chỉ, SĐT, email, tài khoản rút tiền, thu nhập và tài sản (gồm người đã rút tài khoản).", ja: "最大約1,125万口座（部店・お客様コード、ログインID）。うち最大約447万口座は氏名・住所・電話・メール・出金先口座・年収・金融資産等も対象（退会者含む）。"}
+      text: {vi: "Tối đa ~11,25 triệu tài khoản (mã chi nhánh, mã khách hàng, ID đăng nhập) và tối đa ~4,47 triệu tài khoản lộ thêm họ tên, địa chỉ, SĐT, email, tài khoản rút tiền, thu nhập và tài sản (gồm người đã rút tài khoản).", ja: "最大約1,125万口座（部店・お客様コード、ログインID）、および最大約447万口座で氏名・住所・電話・メール・出金先口座・年収・金融資産等も対象（退会者含む）。"}
     - sev: high
-      label: {vi: "Nguyên nhân", ja: "原因"}
-      text: {vi: "Truy cập trái phép của bên thứ ba, phát hiện 16/11; thông tin trong môi trường test có thể bị rò rỉ từ 11/11. Nguyên nhân và đường xâm nhập đang điều tra.", ja: "第三者による不正アクセスを11月16日に検知、テスト環境の情報が11月11日に漏えいしたおそれ。原因・経緯は調査中。"}
+      label: {vi: "Nguyên nhân &amp; Quản lý", ja: "原因・監督"}
+      text: {vi: "Đưa dữ liệu thật không che (unmasked) vào môi trường test để nâng cấp (báo chí); bị truy cập trái phép từ 11/11. FSA ban hành lệnh yêu cầu báo cáo ngày 19/11.", ja: "検証用に本番データを非マスクでテスト環境へ配置（報道）し、11/11に流出のおそれ。11月19日に金融庁が報告徴求命令を発出。"}
     - sev: med
       label: {vi: "Chưa xác nhận lộ", ja: "未確認事項"}
       text: {vi: "Mật khẩu đăng nhập, mã PIN và thông tin giao dịch chưa xác nhận bị lộ; chưa ghi nhận giao dịch trái phép liên quan.", ja: "パスワード・暗証番号など取引に必要な情報の漏えいは未確認。本件起因の不正取引も確認されていません。"}
     - sev: low
       label: {vi: "Ứng phó", ja: "対応"}
-      text: {vi: "Đã xác định xong khách hàng bị ảnh hưởng và thông báo riêng; cảnh báo phishing, khuyến nghị passkey, có thể tạm khóa giao dịch/rút tiền.", ja: "対象のお客様の特定は完了、個別に報告。フィッシング注意、パスキー推奨、取引・出金の一時停止設定が可能。"}
+      text: {vi: "Miễn phí chuyển quỹ tín thác sang đối thủ từ 18/11, hoãn mở cửa hàng Shibuya (25/11); ghi nhận >15.000 người đăng ký khởi kiện tập thể; khuyến nghị passkey.", ja: "11/18より投信出庫手数料を当面無料化、渋谷店舗の開店延期。集団訴訟準備サイトに1.5万人超登録の動き。パスキー推奨。"}
 
 - id: muji
   category: incident
@@ -149,7 +149,7 @@
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
   nav: {vi: "Sự cố MUJI", ja: "無印良品 インシデント"}
   title: {vi: "無印良品 (MUJI / Ryohin Keikaku) — Rò rỉ tối đa 27,26 triệu tài khoản & 1,09 triệu số thẻ MUJI Card", ja: "無印良品（良品計画）— 最大2,726万件の会員情報 & MUJI Card 約109万件流出の恐れ"}
-  date: {vi: "Trạng thái đến 2026-11-16 · Net Store vẫn ngừng · Chưa có lịch mở lại", ja: "2026年11月16日時点 · ネットストア停止継続 · 再開時期未定"}
+  date: {vi: "Cập nhật 2026-11-20 · Net Store vẫn ngừng · Chưa có lịch mở lại", ja: "2026年11月20日更新 · ネットストア停止継続 · 再開時期未定"}
   link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
   items:
     - sev: crit
@@ -157,13 +157,13 @@
       text: {vi: "Tối đa ~27,26 triệu tài khoản (gồm người đã hủy), ~750.000 họ tên/địa chỉ/SĐT, ~1,09 triệu số thẻ MUJI Card 16 chữ số (~345.000 thẻ còn hiệu lực) và ~440.000 người nhận COD.", ja: "最大約2,726万件（退会者含む）、氏名・住所等約75万件、MUJI Card 16桁全桁約109万件（有効約34.5万件）、代引き受取先約44万件に影響の恐れ。"}
     - sev: high
       label: {vi: "Nguyên nhân", ja: "原因"}
-      text: {vi: "Lỗ hổng hệ thống + để tồn đọng 16 số thẻ không che suốt 5 năm từ 07/2021 và không xóa tài khoản đã hủy; kết hợp credential stuffing (~270.000 tài khoản).", ja: "システム脆弱性に加え、2021年7月以降5年間マスクなし放置されたカード番号・退会者の削除漏れ。ネットストアでのリスト型攻撃（約27万件）も判明。"}
+      text: {vi: "Lỗ hổng hệ thống + để tồn đọng 16 số thẻ không che suốt 5 năm (dù Credit Saison từng 2 lần yêu cầu xóa vào 2020 và 07/2021) &amp; không xóa tài khoản đã hủy; kết hợp credential stuffing (~270.000 tài khoản).", ja: "システム脆弱性に加え、クレディセゾンからの過去2回の削除依頼（2020年・21年7月）後も5年間マスクなし放置されたカード番号・退会者の削除漏れ。リスト型攻撃（約27万件）も判明。"}
     - sev: med
       label: {vi: "Tài chính & Quản lý", ja: "金融・監督官庁"}
       text: {vi: "Credit Saison siết chặt giám sát gian lận dải BIN và miễn phí đổi thẻ; PPC yêu cầu nộp báo cáo giải trình chính thức (確報); METI điều tra tuân thủ Credit Card Security Guidelines.", ja: "クレディセゾンがBIN監視強化と無料再発行対応。PPCが正式確報を要求、経産省がセキュリティガイドライン違反を調査。"}
     - sev: low
       label: {vi: "Ứng phó & Bồi thường", ja: "対応・補償"}
-      text: {vi: "Đến 16/11, Net Store vẫn ngừng và MUJI App chỉ giữ mã vạch thành viên; Credit Saison hỗ trợ đổi thẻ miễn phí.", ja: "11月16日時点でネットストアは停止中、MUJIアプリは会員証バーコード表示以外を停止。クレディセゾンはカードを無料再発行。"}
+      text: {vi: "Đến 20/11, Net Store vẫn ngừng sang tuần thứ 2+ và MUJI App chỉ giữ mã vạch thành viên; Credit Saison hỗ trợ đổi thẻ miễn phí.", ja: "11月20日時点もネットストアは停止継続、MUJIアプリは会員証バーコード表示以外を停止。クレディセゾンはカードを無料再発行。"}
 
 - id: java-cve-2026-114938
   category: vulnerability
@@ -266,22 +266,22 @@
   accent: true
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
   nav: {vi: "Sự cố Binance", ja: "Binance インシデント"}
-  title: {vi: "Binance (~6,3 tỷ USD) — Rò rỉ từ laptop DevOps vào container dịch vụ", ja: "Binance（約63億米ドル流出）— DevOps 端末侵害からサービスコンテナへ到達"}
-  date: {vi: "Cập nhật đến 2026-10-30 · Đang diễn biến · Vụ hack tiền mã hóa lớn nhất lịch sử (theo báo chí)", ja: "2026年10月30日 時点 · 進行中 · 報道によると暗号資産史上最大の被害"}
+  title: {vi: "Binance (~6,3 tỷ USD) — Chuỗi xâm nhập phỏng vấn giả từ laptop DevOps vào dịch vụ ký ví", ja: "Binance（約63億米ドル流出）— DevOps 端末・偽装面接経由の多段階侵害"}
+  date: {vi: "Cập nhật 2026-11-20 · Đã khôi phục 100% · Lệnh phong tỏa ADGM 6,5 tỷ USD", ja: "2026年11月20日更新 · 100%補填・出金再開 · ADGM 65億ドル凍結命令"}
   link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
   items:
     - sev: crit
       label: {vi: "Quy mô", ja: "規模"}
-      text: {vi: "Binance ước tính khoảng 6,3 tỷ USD tài sản bị ảnh hưởng; đã dự phòng hơn 6,34 tỷ USD và cam kết bù đắp toàn bộ thiệt hại của người dùng.", ja: "Binance は約63億米ドルの資産が影響を受けたと推計。63.4億米ドル超を確保し、ユーザーの損失を全額補償すると表明。"}
+      text: {vi: "~6,34 tỷ USD rút trái phép từ ví nóng (29/10); lớn nhất lịch sử crypto (~4x Bybit 2025). Binance Japan không bị ảnh hưởng (ví lạnh riêng).", ja: "約63.4億ドル（Binance Japan はコールドウォレット分離管理により直接被害なし）。"}
     - sev: high
-      label: {vi: "Nguyên nhân", ja: "原因"}
-      text: {vi: "Sơ bộ: laptop của kỹ sư DevOps bị xâm nhập, dẫn tới container dịch vụ; sau đó phát hiện thêm điểm xâm nhập khác. Chưa có bằng chứng lộ private key ví.", ja: "暫定: DevOps エンジニアのノート PC が侵害されサービスコンテナへ到達。その後、別の侵入経路も判明。ウォレット秘密鍵の漏えいの証拠は未確認。"}
+      label: {vi: "Nguyên nhân &amp; Quy kết", ja: "原因・特定"}
+      text: {vi: "FBI &amp; các hãng phân tích quy kết cho TraderTraitor (Triều Tiên): cài trojan Homebrew (06/2026), lừa phỏng vấn giả cài mã độc pyenv (09/2026) để chiếm token triển khai container.", ja: "FBI・分析企業は北朝鮮 TraderTraitor と特定。偽装採用面接での pyenv マルウェア等を経てコンテナトークンを窃取。"}
     - sev: med
-      label: {vi: "Quy kết", ja: "攻撃者"}
-      text: {vi: "TRM Labs quy cho nhóm TraderTraitor (Triều Tiên); Binance chưa xác nhận.", ja: "TRM Labs は北朝鮮の TraderTraitor によるものと分析。Binance は未確認。"}
+      label: {vi: "Pháp lý &amp; Thu hồi", ja: "法的回収"}
+      text: {vi: "~2,85 tỷ USD đã phong tỏa sớm qua Tether/Circle; tòa ADGM (Abu Dhabi) ra lệnh phong tỏa toàn cầu 6,5 tỷ USD, tống đạt trực tiếp on-chain tới ~26.000 ví.", ja: "約28.5億ドルを早期凍結後、ADGM 裁判所が約26,000ウォレットへのオンチェーン送達を認める65億ドル凍結命令を発出。"}
     - sev: low
-      label: {vi: "Ứng phó", ja: "対応"}
-      text: {vi: "Đã đóng băng khoảng 3 tỷ USD (số liệu nguồn khác nhau), tạm dừng rút tiền để rà soát an ninh; sẽ công bố báo cáo đầy đủ sau.", ja: "約30億米ドルを凍結（情報源により数値が異なる）。出金を停止しセキュリティを見直し中。詳細レポートは後日公表予定。"}
+      label: {vi: "Khôi phục", ja: "復旧"}
+      text: {vi: "Đã mở lại rút tiền theo đợt từ 01/11, hoàn tất bù đắp 100% tài sản và công bố ZK Proof of Reserves cho 198 token (12–14/11).", ja: "11/1より出金を段階再開、100%資産補填完了し198トークンの ZK Proof of Reserves（11/12〜14）を公開。"}
 
 - id: gmo
   category: incident
@@ -292,7 +292,7 @@
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
   nav: {vi: "Sự cố GMO Onamae", ja: "GMOお名前.com インシデント"}
   title: {vi: "GMO Onamae Desktop Cloud — Chiếm quyền 26.739 VPS Windows, rò rỉ MT4/MT5", ja: "GMO お名前.com デスクトップクラウド — Windows VPS 26,739台乗っ取り・MT4/MT5情報漏えい"}
-  date: {vi: "Cập nhật 2026-11-18 · Công bố KQKD 13/11 · 1.041 tin Bounty đến 17/11", ja: "2026年11月18日更新 · 11/13決算説明 · 情報提供1,041件（11/17時点）"}
+  date: {vi: "Cập nhật 2026-11-20 · Công bố KQKD 13/11 · 1.049 tin Bounty đến 18/11", ja: "2026年11月20日更新 · 11/13決算説明 · 情報提供1,049件（11/18時点）"}
   link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
   items:
     - sev: crit
@@ -300,7 +300,7 @@
       text: {vi: "Chiếm quyền 26.739 máy chủ VPS Windows, rò rỉ thông tin đăng nhập MT4/MT5 tác động hơn 70 sàn chứng khoán & FX.", ja: "Windows VPSサーバー26,739台が乗っ取られ、MT4/MT5のログイン情報が漏えい。70以上の証券・FX会社に影響。"}
     - sev: high
       label: {vi: "Tống tiền", ja: "恐喝"}
-      text: {vi: "GMO từ chối yêu cầu 50 triệu USD và lập Quỹ Bounty tối đa 1 triệu USD; ghi nhận 1.041 tin báo đến 18:00 ngày 17/11, chưa đồng nghĩa với manh mối được xác minh.", ja: "GMOは5,000万米ドルの要求を拒否し、最大100万米ドルの懸賞金基金を設立。11月17日18時時点で情報提供は1,041件（有力情報の確定件数ではない）。"}
+      text: {vi: "GMO từ chối yêu cầu 50 triệu USD và lập Quỹ Bounty tối đa 1 triệu USD; ghi nhận 1.049 tin báo đến 18:00 ngày 18/11, chưa đồng nghĩa với manh mối được xác minh.", ja: "GMOは5,000万米ドルの要求を拒否し、最大100万米ドルの懸賞金基金を設立。11月18日18時時点で情報提供は1,049件（有力情報の確定件数ではない）。"}
     - sev: med
       label: {vi: "Điều tra & Phòng thủ", ja: "捜査・防御"}
       text: {vi: "Takedown tên miền rò rỉ sau 15,5 giờ; ngày 06/11 Tổng cục trưởng Cảnh sát Quốc gia Nhật Bản (NPA) chỉ thị lập Tổ điều tra liên ngành tại Sở Cảnh sát Tokyo.", ja: "流出ドメインを15.5時間でテイクダウン。11月6日、警察庁長官が警察法第61条の3に基づき警視庁への合同捜査本部設置を指示。"}

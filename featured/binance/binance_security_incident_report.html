@@ -2,7 +2,7 @@
 layout: default
 image: "/featured/binance/binance-incident-og.png"
 title: "Binance (~6,3 tỷ USD) — Rò rỉ từ laptop DevOps vào container dịch vụ"
-description: "Diễn biến, nguyên nhân kỹ thuật sơ bộ, tác động tài chính, quy kết và khuyến cáo từ PiraGo từ vụ mất khoảng 6,3 tỷ USD tài sản tại Binance (đang diễn biến)"
+description: "Cập nhật 20/11/2026: Toàn cảnh vụ mất ~6,34 tỷ USD tại Binance — chuỗi xâm nhập phỏng vấn giả của TraderTraitor, khôi phục 100% tài sản qua Proof of Reserves 198 token và lệnh phong tỏa 6,5 tỷ USD từ tòa ADGM"
 category: "Sự cố an ninh"
 ---
 <style>
@@ -19,7 +19,7 @@ category: "Sự cố an ninh"
 
 <div class="report-header">
   <h1>Binance (~6,3 tỷ USD) — Rò rỉ từ laptop DevOps vào container dịch vụ</h1>
-  <p class="sub">Cập nhật <strong>2026-10-30</strong>. Trạng thái: <strong>đang diễn biến</strong>, số liệu còn sơ bộ và có thể thay đổi. Bản tin tháng: <a href="{{ '/monthly/2026-10/' | relative_url }}">Báo cáo tháng 10/2026</a>.</p>
+  <p class="sub">Cập nhật <strong>2026-11-20</strong>. Trạng thái: <strong>đã khôi phục rút tiền &amp; bù đắp 100% tài sản</strong>; đang tiếp tục thu hồi pháp lý trên toàn cầu (lệnh phong tỏa 6,5 tỷ USD của tòa án ADGM). Bản tin tháng: <a href="{{ '/monthly/2026-10/' | relative_url }}">Báo cáo tháng 10/2026</a>.</p>
 </div>
 
 <blockquote class="callout">
@@ -41,10 +41,11 @@ category: "Sự cố an ninh"
 <ul>
   <li><strong>Sự việc:</strong> ngày 29/10/2026 xuất hiện các giao dịch rút tiền trái phép khỏi ví nóng của Binance, phần lớn tiền rời đi trong khoảng 20 phút <span class="badge med">Báo cáo</span> (TRM Labs). Binance xác nhận có sự cố an ninh và tạm dừng rút tiền trên nhiều mạng <span class="badge low">Binance xác nhận</span>.</li>
   <li><strong>Quy mô:</strong> Binance ước tính tác động khoảng 6,3 tỷ USD <span class="badge low">Binance xác nhận</span>; TRM khoảng 6,36 tỷ USD trên 10 chain, Chainalysis khoảng 6,4 tỷ USD <span class="badge med">Báo cáo</span>. Đây là ước tính tài sản bị ảnh hưởng, chưa phải số lỗ ròng cuối cùng. Một số nguồn gọi là vụ trộm tiền mã hóa lớn nhất từng ghi nhận (Bybit 2025: khoảng 1,5 tỷ USD).</li>
-  <li><strong>Nguyên nhân sơ bộ:</strong> laptop của một kỹ sư DevOps bị xâm nhập, từ đó truy cập một service container và gửi giao dịch rút trái phép. Binance không thấy bằng chứng lộ private key của ví. Điều tra sau đó cho thấy có thêm điểm bị xâm nhập khác, chưa công bố cụ thể <span class="badge low">Binance xác nhận</span>.</li>
-  <li><strong>Ứng phó:</strong> Binance cam kết bù toàn bộ thiệt hại từ quỹ SAFU và tiền của công ty; khoảng 3 tỷ USD bị phong tỏa on-chain cùng đối tác (con số lệch giữa các nguồn, xem mục 4).</li>
-  <li><strong>Quy kết:</strong> TRM (độ tin cậy cao) và Chainalysis ("likely") cho rằng do nhóm TraderTraitor của Triều Tiên. <strong>Binance chưa xác nhận quy kết này.</strong></li>
-  <li><strong>Chưa xác nhận:</strong> chưa nguồn nào PiraGo đọc được xác nhận việc mở lại rút tiền. Binance chỉ nói kỳ vọng bắt đầu khôi phục trong vòng 48 giờ.</li>
+  <li><strong>Nguyên nhân (đã làm rõ tháng 11):</strong> Chiến dịch kỹ nghệ xã hội nhiều giai đoạn kéo dài từ tháng 06/2026 của nhóm tin tặc Triều Tiên: dụ kỹ sư DevOps cài Homebrew chứa mã độc (06/2026), sau đó thực hiện <strong>phỏng vấn việc làm giả (Contagious Interview)</strong> lừa kỹ sư thứ hai chạy bài test code chứa mã độc <code>pyenv</code> trên macOS (09/2026), di chuyển ngang qua công cụ AI nội bộ (20/10) để đánh cắp token triển khai container và chiếm quyền dịch vụ ký ví nóng (29/10) <span class="badge med">Báo cáo / Điều tra</span>.</li>
+  <li><strong>Ứng phó &amp; Khôi phục:</strong> Binance đã mở lại rút tiền theo từng đợt từ 01/11 (đến giữa tháng 11 đã mở lại hàng chục mạng lưới), hoàn tất bù đắp <strong>100% tài sản</strong> bị ảnh hưởng bằng quỹ dự trữ công ty, bảo hiểm và SAFU, đồng thời công bố ảnh chụp <strong>Zero-Knowledge Proof of Reserves (PoR)</strong> cho <strong>198 token</strong> (12–14/11) <span class="badge low">Binance xác nhận</span>.</li>
+  <li><strong>Phong tỏa &amp; Thu hồi pháp lý:</strong> Khoảng ~2,85–3 tỷ USD được phong tỏa sớm qua các đơn vị phát hành stablecoin; đến giữa tháng 11, <strong>Tòa án ADGM (Abu Dhabi)</strong> ban hành lệnh phong tỏa toàn cầu trị giá <strong>6,5 tỷ USD</strong>, cho phép tống đạt thông báo pháp lý trực tiếp qua blockchain tới "danh sách động" gồm ~26.000 địa chỉ ví <span class="badge med">Báo cáo</span>.</li>
+  <li><strong>Quy kết:</strong> FBI/Mỹ cùng TRM Labs và Chainalysis quy kết vụ tấn công cho nhóm <strong>TraderTraitor (Lazarus Group)</strong> của Triều Tiên <span class="badge med">Báo cáo</span>.</li>
+  <li><strong>Tại Nhật Bản (Binance Japan):</strong> Không bị ảnh hưởng trực tiếp do tài sản khách hàng được tách biệt trong ví lạnh (cold wallet) theo quy định Nhật Bản; việc tạm dừng rút tiền phòng ngừa đầu tháng 11 đã được gỡ bỏ dần <span class="badge low">Binance Japan xác nhận</span>.</li>
 </ul>
 </section>
 
@@ -63,6 +64,10 @@ category: "Sự cố an ninh"
     <tr><td>30/10, 07:26 ET</td><td>Binance cập nhật: điều tra sâu hơn cho thấy có điểm bị xâm nhập ngoài chiếc laptop bị chiếm.</td><td><span class="badge low">Binance xác nhận</span></td></tr>
     <tr><td>30/10 (Yi He)</td><td>Binance "kỳ vọng bắt đầu khôi phục dịch vụ rút tiền trong vòng 48 giờ tới" sau khi rà soát lại dịch vụ rút tiền và các địa chỉ liên quan. Đây là kỳ vọng, chưa phải xác nhận đã mở lại. Chưa rõ tất cả các mạng có mở lại cùng lúc hay không.</td><td><span class="badge low">Binance xác nhận</span> (kỳ vọng)</td></tr>
     <tr><td>30/10</td><td>Một tiêu đề của CryptoTimes ghi "45 giờ" thay vì 48 giờ. Có thể là cùng mốc 48 giờ tính từ thời điểm muộn hơn, nhưng PiraGo không đọc được trang này.</td><td><span class="badge high">Chưa xác minh</span> (chỉ đoạn trích)</td></tr>
+    <tr><td>31/10 – 02/11</td><td>Binance công bố ảnh chụp ZK Proof of Reserves (PoR) ban đầu cho 10 tài sản lớn nhất (BTC, ETH, USDT, BNB, SOL, USDC, XRP, USD1, RLUSD, ZEC) và bắt đầu mở lại rút tiền theo từng giai đoạn từ ngày 01/11.</td><td><span class="badge low">Binance xác nhận</span></td></tr>
+    <tr><td>Đầu tháng 11</td><td>Binance Japan xác nhận không bị ảnh hưởng trực tiếp (tài sản nằm trong ví lạnh riêng theo luật Nhật) và mở lại rút tiền từng bước. Các hãng phân tích &amp; điều tra (ReversingLabs, The Hacker News...) công bố chuỗi xâm nhập kéo dài từ tháng 06/2026 qua bẫy phỏng vấn giả (Contagious Interview).</td><td><span class="badge low">Binance</span> / <span class="badge med">Báo cáo</span></td></tr>
+    <tr><td>12–14/11</td><td>Binance hoàn tất bù đắp 100% số tài sản bị rút, thực hiện ảnh chụp ZK Proof of Reserves toàn diện cho <strong>198 token</strong> và mở lại rút tiền trên hàng chục mạng lưới bổ sung.</td><td><span class="badge low">Binance xác nhận</span></td></tr>
+    <tr><td>Giữa tháng 11 (đến 20/11)</td><td>Tòa án ADGM (Abu Dhabi Global Market) ban hành <strong>lệnh phong tỏa toàn cầu trị giá 6,5 tỷ USD</strong> (Thẩm phán William Stone), cho phép tống đạt lệnh tòa trực tiếp qua blockchain tới danh sách động ~26.000 địa chỉ ví liên quan; ~2,85 tỷ USD đã được phong tỏa từ trước qua Tether, Circle và các đối tác.</td><td><span class="badge med">Báo cáo</span></td></tr>
   </tbody>
 </table>
 </div>
@@ -86,12 +91,11 @@ category: "Sự cố an ninh"
   <li><span class="badge high">Chưa xác minh</span> Một tiêu đề CryptoTicker và đoạn trích tìm kiếm nhắc tới khoảng 2,8 tỷ USD bị rút khỏi một ví; PiraGo không đọc được trang và chưa kiểm chứng mối liên hệ với nhận định của TRM.</li>
   <li><span class="badge high">Chưa xác minh</span> Suy đoán, không phải sự kiện: CEO NyxLab Kok Tin Gan cho rằng một chữ ký duy nhất có thể đã cấp token toàn quyền không hết hạn cho một ví nóng (CBS dẫn như phân tích của ông).</li>
 </ul>
-<h3>3.3. Điều chưa biết</h3>
+<h3>3.3. Chuỗi xâm nhập đa giai đoạn (cập nhật tháng 11/2026)</h3>
 <ul>
-  <li>Cách laptop DevOps bị xâm nhập (phishing, mã độc hay cách khác) chưa được nguồn nào xác lập.</li>
-  <li>Các điểm xâm nhập bổ sung chưa được công bố.</li>
-  <li>Chưa rõ vector có giống vụ Bybit 2025 hay không. Điểm chung có thể nêu từ nguồn: tấn công vào hạ tầng ký và vận hành của sàn, không phải phá vỡ mật mã; Binance nói không có bằng chứng lộ private key. TRM chỉ nói "một số đặc điểm khớp với các vụ trộm trước đó gắn với Triều Tiên, gồm Bybit". Bybit, theo báo chí công khai, có nguyên nhân gốc là tấn công chuỗi cung ứng Safe{Wallet}.</li>
-  <li>Chưa có IOC công khai (địa chỉ, tx hash, domain) trong các bài PiraGo đọc được. Cần xem trực tiếp trang của TRM.</li>
+  <li><span class="badge med">Báo cáo</span> <strong>Giai đoạn 1 — Trinh sát ban đầu (06/2026):</strong> Một kỹ sư Wallet DevOps tìm công cụ lập trình AI và cài nhầm gói Homebrew chứa trojan. Dù đội an ninh Binance phát hiện, thay máy và xoay vòng khóa kịp thời, kẻ tấn công đã kịp lập bản đồ nhân sự nhóm hạ tầng ví.</li>
+  <li><span class="badge med">Báo cáo</span> <strong>Giai đoạn 2 — Phỏng vấn giả (09/2026):</strong> Kẻ tấn công tiếp cận kỹ sư thứ hai qua nền tảng tuyển dụng hợp pháp, đóng giả Giám đốc dự án &amp; HR thực hiện phỏng vấn video, rồi yêu cầu làm bài test lập trình trên laptop công việc — thực chất cài mã độc ngụy trang dưới dạng công cụ <code>pyenv</code> trên macOS.</li>
+  <li><span class="badge med">Báo cáo</span> <strong>Giai đoạn 3 — Di chuyển ngang &amp; Rút tiền (20/10 – 29/10):</strong> Từ thiết bị bị chiếm và một công cụ AI nội bộ, kẻ tấn công di chuyển sang máy lập trình khác, đánh cắp token triển khai container để truy cập dịch vụ ký ví nóng và rút ~6,34 tỷ USD trong chưa đầy 4 giờ.</li>
 </ul>
 </section>
 
@@ -126,8 +130,9 @@ category: "Sự cố an ninh"
   <li><span class="badge low">Binance xác nhận</span> Sẽ bù toàn bộ thiệt hại từ quỹ SAFU và tiền công ty. Richard Teng: "Your money is safe, and we're covering every loss."</li>
   <li><span class="badge low">Binance xác nhận</span> Cam kết hơn 6,34 tỷ USD tiền công ty và dự trữ. Khoảng 5 tỷ USD đã nằm sẵn trong đúng các token bị ảnh hưởng; khoảng 1,34 tỷ USD còn lại đang mua qua thị trường và OTC. Binance cảnh báo thanh khoản mỏng và thời gian thanh toán có thể làm chậm việc mua.</li>
   <li><span class="badge med">Báo cáo</span> Yi He: việc mua lại dùng cả BTC/ETH của công ty; một bài ghi rõ bài đăng không nói BTC/ETH đã bị bán. Binance đã bắt đầu khôi phục tài sản bị ảnh hưởng nhưng chưa nêu số lượng hay thời hạn hoàn tất.</li>
-  <li><span class="badge low">Binance xác nhận</span> Sẽ công bố Proof of Reserves cập nhật sau khi khắc phục, cùng bản phân tích kỹ thuật chi tiết; đang phối hợp với cơ quan thực thi pháp luật. Chưa có cơ quan quản lý nào bị nêu tên hay hành động quản lý nào trong các nguồn đã đọc.</li>
-  <li><span class="badge high">Chưa xác nhận</span> Mở lại rút tiền: Binance chỉ nêu kỳ vọng trong vòng 48 giờ. PiraGo chưa thấy nguồn nào xác nhận việc đã mở lại.</li>
+  <li><span class="badge low">Binance xác nhận</span> Hoàn tất bù đắp 100% tài sản bị ảnh hưởng (sử dụng quỹ doanh nghiệp, bảo hiểm dư và SAFU) và công bố ảnh chụp <strong>Zero-Knowledge Proof of Reserves (PoR) cho 198 token</strong> trong giai đoạn 12–14/11/2026.</li>
+  <li><span class="badge low">Binance xác nhận</span> Mở lại rút tiền theo từng đợt từ 01/11/2026 (bắt đầu với BTC, ETH, BNB, USDT, SOL, XRP) và đến giữa tháng 11 đã khôi phục hàng chục mạng lưới bổ sung.</li>
+  <li><span class="badge med">Báo cáo</span> <strong>Lệnh phong tỏa toàn cầu 6,5 tỷ USD (Tòa án ADGM):</strong> Đại diện pháp lý của Binance (Gibson Dunn) đã xin được lệnh phong tỏa từ Thẩm phán William Stone (Tòa án ADGM, Abu Dhabi), cho phép tống đạt thông báo pháp lý trực tiếp on-chain tới "danh sách động" gồm ~26.000 ví nhằm tạo cơ sở pháp lý thu hồi số tiền ~2,85 tỷ USD đã đóng băng trước đó và truy vết phần còn lại.</li>
 </ul>
 </section>
 
@@ -171,7 +176,7 @@ category: "Sự cố an ninh"
 
 <section class="an-sec">
 <h2 id="nguon">7. Nguồn và độ tin cậy</h2>
-<p>Sự cố mới xảy ra trong vài giờ. Tất cả phát biểu của Binance trong trang này là do báo chí dẫn lại: trang thông báo chính thức của Binance ("Security Incident Update (2026-10-30)") chỉ hiện tiêu đề, không có nội dung. Cần đối chiếu lại với nguồn gốc khi có.</p>
+<p>Cập nhật đến <strong>20/11/2026</strong>: đối chiếu thông báo khôi phục dịch vụ, Proof of Reserves (198 token) của Binance, báo cáo kỹ thuật của ReversingLabs / The Hacker News và thông tin lệnh phong tỏa toàn cầu từ Tòa án ADGM.</p>
 <h3>Đã đọc được</h3>
 <ul>
   <li><a href="https://techcrunch.com/2026/10/29/binance-pauses-withdrawals-as-hackers-suspected-of-stealing-billions-in-crypto/">TechCrunch (29/10)</a></li>

@@ -3,7 +3,7 @@ layout: default
 image: "/featured/binance/binance-incident-og.png"
 lang: ja
 title: "Binance（約63億米ドル流出）— DevOps 端末侵害からサービスコンテナへ到達"
-description: "2026年10月29日から30日にかけて発生した Binance のホットウォレットからの不正出金インシデントの経緯、技術的な原因、財務的影響、攻撃者の特定、PiraGo からの推奨事項"
+description: "2026年11月20日更新：Binance 約63.4億ドル流出事案の最新経緯（TraderTraitor による偽装面接侵害チェーン、198トークン PoR による100%補填完了、ADGM 裁判所の65億ドル資産凍結命令）"
 category: "セキュリティインシデント"
 permalink: /ja/featured/binance/binance_security_incident_report/
 ---
@@ -20,7 +20,7 @@ permalink: /ja/featured/binance/binance_security_incident_report/
 
 <div class="report-header">
   <h1>Binance（約63億米ドル流出）— DevOps 端末侵害からサービスコンテナへ到達</h1>
-  <p class="sub"><strong>2026年10月30日 時点、進行中。</strong>インシデント発生から間もないため、数値と原因は暫定情報で、今後変わる可能性があります。月次レポート: <a href="{{ '/ja/monthly/2026-10/' | relative_url }}">2026年10月 セキュリティレポート</a>。</p>
+  <p class="sub"><strong>2026年11月20日 時点：出金再開・100%資産補填完了。</strong>グローバルな法的回収（ADGM 裁判所による65億ドル凍結命令）を継続中。月次レポート: <a href="{{ '/ja/monthly/2026-10/' | relative_url }}">2026年10月 セキュリティレポート</a>。</p>
 </div>
 
 <blockquote class="callout">
@@ -42,10 +42,11 @@ permalink: /ja/featured/binance/binance_security_incident_report/
 <ul>
   <li><strong>出来事:</strong> 2026年10月29日、Binance のウォレットから不正な出金が行われ、Binance は複数のネットワークで出金を一時停止し、セキュリティインシデントを認めました。<span class="badge low">確認済</span></li>
   <li><strong>規模:</strong> Binance は影響額を約 63 億ドルと見積もっています（最終的な純損失ではなく、影響を受けた資産の推定）。<span class="badge low">確認済</span> TRM Labs は約 63.6 億ドル（10 のブロックチェーン）、Chainalysis は約 64 億ドルとしています。<span class="badge med">報道</span> 報道では、過去最大の暗号資産窃盗とされ、従来の記録は 2025年 Bybit の約 15 億ドルです。<span class="badge med">報道</span></li>
-  <li><strong>原因（暫定）:</strong> 侵害された DevOps エンジニアのノート PC からサービスコンテナにアクセスされ、不正な出金トランザクションが送信されたと Binance は説明しています。ウォレットの秘密鍵の漏えいを示す証拠は確認されていません。その後の調査で、ノート PC 以外にも侵害箇所があったと発表されましたが、詳細は未公表です。<span class="badge low">確認済</span></li>
-  <li><strong>顧客への影響:</strong> Binance は SAFU 基金と自己資金で全損失を補填すると表明しています。<span class="badge low">確認済</span></li>
-  <li><strong>攻撃者:</strong> TRM Labs と Chainalysis は北朝鮮関連の TraderTraitor によるものと評価していますが、Binance は攻撃者を特定していません。<span class="badge med">報道</span></li>
-  <li><strong>現状:</strong> 出金再開は確認されていません（読めた情報源の範囲）。技術的な事後検証（ポストモーテム）と更新版 Proof of Reserves は、調査と是正の後に公開される予定です。<span class="badge low">確認済</span></li>
+  <li><strong>原因（11月調査で判明）:</strong> 北朝鮮系グループによる2026年6月からの多段階ソーシャルエンジニアリング攻撃。DevOps エンジニアのトロイの木馬化 Homebrew 導入（6月）に続き、別エンジニアへの<strong>偽装採用面接（Contagious Interview）</strong>で macOS 上の悪意ある <code>pyenv</code> コーディング課題をテスト実行させ（9月）、社内 AI ツール経由で横展開（10/20）、コンテナデプロイトークンを窃取してウォレット署名基盤を侵害（10/29）しました。<span class="badge med">報道・調査</span></li>
+  <li><strong>復旧・補填:</strong> 11月1日より出金を段階再開（11月中旬までに数十ネットワークを再開）。企業自己資金・余剰保険・SAFU 基金により<strong>100%の資産補填</strong>を完了し、11月12〜14日に<strong>198トークン</strong>を対象とした包括的な <strong>ZK Proof of Reserves（PoR）</strong>スナップショットを公開しました。<span class="badge low">確認済</span></li>
+  <li><strong>法的凍結・回収:</strong> ステーブルコイン発行体等を通じて約28.5億〜30億ドルを初期凍結したのに続き、11月中旬に<strong>アブダビ（ADGM）裁判所が65億ドルの世界的資産凍結命令</strong>を発出（約26,000ウォレットの動的リストに対しブロックチェーン上で直接送達）。<span class="badge med">報道</span></li>
+  <li><strong>攻撃者:</strong> FBI・米当局および TRM Labs、Chainalysis は北朝鮮関連の <strong>TraderTraitor（Lazarus Group）</strong>によるものと特定しています。<span class="badge med">報道</span></li>
+  <li><strong>日本への影響（Binance Japan）:</strong> 日本の規制に基づき顧客資産をコールドウォレットで分離管理していたため直接の被害はなく、11月上旬に予防的な出金停止を順次解除しました。<span class="badge low">確認済</span></li>
 </ul>
 </section>
 
@@ -64,6 +65,10 @@ permalink: /ja/featured/binance/binance_security_incident_report/
     <tr><td>10月30日 07:26 ET</td><td>Binance が、追加調査で侵害されたノート PC 以外にも侵害箇所があったと発表。</td><td><span class="badge low">確認済</span></td></tr>
     <tr><td>10月30日（金）</td><td>共同創業者の Yi He 氏が、出金サービスの復旧を「今後 48 時間以内に開始する見込み」と表明。入金は通常どおり。これは見込みであり、再開の確認ではありません。全ネットワークが同時に再開するかも不明です。</td><td><span class="badge low">確認済</span>（見込み）</td></tr>
     <tr><td>10月30日</td><td>CryptoTimes の見出しは「45 時間」で再開としているが（ページは読めず、スニペットのみ）、同じ 48 時間の見込みを後の時刻から数えたものと推測されます。</td><td><span class="badge high">未検証</span></td></tr>
+    <tr><td>10月31日〜11月2日</td><td>上位10資産（BTC、ETH、USDT、BNB、SOL、USDC、XRP 等）の初期 ZK Proof of Reserves（PoR）スナップショットを公開。11月1日より主要ネットワークで出金を段階再開。</td><td><span class="badge low">確認済</span></td></tr>
+    <tr><td>11月上旬</td><td>Binance Japan が直接影響なし（コールドウォレット分離管理）を確認し、出金を順次再開。ReversingLabs や The Hacker News 等が、6月からの偽装採用面接（Contagious Interview）を含む侵入チェーンを報じる。</td><td><span class="badge low">確認済</span> / <span class="badge med">報道</span></td></tr>
+    <tr><td>11月12日〜14日</td><td>影響資産の100%補填を完了し、<strong>198トークン</strong>を網羅する包括的な ZK PoR スナップショットを取得。数十の追加ブロックチェーンネットワークで出金を再開。</td><td><span class="badge low">確認済</span></td></tr>
+    <tr><td>11月中旬（〜11月20日）</td><td>ADGM 裁判所（アブダビ）の William Stone 判事が、約26,000ウォレットの動的リストに対するブロックチェーン上での直接送達を認める<strong>65億ドルの世界的資産凍結命令</strong>を発出（先行して Tether/Circle 等が約28.5億ドルを凍結済み）。</td><td><span class="badge med">報道</span></td></tr>
   </tbody>
 </table>
 </div>
@@ -94,11 +99,11 @@ permalink: /ja/featured/binance/binance_security_incident_report/
   <li>CryptoTicker の見出しとスニペットには、EIP-7702 の認可で Ethereum のホットウォレットに攻撃者のコードを実行させ、1 つのウォレットから約 28 億ドルが流出したとあります。<span class="badge high">未検証</span> スニペットのみで、TRM の記述との関係は確認していません。</li>
   <li><strong>推測（事実ではない）:</strong> NyxLab の CEO Kok Tin Gan 氏は、1 回の署名でホットウォレットへの失効しない完全アクセス権限が付与された可能性を示唆しています。これは同氏の分析であり、確認された事実ではありません。</li>
 </ul>
-<h3>3.3. 確定していない点</h3>
+<h3>3.3. 11月調査で判明した多段階侵入チェーン</h3>
 <ul>
-  <li>ノート PC がどう侵害されたか（フィッシングかどうかを含む）は、情報源で示されていません。</li>
-  <li>追加の侵害箇所と、攻撃の全体経路。</li>
-  <li>2025年 Bybit と同じ侵入経路かどうか。Bybit の根本原因は Safe{Wallet} のサプライチェーン侵害と報じられましたが、Binance で同じ手口だったかは確認されていません。</li>
+  <li><strong>第1段階 — 初期偵察（2026年6月）<span class="badge med">報道</span>:</strong> Wallet DevOps エンジニアが AI コーディングツールを探していた際、トロイの木馬化された Homebrew を誤って導入。Binance は異常を検知し端末交換・認証情報ローテーションを行ったが、攻撃者はすでにチーム構成を把握していた。</li>
+  <li><strong>第2段階 — 偽装採用面接（2026年9月）<span class="badge med">報道</span>:</strong> 攻撃者は正規の求人サイト経由で別のエンジニアに接触し、架空企業のプロジェクトディレクターや人事担当を装ってビデオ面接を実施。業務 PC 上でコーディング課題を実行させ、macOS 上のトロイの木馬化 <code>pyenv</code> マルウェアを感染させた。</li>
+  <li><strong>第3段階 — 横展開と不正出金（10月20日〜29日）<span class="badge med">報道</span>:</strong> 侵害端末および社内 AI ツールを悪用して他の開発者端末へ横展開し、コンテナデプロイトークンを窃取。10月29日にウォレット署名サービスへ到達し、4時間未満で約63.4億ドルを出金した。</li>
 </ul>
 </section>
 
@@ -137,11 +142,12 @@ permalink: /ja/featured/binance/binance_security_incident_report/
   <li>Binance は SAFU 基金と自己資金で全損失を補填すると表明。Richard Teng 氏: 「Your money is safe, and we're covering every loss.」<span class="badge low">確認済</span></li>
   <li>63.4 億ドル超の自己資金と準備金を補填に充当。約 50 億ドルは同じ対象トークンで既に保有しており、残りの約 13.4 億ドルを市場および OTC 取引で購入中。流動性と決済の制約で購入が遅れる可能性があると警告しています。<span class="badge low">確認済</span></li>
   <li>Yi He 氏: 買い戻しには自社保有の BTC と ETH も使う。報道の 1 つは、投稿が BTC/ETH を売却したとは述べていないと指摘。Binance は影響を受けた資産の復元を開始したが、戻った額や完了時期は示していません。<span class="badge med">報道</span></li>
-  <li>更新版 Proof of Reserves は是正後に公開予定。<span class="badge low">確認済</span></li>
+  <li>自己資金・余剰保険・SAFU 基金により100%の補填を完了し、11月12〜14日に<strong>198トークン対象の包括的 ZK Proof of Reserves</strong> スナップショットを取得。<span class="badge low">確認済</span></li>
+  <li><strong>ADGM 裁判所による65億ドル世界的凍結命令（11月中旬）:</strong> Gibson Dunn 法律事務所を通じてアブダビ ADGM 裁判所から約26,000ウォレットの動的リストに対するブロックチェーン上での送達を含む資産凍結命令を取得し、先行凍結分（約28.5億ドル）の回収手続きを加速。<span class="badge med">報道</span></li>
 </ul>
 <h3>4.4. 出金、入金、市場、当局</h3>
 <ul>
-  <li>出金は 10月29日に複数のネットワークで予防措置として停止。復旧は「出金サービスと関連アドレスのセキュリティ刷新」の後、約 48 時間以内の見込みで、再開の確認はありません。</li>
+  <li>出金は 11月1日より主要ネットワーク（BTC、ETH、BNB、USDT、SOL、XRP 等）から段階的に再開し、11月中旬までに数十ネットワークが復旧済み。Binance Japan は影響なしを確認のうえ順次出金を再開。<span class="badge low">確認済</span></li>
   <li>市場: BTC は 10月29日午後に約 3.2% 下落して 79,000 ドルを割り込み（AP）、Al Jazeera は 10月30日に約 5% 下落して 77,000 ドル未満と伝えています。時点が異なり、いずれも報道です。<span class="badge med">報道</span></li>
   <li>法執行機関: Binance は法執行機関と協力していると表明。<span class="badge low">確認済</span> Circle は凍結を法執行機関と調整したと報じられています。<span class="badge med">報道</span> 読めた情報源には、規制当局名や規制措置の記載はありません。</li>
   <li>参考: Binance の運用資産は CoinMarketCap によれば約 1,550 億ドル（Al Jazeera）。</li>

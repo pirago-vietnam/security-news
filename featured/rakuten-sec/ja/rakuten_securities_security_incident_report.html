@@ -2,7 +2,7 @@
 layout: default
 lang: ja
 title: "楽天証券 — テスト環境から最大1,125万口座の情報流出の恐れ"
-description: "2026年11月17日公表の楽天証券における顧客情報流出の可能性：影響範囲、流出の恐れがある情報、対応と利用者向け対策"
+description: "2026年11月20日更新：金融庁による報告徴求命令（11/19受領）、投信出庫手数料の当面無料化、集団訴訟の動き、影響範囲と利用者向け対策"
 image: "/featured/rakuten-sec/rakuten-securities-og.png"
 category: "セキュリティインシデント"
 permalink: /ja/featured/rakuten-sec/rakuten_securities_security_incident_report/
@@ -43,18 +43,18 @@ permalink: /ja/featured/rakuten-sec/rakuten_securities_security_incident_report/
 
 <div class="report-header">
   <h1>楽天証券 — テスト環境から最大1,125万口座の情報流出の恐れ</h1>
-  <p class="sub"><strong>2026年11月18日</strong>時点：11月17日、同社は<strong>テスト環境</strong>で管理していた一部情報が外部に漏えいしたおそれがあると公表。不正アクセスの原因・経緯は<strong>調査中</strong>です。月次レポート：<a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月 月次レポート</a>。</p>
+  <p class="sub"><strong>2026年11月20日</strong>時点：11月17日の公表に続き、<strong>11月19日に金融庁から報告徴求命令を受領</strong>（金商法・個人情報保護法に基づく）。投信出庫手数料の当面無料化や実店舗開店延期など対応が拡大。月次レポート：<a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月 月次レポート</a>。</p>
 </div>
 
 <blockquote class="callout">
-  <p><strong>TL;DR（かんたん解説）：</strong>楽天証券（15百万超の口座を持つオンライン証券）は、2026年11月16日に第三者による不正アクセスの可能性を検知し、該当箇所へのアクセス遮断・修正を実施。調査の結果、11月11日にテスト環境内の一部情報が外部へ漏えいしたおそれがあることを確認し、11月17日に公表・謝罪しました。影響は<strong>最大約1,125万口座</strong>（部店・お客様コード、ログインID）、うち<strong>最大約447万口座</strong>では氏名・住所等の個人情報や金融情報も含まれます。ログインに必要なパスワード、暗証番号を含む取引に必要な情報の漏えいは<strong>確認されておらず</strong>、本件に起因する不正アクセス・不正取引も現時点で確認されていません。</p>
+  <p><strong>TL;DR（かんたん解説）：</strong>楽天証券（15百万超の口座を持つオンライン証券）は、2026年11月16日に第三者による不正アクセスの可能性を検知し、該当箇所へのアクセス遮断・修正を実施。調査の結果、11月11日にテスト環境内の一部情報が外部へ漏えいしたおそれがあることを確認し、11月17日に公表・謝罪しました。システム更新の検証用に本番データをマスキングなしでテスト環境へ配置していたことが報じられています。影響は<strong>最大約1,125万口座</strong>（部店・お客様コード、ログインID）および<strong>最大約447万口座</strong>（氏名・住所等の個人情報や金融情報も含む）。11月18日には投資信託の出庫手数料を当面無料化し、11月19日には<strong>金融庁から報告徴求命令</strong>を受領しました。パスワード・暗証番号など取引に必要な情報の漏えいや不正取引は現時点で確認されていません。</p>
 </blockquote>
 
 <div class="kpi-grid">
   <div class="kpi-card"><div class="kpi-num crit">~1,125万</div><div class="kpi-label">部店・お客様コード、ログインID（最大口座数）</div></div>
   <div class="kpi-card"><div class="kpi-num crit">~447万</div><div class="kpi-label">個人情報・金融情報を含む（最大口座数）</div></div>
-  <div class="kpi-card"><div class="kpi-num high">テスト環境</div><div class="kpi-label">流出元。退会者の情報も含む</div></div>
-  <div class="kpi-card"><div class="kpi-num">調査中</div><div class="kpi-label">原因・詳細な経緯は未公表</div></div>
+  <div class="kpi-card"><div class="kpi-num high">テスト環境</div><div class="kpi-label">本番データを非マスクで一時配置（報道）。退会者含む</div></div>
+  <div class="kpi-card"><div class="kpi-num crit">報告徴求命令</div><div class="kpi-label">11/19 金融庁より受領（原因詳細は調査中）</div></div>
 </div>
 
 <nav class="an-nav" aria-label="目次">
@@ -70,8 +70,8 @@ permalink: /ja/featured/rakuten-sec/rakuten_securities_security_incident_report/
 <h2 id="tom-tat">1. 概要</h2>
 <ul>
   <li><strong>対象：</strong>楽天証券（楽天グループ全体ではない）<span class="badge low">企業公表</span>。</li>
-  <li><strong>流出元：</strong>テスト環境のシステム。NHK は「社内システム」と表現しますが、公式発表は「テスト環境」です。</li>
-  <li><strong>原因：</strong>未公表（調査中）<span class="badge med">未確認</span>。</li>
+  <li><strong>流出元・背景：</strong>テスト環境のシステム。システムアップグレードに伴う検証作業のため、例外的に本番データをマスキング（匿名化）せずにテスト環境へ配置していた時期に不正アクセスを受けたと報じられています（ITmedia 等）<span class="badge med">国内報道</span>。</li>
+  <li><strong>原因：</strong>詳細・侵入経路は引き続き調査中 <span class="badge med">調査中</span>。</li>
   <li><strong>数値の注意：</strong>「最大1,572万口座」という見出しは二つの数値の単純合算で、公式の件数ではありません。公式発表は二つの区分を別項目で列挙しており、包含関係は明記されていません。</li>
   <li><strong>別件（混同注意）：</strong>10月31日公表の、デジタル特典付き社債購入者362名の情報が第三者システム（NTTデータ委託先）経由で漏えいした可能性の件。同社システムへのアクセスはないとしています。</li>
 </ul>
@@ -103,7 +103,9 @@ permalink: /ja/featured/rakuten-sec/rakuten_securities_security_incident_report/
     <tr><td>11月11日（水）</td><td>調査の結果、テスト環境内で管理していた一部情報が外部に漏えいしたおそれがあることを確認。</td></tr>
     <tr><td>11月16日（月）</td><td>一部システムへの第三者による不正アクセスの可能性を検知。該当箇所へのアクセス遮断・修正を実施。</td></tr>
     <tr><td>11月17日（火）</td><td>公式発表・謝罪。NHK WORLD が報道。</td></tr>
-    <tr><td>11月18日</td><td>確認できた範囲で新たな更新なし。</td></tr>
+    <tr><td>11月18日（水）</td><td>投資信託の出庫手数料（通常1銘柄あたり税込3,300円）を当日の受付分より当面無料化すると発表。11月25日予定だった「楽天証券ストア 渋谷」の開店延期も発表。</td></tr>
+    <tr><td>11月19日（木）</td><td>金融庁より金融商品取引法第56条の2第1項および個人情報保護法第146条第1項に基づく<strong>報告徴求命令</strong>を受領。</td></tr>
+    <tr><td>11月20日（金）</td><td>報告徴求命令の受領が公表・報道される。また弁護士による集団訴訟準備サイトに発足数日で15,000人超の参加希望者が集まる動きも報道。</td></tr>
   </tbody>
 </table>
 </div>
@@ -141,7 +143,8 @@ permalink: /ja/featured/rakuten-sec/rakuten_securities_security_incident_report/
   <li>同社は謝罪し、影響を受けたお客様の特定を<strong>完了</strong>、該当のお客様へ個別に報告。原因・範囲の調査とセキュリティ強化を継続。</li>
   <li>楽天証券をかたるメール・SMS・電話・郵送に注意。同社のメールには URL を記載せず、電話で個人情報やログイン情報を尋ねることはないとしています。</li>
   <li>パスキー認証の利用を推奨。セキュリティ設定ページで取引・出金の一時停止が可能。問い合わせ：0120-862-274。二次情報（AliasFleet）はパスキーが必須化されると伝えていますが、公式発表では未確認です。</li>
-  <li><strong>監督当局：</strong>発表には警察や個人情報保護委員会（PPC）への言及はなく、届出状況は未公表。</li>
+  <li><strong>顧客救済・事業影響：</strong>投資信託の他社移管（出庫）手数料（通常1銘柄3,300円税込）を11月18日受付分より当面無料化。11月25日予定の「楽天証券ストア 渋谷」開店を延期。また集団訴訟を準備する動き（参加希望者15,000人超）も報じられています。</li>
+  <li><strong>監督当局：</strong>11月19日、金融庁が金融商品取引法（第56条の2第1項）および個人情報保護法（第146条第1項）に基づく<strong>報告徴求命令</strong>を発出・受領（事実関係、原因分析、再発防止策の報告を要求）。</li>
 </ul>
 </section>
 
@@ -176,6 +179,8 @@ permalink: /ja/featured/rakuten-sec/rakuten_securities_security_incident_report/
   <li><a href="https://www.rakuten-sec.co.jp/web/info/info20261117-02.html" target="_blank" rel="noopener">楽天証券 — 公式お知らせ（2026年11月17日）</a></li>
   <li><a href="https://www.rakuten-sec.co.jp/web/company/newsrelease/pdf/press2026111702.pdf" target="_blank" rel="noopener">楽天証券 — プレスリリース（PDF）</a></li>
   <li><a href="https://www.itmedia.co.jp/news/article/2611/17/2000003275/" target="_blank" rel="noopener">ITmedia NEWS（2026年11月17日）</a></li>
+  <li><strong>金融庁 報告徴求命令（11/19受領・11/20報道）：</strong>読売新聞、株探（Kabutan）、SBI・楽天証券公式開示、BigGo 等</li>
+  <li><strong>投信出庫手数料の無料化・渋谷店舗延期（11/18〜20）：</strong>楽天証券公式お知らせ、Tokyo News Media 等</li>
   <li><a href="https://cybersecurity-jp.com/news/118606" target="_blank" rel="noopener">Cybersecurity-jp</a></li>
   <li><a href="https://internet.watch.impress.co.jp/docs/news/2157218.html" target="_blank" rel="noopener">Impress Internet Watch</a></li>
   <li><a href="https://www.aliasfleet.com/blog/rakuten-securities-data-breach" target="_blank" rel="noopener">AliasFleet（二次情報）</a></li>

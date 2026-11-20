@@ -3,7 +3,7 @@ layout: default
 image: "/featured/muji/muji-incident-og.png"
 lang: ja
 title: "無印良品（良品計画）— 最大2,726万件の会員情報 & MUJI Card 約109万件流出の恐れ"
-description: "2026年11月16日時点のサービス停止状況、情報流出事案、カード再発行対応と利用者向け対策"
+description: "2026年11月20日時点のサービス停止状況、情報流出事案、ガバナンス課題、カード再発行対応と利用者向け対策"
 category: "セキュリティインシデント"
 permalink: /ja/featured/muji/muji_security_incident_report/
 ---
@@ -35,11 +35,11 @@ permalink: /ja/featured/muji/muji_security_incident_report/
 
 <div class="report-header">
   <h1>無印良品（良品計画）— 最大2,726万件の会員情報 &amp; MUJI Card 約109万件流出の恐れ</h1>
-  <p class="sub"><strong>2026年11月16日時点</strong>のサービス状況：ネットストアは停止中で再開時期未定、MUJIアプリは会員証バーコード表示以外を停止。ステータス: <strong>進行中</strong>。月次レポート: <a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月 セキュリティレポート</a>。</p>
+  <p class="sub"><strong>2026年11月20日時点</strong>のサービス状況：ネットストアは停止2週目以降も再開時期未定、MUJIアプリは会員証バーコード表示以外を停止。ステータス: <strong>進行中</strong>。月次レポート: <a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月 セキュリティレポート</a>。</p>
 </div>
 
 <blockquote class="callout">
-  <p><strong>TL;DR（かんたん解説）:</strong> 2026年10月末、株式会社良品計画が運営する「MUJIアプリ」および「無印良品ネットストア」が外部からの不正アクセスを受け、退会者を含む<strong>最大約2,726万件</strong>の会員情報と、<strong>約109万件</strong>のMUJI Cardクレジットカード番号（うち有効カード約34.5万件）が流出した恐れがあります。11月12日の記者会見で同社は、システムの脆弱性に加え、2021年7月のシステム刷新時に破棄すべきだった16桁のカード番号をマスキングせず5年間放置していたこと、退会者データを削除していなかったこと、およびネットストアへのリスト型攻撃（不正ログイン）を認めました。11月13日現在もネットストアは停止8日目を迎えており、クレディセゾンが専用窓口を開設してカード再発行手数料の全額無償対応を行っています。</p>
+  <p><strong>TL;DR（かんたん解説）:</strong> 2026年10月末、株式会社良品計画が運営する「MUJIアプリ」および「無印良品ネットストア」が外部からの不正アクセスを受け、退会者を含む<strong>最大約2,726万件</strong>の会員情報と、<strong>約109万件</strong>のMUJI Cardクレジットカード番号（うち有効カード約34.5万件）が流出した恐れがあります。11月12日の記者会見で同社は、システムの脆弱性に加え、2021年7月のシステム刷新時に破棄すべきだった16桁のカード番号をマスキングせず5年間放置していたこと（クレディセゾンからの過去2回の削除依頼も未実行）、退会者データを削除していなかったこと、およびネットストアへのリスト型攻撃（不正ログイン）を認めました。11月20日現在もネットストアは再開時期未定のまま停止が続いており、クレディセゾンが専用窓口を開設してカード再発行手数料の全額無償対応を行っています。</p>
 </blockquote>
 
 <div class="kpi-grid">
@@ -57,13 +57,13 @@ permalink: /ja/featured/muji/muji_security_incident_report/
   </div>
   <div class="kpi-card">
     <div class="kpi-num">停止中</div>
-    <div class="kpi-label">ネットストア再開時期未定（11/16時点）</div>
+    <div class="kpi-label">ネットストア再開時期未定（11/20時点）</div>
   </div>
 </div>
 
 <nav class="an-nav" aria-label="目次">
   <a href="#tom-tat">1. 概要と被害規模</a>
-  <a href="#dien-bien">2. 経緯・タイムライン（11/16更新）</a>
+  <a href="#dien-bien">2. 経緯・タイムライン（11/20更新）</a>
   <a href="#pham-vi">3. 影響範囲と件数詳細</a>
   <a href="#nguyen-nhan">4. 原因分析と技術的課題</a>
   <a href="#ung-pho">5. 対応状況・補償・監督官庁の動向</a>
@@ -81,7 +81,7 @@ permalink: /ja/featured/muji/muji_security_incident_report/
 </section>
 
 <section class="an-sec">
-<h2 id="dien-bien">2. 経緯・タイムライン（2026年11月16日 更新）</h2>
+<h2 id="dien-bien">2. 経緯・タイムライン（2026年11月20日 更新）</h2>
 <figure class="fig">
 <svg viewBox="0 0 740 170" role="img" aria-label="timeline">
 <rect x="40" y="74" width="352" height="12" rx="6" fill="var(--crit)" opacity=".25"/>
@@ -124,6 +124,11 @@ permalink: /ja/featured/muji/muji_security_incident_report/
       • <strong>事業影響:</strong> ネットストア停止が長期化、実店舗は通常営業。良品計画の株式が売られるなど市場への波紋が拡大。</td><td><span class="badge med">各社報道・金融市場</span></td></tr>
     <tr><td>2026/11/14</td><td><strong>最新状況の確認:</strong> 11月9日の第四報より新しい公式発表は確認できず。ネットストアは引き続き停止中で再開時期は未定。良品計画の問い合わせ窓口（<code>0120-36-0470</code>、毎日9:30〜17:00、2026年12月26日まで）は継続中。クレディセゾンと良品計画は、ダークウェブでの流通や不正利用の急増は確認されていないとしている。サービス別の件数は報道間で差異が残る。</td><td><span class="badge med">PR TIMES・NHK・日経</span></td></tr>
     <tr><td>2026/11/16</td><td><strong>サービス状況の確認:</strong> Westeriaによると、ネットストアは全サービス・機能の停止が続き再開時期は未定。MUJIアプリは会員証バーコード表示以外の機能を停止し、店舗は通常営業。これはサービス状況の確認であり、新たな調査結果の公表ではありません。<a href="https://westeria.jp/security-incidents/cases/ryohin-keikaku-muji-2026/" target="_blank" rel="noopener noreferrer">まとめ記事</a> · <a href="https://www.muji.com/content/maintenance_s_20261111.html" target="_blank" rel="noopener noreferrer">MUJIサービス停止のお知らせ</a>。</td><td><span class="badge med">Westeria · 11/16</span></td></tr>
+    <tr><td>2026/11/18〜20</td><td><strong>最新動向・メディアによる深掘り報道（ネットストア停止2週目以降）:</strong><br>
+      • <strong>サービス状況:</strong> 11月9日の第四報以降、新たな公式発表（第五報）は出ておらず、無印良品ネットストアの停止およびMUJIアプリの機能制限（会員証バーコード表示のみ）が継続。再開時には全会員へパスワード再設定を求める方針。<br>
+      • <strong>データ削除依頼の未実行:</strong> ITmedia（11/18更新）、東洋経済オンライン、週刊文春等の報道により、クレディセゾン側から過去<strong>2度（2020年のPOSシステム改修時、2021年7月のネットストア改修時）</strong>にわたりカード番号の削除依頼が出されていたにもかかわらず良品計画側で実行されず、カード会社側の完了確認（見届け）も不十分だった点が指摘された。<br>
+      • <strong>経営・ガバナンスの死角:</strong> 3期連続の過去最高益（営業利益1,000億円超）という好業績の裏で、ITガバナンス・セキュリティ投資が追いついていなかった構造的課題がクローズアップされている。<br>
+      • <strong>顧客対応:</strong> 個別連絡（11/10〜）、専用窓口（<code>0120-36-0470</code>）およびクレディセゾンによるカード無償再発行を継続中。</td><td><span class="badge med">ITmedia / 東洋経済 / 文春 · 11/18〜20</span></td></tr>
   </tbody>
 </table>
 </div>
@@ -220,7 +225,7 @@ permalink: /ja/featured/muji/muji_security_incident_report/
 
 <h3>4.1. 攻撃経路1: システム脆弱性と孤立レガシーDBテーブル</h3>
 <ul>
-  <li><strong>16桁カード番号の非マスキング保管（5年間の放置）:</strong> 良品計画は2021年7月以前、自社独自の会員特典（MUJIマイル連携等）の付与判定のために MUJI Card の16桁番号を収集・保管していました。しかし2021年7月のシステム刷新時にカード番号の新規収集を取りやめたものの、<strong>過去の保管データを削除・パージするスクリプトを実行せず放置</strong>していました。</li>
+  <li><strong>16桁カード番号の非マスキング保管（5年間の放置）:</strong> 良品計画は2021年7月以前、自社独自の会員特典（MUJIマイル連携等）の付与判定のために MUJI Card の16桁番号を収集・保管していました。さらに報道により、提携先の<strong>クレディセゾンから過去2度（2020年POS改修時・2021年7月ネットストア改修時）にわたりカード番号削除の依頼</strong>があったにもかかわらず、2021年7月に新規収集を停止した後も<strong>過去の保管データを削除・パージするスクリプトを実行せず放置</strong>していたこと、またカード会社側でも削除完了の確認（見届け）が不十分だったことが判明しました。</li>
   <li><strong>役員の会見証言:</strong> 宮澤高浩役員は会見で<em>「マスクをしない状態で保管していたところが一番の課題。2021年7月に対策を行って削除するべきだった」</em>と説明。16桁の平文PANが5年以上にわたり社内DBの遺留テーブル内にそのまま残存していました。</li>
   <li><strong>PCI-DSS およびガイドライン違反:</strong>
     <ul>
@@ -261,7 +266,7 @@ permalink: /ja/featured/muji/muji_security_incident_report/
 
 <h3>5.1. 良品計画の対応状況</h3>
 <ul>
-  <li><strong>サービス停止措置:</strong> 11月6日よりネットストアを全面停止（11月13日現在も再開時期未定）。MUJIアプリは店舗での会員コード提示以外の機能を停止。</li>
+  <li><strong>サービス停止措置:</strong> 11月6日よりネットストアを全面停止（11月20日現在も再開時期未定）。MUJIアプリは店舗での会員コード提示以外の機能を停止。</li>
   <li><strong>第三者フォレンジック調査:</strong> 外部の専門セキュリティ機関と連携し、ソースコード全般、DBアクセス権限、WAFログの包括的なフォレンジック調査を実施中。</li>
   <li><strong>個別通知と強制パスワード再設定:</strong> 11月10日よりメール・郵送での通知を継続。ネットストア再開時には<strong>全会員に対する強制パスワード再設定</strong>を実施予定。</li>
 </ul>
