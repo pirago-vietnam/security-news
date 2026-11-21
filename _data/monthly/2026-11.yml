@@ -14,8 +14,8 @@ h1:
   vi: Báo cáo bảo mật tháng 11/2026
   ja: 2026年11月 セキュリティレポート
 sub:
-  vi: 'Số liệu tính đến <strong>2026-11-19</strong> (cập nhật nghiên cứu RCE engine cơ sở dữ liệu PostgreSQL/MySQL/Oracle/ClickHouse, đợt phát hành bảo mật PostgreSQL 52 CVEs, Patch Tuesday Microsoft, Chrome Zero-Day, Apache HTTP Server 2.4.71 và các bản tin an ninh định kỳ).'
-  ja: '<strong>2026年11月19日</strong>時点の情報です（データベースエンジン RCE 研究（PostgreSQL/MySQL/Oracle/ClickHouse）、PostgreSQL 52件の脆弱性修正リリース、Microsoft Patch Tuesday、Chrome ゼロデイ緊急リリース、Apache HTTP Server 2.4.71 および定期セキュリティ情報に対応）。'
+  vi: 'Số liệu tính đến <strong>2026-11-21</strong> (cập nhật lỗ hổng Linux KVM AMD CVE-2026-99312, nghiên cứu RCE engine cơ sở dữ liệu PostgreSQL/MySQL/Oracle/ClickHouse, đợt phát hành bảo mật PostgreSQL 52 CVEs, Patch Tuesday Microsoft, Chrome Zero-Day, Apache HTTP Server 2.4.71 và các bản tin an ninh định kỳ).'
+  ja: '<strong>2026年11月21日</strong>時点の情報です（Linux KVM AMD 脆弱性 CVE-2026-99312、データベースエンジン RCE 研究（PostgreSQL/MySQL/Oracle/ClickHouse）、PostgreSQL 52件の脆弱性修正リリース、Microsoft Patch Tuesday、Chrome ゼロデイ緊急リリース、Apache HTTP Server 2.4.71 および定期セキュリティ情報に対応）。'
 placeholder:
   vi: '🔍 Tìm kiếm CVE, framework, thư viện (vd: PostgreSQL, MySQL, Oracle, VS Code, Chrome, .NET, Tomcat, Next.js, AWS)...'
   ja: '🔍 CVE、フレームワーク、ライブラリで検索（例: PostgreSQL, MySQL, Oracle, VS Code, Chrome, .NET, Tomcat, Next.js, AWS）...'
@@ -28,8 +28,8 @@ card:
     vi: Báo cáo tháng 11/2026
     ja: 2026年11月レポート
   date:
-    vi: Cập nhật đến 2026-11-19 · Định kỳ hàng tháng
-    ja: 2026年11月19日 時点 · 月次定期レポート
+    vi: Cập nhật đến 2026-11-21 · Định kỳ hàng tháng
+    ja: 2026年11月21日 時点 · 月次定期レポート
   items:
   - sev: high
     label: PostgreSQL (RDBMS)
@@ -184,6 +184,13 @@ sections:
       vi: Trước 16-11-2026 (ngay lập tức nếu dùng JNDI Realm)
       ja: 2026年11月16日まで（JNDI Realm 使用時は即時）
   - task:
+      vi: 'Rà soát hypervisor Linux KVM dùng CPU <strong>AMD</strong> có bật nested virtualization (<code>kvm_amd.nested=1</code>): cập nhật kernel đã vá <strong>CVE-2026-99312</strong> (<code>6.12.118</code> / <code>6.18.64</code> / <code>7.3.5+</code>) và reboot, hoặc tắt tạm <code>kvm_amd nested=0</code>'
+      ja: 'nested virtualization 有効（<code>kvm_amd.nested=1</code>）な <strong>AMD</strong> 製 Linux KVM ハイパーバイザーを点検：<strong>CVE-2026-99312</strong> 修正カーネル（<code>6.12.118</code> / <code>6.18.64</code> / <code>7.3.5+</code>）へ更新・再起動、または暫定で <code>kvm_amd nested=0</code> を適用'
+    sev: high
+    due:
+      vi: Trước 28-11-2026 (áp dụng nested=0 ngay nếu vận hành host AMD KVM multi-tenant)
+      ja: 2026年11月28日まで（マルチテナント AMD KVM ホスト運用時は即時 nested=0）
+  - task:
       vi: 'Rà soát máy chủ Linux mở cổng TCP internet: cập nhật kernel đã vá <strong>CVE-2026-98432</strong> hoặc áp dụng cấu hình lọc gói IP options bằng nftables/iptables u32 và tắt MPTCP'
       ja: 'インターネット公開されたLinuxサーバーの総点検: <strong>CVE-2026-98432</strong> 修正カーネルへの更新・再起動、またはnftables/iptables u32によるIPオプション遮断ルールの適用とMPTCP無効化'
     sev: high
@@ -288,6 +295,17 @@ sections:
     ja: 4. OSおよびプログラミング言語（OS &amp; Languages）
   type: component
   rows:
+  - name: Linux kernel KVM (AMD)
+    sev: high
+    summary:
+      vi: '<strong>CVE-2026-99312</strong> (<code>CWE-825</code>, CVSS v3.1 <strong>8.8</strong> theo Linux CNA / 7.8 theo Red Hat &amp; SUSE): lỗi không reset ngữ cảnh MMU khi mô phỏng <code>INIT</code> ở trạng thái <code>CR0.PG=0</code> trên AMD SVM bật nested virtualization → Page-Table UAF cho phép guest thoát VM đọc/ghi RAM vật lý host (đã chứng minh đọc ~127 GB RAM trên DigitalOcean Droplet). Đã vá ở upstream <code>6.12.118</code>, <code>6.18.64</code>, <code>7.3.5</code>, <code>7.4-rc2</code>; SUSE (SP7/16.x/Micro 6.x), Debian sid và DigitalOcean đã vá; RHEL 9/10, Ubuntu 22.04/24.04 và Debian 12/13 đang chờ. Xem <a href="@home@featured/linux-cve-2026-99312/analysis/">bài phân tích chuyên sâu</a>.'
+      ja: '<strong>CVE-2026-99312</strong>（<code>CWE-825</code>、Linux CNA CVSS v3.1 <strong>8.8</strong> / Red Hat・SUSE 7.8）：nested virtualization 有効な AMD SVM 環境で <code>CR0.PG=0</code> のまま <code>INIT</code> エミュレーション時に MMU を初期化せず、ページテーブル UAF によりゲストからホスト物理 RAM を読み書き可能（DigitalOcean Droplet で約127GB読取実証）。upstream <code>6.12.118</code> / <code>6.18.64</code> / <code>7.3.5</code> / <code>7.4-rc2</code>、SUSE（SP7/16.x/Micro 6.x）、Debian sid、DigitalOcean で対応済み。RHEL 9/10・Ubuntu・Debian 12/13 は修正待ち。<a href="@home@featured/linux-cve-2026-99312/analysis/">詳細分析ページ</a>を参照。'
+    impact:
+      vi: 'Chỉ ảnh hưởng máy chủ hypervisor Linux KVM dùng CPU <strong>AMD</strong>, bật <code>kvm_amd.nested=1</code> và chạy kernel từ <code>5.15.81</code> trở lên (trừ <code>5.10.y</code>, <code>5.4.y</code>, Intel VMX và cloud VM khách thông thường).'
+      ja: '<strong>AMD</strong> CPU を搭載し <code>kvm_amd.nested=1</code> を有効化したカーネル <code>5.15.81</code> 以降の Linux KVM ハイパーバイザーのみ対象（<code>5.10.y</code>・<code>5.4.y</code>・Intel VMX・通常のクラウド VM ゲストは対象外）。'
+    fix:
+      vi: 'Cập nhật kernel host lên bản đã vá và reboot. Nếu chưa thể vá ngay và không cần chạy VM lồng nhau, tắt nested virtualization: <code>modprobe -r kvm_amd &amp;&amp; modprobe kvm_amd nested=0</code> và lưu vào <code>/etc/modprobe.d/</code>.'
+      ja: 'ホストカーネルを修正版へ更新して再起動してください。即時更新が困難で L2 仮想化が不要な場合は、<code>modprobe -r kvm_amd &amp;&amp; modprobe kvm_amd nested=0</code> で無効化し <code>/etc/modprobe.d/</code> に永続化してください。'
   - name: Linux kernel
     sev: high
     summary:
@@ -546,5 +564,7 @@ sections:
     ja: '<strong>Google Chrome ゼロデイ警告（CVE-2026-125350）:</strong> XML パーサーの Use-After-Free 脆弱性は Google により実環境での悪用（in the wild）が確認済み。Stable および Extended Stable チャンネルにて緊急アップデートが配信されています。'
   - vi: '<strong>Cảnh báo chuỗi cung ứng công cụ AI Coding:</strong> Các chiến dịch mã độc mạo danh máy chủ Model Context Protocol (MCP) và công cụ mở rộng IDE đang gia tăng; khuyến nghị toàn bộ kỹ sư áp dụng nguyên tắc kiểm tra mã nguồn và xác minh tính toàn vẹn của lockfile trước khi tích hợp vào môi trường làm việc.'
     ja: '<strong>AIコーディングツールのサプライチェーン警戒:</strong> Model Context Protocol（MCP）サーバーやIDE拡張ツールを騙る悪意あるパッケージが増加しています。全エンジニアは作業環境に組み込む前にソースコードの監査およびロックファイルの整合性検証を徹底してください。'
+  - vi: '<strong>Đối chiếu nguồn chính thức Linux kernel CNA, git.kernel.org &amp; các distro (CVE-2026-99312):</strong> Công bố ngày 18-11-2026 (cập nhật 19-11); Terra Security chứng minh đọc ~127 GB RAM host trên DigitalOcean Droplet trong môi trường kiểm soát (DigitalOcean đã live-patch toàn bộ hypervisor ngày 19-11). Chưa có PoC công khai, chưa ghi nhận khai thác thực tế và chưa có trong CISA KEV (kiểm tra 21-11-2026).'
+    ja: '<strong>Linux カーネル CNA・git.kernel.org・各ディストリとの照合済み（CVE-2026-99312）:</strong> 2026年11月18日公開（11/19更新）。Terra Security は制御環境下の DigitalOcean Droplet でホスト RAM 約127GB読取を実証（DigitalOcean は11/19に全ハイパーバイザーへライブパッチ完了）。公開 PoC・実環境悪用は未確認、CISA KEV 未掲載（2026年11月21日確認）。'
   - vi: '<strong>Liên kết tham khảo:</strong> <a href="https://www.postgresql.org/about/news/" target="_blank" rel="noopener noreferrer">PostgreSQL Release Announcement</a> · <a href="https://www.helpnetsecurity.com/2026/11/13/postgresql-security-update-november-2026/" target="_blank" rel="noopener noreferrer">Help Net Security PostgreSQL Advisory</a> · <a href="@home@featured/postgresql-cve-2026-6460/analysis/">PiraGo Analysis: PostgreSQL Security Update Nov 2026</a> · <a href="https://httpd.apache.org/security/vulnerabilities_24.html" target="_blank" rel="noopener noreferrer">Apache HTTP Server 2.4 Security</a> · <a href="https://www.cve.org/CVERecord?id=CVE-2026-119618" target="_blank" rel="noopener noreferrer">CVE-2026-119618</a> · <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://chromereleases.googleblog.com/" target="_blank" rel="noopener noreferrer">Chrome Releases Blog</a> · <a href="https://spring.io/security/cve" target="_blank" rel="noopener noreferrer">Spring Security Advisories</a> · <a href="https://tomcat.apache.org/security.html" target="_blank" rel="noopener noreferrer">Apache Tomcat Security</a> · <a href="@home@featured/apache-cve-2026-119618/analysis/">PiraGo Analysis: Apache CVE-2026-119618</a> · <a href="@home@featured/java-cve-2026-114938/analysis/">PiraGo Analysis: Java CVE-2026-114938</a> · <a href="@home@featured/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a> · <a href="@home@featured/php-cve-2026-109618-109619/php2shell/">PiraGo Guide: PHP2Shell</a> · <a href="https://thehackernews.com/2026/11/researcher-demonstrates-database-rce.html" target="_blank" rel="noopener noreferrer">The Hacker News: Database RCE (PostgreSQL, MySQL, Oracle)</a> · <a href="https://depthfirst.com/research/narrow-grants-wide-engines" target="_blank" rel="noopener noreferrer">Depthfirst: Narrow Grants, Wide Engines</a> · <a href="https://www.postgresql.org/support/security/CVE-2026-116331/" target="_blank" rel="noopener noreferrer">PostgreSQL CVE-2026-116331</a> · <a href="https://dev.mysql.com/community/security/advisories/2026-10-20/" target="_blank" rel="noopener noreferrer">MySQL Security Advisory 2026-10-20</a> · <a href="https://www.oracle.com/security-alerts/cspunov2026.html" target="_blank" rel="noopener noreferrer">Oracle CSPU November 2026</a> · <a href="https://www.oracle.com/security-alerts/cpuoct2026.html" target="_blank" rel="noopener noreferrer">Oracle CPU October 2026</a> · <a href="@home@featured/database-rce-narrow-grants/analysis/">PiraGo Analysis: Database engine RCE (Narrow Grants)</a>.'
     ja: '<strong>参考リンク:</strong> <a href="https://www.postgresql.org/about/news/" target="_blank" rel="noopener noreferrer">PostgreSQL Release Announcement</a> · <a href="https://www.helpnetsecurity.com/2026/11/13/postgresql-security-update-november-2026/" target="_blank" rel="noopener noreferrer">Help Net Security PostgreSQL Advisory</a> · <a href="@home@featured/postgresql-cve-2026-6460/analysis/">PiraGo Analysis: PostgreSQL Security Update Nov 2026</a> · <a href="https://httpd.apache.org/security/vulnerabilities_24.html" target="_blank" rel="noopener noreferrer">Apache HTTP Server 2.4 Security</a> · <a href="https://www.cve.org/CVERecord?id=CVE-2026-119618" target="_blank" rel="noopener noreferrer">CVE-2026-119618</a> · <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://chromereleases.googleblog.com/" target="_blank" rel="noopener noreferrer">Chrome Releases Blog</a> · <a href="https://spring.io/security/cve" target="_blank" rel="noopener noreferrer">Spring Security Advisories</a> · <a href="https://tomcat.apache.org/security.html" target="_blank" rel="noopener noreferrer">Apache Tomcat Security</a> · <a href="@home@featured/apache-cve-2026-119618/analysis/">PiraGo Analysis: Apache CVE-2026-119618</a> · <a href="@home@featured/java-cve-2026-114938/analysis/">PiraGo Analysis: Java CVE-2026-114938</a> · <a href="@home@featured/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a> · <a href="@home@featured/php-cve-2026-109618-109619/php2shell/">PiraGo Guide: PHP2Shell</a> · <a href="https://thehackernews.com/2026/11/researcher-demonstrates-database-rce.html" target="_blank" rel="noopener noreferrer">The Hacker News: Database RCE (PostgreSQL, MySQL, Oracle)</a> · <a href="https://depthfirst.com/research/narrow-grants-wide-engines" target="_blank" rel="noopener noreferrer">Depthfirst: Narrow Grants, Wide Engines</a> · <a href="https://www.postgresql.org/support/security/CVE-2026-116331/" target="_blank" rel="noopener noreferrer">PostgreSQL CVE-2026-116331</a> · <a href="https://dev.mysql.com/community/security/advisories/2026-10-20/" target="_blank" rel="noopener noreferrer">MySQL Security Advisory 2026-10-20</a> · <a href="https://www.oracle.com/security-alerts/cspunov2026.html" target="_blank" rel="noopener noreferrer">Oracle CSPU November 2026</a> · <a href="https://www.oracle.com/security-alerts/cpuoct2026.html" target="_blank" rel="noopener noreferrer">Oracle CPU October 2026</a> · <a href="@home@featured/database-rce-narrow-grants/analysis/">PiraGo Analysis: Database engine RCE (Narrow Grants)</a>。'

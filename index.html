@@ -25,9 +25,12 @@ description: "Tổng hợp báo cáo sự cố an ninh mạng và lỗ hổng đ
   <!-- 1. Sự cố an ninh (Security Incidents: MUJI, GMO, Binance...) -->
   <h2 class="section-heading" id="incidents">🚨 {{ t.incidents_heading }}</h2>
   <p class="date">{{ t.incidents_sub }}</p>
+  {%- assign inc_count = 0 %}
   {%- for c in site.data.featured %}
   {%- if c.category == 'incident' %}
   {%- unless c.archived %}
+  {%- if inc_count < 3 %}
+  {%- assign inc_count = inc_count | plus: 1 %}
   <section class="card"{% if c.accent %} style="border-left: 4px solid var(--pirago-red);"{% endif %}>
     <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
       <h2>{{ c.icon }} {{ c.title[lang] }}</h2>
@@ -41,6 +44,7 @@ description: "Tổng hợp báo cáo sự cố an ninh mạng và lỗ hổng đ
     </ul>
     <a href="{{ home_url | append: c.path | relative_url }}" class="card-link-btn">{{ c.link[lang] }}</a>
   </section>
+  {%- endif %}
   {%- endunless %}
   {%- endif %}
   {%- endfor %}
@@ -50,7 +54,7 @@ description: "Tổng hợp báo cáo sự cố an ninh mạng và lỗ hổng đ
   <div id="incidents-archive" style="margin: 4px 0 32px;">
     <h3 style="font-size: 15px; margin: 0 0 8px; color: var(--text-muted);">{{ t.incidents_archive }}</h3>
     <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px;">
-      {%- for c in archived_incidents limit:5 %}
+      {%- for c in archived_incidents limit:3 %}
       <li style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
         <span class="badge {{ c.badge.sev }}">{{ c.badge.text }}</span>
         <a href="{{ home_url | append: c.path | relative_url }}">{{ c.icon }} {{ c.title[lang] }}</a>
@@ -63,9 +67,12 @@ description: "Tổng hợp báo cáo sự cố an ninh mạng và lỗ hổng đ
   <!-- 2. Lỗ hổng bảo mật & CVE (Vulnerabilities & CVEs: PostgreSQL, Apache, Linux, PHP...) -->
   <h2 class="section-heading" id="vulnerabilities" style="margin-top: 36px;">🛡️ {{ t.vulnerabilities_heading }}</h2>
   <p class="date">{{ t.vulnerabilities_sub }}</p>
+  {%- assign vuln_count = 0 %}
   {%- for c in site.data.featured %}
   {%- if c.category == 'vulnerability' %}
   {%- unless c.archived %}
+  {%- if vuln_count < 3 %}
+  {%- assign vuln_count = vuln_count | plus: 1 %}
   <section class="card"{% if c.accent %} style="border-left: 4px solid var(--pirago-red);"{% endif %}>
     <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
       <h2>{{ c.icon }} {{ c.title[lang] }}</h2>
@@ -79,6 +86,7 @@ description: "Tổng hợp báo cáo sự cố an ninh mạng và lỗ hổng đ
     </ul>
     <a href="{{ home_url | append: c.path | relative_url }}" class="card-link-btn">{{ c.link[lang] }}</a>
   </section>
+  {%- endif %}
   {%- endunless %}
   {%- endif %}
   {%- endfor %}
@@ -88,7 +96,7 @@ description: "Tổng hợp báo cáo sự cố an ninh mạng và lỗ hổng đ
   <div id="vulnerabilities-archive" style="margin: 4px 0 32px;">
     <h3 style="font-size: 15px; margin: 0 0 8px; color: var(--text-muted);">{{ t.vulnerabilities_archive }}</h3>
     <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px;">
-      {%- for c in archived_vulns limit:5 %}
+      {%- for c in archived_vulns limit:3 %}
       <li style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
         <span class="badge {{ c.badge.sev }}">{{ c.badge.text }}</span>
         <a href="{{ home_url | append: c.path | relative_url }}">{{ c.icon }} {{ c.title[lang] }}</a>
@@ -100,7 +108,7 @@ description: "Tổng hợp báo cáo sự cố an ninh mạng và lỗ hổng đ
 
   <h2 class="section-heading" id="monthly" style="margin-top: 36px;">📅 {{ t.monthly }}</h2>
   <!-- Báo cáo tháng: lặp theo _data/monthly, mới nhất xếp trên -->
-  {%- for m in site.data.monthly reversed %}
+  {%- for m in site.data.monthly reversed limit:3 %}
   {%- assign d = m[1] %}
   <section class="card">
     {%- if forloop.first %}

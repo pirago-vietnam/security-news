@@ -1,5 +1,29 @@
 # Các case nổi bật (sự cố lớn, phân tích lỗ hổng, runbook ứng phó). Thứ tự = thứ tự hiển thị.
 # `path` tính từ gốc ngôn ngữ (vi: "/", ja: "/ja/").
+- id: linux-cve-2026-99312
+  category: vulnerability
+  path: "featured/linux-cve-2026-99312/analysis/"
+  icon: "🐧"
+  accent: true
+  badge: {sev: high, text: "HIGH"}
+  nav: {vi: "Linux KVM CVE-2026-99312", ja: "Linux KVM CVE-2026-99312"}
+  title: {vi: "Linux Kernel KVM (AMD) CVE-2026-99312 — Page-Table UAF cho phép thoát VM đọc/ghi RAM máy chủ", ja: "Linux Kernel KVM（AMD）CVE-2026-99312 — VM 脱出でホスト RAM を読み書き可能なページテーブル UAF"}
+  date: {vi: "Cập nhật đến 2026-11-21 · CVSS 8.8 · Ảnh hưởng AMD KVM bật nested (≥5.15.81) · Đã vá ở 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2", ja: "2026年11月21日 時点 · CVSS 8.8 · nested 有効な AMD KVM（5.15.81以降）が対象 · 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2 で修正済み"}
+  link: {vi: "Xem phân tích & hướng dẫn →", ja: "分析・対策ガイドを見る →"}
+  items:
+    - sev: high
+      label: {vi: "Nguy cơ", ja: "リスク"}
+      text: {vi: "Không reset ngữ cảnh MMU khi mô phỏng INIT ở trạng thái CR0.PG=0 trên AMD SVM → Page-Table UAF (CWE-825), cho phép guest thoát VM đọc/ghi RAM vật lý của host (đã chứng minh đọc ~127 GB RAM trên DigitalOcean Droplet).", ja: "AMD SVM で CR0.PG=0 のまま INIT エミュレーション時に MMU を初期化せず、ページテーブル UAF（CWE-825）。ゲストからホスト物理 RAM の読み書きに至る恐れ（DigitalOcean Droplet で約127GB読取実証）。"}
+    - sev: high
+      label: {vi: "Phạm vi", ja: "影響範囲"}
+      text: {vi: "Chỉ ảnh hưởng host KVM dùng CPU AMD và bật nested virtualization (kvm_amd.nested=1), kernel ≥ 5.15.81 (trừ 5.10.y, 5.4.y, Intel VMX). RHEL 9/10, Ubuntu 22.04/24.04, Debian 12/13 chờ bản vá; SUSE SP7/16.x, Debian sid, DigitalOcean đã vá.", ja: "AMD CPU かつ nested 有効（kvm_amd.nested=1）な Linux KVM ホスト（カーネル 5.15.81 以降）のみ対象（Intel VMX・5.10.y は対象外）。RHEL 9/10・Ubuntu・Debian 12/13 は修正待ち、SUSE SP7/16.x・Debian sid・DigitalOcean は対応済み。"}
+    - sev: med
+      label: {vi: "Tạm thời", ja: "暫定対策"}
+      text: {vi: "Tắt nested virtualization trên host AMD KVM (modprobe -r kvm_amd && modprobe kvm_amd nested=0 và lưu vào /etc/modprobe.d/) nếu không cần chạy VM lồng nhau.", ja: "L2 仮想化が不要なら AMD KVM ホストで nested virtualization を無効化（modprobe -r kvm_amd && modprobe kvm_amd nested=0、/etc/modprobe.d/ へ永続化）。"}
+    - sev: low
+      label: {vi: "Triệt để", ja: "恒久対策"}
+      text: {vi: "Cập nhật kernel host lên 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2 (hoặc bản backport từ distro khi có) và reboot. Chưa có PoC công khai hay khai thác thực tế; chưa có trong CISA KEV (2026-11-21).", ja: "ホストカーネルを 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2（またはディストリの修正版）へ更新して再起動。公開 PoC や実環境での悪用未確認、CISA KEV 未掲載（2026-11-21 時点）。"}
+
 - id: spring-security-cve-2026-59273
   category: vulnerability
   path: "featured/spring-security-cve-2026-59273/analysis/"
@@ -50,6 +74,7 @@
 
 - id: ruby-ghsa-34m4-m9fh-gqp5
   category: vulnerability
+  archived: true
   path: "featured/ruby-ghsa-34m4-m9fh-gqp5/analysis/"
   icon: "💎"
   accent: true
@@ -74,6 +99,7 @@
 
 - id: php-security-release-2026-11-19
   category: vulnerability
+  archived: true
   path: "featured/php-security-release-2026-11-19/advisory/"
   icon: "🐘"
   accent: true
@@ -95,6 +121,7 @@
 
 - id: nginx-cve-2026-123007
   category: vulnerability
+  archived: true
   path: "featured/nginx-cve-2026-123007/analysis/"
   icon: "🧩"
   accent: true
@@ -167,6 +194,7 @@
 
 - id: java-cve-2026-114938
   category: vulnerability
+  archived: true
   path: "featured/java-cve-2026-114938/analysis/"
   icon: "☕"
   accent: true
@@ -191,6 +219,7 @@
 
 - id: postgresql-cve-2026-6460
   category: vulnerability
+  archived: true
   path: "featured/postgresql-cve-2026-6460/analysis/"
   icon: "🐘"
   accent: true
@@ -215,6 +244,7 @@
 
 - id: apache-cve-2026-119618
   category: vulnerability
+  archived: true
   path: "featured/apache-cve-2026-119618/analysis/"
   icon: "🌐"
   accent: true
@@ -239,6 +269,7 @@
 
 - id: brotli-cve-2026-111497
   category: vulnerability
+  archived: true
   path: "featured/brotli-cve-2026-111497/analysis/"
   icon: "📦"
   accent: true

@@ -23,7 +23,7 @@
             <span class="dropdown-arrow">▾</span>
           </a>
           <ul class="pirago-dropdown">
-            {%- for m in site.data.monthly reversed %}
+            {%- for m in site.data.monthly reversed limit:3 %}
             <li><a href="{{ home_url | append: 'monthly/' | append: m[0] | append: '/' | relative_url }}" class="{% if page.url contains m[0] %}active{% endif %}">{{ m[1].nav[lang] }}{% if forloop.first %} <span class="badge-new">{{ t.new }}</span>{% endif %}</a></li>
             {%- endfor %}
           </ul>
@@ -35,10 +35,14 @@
             <span class="dropdown-arrow">▾</span>
           </a>
           <ul class="pirago-dropdown">
+            {%- assign inc_count = 0 %}
             {%- for c in site.data.featured %}
             {%- if c.category == 'incident' %}
             {%- unless c.archived %}
+            {%- if inc_count < 3 %}
+            {%- assign inc_count = inc_count | plus: 1 %}
             <li><a href="{{ home_url | append: c.path | relative_url }}" class="{% if page.url contains c.path %}active{% endif %}">{{ c.nav[lang] }}</a></li>
+            {%- endif %}
             {%- endunless %}
             {%- endif %}
             {%- endfor %}
@@ -47,7 +51,7 @@
             <li class="has-submenu">
               <a href="{{ home_url | append: '#incidents-archive' | relative_url }}">{{ t.incidents_archive }} <span class="dropdown-arrow">▸</span></a>
               <ul class="pirago-submenu">
-                {%- for c in archived_incidents limit:5 %}
+                {%- for c in archived_incidents limit:3 %}
                 <li><a href="{{ home_url | append: c.path | relative_url }}" class="{% if page.url contains c.path %}active{% endif %}">{{ c.nav[lang] }}</a></li>
                 {%- endfor %}
               </ul>
@@ -62,10 +66,14 @@
             <span class="dropdown-arrow">▾</span>
           </a>
           <ul class="pirago-dropdown">
+            {%- assign vuln_count = 0 %}
             {%- for c in site.data.featured %}
             {%- if c.category == 'vulnerability' %}
             {%- unless c.archived %}
+            {%- if vuln_count < 3 %}
+            {%- assign vuln_count = vuln_count | plus: 1 %}
             <li><a href="{{ home_url | append: c.path | relative_url }}" class="{% if page.url contains c.path %}active{% endif %}">{{ c.nav[lang] }}</a></li>
+            {%- endif %}
             {%- endunless %}
             {%- endif %}
             {%- endfor %}
@@ -74,7 +82,7 @@
             <li class="has-submenu">
               <a href="{{ home_url | append: '#vulnerabilities-archive' | relative_url }}">{{ t.vulnerabilities_archive }} <span class="dropdown-arrow">▸</span></a>
               <ul class="pirago-submenu">
-                {%- for c in archived_vulns limit:5 %}
+                {%- for c in archived_vulns limit:3 %}
                 <li><a href="{{ home_url | append: c.path | relative_url }}" class="{% if page.url contains c.path %}active{% endif %}">{{ c.nav[lang] }}</a></li>
                 {%- endfor %}
               </ul>
