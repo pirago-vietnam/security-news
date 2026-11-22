@@ -50,6 +50,31 @@
       label: {vi: "Triệt để", ja: "恒久対策"}
       text: {vi: "Nâng cấp Spring Security lên 7.1.3 / 7.0.9 / 7.2.0 (hoặc Spring Boot 4.1.3 / 4.0.10 / 4.2.0); 6.5/6.4/5.8/5.7 chỉ có bản vá qua Enterprise Support. Chưa có trong CISA KEV (kiểm tra 2026-11-20).", ja: "Spring Security を 7.1.3 / 7.0.9 / 7.2.0（または Spring Boot 4.1.3 / 4.0.10 / 4.2.0）へ更新。6.5/6.4/5.8/5.7 は Enterprise Support のみ。CISA KEV 未掲載（2026-11-20 確認）。"}
 
+- id: linux-cve-2026-99362
+  category: vulnerability
+  month: "2026-11"
+  path: "featured/linux-cve-2026-99362/analysis/"
+  icon: "🐧"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL"}
+  nav: {vi: 'Linux NFSD CVE-2026-99362', ja: 'Linux NFSD CVE-2026-99362'}
+  title: {vi: 'Linux Kernel NFSD CVE-2026-99362 — Tràn bộ đệm slab-out-of-bounds trong NFSv4.1+ SEQUENCE (CVSS 9.8)', ja: 'Linux Kernel NFSD CVE-2026-99362 — NFSv4.1+ SEQUENCE における slab-out-of-bounds（CVSS 9.8）'}
+  date: {vi: 'Cập nhật đến 2026-11-23 · CVSS 9.8 · Ảnh hưởng Linux ≥ 3.16 (nfsd NFSv4.1+) · Đã vá ở 6.12.117 / 6.18.61 / 7.3.2 / 7.4-rc1', ja: '2026年11月23日 時点 · CVSS 9.8 · Linux 3.16以降（nfsd NFSv4.1+）が対象 · 6.12.117 / 6.18.61 / 7.3.2 / 7.4-rc1 で修正済み'}
+  link: {vi: 'Xem phân tích & hướng dẫn →', ja: '分析・対策ガイドを見る →'}
+  items:
+    - sev: crit
+      label: {vi: 'Nguy cơ', ja: 'リスク'}
+      text: {vi: 'nfsd4_sequence() thu hẹp buffer trả về xuống ngưỡng tối thiểu (slot sl_data[] độ dài 0) nhưng vẫn ghi dữ liệu phản hồi COMPOUND vào cache slot → ghi tràn slab-out-of-bounds ở nhân Linux (CVSS 9.8), gây panic/DoS hoặc nguy cơ thực thi mã từ xa.', ja: 'nfsd4_sequence() で最小サイズの応答バッファ（sl_data[] 長 0 のスロット）を割り当てたまま COMPOUND 応答をキャッシュへ書き込み、カーネル空間で slab-out-of-bounds 書き込み（CVSS 9.8）。カーネルパニック/DoS やリモートコード実行の恐れ。'}
+    - sev: high
+      label: {vi: 'Phạm vi', ja: '影響範囲'}
+      text: {vi: 'Máy chủ Linux kernel ≥ 3.16 bật dịch vụ nfsd với NFSv4.1+. Debian 12 LTS đã phát hành bản vá (DLA-4927-1, linux-6.12 6.12.117-1~deb12u1); RHEL, Ubuntu và Amazon Linux đang chờ bản cập nhật chính thức.', ja: 'NFSv4.1+ を有効にして nfsd を稼働させている Linux カーネル 3.16 以降のサーバーが対象。Debian 12 LTS は修正済み（DLA-4927-1、linux-6.12 6.12.117-1~deb12u1）、RHEL・Ubuntu・Amazon Linux は修正待ち。'}
+    - sev: med
+      label: {vi: 'Tạm thời', ja: '暫定対策'}
+      text: {vi: 'Giới hạn cổng NFS (TCP/UDP 2049) bằng firewall/security group chỉ cho các client tin cậy; tắt NFSv4.1/4.2 (hoặc dừng nfs-server nếu không dùng) trong lúc chờ bản vá kernel.', ja: 'ファイアウォール／セキュリティグループで NFS ポート（TCP/UDP 2049）を信頼済みクライアントのみに制限。カーネル更新まで NFSv4.1/4.2 を無効化（または不要なら nfs-server を停止）。'}
+    - sev: low
+      label: {vi: 'Triệt để', ja: '恒久対策'}
+      text: {vi: 'Cập nhật kernel máy chủ NFS lên bản đã vá upstream 6.12.117 / 6.18.61 / 7.3.2 / 7.4-rc1 (hoặc bản distro như Debian DLA-4927-1) và reboot. Chưa có PoC công khai và chưa có trong CISA KEV (2026-11-23).', ja: 'NFS サーバーのカーネルを 6.12.117 / 6.18.61 / 7.3.2 / 7.4-rc1（または Debian DLA-4927-1 等のディストリ修正版）へ更新し再起動。公開 PoC なし、CISA KEV 未掲載（2026-11-23 確認）。'}
+
 - id: database-rce-narrow-grants
   category: vulnerability
   month: "2026-11"
