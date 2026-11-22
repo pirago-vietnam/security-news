@@ -1,0 +1,86 @@
+{%- assign lang = page.lang | default: "vi" -%}
+{%- assign t = site.data.i18n[lang] -%}
+{%- if lang == 'ja' -%}{%- assign home_url = '/ja/' -%}{%- else -%}{%- assign home_url = '/' -%}{%- endif -%}
+{%- assign cat = page.archive_category -%}
+{%- assign all_items = site.data.featured | where: "category", cat -%}
+{%- assign grouped = all_items | group_by: "month" | sort: "name" | reverse -%}
+
+<style>
+  .arch-controls { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 16px 0 28px; }
+  .arch-search { flex: 1; min-width: 240px; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--card); color: var(--text); font-size: 14px; font-family: inherit; }
+  .arch-search:focus { outline: none; border-color: var(--pirago-blue); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12); }
+  .arch-total { font-size: 13px; color: var(--text-muted); font-weight: 600; }
+  .arch-month { margin: 0 0 28px; }
+  .arch-month-head { display: flex; align-items: center; gap: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--line); margin-bottom: 12px; }
+  .arch-month-head h2 { font-size: 18px; margin: 0; }
+  .arch-count { font-size: 12px; font-weight: 700; padding: 2px 9px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--line); color: var(--text-muted); }
+  .arch-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .arch-item { display: flex; flex-direction: column; gap: 3px; padding: 10px 14px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .arch-item:hover { border-color: var(--pirago-blue); }
+  .arch-item-top { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .arch-item-top .badge { flex-shrink: 0; }
+  .arch-item-top a { font-weight: 600; font-size: 15px; line-height: 1.4; }
+  .arch-item-date { font-size: 12.5px; color: var(--text-muted); }
+</style>
+
+<div class="report-header">
+  <h1>{{ page.heading }}</h1>
+  <p class="sub">{{ page.subheading }}</p>
+</div>
+
+<div class="arch-controls">
+  <input type="search" id="archiveFilterInput" class="arch-search" placeholder="{{ t.archive_filter_placeholder }}" aria-label="{{ t.archive_filter_placeholder }}">
+  <span class="arch-total" id="archiveTotalCount">{{ all_items.size }} {{ t.archive_count_suffix }}</span>
+</div>
+
+<div id="archiveContainer">
+  {%- for grp in grouped %}
+  {%- assign ym = grp.name | split: "-" %}
+  <section class="arch-month" data-month="{{ grp.name }}">
+    <div class="arch-month-head">
+      <h2>📅 {% if lang == 'ja' %}{{ ym[0] }}年{{ ym[1] }}月{% else %}Tháng {{ ym[1] }}/{{ ym[0] }}{% endif %}</h2>
+      <span class="arch-count">{{ grp.items.size }} {{ t.archive_count_suffix }}</span>
+    </div>
+    <ul class="arch-list">
+      {%- for c in grp.items %}
+      <li class="arch-item" data-search="{{ c.title[lang] | escape | downcase }} {{ c.date[lang] | escape | downcase }} {{ c.badge.text | escape | downcase }}">
+        <div class="arch-item-top">
+          <span class="badge {{ c.badge.sev }}">{{ c.badge.text }}</span>
+          <a href="{{ home_url | append: c.path | relative_url }}">{{ c.icon }} {{ c.title[lang] }}</a>
+        </div>
+        <div class="arch-item-date">{{ c.date[lang] }}</div>
+      </li>
+      {%- endfor %}
+    </ul>
+  </section>
+  {%- endfor %}
+</div>
+
+<script>
+(function() {
+  var input = document.getElementById('archiveFilterInput');
+  var totalEl = document.getElementById('archiveTotalCount');
+  if (!input) return;
+  var suffix = {{ t.archive_count_suffix | jsonify }};
+  input.addEventListener('input', function() {
+    var q = input.value.trim().toLowerCase();
+    var sections = document.querySelectorAll('#archiveContainer .arch-month');
+    var visibleTotal = 0;
+    sections.forEach(function(sec) {
+      var items = sec.querySelectorAll('.arch-item');
+      var vis = 0;
+      items.forEach(function(li) {
+        var text = li.getAttribute('data-search') || '';
+        var show = !q || text.indexOf(q) !== -1;
+        li.style.display = show ? '' : 'none';
+        if (show) vis++;
+      });
+      sec.style.display = vis > 0 ? '' : 'none';
+      var cnt = sec.querySelector('.arch-count');
+      if (cnt) cnt.textContent = vis + ' ' + suffix;
+      visibleTotal += vis;
+    });
+    if (totalEl) totalEl.textContent = visibleTotal + ' ' + suffix;
+  });
+})();
+</script>

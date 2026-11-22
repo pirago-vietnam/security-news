@@ -2,6 +2,7 @@
 # `path` tính từ gốc ngôn ngữ (vi: "/", ja: "/ja/").
 - id: linux-cve-2026-99312
   category: vulnerability
+  month: "2026-11"
   path: "featured/linux-cve-2026-99312/analysis/"
   icon: "🐧"
   accent: true
@@ -26,6 +27,7 @@
 
 - id: spring-security-cve-2026-59273
   category: vulnerability
+  month: "2026-11"
   path: "featured/spring-security-cve-2026-59273/analysis/"
   icon: "🍃"
   accent: true
@@ -50,6 +52,7 @@
 
 - id: database-rce-narrow-grants
   category: vulnerability
+  month: "2026-11"
   path: "featured/database-rce-narrow-grants/analysis/"
   icon: "🗄️"
   accent: true
@@ -74,6 +77,7 @@
 
 - id: ruby-ghsa-34m4-m9fh-gqp5
   category: vulnerability
+  month: "2026-11"
   archived: true
   path: "featured/ruby-ghsa-34m4-m9fh-gqp5/analysis/"
   icon: "💎"
@@ -99,6 +103,7 @@
 
 - id: php-security-release-2026-11-19
   category: vulnerability
+  month: "2026-11"
   archived: true
   path: "featured/php-security-release-2026-11-19/advisory/"
   icon: "🐘"
@@ -121,6 +126,7 @@
 
 - id: nginx-cve-2026-123007
   category: vulnerability
+  month: "2026-11"
   archived: true
   path: "featured/nginx-cve-2026-123007/analysis/"
   icon: "🧩"
@@ -146,6 +152,7 @@
 
 - id: rakuten-sec
   category: incident
+  month: "2026-11"
   path: "featured/rakuten-sec/rakuten_securities_security_incident_report/"
   icon: "📈"
   accent: true
@@ -168,8 +175,34 @@
       label: {vi: "Ứng phó", ja: "対応"}
       text: {vi: "Miễn phí chuyển quỹ tín thác sang đối thủ từ 18/11, hoãn mở cửa hàng Shibuya (25/11); ghi nhận >15.000 người đăng ký khởi kiện tập thể; khuyến nghị passkey.", ja: "11/18より投信出庫手数料を当面無料化、渋谷店舗の開店延期。集団訴訟準備サイトに1.5万人超登録の動き。パスキー推奨。"}
 
+- id: microsoft-365-outage-2026-11
+  category: incident
+  month: "2026-11"
+  path: "featured/microsoft-365-outage-2026-11/incident_report/"
+  icon: "☁️"
+  accent: true
+  badge: {sev: high, text: "OPERATIONAL INCIDENT"}
+  nav: {vi: "Sự cố Microsoft 365", ja: "Microsoft 365 障害"}
+  title: {vi: "Microsoft 365 (12–14/11/2026) — Gián đoạn toàn cầu ~24–30h do \"triple failure\" tại gateway mạng", ja: "Microsoft 365（2026年11月12〜14日）— ゲートウェイの「三重障害」による約24〜30時間の大規模障害"}
+  date: {vi: "Cập nhật 2026-11-22 · EX1550543 / MO1550821 · 74+ quốc gia · Không phải tấn công mạng", ja: "2026年11月22日更新 · EX1550543 / MO1550821 · 74カ国以上 · サイバー攻撃ではない"}
+  link: {vi: "Xem phân tích sự cố chi tiết →", ja: "障害詳細レポートを見る →"}
+  items:
+    - sev: high
+      label: {vi: "Phạm vi", ja: "影響範囲"}
+      text: {vi: "Exchange Online/Outlook, Teams, SharePoint, OneDrive, Copilot &amp; Defender XDR gián đoạn tại 74+ quốc gia (~24–30h đến khi xác nhận ổn định 14/11); &gt;80% gateway mất phản hồi ở đỉnh.", ja: "Exchange Online/Outlook・Teams・SharePoint・OneDrive・Copilot・Defender XDR が74カ国以上で停止（11/14の安定確認まで約24〜30時間）。ピーク時に80%超のゲートウェイが応答不能。"}
+    - sev: crit
+      label: {vi: "Nguyên nhân", ja: "原因"}
+      text: {vi: "Triple failure nội bộ (không phải cyberattack): bug lock contention từ bản vá 07/2026 trên phần cứng nhiều nhân + mất -14% dung lượng gateway + Teams tự động failover sang gateway chính.", ja: "内部起因の三重障害（攻撃ではない）：2026年7月修正の多コア向けロック競合バグ＋前日からの容量14%減＋Teamsのプライマリゲートウェイへの自動フェイルオーバー。"}
+    - sev: med
+      label: {vi: "Rủi ro thứ cấp", ja: "二次リスク"}
+      text: {vi: "Microsoft Threat Intelligence cảnh báo phishing quy mô lớn giả mạo Service Health (dẫn mã EX1550543, dọa xóa email sau 24h) qua SendGrid chuyển hướng ra ngoài.", ja: "Microsoft Threat Intelligence が障害番号 EX1550543 を悪用し「24時間以内にメール削除」と偽る大規模フィッシング（SendGrid 経由の外部誘導）を警告。"}
+    - sev: low
+      label: {vi: "Khuyến cáo", ja: "対策"}
+      text: {vi: "Săn tìm email chủ đề \"Outage -\" / EX1550543; load test trên phần cứng nhiều nhân sát production; tách blast radius khi failover và chống retry storm.", ja: "件名 \"Outage -\" / EX1550543 の不審メールを調査；本番同等の多コア環境で負荷検証；フェイルオーバー時の影響分離とリトライストーム対策を実施。"}
+
 - id: muji
   category: incident
+  month: "2026-10"
   path: "featured/muji/muji_security_incident_report/"
   icon: "🛍️"
   accent: true
@@ -194,6 +227,7 @@
 
 - id: java-cve-2026-114938
   category: vulnerability
+  month: "2026-11"
   archived: true
   path: "featured/java-cve-2026-114938/analysis/"
   icon: "☕"
@@ -217,8 +251,32 @@
       label: {vi: "Triệt để", ja: "恒久対策"}
       text: {vi: "Nâng JDK (Corretto 17.0.21.1.2), restart toàn bộ tiến trình Java, rebuild image. Temurin/distro chưa xác nhận bản vá.", ja: "JDK 更新（Corretto 17.0.21.1.2）、全 Java プロセス再起動、イメージ再ビルド。Temurin/ディストリビューションは修正未確認。"}
 
+- id: brotli-cve-2026-111497
+  category: vulnerability
+  month: "2026-11"
+  archived: true
+  path: "featured/brotli-cve-2026-111497/analysis/"
+  icon: "📦"
+  accent: true
+  badge: {sev: high, text: "HIGH"}
+  nav: {vi: "Brotli CVE-2026-111497", ja: "Brotli CVE-2026-111497"}
+  title: {vi: "Brotli CVE-2026-111497 — Lỗi bộ nhớ khi giải nén dữ liệu không đáng tin cậy", ja: "Brotli CVE-2026-111497 — 信頼できないデータ展開時のメモリ破壊"}
+  date: {vi: "Cập nhật 2026-11-16 · Brotli decoder · Bản vá phụ thuộc sản phẩm", ja: "2026年11月16日 時点 · Brotli デコーダー · 製品別に修正を確認"}
+  link: {vi: "Xem phân tích & hướng dẫn →", ja: "分析・対策ガイドを見る →"}
+  items:
+    - sev: high
+      label: {vi: "Nguy cơ", ja: "リスク"}
+      text: {vi: "Dữ liệu Brotli độc hại được giải nén có thể gây hỏng bộ nhớ, gián đoạn dịch vụ, rò rỉ dữ liệu hoặc có khả năng thực thi mã.", ja: "細工された Brotli データの展開により、メモリ破壊、サービス停止、情報漏えいやコード実行の恐れ。"}
+    - sev: high
+      label: {vi: "Phạm vi", ja: "影響範囲"}
+      text: {vi: "Rà soát Brotli hệ thống và bản nhúng trong runtime, ứng dụng, trình duyệt và container; nguy cơ phụ thuộc đường giải nén dữ liệu không đáng tin cậy.", ja: "システムおよびランタイム・アプリ・ブラウザー・コンテナーに同梱された Brotli を確認。リスクは信頼できない入力の展開経路に依存。"}
+    - sev: med
+      label: {vi: "Xử lý", ja: "対応"}
+      text: {vi: "Áp dụng bản vá hoặc backport theo nhà cung cấp, rebuild image và khởi động lại; hạn chế giải nén dữ liệu không đáng tin cậy trong lúc chờ vá.", ja: "ベンダーの修正またはバックポートを適用し、イメージ再ビルドと再起動を実施。修正まで信頼できないデータの展開を制限。"}
+
 - id: postgresql-cve-2026-6460
   category: vulnerability
+  month: "2026-11"
   archived: true
   path: "featured/postgresql-cve-2026-6460/analysis/"
   icon: "🐘"
@@ -244,6 +302,7 @@
 
 - id: apache-cve-2026-119618
   category: vulnerability
+  month: "2026-11"
   archived: true
   path: "featured/apache-cve-2026-119618/analysis/"
   icon: "🌐"
@@ -267,30 +326,9 @@
       label: {vi: "Triệt để", ja: "恒久対策"}
       text: {vi: "Nâng cấp Apache HTTP Server lên 2.4.71 trở lên (phát hành 11-11-2026), kiểm tra cấu hình và restart dịch vụ / rebuild image.", ja: "Apache HTTP Server を 2.4.71 以上（11月11日リリース）へ更新し、サービス再起動・コンテナ再ビルドを実施。"}
 
-- id: brotli-cve-2026-111497
-  category: vulnerability
-  archived: true
-  path: "featured/brotli-cve-2026-111497/analysis/"
-  icon: "📦"
-  accent: true
-  badge: {sev: high, text: "HIGH"}
-  nav: {vi: "Brotli CVE-2026-111497", ja: "Brotli CVE-2026-111497"}
-  title: {vi: "Brotli CVE-2026-111497 — Lỗi bộ nhớ khi giải nén dữ liệu không đáng tin cậy", ja: "Brotli CVE-2026-111497 — 信頼できないデータ展開時のメモリ破壊"}
-  date: {vi: "Cập nhật 2026-11-16 · Brotli decoder · Bản vá phụ thuộc sản phẩm", ja: "2026年11月16日 時点 · Brotli デコーダー · 製品別に修正を確認"}
-  link: {vi: "Xem phân tích & hướng dẫn →", ja: "分析・対策ガイドを見る →"}
-  items:
-    - sev: high
-      label: {vi: "Nguy cơ", ja: "リスク"}
-      text: {vi: "Dữ liệu Brotli độc hại được giải nén có thể gây hỏng bộ nhớ, gián đoạn dịch vụ, rò rỉ dữ liệu hoặc có khả năng thực thi mã.", ja: "細工された Brotli データの展開により、メモリ破壊、サービス停止、情報漏えいやコード実行の恐れ。"}
-    - sev: high
-      label: {vi: "Phạm vi", ja: "影響範囲"}
-      text: {vi: "Rà soát Brotli hệ thống và bản nhúng trong runtime, ứng dụng, trình duyệt và container; nguy cơ phụ thuộc đường giải nén dữ liệu không đáng tin cậy.", ja: "システムおよびランタイム・アプリ・ブラウザー・コンテナーに同梱された Brotli を確認。リスクは信頼できない入力の展開経路に依存。"}
-    - sev: med
-      label: {vi: "Xử lý", ja: "対応"}
-      text: {vi: "Áp dụng bản vá hoặc backport theo nhà cung cấp, rebuild image và khởi động lại; hạn chế giải nén dữ liệu không đáng tin cậy trong lúc chờ vá.", ja: "ベンダーの修正またはバックポートを適用し、イメージ再ビルドと再起動を実施。修正まで信頼できないデータの展開を制限。"}
-
 - id: binance
   category: incident
+  month: "2026-10"
   archived: true
   path: "featured/binance/binance_security_incident_report/"
   icon: "💸"
@@ -316,6 +354,7 @@
 
 - id: gmo
   category: incident
+  month: "2026-10"
   archived: true
   path: "featured/gmo/gmo_onamae_security_incident_report/"
   icon: "🚨"
@@ -339,33 +378,9 @@
       label: {vi: "Bồi thường", ja: "補償"}
       text: {vi: "Đến 12/11, 2.943 tài khoản yêu cầu bồi thường khoảng 2,998 tỷ JPY; chi phí trực tiếp dự kiến 3,05 tỷ JPY, chưa phải số tiền chi trả đã xác nhận.", ja: "11月12日時点の損失補償申請は2,943口座・約29.98億円。直接費用は約30.5億円を見込むが、確定した支払額ではない。"}
 
-- id: php2shell
-  category: vulnerability
-  archived: true
-  path: "featured/php-cve-2026-109618-109619/php2shell/"
-  icon: "📘"
-  accent: false
-  badge: {sev: crit, text: "CRITICAL"}
-  nav: {vi: "PHP CVE-2026-109618", ja: "PHP CVE-2026-109618"}
-  title: {vi: "PHP2Shell (CVE-2026-109618 / 109619) — RCE không cần xác thực trong lõi PHP", ja: "PHP2Shell（CVE-2026-109618 / 109619）— PHP コアの認証不要 RCE"}
-  date: {vi: "Lỗ hổng RCE PHP · TL;DR dễ hiểu & hướng dẫn xử lý cho kỹ sư PiraGo", ja: "PHP の RCE 脆弱性 · TL;DR（かんたん解説）& PiraGo エンジニア向け対応ガイド"}
-  link: {vi: "Xem hướng dẫn đầy đủ →", ja: "ガイド全文を見る →"}
-  items:
-    - sev: crit
-      label: {vi: "Xử lý", ja: "対応"}
-      text: {vi: "RCE không cần xác thực trong lõi PHP (CVSS 9.2). Cập nhật ứng dụng không giúp được; phải vá PHP và restart.", ja: "PHP コアの認証不要 RCE（CVSS 9.2）。アプリ更新では解決せず、PHP の更新と再起動が必要。"}
-    - sev: high
-      label: {vi: "Dễ bị tấn công", ja: "狙われやすい対象"}
-      text: {vi: "Apache mod_php, PHP-FPM lộ internet, PHP 8.1 trở xuống (EOL), image Docker cũ, hosting managed.", ja: "Apache mod_php、公開 PHP-FPM、PHP 8.1 以下（EOL）、古い Docker イメージ、マネージドホスティング。"}
-    - sev: med
-      label: {vi: "Tạm thời", ja: "暫定対策"}
-      text: {vi: "Tắt upload progress, đặt memory_limit bằng php_admin_value, hạn chế multipart ở WAF/LB, thu hẹp truy cập.", ja: "upload progress の無効化、php_admin_value での memory_limit 設定、WAF/LB での multipart 制限、アクセス範囲の縮小。"}
-    - sev: low
-      label: {vi: "Triệt để", ja: "恒久対策"}
-      text: {vi: "Nâng lên 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35, restart, build lại image; lên kế hoạch rời PHP 8.1 trở xuống.", ja: "8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 へ更新して再起動、イメージ再ビルド。PHP 8.1 以下からの移行を計画。"}
-
 - id: linux-cve-2026-98432
   category: vulnerability
+  month: "2026-11"
   archived: true
   path: "featured/linux-cve-2026-98432/analysis/"
   icon: "🐧"
@@ -388,3 +403,29 @@
     - sev: low
       label: {vi: "Xử lý", ja: "対処"}
       text: {vi: "Cập nhật kernel và reboot. Tạm thời: tắt MPTCP (net.mptcp.enabled=0, GODEBUG=multipathtcp=0 cho Go), lọc IP options bằng nftables/iptables u32 hoặc AWS Network Firewall.", ja: "カーネル更新と再起動が恒久対策。暫定措置: MPTCP無効化（net.mptcp.enabled=0、Go向けGODEBUG=multipathtcp=0）、nftables/iptables u32またはAWS Network FirewallによるIPオプション遮断。"}
+
+- id: php2shell
+  category: vulnerability
+  month: "2026-10"
+  archived: true
+  path: "featured/php-cve-2026-109618-109619/php2shell/"
+  icon: "📘"
+  accent: false
+  badge: {sev: crit, text: "CRITICAL"}
+  nav: {vi: "PHP CVE-2026-109618", ja: "PHP CVE-2026-109618"}
+  title: {vi: "PHP2Shell (CVE-2026-109618 / 109619) — RCE không cần xác thực trong lõi PHP", ja: "PHP2Shell（CVE-2026-109618 / 109619）— PHP コアの認証不要 RCE"}
+  date: {vi: "Lỗ hổng RCE PHP · TL;DR dễ hiểu & hướng dẫn xử lý cho kỹ sư PiraGo", ja: "PHP の RCE 脆弱性 · TL;DR（かんたん解説）& PiraGo エンジニア向け対応ガイド"}
+  link: {vi: "Xem hướng dẫn đầy đủ →", ja: "ガイド全文を見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Xử lý", ja: "対応"}
+      text: {vi: "RCE không cần xác thực trong lõi PHP (CVSS 9.2). Cập nhật ứng dụng không giúp được; phải vá PHP và restart.", ja: "PHP コアの認証不要 RCE（CVSS 9.2）。アプリ更新では解決せず、PHP の更新と再起動が必要。"}
+    - sev: high
+      label: {vi: "Dễ bị tấn công", ja: "狙われやすい対象"}
+      text: {vi: "Apache mod_php, PHP-FPM lộ internet, PHP 8.1 trở xuống (EOL), image Docker cũ, hosting managed.", ja: "Apache mod_php、公開 PHP-FPM、PHP 8.1 以下（EOL）、古い Docker イメージ、マネージドホスティング。"}
+    - sev: med
+      label: {vi: "Tạm thời", ja: "暫定対策"}
+      text: {vi: "Tắt upload progress, đặt memory_limit bằng php_admin_value, hạn chế multipart ở WAF/LB, thu hẹp truy cập.", ja: "upload progress の無効化、php_admin_value での memory_limit 設定、WAF/LB での multipart 制限、アクセス範囲の縮小。"}
+    - sev: low
+      label: {vi: "Triệt để", ja: "恒久対策"}
+      text: {vi: "Nâng lên 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35, restart, build lại image; lên kế hoạch rời PHP 8.1 trở xuống.", ja: "8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 へ更新して再起動、イメージ再ビルド。PHP 8.1 以下からの移行を計画。"}

@@ -73,10 +73,11 @@ Every new vulnerability analysis page (`featured/<case>/analysis.html` + `ja/ana
 - **Diagrams / illustrations**: hand-written inline `<svg>` inside `<figure class="fig">…<figcaption>` (viewBox width 740, `role="img"` + `aria-label`). Use theme tokens only (`var(--crit|high|med|low|text-muted|line|bg-subtle)`, `fill="currentColor"`, classes `box` / `mut`) so light and dark mode both work; give each arrow marker a unique `id` per page. Include the `.fig*` CSS in the page `<style>` (copy from the nginx page). Minimum set: (1) attack chain, (2) mechanism illustration when meaningful (e.g. buffer overflow), (3) affected/fixed version scope, (4) quick decision tree / remediation flow. Translate labels in the ja page; never show exploit detail.
 - **SNS (OG) image**: `featured/<case>/<name>-og.png`, 1200x630, referenced by `image:` in the front matter of both vi and ja pages. Render from a small HTML (dark navy gradient, JetBrains Mono, severity badge, name, CVE/GHSA id, one-line summary, affected → fixed versions, `assets/images/logo_footer.webp`, `security-news.pirago.vn`) with headless Chrome: `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --hide-scrollbars --window-size=1200,630 --screenshot=<out.png> file://<html>`. Keep the temp HTML in the scratchpad, not the repo.
 - **Verify visually**: screenshot the `<figure>` blocks with headless Chrome and check for overlapping or clipped text before committing.
-- Register the case in `_data/featured.yml` (vi + ja strings).
+- Register the case in `_data/featured.yml` (vi + ja strings, including `month: "YYYY-MM"` based on initial disclosure/occurrence month for `/incidents/` and `/vulnerabilities/` monthly archive pages). **Sort order**: entries in `_data/featured.yml` (both `incident` and `vulnerability`) must be ordered by **initial public disclosure / occurrence date of the incident or vulnerability (newest first)**, not by article creation or last-updated date.
 
 ## Rules
 
 - Always "fan out subagents" to update the security news.
 - **Subagents for Search, Scan & Explore**: Always use the Haiku model (`model: "haiku"`) when spawning subagents via the `Agent` tool for search, scan, codebase exploration, or research tasks (e.g., `Explore` or `general-purpose` search agents).
+- **Featured sorting**: Keep `_data/featured.yml` ordered by initial disclosure/occurrence date (newest first) for both incidents and vulnerabilities.
 
