@@ -1,0 +1,191 @@
+---
+layout: default
+lang: ja
+title: "楽天証券 — テスト環境から最大1,125万口座の情報流出の恐れ"
+description: "2026年11月20日更新：金融庁による報告徴求命令（11/19受領）、投信出庫手数料の当面無料化、集団訴訟の動き、影響範囲と利用者向け対策"
+image: "/featured/incidents/rakuten-sec/rakuten-securities-og.png"
+category: "セキュリティインシデント"
+permalink: /ja/featured/incidents/rakuten-sec/rakuten_securities_security_incident_report/
+redirect_from:
+  - /ja/featured/rakuten-sec/rakuten_securities_security_incident_report/
+---
+<style>
+  .an-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
+  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--line); color: var(--text-muted); }
+  .an-nav a:hover { color: var(--pirago-blue); border-color: var(--pirago-blue); text-decoration: none; }
+  .an-sec { margin: 0 0 40px; }
+  .an-sec h2 { font-size: 21px; margin: 28px 0 14px; scroll-margin-top: 90px; }
+  .an-sec h3 { font-size: 17px; margin: 20px 0 8px; }
+  .an-sec ul, .an-sec ol { padding-left: 22px; }
+  .an-sec li { margin: 6px 0; }
+  .an-sec .table-wrap { overflow-x: auto; margin: 14px 0 20px; }
+  .an-sec code { word-break: break-all; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 20px 0 24px; }
+  .kpi-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); }
+  .kpi-num { font-size: 22px; font-weight: 800; font-family: var(--font-mono); color: var(--pirago-navy); line-height: 1.2; margin-bottom: 4px; }
+  html[data-theme="dark"] .kpi-num { color: #5ab0e8; }
+  .kpi-num.crit { color: var(--crit); }
+  .kpi-num.high { color: var(--high); }
+  .kpi-label { font-size: 12.5px; color: var(--text-muted); line-height: 1.4; }
+  .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
+  .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
+  .fig .mut { fill: var(--text-muted); }
+  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
+  .fig .box[style*="--crit"] { fill: var(--crit-bg); }
+  .fig .box[style*="--high"] { fill: var(--high-bg); }
+  .fig rect[stroke="var(--low)"] { fill: var(--low-bg); }
+  .fig rect[fill="var(--line)"] { fill: #cbd5e1; }
+  html[data-theme="dark"] .fig .box[style*="--crit"] { fill: rgba(239,68,68,.32); }
+  html[data-theme="dark"] .fig .box[style*="--high"] { fill: rgba(245,158,11,.32); }
+  html[data-theme="dark"] .fig rect[stroke="var(--low)"] { fill: rgba(16,185,129,.28); }
+  html[data-theme="dark"] .fig rect[fill="var(--line)"] { fill: #64748b; }
+</style>
+
+<div class="report-header">
+  <h1>楽天証券 — テスト環境から最大1,125万口座の情報流出の恐れ</h1>
+  <p class="sub">発生・公開日：<strong>2026-11-17</strong> · <strong>2026年11月20日</strong>時点：11月17日の公表に続き、<strong>11月19日に金融庁から報告徴求命令を受領</strong>（金商法・個人情報保護法に基づく）。投信出庫手数料の当面無料化や実店舗開店延期など対応が拡大。月次レポート：<a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月 月次レポート</a>。</p>
+</div>
+
+<blockquote class="callout">
+  <p><strong>TL;DR（かんたん解説）：</strong>楽天証券（15百万超の口座を持つオンライン証券）は、2026年11月16日に第三者による不正アクセスの可能性を検知し、該当箇所へのアクセス遮断・修正を実施。調査の結果、11月11日にテスト環境内の一部情報が外部へ漏えいしたおそれがあることを確認し、11月17日に公表・謝罪しました。システム更新の検証用に本番データをマスキングなしでテスト環境へ配置していたことが報じられています。影響は<strong>最大約1,125万口座</strong>（部店・お客様コード、ログインID）および<strong>最大約447万口座</strong>（氏名・住所等の個人情報や金融情報も含む）。11月18日には投資信託の出庫手数料を当面無料化し、11月19日には<strong>金融庁から報告徴求命令</strong>を受領しました。パスワード・暗証番号など取引に必要な情報の漏えいや不正取引は現時点で確認されていません。</p>
+</blockquote>
+
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-num crit">~1,125万</div><div class="kpi-label">部店・お客様コード、ログインID（最大口座数）</div></div>
+  <div class="kpi-card"><div class="kpi-num crit">~447万</div><div class="kpi-label">個人情報・金融情報を含む（最大口座数）</div></div>
+  <div class="kpi-card"><div class="kpi-num high">テスト環境</div><div class="kpi-label">本番データを非マスクで一時配置（報道）。退会者含む</div></div>
+  <div class="kpi-card"><div class="kpi-num crit">報告徴求命令</div><div class="kpi-label">11/19 金融庁より受領（原因詳細は調査中）</div></div>
+</div>
+
+<nav class="an-nav" aria-label="目次">
+  <a href="#summary">1. 概要</a>
+  <a href="#timeline">2. 経緯</a>
+  <a href="#scope">3. 影響を受けた情報</a>
+  <a href="#response">4. 対応・利用者向け対策</a>
+  <a href="#recommendations">5. PiraGo の推奨事項</a>
+  <a href="#sources">6. 参考情報</a>
+</nav>
+
+<section class="an-sec">
+<h2 id="summary">1. 概要</h2>
+<ul>
+  <li><strong>対象：</strong>楽天証券（楽天グループ全体ではない）<span class="badge low">企業公表</span>。</li>
+  <li><strong>流出元・背景：</strong>テスト環境のシステム。システムアップグレードに伴う検証作業のため、例外的に本番データをマスキング（匿名化）せずにテスト環境へ配置していた時期に不正アクセスを受けたと報じられています（ITmedia 等）<span class="badge med">国内報道</span>。</li>
+  <li><strong>原因：</strong>詳細・侵入経路は引き続き調査中 <span class="badge med">調査中</span>。</li>
+  <li><strong>数値の注意：</strong>「最大1,572万口座」という見出しは二つの数値の単純合算で、公式の件数ではありません。公式発表は二つの区分を別項目で列挙しており、包含関係は明記されていません。</li>
+  <li><strong>別件（混同注意）：</strong>10月31日公表の、デジタル特典付き社債購入者362名の情報が第三者システム（NTTデータ委託先）経由で漏えいした可能性の件。同社システムへのアクセスはないとしています。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="timeline">2. 経緯</h2>
+
+<figure class="fig">
+<svg viewBox="0 0 720 170" role="img" aria-label="時系列">
+<defs><marker id="ah1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs>
+<line x1="40" y1="70" x2="690" y2="70" stroke="var(--line)" stroke-width="3"/>
+<circle cx="90" cy="70" r="11" fill="var(--high)"/><circle cx="420" cy="70" r="11" fill="var(--crit)"/><circle cx="550" cy="70" r="11" fill="var(--pirago-blue)"/>
+<text x="90" y="40" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">11/11</text>
+<text x="420" y="40" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">16/11</text>
+<text x="550" y="40" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">17/11</text>
+<text x="90" y="104" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">漏えいのおそれ</text><text x="90" y="122" text-anchor="middle" font-size="11.5" class="mut">テスト環境</text>
+<text x="420" y="104" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">検知</text><text x="420" y="122" text-anchor="middle" font-size="11.5" class="mut">アクセス遮断・修正</text>
+<text x="550" y="104" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">公表</text><text x="550" y="122" text-anchor="middle" font-size="11.5" class="mut">謝罪・報道</text>
+<text x="255" y="62" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--high)">5日</text>
+<text x="485" y="62" text-anchor="middle" font-size="12" font-weight="700" fill="var(--pirago-blue)">1日</text>
+</svg>
+<figcaption>時系列（2026年11月）。漏えいのおそれがある日から検知までの5日間の差について、公式発表に説明はありません。</figcaption>
+</figure>
+<div class="table-wrap">
+<table id="timeline">
+  <thead><tr><th>日付（2026年）</th><th>出来事</th></tr></thead>
+  <tbody>
+    <tr><td>11月11日（水）</td><td>調査の結果、テスト環境内で管理していた一部情報が外部に漏えいしたおそれがあることを確認。</td></tr>
+    <tr><td>11月16日（月）</td><td>一部システムへの第三者による不正アクセスの可能性を検知。該当箇所へのアクセス遮断・修正を実施。</td></tr>
+    <tr><td>11月17日（火）</td><td>公式発表・謝罪。NHK WORLD が報道。</td></tr>
+    <tr><td>11月18日（水）</td><td>投資信託の出庫手数料（通常1銘柄あたり税込3,300円）を当日の受付分より当面無料化すると発表。11月25日予定だった「楽天証券ストア 渋谷」の開店延期も発表。</td></tr>
+    <tr><td>11月19日（木）</td><td>金融庁より金融商品取引法第56条の2第1項および個人情報保護法第146条第1項に基づく<strong>報告徴求命令</strong>を受領。</td></tr>
+    <tr><td>11月20日（金）</td><td>報告徴求命令の受領が公表・報道される。また弁護士による集団訴訟準備サイトに発足数日で15,000人超の参加希望者が集まる動きも報道。</td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section class="an-sec">
+<h2 id="scope">3. 影響を受けた情報</h2>
+
+<figure class="fig">
+<svg viewBox="0 0 720 150" role="img" aria-label="規模">
+<text x="0" y="27" font-size="12.5" fill="currentColor">総口座数（参考）</text>
+<rect x="250" y="10" width="360" height="24" rx="4" fill="var(--line)"/><text x="618" y="27" font-size="12.5" font-weight="700" fill="currentColor">15M+</text>
+<text x="0" y="67" font-size="12.5" fill="currentColor">部店・顧客コード、ID</text>
+<rect x="250" y="50" width="270" height="24" rx="4" fill="var(--crit)"/><text x="528" y="67" font-size="12.5" font-weight="700" fill="currentColor">~11,25M</text>
+<text x="0" y="107" font-size="12.5" fill="currentColor">＋個人・金融情報</text>
+<rect x="250" y="90" width="107" height="24" rx="4" fill="var(--high)"/><text x="365" y="107" font-size="12.5" font-weight="700" fill="currentColor">~4,47M</text>
+</svg>
+<figcaption>最大規模（線形スケール、単位：百万口座）。発表は二つの区分を別項目で列挙しており、単純合算はできません。1,500万はNHKが報じた11月2日時点の総口座数です。</figcaption>
+</figure>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>区分</th><th>件数（最大）</th><th>流出の恐れがある情報</th></tr></thead>
+  <tbody>
+    <tr><td>区分1</td><td>約447万口座</td><td>部店・お客様コード、ログインID（楽天IDとは別）、氏名、カナ氏名、生年月日、住所、電話番号、メールアドレス、勤務先、出金先口座（金融機関・口座番号・名義人）、年収・金融資産（お客様ご申告情報）、商品別資産情報、最終ログイン日。退会者を含む。</td></tr>
+    <tr><td>区分2</td><td>約1,125万口座</td><td>部店・お客様コード、ログインID。</td></tr>
+  </tbody>
+</table>
+</div>
+<p><strong>流出が確認されていない情報（公式）：</strong>ログインに必要なパスワード、暗証番号を含む取引に必要な各種情報。本件に起因する不正アクセス・不正取引は現時点で確認されていません。「確認されていない」は「流出していないと確定」とは異なります。</p>
+</section>
+
+<section class="an-sec">
+<h2 id="response">4. 対応・利用者向け対策</h2>
+<ul>
+  <li>同社は謝罪し、影響を受けたお客様の特定を<strong>完了</strong>、該当のお客様へ個別に報告。原因・範囲の調査とセキュリティ強化を継続。</li>
+  <li>楽天証券をかたるメール・SMS・電話・郵送に注意。同社のメールには URL を記載せず、電話で個人情報やログイン情報を尋ねることはないとしています。</li>
+  <li>パスキー認証の利用を推奨。セキュリティ設定ページで取引・出金の一時停止が可能。問い合わせ：0120-862-274。二次情報（AliasFleet）はパスキーが必須化されると伝えていますが、公式発表では未確認です。</li>
+  <li><strong>顧客救済・事業影響：</strong>投資信託の他社移管（出庫）手数料（通常1銘柄3,300円税込）を11月18日受付分より当面無料化。11月25日予定の「楽天証券ストア 渋谷」開店を延期。また集団訴訟を準備する動き（参加希望者15,000人超）も報じられています。</li>
+  <li><strong>監督当局：</strong>11月19日、金融庁が金融商品取引法（第56条の2第1項）および個人情報保護法（第146条第1項）に基づく<strong>報告徴求命令</strong>を発出・受領（事実関係、原因分析、再発防止策の報告を要求）。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="recommendations">5. PiraGo の推奨事項</h2>
+
+<figure class="fig">
+<svg viewBox="0 0 740 200" role="img" aria-label="テスト環境リスクの図">
+<defs><marker id="ah2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs>
+<rect class="box" x="0" y="16" width="150" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="75" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">本番データ</text><text x="75" y="68" text-anchor="middle" font-size="11" class="mut">（顧客・資産情報）</text><rect class="box" x="197" y="16" width="150" height="74" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="272" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">テスト環境</text><text x="272" y="68" text-anchor="middle" font-size="11" class="mut">統制が弱い？</text><rect class="box" x="394" y="16" width="150" height="74" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="469" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">不正アクセス</text><text x="469" y="68" text-anchor="middle" font-size="11" class="mut">第三者</text><rect class="box" x="590" y="16" width="150" height="74" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="665" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">情報流出</text><text x="665" y="68" text-anchor="middle" font-size="11" class="mut">個人・金融情報</text>
+<line x1="150" y1="53" x2="195" y2="53" stroke="var(--text-muted)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ah2)"/>
+<line x1="544" y1="53" x2="588" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#ah2)"/>
+<line x1="347" y1="53" x2="392"  y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#ah2)"/>
+<rect x="0" y="130" width="740" height="56" rx="8" fill="none" stroke="var(--low)" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="16" y="152" font-size="12.5" font-weight="700" fill="currentColor">PiraGo の推奨:</text>
+<text x="16" y="170" font-size="11.5" class="mut">• 合成/マスキングデータ、テストにも MFA・VPN</text>
+</svg>
+<figcaption>テスト環境に実データがある場合の一般的なリスクの図解です。本件の原因を示すものではありません（原因は調査中）。</figcaption>
+</figure>
+<ol>
+  <li><strong>本番データをテスト環境に持ち込まない：</strong>合成データまたは管理されたマスキング済みデータを使用し、本番 DB の丸ごとコピーを禁止。</li>
+  <li><strong>テスト/ステージングも実際の攻撃対象と考える：</strong>SSO + MFA、VPN/IP 許可リスト、ログ・監視を本番と同水準に。</li>
+  <li><strong>定期的な棚卸しと削除：</strong>退会者を含む個人データが副次環境に残っていないか、保持ポリシーに沿って確認。</li>
+  <li><strong>顧客通知の準備：</strong>流出した情報と未確認の情報を明確に区別し、フィッシング対策とパスキー/MFA を案内。</li>
+</ol>
+</section>
+
+<section class="an-sec">
+<h2 id="sources">6. 参考情報</h2>
+<ul>
+  <li><a href="https://www3.nhk.or.jp/nhkworld/news/20261117de77429/" target="_blank" rel="noopener">NHK WORLD（2026年11月17日）</a></li>
+  <li><a href="https://www.rakuten-sec.co.jp/web/info/info20261117-02.html" target="_blank" rel="noopener">楽天証券 — 公式お知らせ（2026年11月17日）</a></li>
+  <li><a href="https://www.rakuten-sec.co.jp/web/company/newsrelease/pdf/press2026111702.pdf" target="_blank" rel="noopener">楽天証券 — プレスリリース（PDF）</a></li>
+  <li><a href="https://www.itmedia.co.jp/news/article/2611/17/2000003275/" target="_blank" rel="noopener">ITmedia NEWS（2026年11月17日）</a></li>
+  <li><strong>金融庁 報告徴求命令（11/19受領・11/20報道）：</strong>読売新聞、株探（Kabutan）、SBI・楽天証券公式開示、BigGo 等</li>
+  <li><strong>投信出庫手数料の無料化・渋谷店舗延期（11/18〜20）：</strong>楽天証券公式お知らせ、Tokyo News Media 等</li>
+  <li><a href="https://cybersecurity-jp.com/news/118606" target="_blank" rel="noopener">Cybersecurity-jp</a></li>
+  <li><a href="https://internet.watch.impress.co.jp/docs/news/2157218.html" target="_blank" rel="noopener">Impress Internet Watch</a></li>
+  <li><a href="https://www.aliasfleet.com/blog/rakuten-securities-data-breach" target="_blank" rel="noopener">AliasFleet（二次情報）</a></li>
+  <li><a href="https://www.rakuten-sec.co.jp/web/info/info20261031-01.html" target="_blank" rel="noopener">楽天証券 — 10月31日のお知らせ（別件）</a></li>
+</ul>
+</section>

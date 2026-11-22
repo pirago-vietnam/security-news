@@ -19,10 +19,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - `_data/monthly/YYYY-mm.yml`: Bilingual (vi + ja) content of each monthly report; the single source of truth.
   - `monthly/` and `monthly/ja/`: Thin stubs (`YYYY-mm.html`) that only set `monthly: "YYYY-mm"` and include `_includes/monthly-report.html`.
   - `_data/i18n.yml`: UI strings per language (`vi`, `ja`); `ja/` pages get `lang: ja` via `_config.yml` defaults.
-  - `featured/<case>/` (vi) and `featured/<case>/ja/` (ja, with explicit `lang: ja` and `permalink: /ja/featured/<case>/...` so the URL keeps the `/ja/` prefix the layout relies on): Featured cases (major incidents, vulnerability analyses, runbooks), listed in `_data/featured.yml` (drives the homepage section, header dropdown and footer):
-    - `gmo/`: Incident reports for major external security crises (e.g., `gmo_onamae_security_incident_report.html`).
-    - `linux-cve-2026-98432/`: Linux kernel TCP UAF analysis.
-    - `php-cve-2026-109618-109619/`: Single-page HTML runbook (PHP2Shell) for incident response and patching.
+  - `featured/incidents/<case>/` & `featured/vulnerabilities/<case>/` (vi) and `.../ja/` (ja, with explicit `lang: ja` and `permalink: /ja/featured/<type>/<case>/...` so the URL keeps the `/ja/` prefix the layout relies on): Featured cases (major incidents, vulnerability analyses, runbooks), listed in `_data/featured.yml` (drives the homepage section, header dropdown and footer):
+    - `featured/incidents/gmo/`: Incident reports for major external security crises (e.g., `gmo_onamae_security_incident_report.html`).
+    - `featured/vulnerabilities/linux-cve-2026-98432/`: Linux kernel TCP UAF analysis.
+    - `featured/vulnerabilities/php-cve-2026-109618-109619/`: Single-page HTML runbook (PHP2Shell) for incident response and patching.
   - `_templates/monthly-data.yml` & `_templates/monthly-stub.html` / `monthly-stub-ja.html`: Templates for new monthly reports.
   - `monthly/RULES.md`: Authoritative specification for monthly report structure and workflow.
 
@@ -68,10 +68,10 @@ Verify that the output contains the expected content, not an error, login, or ch
 
 ## Featured Case Pages (vulnerability analyses)
 
-Every new vulnerability analysis page (`featured/<case>/analysis.html` + `ja/analysis.html`) must include, like the existing pages (e.g. `featured/nginx-cve-2026-123007/`):
+Every new vulnerability analysis page (`featured/vulnerabilities/<case>/analysis.html` + `ja/analysis.html`) must include, like the existing pages (e.g. `featured/vulnerabilities/nginx-cve-2026-123007/`):
 
 - **Diagrams / illustrations**: hand-written inline `<svg>` inside `<figure class="fig">…<figcaption>` (viewBox width 740, `role="img"` + `aria-label`). Use theme tokens only (`var(--crit|high|med|low|text-muted|line|bg-subtle)`, `fill="currentColor"`, classes `box` / `mut`) so light and dark mode both work; give each arrow marker a unique `id` per page. Include the `.fig*` CSS in the page `<style>` (copy from the nginx page). Minimum set: (1) attack chain, (2) mechanism illustration when meaningful (e.g. buffer overflow), (3) affected/fixed version scope, (4) quick decision tree / remediation flow. Translate labels in the ja page; never show exploit detail.
-- **SNS (OG) image**: `featured/<case>/<name>-og.png`, 1200x630, referenced by `image:` in the front matter of both vi and ja pages. Render from a small HTML (dark navy gradient, JetBrains Mono, severity badge, name, CVE/GHSA id, one-line summary, affected → fixed versions, `assets/images/logo_footer.webp`, `security-news.pirago.vn`) with headless Chrome: `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --hide-scrollbars --window-size=1200,630 --screenshot=<out.png> file://<html>`. Keep the temp HTML in the scratchpad, not the repo.
+- **SNS (OG) image**: `featured/<type>/<case>/<name>-og.png`, 1200x630, referenced by `image:` in the front matter of both vi and ja pages. Render from a small HTML (dark navy gradient, JetBrains Mono, severity badge, name, CVE/GHSA id, one-line summary, affected → fixed versions, `assets/images/logo_footer.webp`, `security-news.pirago.vn`) with headless Chrome: `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --hide-scrollbars --window-size=1200,630 --screenshot=<out.png> file://<html>`. Keep the temp HTML in the scratchpad, not the repo.
 - **Verify visually**: screenshot the `<figure>` blocks with headless Chrome and check for overlapping or clipped text before committing.
 - Register the case in `_data/featured.yml` (vi + ja strings, including `month: "YYYY-MM"` based on initial disclosure/occurrence month for `/incidents/` and `/vulnerabilities/` monthly archive pages). **Sort order**: entries in `_data/featured.yml` (both `incident` and `vulnerability`) must be ordered by **initial public disclosure / occurrence date of the incident or vulnerability (newest first)**, not by article creation or last-updated date.
 

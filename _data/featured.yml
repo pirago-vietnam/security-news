@@ -7,7 +7,7 @@
 - id: linux-cve-2026-99362
   category: vulnerability
   month: "2026-11"
-  path: "featured/linux-cve-2026-99362/analysis/"
+  path: "featured/vulnerabilities/linux-cve-2026-99362/analysis/"
   icon: "🐧"
   accent: true
   badge: {sev: crit, text: "CRITICAL"}
@@ -33,7 +33,7 @@
 - id: spring-security-cve-2026-59273
   category: vulnerability
   month: "2026-11"
-  path: "featured/spring-security-cve-2026-59273/analysis/"
+  path: "featured/vulnerabilities/spring-security-cve-2026-59273/analysis/"
   icon: "🍃"
   accent: true
   badge: {sev: crit, text: "CRITICAL"}
@@ -60,7 +60,7 @@
   category: vulnerability
   month: "2026-11"
   archived: true
-  path: "featured/php-security-release-2026-11-19/advisory/"
+  path: "featured/vulnerabilities/php-security-release-2026-11-19/advisory/"
   icon: "🐘"
   accent: true
   badge: {sev: crit, text: "CRITICAL · 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36"}
@@ -83,7 +83,7 @@
 - id: linux-cve-2026-99312
   category: vulnerability
   month: "2026-11"
-  path: "featured/linux-cve-2026-99312/analysis/"
+  path: "featured/vulnerabilities/linux-cve-2026-99312/analysis/"
   icon: "🐧"
   accent: true
   badge: {sev: high, text: "HIGH"}
@@ -109,7 +109,7 @@
 - id: database-rce-narrow-grants
   category: vulnerability
   month: "2026-11"
-  path: "featured/database-rce-narrow-grants/analysis/"
+  path: "featured/vulnerabilities/database-rce-narrow-grants/analysis/"
   icon: "🗄️"
   accent: true
   badge: {sev: crit, text: "CRITICAL"}
@@ -136,7 +136,7 @@
   category: vulnerability
   month: "2026-11"
   archived: true
-  path: "featured/ruby-ghsa-34m4-m9fh-gqp5/analysis/"
+  path: "featured/vulnerabilities/ruby-ghsa-34m4-m9fh-gqp5/analysis/"
   icon: "💎"
   accent: true
   badge: {sev: crit, text: "CRITICAL"}
@@ -163,7 +163,7 @@
   category: vulnerability
   month: "2026-11"
   archived: true
-  path: "featured/nginx-cve-2026-123007/analysis/"
+  path: "featured/vulnerabilities/nginx-cve-2026-123007/analysis/"
   icon: "🧩"
   accent: true
   badge: {sev: crit, text: "CRITICAL"}
@@ -190,7 +190,7 @@
   category: vulnerability
   month: "2026-11"
   archived: true
-  path: "featured/java-cve-2026-114938/analysis/"
+  path: "featured/vulnerabilities/java-cve-2026-114938/analysis/"
   icon: "☕"
   accent: true
   badge: {sev: high, text: "HIGH"}
@@ -216,7 +216,7 @@
 - id: rakuten-sec
   category: incident
   month: "2026-11"
-  path: "featured/rakuten-sec/rakuten_securities_security_incident_report/"
+  path: "featured/incidents/rakuten-sec/rakuten_securities_security_incident_report/"
   icon: "📈"
   accent: true
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
@@ -243,7 +243,7 @@
   category: vulnerability
   month: "2026-11"
   archived: true
-  path: "featured/brotli-cve-2026-111497/analysis/"
+  path: "featured/vulnerabilities/brotli-cve-2026-111497/analysis/"
   icon: "📦"
   accent: true
   badge: {sev: high, text: "HIGH"}
@@ -267,7 +267,7 @@
   category: vulnerability
   month: "2026-11"
   archived: true
-  path: "featured/postgresql-cve-2026-6460/analysis/"
+  path: "featured/vulnerabilities/postgresql-cve-2026-6460/analysis/"
   icon: "🐘"
   accent: true
   badge: {sev: high, text: "HIGH"}
@@ -293,7 +293,7 @@
 - id: microsoft-365-outage-2026-11
   category: incident
   month: "2026-11"
-  path: "featured/microsoft-365-outage-2026-11/incident_report/"
+  path: "featured/incidents/microsoft-365-outage-2026-11/incident_report/"
   icon: "☁️"
   accent: true
   badge: {sev: high, text: "OPERATIONAL INCIDENT"}
@@ -320,7 +320,7 @@
   category: vulnerability
   month: "2026-11"
   archived: true
-  path: "featured/apache-cve-2026-119618/analysis/"
+  path: "featured/vulnerabilities/apache-cve-2026-119618/analysis/"
   icon: "🌐"
   accent: true
   badge: {sev: crit, text: "CRITICAL"}
@@ -347,7 +347,7 @@
   category: vulnerability
   month: "2026-11"
   archived: true
-  path: "featured/linux-cve-2026-98432/analysis/"
+  path: "featured/vulnerabilities/linux-cve-2026-98432/analysis/"
   icon: "🐧"
   accent: true
   badge: {sev: high, text: "HIGH"}
@@ -373,7 +373,7 @@
 - id: muji
   category: incident
   month: "2026-10"
-  path: "featured/muji/muji_security_incident_report/"
+  path: "featured/incidents/muji/muji_security_incident_report/"
   icon: "🛍️"
   accent: true
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
@@ -400,7 +400,7 @@
   category: vulnerability
   month: "2026-10"
   archived: true
-  path: "featured/php-cve-2026-109618-109619/php2shell/"
+  path: "featured/vulnerabilities/php-cve-2026-109618-109619/php2shell/"
   icon: "📘"
   accent: false
   badge: {sev: crit, text: "CRITICAL"}
@@ -427,7 +427,7 @@
   category: incident
   month: "2026-10"
   archived: true
-  path: "featured/binance/binance_security_incident_report/"
+  path: "featured/incidents/binance/binance_security_incident_report/"
   icon: "💸"
   accent: true
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
@@ -454,7 +454,7 @@
   category: incident
   month: "2026-10"
   archived: true
-  path: "featured/gmo/gmo_onamae_security_incident_report/"
+  path: "featured/incidents/gmo/gmo_onamae_security_incident_report/"
   icon: "🚨"
   accent: true
   badge: {sev: crit, text: "CRITICAL INCIDENT"}

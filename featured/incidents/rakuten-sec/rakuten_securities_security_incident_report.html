@@ -1,0 +1,191 @@
+---
+layout: default
+title: "楽天証券 (Rakuten Securities) — Có thể lộ tối đa 11,25 triệu tài khoản từ môi trường test"
+description: "Cập nhật 20/11/2026 sự cố Rakuten Securities: Lệnh yêu cầu báo cáo từ FSA (19/11), miễn phí chuyển quỹ tín thác, động thái kiện tập thể, phạm vi và khuyến cáo"
+image: "/featured/incidents/rakuten-sec/rakuten-securities-og.png"
+category: "Sự cố an ninh"
+redirect_from:
+  - /featured/rakuten-sec/rakuten_securities_security_incident_report/
+---
+<style>
+  .an-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
+  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--line); color: var(--text-muted); }
+  .an-nav a:hover { color: var(--pirago-blue); border-color: var(--pirago-blue); text-decoration: none; }
+  .an-sec { margin: 0 0 40px; }
+  .an-sec h2 { font-size: 21px; margin: 28px 0 14px; scroll-margin-top: 90px; }
+  .an-sec h3 { font-size: 17px; margin: 20px 0 8px; }
+  .an-sec ul, .an-sec ol { padding-left: 22px; }
+  .an-sec li { margin: 6px 0; }
+  .an-sec .table-wrap { overflow-x: auto; margin: 14px 0 20px; }
+  .an-sec code { word-break: break-all; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 20px 0 24px; }
+  .kpi-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); }
+  .kpi-num { font-size: 22px; font-weight: 800; font-family: var(--font-mono); color: var(--pirago-navy); line-height: 1.2; margin-bottom: 4px; }
+  html[data-theme="dark"] .kpi-num { color: #5ab0e8; }
+  .kpi-num.crit { color: var(--crit); }
+  .kpi-num.high { color: var(--high); }
+  .kpi-label { font-size: 12.5px; color: var(--text-muted); line-height: 1.4; }
+  .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
+  .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
+  .fig .mut { fill: var(--text-muted); }
+  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
+  .fig .box[style*="--crit"] { fill: var(--crit-bg); }
+  .fig .box[style*="--high"] { fill: var(--high-bg); }
+  .fig rect[stroke="var(--low)"] { fill: var(--low-bg); }
+  .fig rect[fill="var(--line)"] { fill: #cbd5e1; }
+  html[data-theme="dark"] .fig .box[style*="--crit"] { fill: rgba(239,68,68,.32); }
+  html[data-theme="dark"] .fig .box[style*="--high"] { fill: rgba(245,158,11,.32); }
+  html[data-theme="dark"] .fig rect[stroke="var(--low)"] { fill: rgba(16,185,129,.28); }
+  html[data-theme="dark"] .fig rect[fill="var(--line)"] { fill: #64748b; }
+</style>
+
+<div class="report-header">
+  <h1>楽天証券 (Rakuten Securities) — Có thể lộ tối đa 11,25 triệu tài khoản từ môi trường test</h1>
+  <p class="sub">Xảy ra / Công bố: <strong>2026-11-17</strong> · Cập nhật đến <strong>2026-11-20</strong>: tiếp nối công bố ngày 17/11, ngày <strong>19/11 công ty nhận Lệnh yêu cầu báo cáo từ Cơ quan Dịch vụ Tài chính Nhật Bản (FSA)</strong>; miễn phí xuất lưu quỹ tín thác sang công ty khác và hoãn khai trương cửa hàng Shibuya. Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a>.</p>
+</div>
+
+<blockquote class="callout">
+  <p><strong>TL;DR (dễ hiểu):</strong> Rakuten Securities (công ty chứng khoán trực tuyến của Rakuten Group, hơn 15 triệu tài khoản) xác nhận ngày 11/11/2026 rằng một phần thông tin quản lý trong hệ thống môi trường test có thể đã bị rò rỉ. Ngày 16/11 công ty phát hiện khả năng bên thứ ba truy cập trái phép, đã chặn truy cập và khắc phục các điểm bị ảnh hưởng, rồi công bố và xin lỗi ngày 17/11. Báo chí Nhật Bản đưa tin công ty đã đặt dữ liệu khách hàng thật không che (unmasked) vào môi trường test để kiểm thử nâng cấp hệ thống. Có thể ảnh hưởng tối đa <strong>khoảng 11,25 triệu tài khoản</strong> (mã chi nhánh, mã khách hàng, ID đăng nhập) và <strong>khoảng 4,47 triệu tài khoản</strong> bị lộ thêm thông tin cá nhân và tài chính. Ngày 18/11 công ty miễn phí chuyển quỹ tín thác sang đối thủ và ngày 19/11 nhận <strong>lệnh yêu cầu báo cáo từ FSA</strong>. Mật khẩu, mã PIN và giao dịch trái phép hiện vẫn chưa ghi nhận bị lộ/phát sinh.</p>
+</blockquote>
+
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-num crit">~11,25M</div><div class="kpi-label">Tài khoản có thể lộ mã chi nhánh, mã khách hàng, ID đăng nhập (tối đa)</div></div>
+  <div class="kpi-card"><div class="kpi-num crit">~4,47M</div><div class="kpi-label">Tài khoản có thể lộ thêm thông tin cá nhân &amp; tài chính (tối đa)</div></div>
+  <div class="kpi-card"><div class="kpi-num high">Môi trường test</div><div class="kpi-label">Đặt dữ liệu thật không masking (theo báo chí); gồm người đã rút tài khoản</div></div>
+  <div class="kpi-card"><div class="kpi-num crit">Lệnh FSA</div><div class="kpi-label">Nhận lệnh yêu cầu báo cáo ngày 19/11 (chi tiết xâm nhập đang điều tra)</div></div>
+</div>
+
+<nav class="an-nav" aria-label="Mục lục">
+  <a href="#summary">1. Tóm tắt</a>
+  <a href="#timeline">2. Diễn biến</a>
+  <a href="#scope">3. Dữ liệu bị ảnh hưởng</a>
+  <a href="#response">4. Ứng phó &amp; Khuyến cáo người dùng</a>
+  <a href="#recommendations">5. Khuyến cáo từ PiraGo</a>
+  <a href="#sources">6. Nguồn tham khảo</a>
+</nav>
+
+<section class="an-sec">
+<h2 id="summary">1. Tóm tắt</h2>
+<ul>
+  <li><strong>Đơn vị:</strong> Rakuten Securities (楽天証券), không phải toàn bộ Rakuten Group <span class="badge low">Công ty xác nhận</span>.</li>
+  <li><strong>Nguồn rò rỉ &amp; Bối cảnh:</strong> hệ thống môi trường test; theo báo chí Nhật Bản (ITmedia...), để phục vụ kiểm thử nâng cấp hệ thống, dữ liệu khách hàng thật (không masking/ẩn danh hóa) đã được đặt tạm thời trên máy chủ môi trường test và bị truy cập trái phép <span class="badge med">Báo chí Nhật Bản</span>.</li>
+  <li><strong>Nguyên nhân:</strong> chi tiết kỹ thuật và đường xâm nhập vẫn đang được điều tra <span class="badge med">Đang điều tra</span>.</li>
+  <li><strong>Lưu ý số liệu:</strong> một số tiêu đề báo ghi "tối đa 15,72 triệu tài khoản" là phép cộng hai con số trên, không phải số liệu chính thức. Thông báo gốc liệt kê hai nhóm tách biệt (tối đa ~4,47 triệu và ~11,25 triệu tài khoản), không nêu rõ quan hệ tập con.</li>
+  <li><strong>Vụ việc khác, không nhầm lẫn:</strong> thông báo ngày 31/10/2026 về thông tin của 362 người mua trái phiếu doanh nghiệp quyền lợi số có thể bị lộ qua hệ thống bên thứ ba (nhà thầu phụ của NTT Data). Công ty cho biết hệ thống của mình không bị truy cập.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="timeline">2. Diễn biến</h2>
+
+<figure class="fig">
+<svg viewBox="0 0 720 170" role="img" aria-label="dòng thời gian">
+<defs><marker id="ah1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs>
+<line x1="40" y1="70" x2="690" y2="70" stroke="var(--line)" stroke-width="3"/>
+<circle cx="90" cy="70" r="11" fill="var(--high)"/><circle cx="420" cy="70" r="11" fill="var(--crit)"/><circle cx="550" cy="70" r="11" fill="var(--pirago-blue)"/>
+<text x="90" y="40" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">11/11</text>
+<text x="420" y="40" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">16/11</text>
+<text x="550" y="40" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">17/11</text>
+<text x="90" y="104" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">Có thể rò rỉ</text><text x="90" y="122" text-anchor="middle" font-size="11.5" class="mut">Môi trường test</text>
+<text x="420" y="104" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">Phát hiện</text><text x="420" y="122" text-anchor="middle" font-size="11.5" class="mut">Chặn truy cập & sửa</text>
+<text x="550" y="104" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">Công bố</text><text x="550" y="122" text-anchor="middle" font-size="11.5" class="mut">Xin lỗi, báo chí đưa tin</text>
+<text x="255" y="62" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--high)">5 ngày</text>
+<text x="485" y="62" text-anchor="middle" font-size="12" font-weight="700" fill="var(--pirago-blue)">1 ngày</text>
+</svg>
+<figcaption>Dòng thời gian (tháng 11/2026). Khoảng cách 5 ngày giữa thời điểm có thể rò rỉ và lúc phát hiện chưa được thông báo giải thích.</figcaption>
+</figure>
+<div class="table-wrap">
+<table id="timeline">
+  <thead><tr><th>Ngày (2026)</th><th>Sự kiện</th></tr></thead>
+  <tbody>
+    <tr><td>11/11 (Thứ Tư)</td><td>Điều tra xác nhận một phần thông tin quản lý trong môi trường test có thể đã bị rò rỉ ra ngoài.</td></tr>
+    <tr><td>16/11 (Thứ Hai)</td><td>Phát hiện khả năng bên thứ ba truy cập trái phép vào một số hệ thống; đã chặn truy cập và khắc phục điểm bị ảnh hưởng.</td></tr>
+    <tr><td>17/11 (Thứ Ba)</td><td>Công bố chính thức và xin lỗi; NHK World đưa tin.</td></tr>
+    <tr><td>18/11 (Thứ Tư)</td><td>Thông báo miễn phí xuất lưu/chuyển quỹ tín thác sang công ty khác (thông thường 3.300 yên/mã gồm thuế) áp dụng cho hồ sơ tiếp nhận từ ngày 18/11; hoãn khai trương cửa hàng vật lý "Rakuten Securities Store Shibuya" (vốn dự kiến 25/11).</td></tr>
+    <tr><td>19/11 (Thứ Năm)</td><td>Nhận <strong>Lệnh yêu cầu báo cáo (報告徴求命令)</strong> từ Cơ quan Dịch vụ Tài chính Nhật Bản (FSA) theo Điều 56-2 Khoản 1 Luật Giao dịch &amp; Công cụ Tài chính và Điều 146 Khoản 1 Luật Bảo vệ Thông tin Cá nhân.</td></tr>
+    <tr><td>20/11 (Thứ Sáu)</td><td>Công bố và đưa tin rộng rãi về lệnh yêu cầu báo cáo của FSA. Báo chí ghi nhận trang chuẩn bị khởi kiện tập thể do luật sư lập đã thu hút hơn 15.000 người đăng ký chỉ sau vài ngày.</td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section class="an-sec">
+<h2 id="scope">3. Dữ liệu bị ảnh hưởng</h2>
+
+<figure class="fig">
+<svg viewBox="0 0 720 150" role="img" aria-label="quy mô">
+<text x="0" y="27" font-size="12.5" fill="currentColor">Tổng tài khoản (tham chiếu)</text>
+<rect x="250" y="10" width="360" height="24" rx="4" fill="var(--line)"/><text x="618" y="27" font-size="12.5" font-weight="700" fill="currentColor">15M+</text>
+<text x="0" y="67" font-size="12.5" fill="currentColor">Mã chi nhánh, mã KH, ID</text>
+<rect x="250" y="50" width="270" height="24" rx="4" fill="var(--crit)"/><text x="528" y="67" font-size="12.5" font-weight="700" fill="currentColor">~11,25M</text>
+<text x="0" y="107" font-size="12.5" fill="currentColor">+ Thông tin cá nhân & tài chính</text>
+<rect x="250" y="90" width="107" height="24" rx="4" fill="var(--high)"/><text x="365" y="107" font-size="12.5" font-weight="700" fill="currentColor">~4,47M</text>
+</svg>
+<figcaption>Quy mô tối đa (thang tuyến tính, đơn vị triệu tài khoản). Công bố liệt kê hai nhóm riêng biệt, không nên cộng gộp; 15 triệu là số tổng theo NHK tại 02/11.</figcaption>
+</figure>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Nhóm</th><th>Số lượng (tối đa)</th><th>Trường dữ liệu có nguy cơ bị lộ</th></tr></thead>
+  <tbody>
+    <tr><td>Nhóm 1</td><td>~11,25 triệu tài khoản</td><td>Mã chi nhánh, mã khách hàng, ID đăng nhập (khác với Rakuten ID).</td></tr>
+    <tr><td>Nhóm 2</td><td>~4,47 triệu tài khoản</td><td>Các mục của nhóm 1 cùng họ tên, tên kana, ngày sinh, địa chỉ, số điện thoại, email, nơi làm việc, thông tin tài khoản rút tiền (ngân hàng, số tài khoản, tên chủ tài khoản), thu nhập hằng năm tự khai, thông tin tài sản tài chính, tài sản theo sản phẩm, ngày đăng nhập gần nhất. Gồm cả khách hàng đã rút tài khoản.</td></tr>
+  </tbody>
+</table>
+</div>
+<p><strong>Không bị lộ (theo công ty, "chưa xác nhận bị lộ"):</strong> mật khẩu đăng nhập, mã PIN và thông tin cần thiết để giao dịch. Chưa xác nhận truy cập hoặc giao dịch trái phép liên quan đến sự cố này. Cụm "chưa xác nhận" khác với "đã xác nhận không bị lộ".</p>
+</section>
+
+<section class="an-sec">
+<h2 id="response">4. Ứng phó &amp; Khuyến cáo người dùng</h2>
+<ul>
+  <li>Công ty xin lỗi, đã <strong>hoàn tất việc xác định</strong> khách hàng bị ảnh hưởng và sẽ thông báo riêng; tiếp tục điều tra nguyên nhân, phạm vi và tăng cường bảo mật.</li>
+  <li>Cảnh giác email, SMS, cuộc gọi và thư giả mạo Rakuten Securities. Công ty cho biết email của họ không chứa URL và không gọi điện hỏi thông tin cá nhân hay đăng nhập.</li>
+  <li>Khuyến nghị bật xác thực passkey. Khách hàng có thể tạm khóa giao dịch và rút tiền trong trang cài đặt bảo mật. Hotline: 0120-862-274. Một blog thứ cấp (AliasFleet) cho biết passkey sẽ trở thành bắt buộc; thông báo gốc chưa xác nhận điều này.</li>
+  <li><strong>Hỗ trợ khách hàng &amp; Ảnh hưởng kinh doanh:</strong> Miễn phí xuất lưu (chuyển sang công ty chứng khoán khác) đối với quỹ tín thác đầu tư (thông thường 3.300 yên/mã) từ hồ sơ tiếp nhận ngày 18/11; hoãn khai trương cửa hàng "Rakuten Securities Store Shibuya" (dự kiến 25/11). Ghi nhận động thái chuẩn bị khởi kiện tập thể với hơn 15.000 người đăng ký tham gia.</li>
+  <li><strong>Cơ quan quản lý:</strong> Ngày 19/11, Cơ quan Dịch vụ Tài chính Nhật Bản (FSA) đã ban hành <strong>Lệnh yêu cầu báo cáo (報告徴求命令)</strong> theo Luật Giao dịch &amp; Công cụ Tài chính và Luật Bảo vệ Thông tin Cá nhân, yêu cầu giải trình chi tiết sự việc, phân tích nguyên nhân và biện pháp phòng ngừa tái diễn.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="recommendations">5. Khuyến cáo từ PiraGo</h2>
+
+<figure class="fig">
+<svg viewBox="0 0 740 200" role="img" aria-label="sơ đồ rủi ro môi trường test">
+<defs><marker id="ah2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs>
+<rect class="box" x="0" y="16" width="150" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="75" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Dữ liệu thật</text><text x="75" y="68" text-anchor="middle" font-size="11" class="mut">(khách hàng, tài sản)</text><rect class="box" x="197" y="16" width="150" height="74" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="272" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Môi trường test</text><text x="272" y="68" text-anchor="middle" font-size="11" class="mut">kiểm soát yếu hơn?</text><rect class="box" x="394" y="16" width="150" height="74" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="469" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Truy cập trái phép</text><text x="469" y="68" text-anchor="middle" font-size="11" class="mut">bên thứ ba</text><rect class="box" x="590" y="16" width="150" height="74" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="665" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Lộ dữ liệu</text><text x="665" y="68" text-anchor="middle" font-size="11" class="mut">cá nhân + tài chính</text>
+<line x1="150" y1="53" x2="195" y2="53" stroke="var(--text-muted)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ah2)"/>
+<line x1="544" y1="53" x2="588" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#ah2)"/>
+<line x1="347" y1="53" x2="392"  y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#ah2)"/>
+<rect x="0" y="130" width="740" height="56" rx="8" fill="none" stroke="var(--low)" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="16" y="152" font-size="12.5" font-weight="700" fill="currentColor">Khuyến cáo PiraGo:</text>
+<text x="16" y="170" font-size="11.5" class="mut">• Dữ liệu tổng hợp/masking, MFA & VPN cho test</text>
+</svg>
+<figcaption>Minh họa rủi ro chung khi môi trường test chứa dữ liệu thật. Đây là sơ đồ khái quát, không phải xác nhận nguyên nhân của vụ này (nguyên nhân đang điều tra).</figcaption>
+</figure>
+<ol>
+  <li><strong>Không đưa dữ liệu production vào môi trường test:</strong> dùng dữ liệu tổng hợp hoặc dữ liệu đã ẩn danh hóa (masking) có kiểm soát; cấm sao chép nguyên bản DB production xuống staging/test.</li>
+  <li><strong>Coi môi trường test/staging là bề mặt tấn công thật:</strong> áp dụng cùng chuẩn xác thực (SSO + MFA), giới hạn mạng (VPN/IP allowlist), ghi log và giám sát như production.</li>
+  <li><strong>Kiểm kê và xóa định kỳ:</strong> rà soát dữ liệu cá nhân tồn đọng trong các môi trường phụ, gồm dữ liệu của người dùng đã hủy tài khoản, theo chính sách retention.</li>
+  <li><strong>Chuẩn bị kênh thông báo khách hàng:</strong> khi có sự cố, nêu rõ dữ liệu nào lộ, dữ liệu nào chưa xác nhận, nhắc phòng chống phishing và khuyến khích passkey/MFA.</li>
+</ol>
+</section>
+
+<section class="an-sec">
+<h2 id="sources">6. Nguồn tham khảo</h2>
+<ul>
+  <li><a href="https://www3.nhk.or.jp/nhkworld/news/20261117de77429/" target="_blank" rel="noopener">NHK WORLD — Tin ngày 17/11/2026</a></li>
+  <li><a href="https://www.rakuten-sec.co.jp/web/info/info20261117-02.html" target="_blank" rel="noopener">Rakuten Securities — Thông báo chính thức (17/11/2026)</a></li>
+  <li><a href="https://www.rakuten-sec.co.jp/web/company/newsrelease/pdf/press2026111702.pdf" target="_blank" rel="noopener">Rakuten Securities — Thông cáo báo chí (PDF)</a></li>
+  <li><a href="https://www.itmedia.co.jp/news/article/2611/17/2000003275/" target="_blank" rel="noopener">ITmedia NEWS (17/11/2026)</a></li>
+  <li><strong>Lệnh yêu cầu báo cáo của FSA (nhận 19/11, đưa tin 20/11):</strong> Yomiuri Shimbun, Kabutan, thông cáo Rakuten Securities, BigGo...</li>
+  <li><strong>Miễn phí xuất lưu quỹ tín thác &amp; Hoãn mở cửa hàng Shibuya (18–20/11):</strong> Thông báo Rakuten Securities, Tokyo News Media...</li>
+  <li><a href="https://www.itkisyakai.com/entry/2026/11/17/201314" target="_blank" rel="noopener">ITkisyakai — Bản sao thông báo</a></li>
+  <li><a href="https://cybersecurity-jp.com/news/118606" target="_blank" rel="noopener">Cybersecurity-jp</a></li>
+  <li><a href="https://internet.watch.impress.co.jp/docs/news/2157218.html" target="_blank" rel="noopener">Impress Internet Watch</a></li>
+  <li><a href="https://www.aliasfleet.com/blog/rakuten-securities-data-breach" target="_blank" rel="noopener">AliasFleet (nguồn thứ cấp)</a></li>
+  <li><a href="https://www.rakuten-sec.co.jp/web/info/info20261031-01.html" target="_blank" rel="noopener">Rakuten Securities — Thông báo 31/10/2026 (vụ việc riêng)</a></li>
+</ul>
+<p><small>Nội dung đã đối chiếu với thông báo chính thức ngày 17/11/2026 của Rakuten Securities (ảnh chụp trang) và báo chí.</small></p>
+</section>

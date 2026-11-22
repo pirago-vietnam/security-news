@@ -6,15 +6,15 @@ Tài liệu này mô tả cấu trúc layout, CSS, dàn bài và quy trình chu�
 
 ## 1. Cấu trúc thư mục & File song ngữ
 
-Mỗi case trong `featured/<case-slug>/` gồm các file sau:
+Mỗi case đặt trong `featured/<type>/<case-slug>/` (`<type>` là `vulnerabilities` cho lỗ hổng, `incidents` cho sự cố) gồm các file sau:
 
-- **Trang tiếng Việt** (mặc định, URL `/featured/<case-slug>/<page-name>/`):
-  - Lỗ hổng: `featured/<case-slug>/analysis.html` (hoặc `advisory.html` với đợt vá tổng hợp)
-  - Sự cố: `featured/<case-slug>/incident_report.html` (hoặc `<name>_security_incident_report.html`)
+- **Trang tiếng Việt** (mặc định, URL `/featured/<type>/<case-slug>/<page-name>/`):
+  - Lỗ hổng: `featured/vulnerabilities/<case-slug>/analysis.html` (hoặc `advisory.html` với đợt vá tổng hợp)
+  - Sự cố: `featured/incidents/<case-slug>/incident_report.html` (hoặc `<name>_security_incident_report.html`)
 - **Trang tiếng Nhật** (bắt buộc có `lang: ja` và `permalink` tường minh):
-  - `featured/<case-slug>/ja/analysis.html` (hoặc `ja/incident_report.html`)
+  - `featured/<type>/<case-slug>/ja/analysis.html` (hoặc `ja/incident_report.html`)
 - **Ảnh Open Graph (OG)** (dùng chung cho cả `vi` và `ja`):
-  - `featured/<case-slug>/<name>-og.png` (kích thước `1200×630`)
+  - `featured/<type>/<case-slug>/<name>-og.png` (kích thước `1200×630`)
 
 ---
 
@@ -26,7 +26,7 @@ Mỗi case trong `featured/<case-slug>/` gồm các file sau:
 layout: default
 title: "<Tên đối tượng / CVE> — <Tóm tắt ngắn tác động>"
 description: "<Mô tả SEO 1–2 câu: phạm vi, nguyên nhân chính, bản vá / trạng thái>"
-image: "/featured/<case-slug>/<name>-og.png"
+image: "/featured/<type>/<case-slug>/<name>-og.png"
 category: "Phân tích lỗ hổng"   # hoặc "Sự cố an ninh" / "Sự cố vận hành"
 ---
 ```
@@ -39,9 +39,9 @@ layout: default
 lang: ja
 title: "<Tiêu đề tiếng Nhật>"
 description: "<Mô tả SEO tiếng Nhật>"
-image: "/featured/<case-slug>/<name>-og.png"
+image: "/featured/<type>/<case-slug>/<name>-og.png"
 category: "脆弱性分析"          # hoặc "セキュリティインシデント" / "運用障害レポート"
-permalink: /ja/featured/<case-slug>/<page-name>/
+permalink: /ja/featured/<type>/<case-slug>/<page-name>/
 ---
 ```
 
