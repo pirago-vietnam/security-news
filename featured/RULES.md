@@ -96,7 +96,7 @@ Mọi trang trong `featured/` đều tuân theo thứ tự các khối sau:
 
 1. **Header báo cáo (`.report-header`)**:
    - `<h1>`: Tiêu đề đầy đủ của bài viết.
-   - `<p class="sub">`: Ngày cập nhật (`Cập nhật đến <strong>YYYY-MM-DD</strong>`), tóm tắt nguồn chính, link tới bản tin tháng tương ứng (`<a href="{{ '/monthly/YYYY-mm/' | relative_url }}">...</a>` hoặc `/ja/monthly/YYYY-mm/`), và badge mức độ `<span class="badge crit|high|med|low">...</span>` + điểm CVSS (nếu có).
+   - `<p class="sub">`: **Bắt buộc ghi rõ ngày công bố/xảy ra ban đầu** (`Công bố: <strong>YYYY-MM-DD</strong> · ` hoặc `Xảy ra / Công bố: <strong>YYYY-MM-DD</strong> · ` ở đầu dòng; bản `ja`: `公開日：<strong>YYYY-MM-DD</strong> · ` / `発生・公開日：<strong>YYYY-MM-DD</strong> · `), kèm ngày cập nhật (`Cập nhật đến <strong>YYYY-MM-DD</strong>`), tóm tắt nguồn chính, link tới bản tin tháng tương ứng (`<a href="{{ '/monthly/YYYY-mm/' | relative_url }}">...</a>` hoặc `/ja/monthly/YYYY-mm/`), và badge mức độ `<span class="badge crit|high|med|low">...</span>` + điểm CVSS (nếu có).
 2. **Hộp tóm tắt hành động / Đọc trước (`blockquote.callout`)**:
    - Với **Lỗ hổng**: `<strong>Đọc trước:</strong>` nêu bản vá triệt để, workaround tạm thời (nếu có), và lưu ý *"Trang này không chứa mã khai thác."* (`本ページには攻撃コードは含まれません。`).
    - Với **Sự cố**: `<strong>TL;DR (dễ hiểu):</strong>` tóm tắt ngắn gọn chuyện gì đã xảy ra, quy mô, nguyên nhân gốc và trạng thái hiện tại. **Viết phù hợp cho cả người non-tech** (PM, quản lý, nhân sự không chuyên kỹ thuật): giải thích dễ hiểu bằng ngôn ngữ phổ thông, tránh thuật ngữ chuyên sâu chưa được diễn giải, nêu rõ tác động thực tế và việc cần làm.
