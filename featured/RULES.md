@@ -173,7 +173,7 @@ Mỗi case cần 1 ảnh `1200×630` đặt tại `featured/<case-slug>/<name>-o
 
 Thêm entry mới vào `_data/featured.yml` để trang tự động hiển thị trên Trang chủ (`index.html`, `ja/index.html`), menu điều hướng (`_includes/header.html`) và trang lưu trữ (`/incidents/`, `/vulnerabilities/`):
 
-- **Thứ tự sắp xếp (bắt buộc):** Sắp xếp theo **ngày công bố / xảy ra ban đầu** của lỗ hổng hoặc sự cố (**mới nhất xếp trên**), **không** xếp theo ngày tạo file hoặc ngày cập nhật bài viết.
+- **Thứ tự sắp xếp (bắt buộc):** Sắp xếp theo **ngày công bố / xảy ra ban đầu** của lỗ hổng hoặc sự cố (**mới nhất xếp trên**), **không** xếp theo ngày tạo file hoặc ngày cập nhật bài viết. Luôn ghi chú `# disclosed: YYYY-MM-DD` ngay phía trên mỗi `- id:` để đối chiếu cho các lần cập nhật sau.
 - **Cấu trúc entry:**
   ```yaml
   - id: <case-slug>

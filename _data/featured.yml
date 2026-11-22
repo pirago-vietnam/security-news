@@ -1,55 +1,9 @@
-# Các case nổi bật (sự cố lớn, phân tích lỗ hổng, runbook ứng phó). Thứ tự = thứ tự hiển thị.
+# Các case nổi bật (sự cố lớn, phân tích lỗ hổng, runbook ứng phó).
+# Quy tắc sắp xếp: luôn xếp theo ngày công bố/xảy ra ban đầu (mới nhất xếp trên, không xếp theo ngày cập nhật bài viết).
+# Ghi chú `# disclosed: YYYY-MM-DD` ngay trên mỗi entry để đối chiếu cho các lần cập nhật sau.
 # `path` tính từ gốc ngôn ngữ (vi: "/", ja: "/ja/").
-- id: linux-cve-2026-99312
-  category: vulnerability
-  month: "2026-11"
-  path: "featured/linux-cve-2026-99312/analysis/"
-  icon: "🐧"
-  accent: true
-  badge: {sev: high, text: "HIGH"}
-  nav: {vi: "Linux KVM CVE-2026-99312", ja: "Linux KVM CVE-2026-99312"}
-  title: {vi: "Linux Kernel KVM (AMD) CVE-2026-99312 — Page-Table UAF cho phép thoát VM đọc/ghi RAM máy chủ", ja: "Linux Kernel KVM（AMD）CVE-2026-99312 — VM 脱出でホスト RAM を読み書き可能なページテーブル UAF"}
-  date: {vi: "Cập nhật đến 2026-11-21 · CVSS 8.8 · Ảnh hưởng AMD KVM bật nested (≥5.15.81) · Đã vá ở 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2", ja: "2026年11月21日 時点 · CVSS 8.8 · nested 有効な AMD KVM（5.15.81以降）が対象 · 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2 で修正済み"}
-  link: {vi: "Xem phân tích & hướng dẫn →", ja: "分析・対策ガイドを見る →"}
-  items:
-    - sev: high
-      label: {vi: "Nguy cơ", ja: "リスク"}
-      text: {vi: "Không reset ngữ cảnh MMU khi mô phỏng INIT ở trạng thái CR0.PG=0 trên AMD SVM → Page-Table UAF (CWE-825), cho phép guest thoát VM đọc/ghi RAM vật lý của host (đã chứng minh đọc ~127 GB RAM trên DigitalOcean Droplet).", ja: "AMD SVM で CR0.PG=0 のまま INIT エミュレーション時に MMU を初期化せず、ページテーブル UAF（CWE-825）。ゲストからホスト物理 RAM の読み書きに至る恐れ（DigitalOcean Droplet で約127GB読取実証）。"}
-    - sev: high
-      label: {vi: "Phạm vi", ja: "影響範囲"}
-      text: {vi: "Chỉ ảnh hưởng host KVM dùng CPU AMD và bật nested virtualization (kvm_amd.nested=1), kernel ≥ 5.15.81 (trừ 5.10.y, 5.4.y, Intel VMX). RHEL 9/10, Ubuntu 22.04/24.04, Debian 12/13 chờ bản vá; SUSE SP7/16.x, Debian sid, DigitalOcean đã vá.", ja: "AMD CPU かつ nested 有効（kvm_amd.nested=1）な Linux KVM ホスト（カーネル 5.15.81 以降）のみ対象（Intel VMX・5.10.y は対象外）。RHEL 9/10・Ubuntu・Debian 12/13 は修正待ち、SUSE SP7/16.x・Debian sid・DigitalOcean は対応済み。"}
-    - sev: med
-      label: {vi: "Tạm thời", ja: "暫定対策"}
-      text: {vi: "Tắt nested virtualization trên host AMD KVM (modprobe -r kvm_amd && modprobe kvm_amd nested=0 và lưu vào /etc/modprobe.d/) nếu không cần chạy VM lồng nhau.", ja: "L2 仮想化が不要なら AMD KVM ホストで nested virtualization を無効化（modprobe -r kvm_amd && modprobe kvm_amd nested=0、/etc/modprobe.d/ へ永続化）。"}
-    - sev: low
-      label: {vi: "Triệt để", ja: "恒久対策"}
-      text: {vi: "Cập nhật kernel host lên 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2 (hoặc bản backport từ distro khi có) và reboot. Chưa có PoC công khai hay khai thác thực tế; chưa có trong CISA KEV (2026-11-21).", ja: "ホストカーネルを 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2（またはディストリの修正版）へ更新して再起動。公開 PoC や実環境での悪用未確認、CISA KEV 未掲載（2026-11-21 時点）。"}
 
-- id: spring-security-cve-2026-59273
-  category: vulnerability
-  month: "2026-11"
-  path: "featured/spring-security-cve-2026-59273/analysis/"
-  icon: "🍃"
-  accent: true
-  badge: {sev: crit, text: "CRITICAL"}
-  nav: {vi: "Spring Security CVE-2026-59273", ja: "Spring Security CVE-2026-59273"}
-  title: {vi: "Spring Security CVE-2026-59273 — RCE nghiêm trọng (CVSS 9.8) qua ELRequestMatcher (SpEL)", ja: "Spring Security CVE-2026-59273 — ELRequestMatcher（SpEL）経由の重大な RCE（CVSS 9.8）"}
-  date: {vi: "Cập nhật đến 2026-11-20 · Ảnh hưởng 7.1.0–7.1.2, 7.0.0–7.0.8 và nhánh cũ · Đã vá ở 7.1.3 / 7.0.9", ja: "2026年11月20日 時点 · 7.1.0〜7.1.2、7.0.0〜7.0.8 と旧系統が対象 · 7.1.3 / 7.0.9 で修正済み"}
-  link: {vi: "Xem phân tích & hướng dẫn →", ja: "分析・対策ガイドを見る →"}
-  items:
-    - sev: crit
-      label: {vi: "Nguy cơ", ja: "リスク"}
-      text: {vi: "ELRequestMatcher chạy SpEL với reflection đầy đủ; nếu input ngoài bind vào thuộc tính kiểu này thì kẻ tấn công chưa xác thực có thể RCE (CVSS 3.1 9.8, CWE-94).", ja: "ELRequestMatcher が完全なリフレクション付きで SpEL を評価。外部入力がこの型のプロパティにバインドされると未認証で RCE の恐れ（CVSS 3.1 9.8、CWE-94）。"}
-    - sev: high
-      label: {vi: "Phạm vi", ja: "影響範囲"}
-      text: {vi: "Spring Security 7.1.0–7.1.2, 7.0.0–7.0.8, 6.5.0–6.5.12, 6.4.0–6.4.19, 5.8.0–5.8.28, ≤5.7.26.", ja: "Spring Security 7.1.0〜7.1.2、7.0.0〜7.0.8、6.5.0〜6.5.12、6.4.0〜6.4.19、5.8.0〜5.8.28、5.7.26 以前。"}
-    - sev: med
-      label: {vi: "Tạm thời", ja: "暫定対策"}
-      text: {vi: "Advisory không nêu mitigation khác ngoài nâng cấp; trong lúc chờ, rà soát để không bind input ngoài vào ELRequestMatcher.", ja: "アドバイザリは更新以外の緩和策を示していない。更新までは外部入力が ELRequestMatcher にバインドされないか点検。"}
-    - sev: low
-      label: {vi: "Triệt để", ja: "恒久対策"}
-      text: {vi: "Nâng cấp Spring Security lên 7.1.3 / 7.0.9 / 7.2.0 (hoặc Spring Boot 4.1.3 / 4.0.10 / 4.2.0); 6.5/6.4/5.8/5.7 chỉ có bản vá qua Enterprise Support. Chưa có trong CISA KEV (kiểm tra 2026-11-20).", ja: "Spring Security を 7.1.3 / 7.0.9 / 7.2.0（または Spring Boot 4.1.3 / 4.0.10 / 4.2.0）へ更新。6.5/6.4/5.8/5.7 は Enterprise Support のみ。CISA KEV 未掲載（2026-11-20 確認）。"}
-
+# disclosed: 2026-11-19
 - id: linux-cve-2026-99362
   category: vulnerability
   month: "2026-11"
@@ -75,6 +29,83 @@
       label: {vi: 'Triệt để', ja: '恒久対策'}
       text: {vi: 'Cập nhật kernel máy chủ NFS lên bản đã vá upstream 6.12.117 / 6.18.61 / 7.3.2 / 7.4-rc1 (hoặc bản distro như Debian DLA-4927-1) và reboot. Chưa có PoC công khai và chưa có trong CISA KEV (2026-11-23).', ja: 'NFS サーバーのカーネルを 6.12.117 / 6.18.61 / 7.3.2 / 7.4-rc1（または Debian DLA-4927-1 等のディストリ修正版）へ更新し再起動。公開 PoC なし、CISA KEV 未掲載（2026-11-23 確認）。'}
 
+# disclosed: 2026-11-19
+- id: spring-security-cve-2026-59273
+  category: vulnerability
+  month: "2026-11"
+  path: "featured/spring-security-cve-2026-59273/analysis/"
+  icon: "🍃"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL"}
+  nav: {vi: "Spring Security CVE-2026-59273", ja: "Spring Security CVE-2026-59273"}
+  title: {vi: "Spring Security CVE-2026-59273 — RCE nghiêm trọng (CVSS 9.8) qua ELRequestMatcher (SpEL)", ja: "Spring Security CVE-2026-59273 — ELRequestMatcher（SpEL）経由の重大な RCE（CVSS 9.8）"}
+  date: {vi: "Cập nhật đến 2026-11-20 · Ảnh hưởng 7.1.0–7.1.2, 7.0.0–7.0.8 và nhánh cũ · Đã vá ở 7.1.3 / 7.0.9", ja: "2026年11月20日 時点 · 7.1.0〜7.1.2、7.0.0〜7.0.8 と旧系統が対象 · 7.1.3 / 7.0.9 で修正済み"}
+  link: {vi: "Xem phân tích & hướng dẫn →", ja: "分析・対策ガイドを見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Nguy cơ", ja: "リスク"}
+      text: {vi: "ELRequestMatcher chạy SpEL với reflection đầy đủ; nếu input ngoài bind vào thuộc tính kiểu này thì kẻ tấn công chưa xác thực có thể RCE (CVSS 3.1 9.8, CWE-94).", ja: "ELRequestMatcher が完全なリフレクション付きで SpEL を評価。外部入力がこの型のプロパティにバインドされると未認証で RCE の恐れ（CVSS 3.1 9.8、CWE-94）。"}
+    - sev: high
+      label: {vi: "Phạm vi", ja: "影響範囲"}
+      text: {vi: "Spring Security 7.1.0–7.1.2, 7.0.0–7.0.8, 6.5.0–6.5.12, 6.4.0–6.4.19, 5.8.0–5.8.28, ≤5.7.26.", ja: "Spring Security 7.1.0〜7.1.2、7.0.0〜7.0.8、6.5.0〜6.5.12、6.4.0〜6.4.19、5.8.0〜5.8.28、5.7.26 以前。"}
+    - sev: med
+      label: {vi: "Tạm thời", ja: "暫定対策"}
+      text: {vi: "Advisory không nêu mitigation khác ngoài nâng cấp; trong lúc chờ, rà soát để không bind input ngoài vào ELRequestMatcher.", ja: "アドバイザリは更新以外の緩和策を示していない。更新までは外部入力が ELRequestMatcher にバインドされないか点検。"}
+    - sev: low
+      label: {vi: "Triệt để", ja: "恒久対策"}
+      text: {vi: "Nâng cấp Spring Security lên 7.1.3 / 7.0.9 / 7.2.0 (hoặc Spring Boot 4.1.3 / 4.0.10 / 4.2.0); 6.5/6.4/5.8/5.7 chỉ có bản vá qua Enterprise Support. Chưa có trong CISA KEV (kiểm tra 2026-11-20).", ja: "Spring Security を 7.1.3 / 7.0.9 / 7.2.0（または Spring Boot 4.1.3 / 4.0.10 / 4.2.0）へ更新。6.5/6.4/5.8/5.7 は Enterprise Support のみ。CISA KEV 未掲載（2026-11-20 確認）。"}
+
+# disclosed: 2026-11-19
+- id: php-security-release-2026-11-19
+  category: vulnerability
+  month: "2026-11"
+  archived: true
+  path: "featured/php-security-release-2026-11-19/advisory/"
+  icon: "🐘"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL · 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36"}
+  nav: {vi: "PHP bản vá 19/11", ja: "PHP 修正版 11/19"}
+  title: {vi: "PHP bản vá bảo mật CRITICAL 19-11: vá 17 CVE (gồm CVE-2026-115560), 7 lỗi CVSS 9.2", ja: "PHP の CRITICAL 級セキュリティ修正版（11/19）：17 件の CVE を修正（CVE-2026-115560 含む、CVSS 9.2 が 7 件）"}
+  date: {vi: "Cập nhật 2026-11-19 22:30 ICT (UTC+7) · Đã phát hành · 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 + 8.6.0 GA", ja: "2026年11月20日 00:30（JST）更新 · 公開済み · 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 ＋ 8.6.0 GA"}
+  link: {vi: "Xem danh sách CVE & việc cần làm →", ja: "CVE 一覧・対応事項を見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Mức độ", ja: "重大度"}
+      text: {vi: "17 GHSA: 7 lỗi CVSS 9.2 (UAF engine/date/session, deserialization session, request smuggling PHP-FPM), 4 High, 6 Moderate. Lỗi CRITICAL cần cấu hình không mặc định hoặc thiết lập ít gặp.", ja: "GHSA 17 件：CVSS 9.2 が 7 件（エンジン/date/session の UAF、session デシリアライズ、PHP-FPM スマグリング）、High 4 件、Moderate 6 件。CRITICAL は非デフォルト設定または特殊な構成が前提。"}
+    - sev: low
+      label: {vi: "Bản vá", ja: "修正版"}
+      text: {vi: "Nâng lên 8.2.36 / 8.3.37 / 8.4.28 / 8.5.13 (hoặc 8.6.0), restart PHP-FPM/Apache và rebuild image. PHP 8.1 trở xuống không có bản vá.", ja: "8.2.36 / 8.3.37 / 8.4.28 / 8.5.13（または 8.6.0）へ更新し、PHP-FPM/Apache 再起動とイメージ再ビルド。8.1 以前は修正版なし。"}
+    - sev: high
+      label: {vi: "CVE-2026-115560", ja: "CVE-2026-115560"}
+      text: {vi: "cve.org: CVSS 4.0 9.2 (CWE-502). Lệch serializer session + upload progress dẫn tới RCE nếu có gadget. Tạm thời: session.upload_progress.enabled=0 ở php.ini/FPM rồi restart (chỉ giảm thiểu lỗi này).", ja: "cve.org：CVSS 4.0 9.2（CWE-502）。セッションシリアライザ不一致＋upload progress でガジェットがあれば RCE。暫定：php.ini/FPM で session.upload_progress.enabled=0 にして再起動（この脆弱性のみの緩和）。"}
+
+# disclosed: 2026-11-18
+- id: linux-cve-2026-99312
+  category: vulnerability
+  month: "2026-11"
+  path: "featured/linux-cve-2026-99312/analysis/"
+  icon: "🐧"
+  accent: true
+  badge: {sev: high, text: "HIGH"}
+  nav: {vi: "Linux KVM CVE-2026-99312", ja: "Linux KVM CVE-2026-99312"}
+  title: {vi: "Linux Kernel KVM (AMD) CVE-2026-99312 — Page-Table UAF cho phép thoát VM đọc/ghi RAM máy chủ", ja: "Linux Kernel KVM（AMD）CVE-2026-99312 — VM 脱出でホスト RAM を読み書き可能なページテーブル UAF"}
+  date: {vi: "Cập nhật đến 2026-11-21 · CVSS 8.8 · Ảnh hưởng AMD KVM bật nested (≥5.15.81) · Đã vá ở 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2", ja: "2026年11月21日 時点 · CVSS 8.8 · nested 有効な AMD KVM（5.15.81以降）が対象 · 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2 で修正済み"}
+  link: {vi: "Xem phân tích & hướng dẫn →", ja: "分析・対策ガイドを見る →"}
+  items:
+    - sev: high
+      label: {vi: "Nguy cơ", ja: "リスク"}
+      text: {vi: "Không reset ngữ cảnh MMU khi mô phỏng INIT ở trạng thái CR0.PG=0 trên AMD SVM → Page-Table UAF (CWE-825), cho phép guest thoát VM đọc/ghi RAM vật lý của host (đã chứng minh đọc ~127 GB RAM trên DigitalOcean Droplet).", ja: "AMD SVM で CR0.PG=0 のまま INIT エミュレーション時に MMU を初期化せず、ページテーブル UAF（CWE-825）。ゲストからホスト物理 RAM の読み書きに至る恐れ（DigitalOcean Droplet で約127GB読取実証）。"}
+    - sev: high
+      label: {vi: "Phạm vi", ja: "影響範囲"}
+      text: {vi: "Chỉ ảnh hưởng host KVM dùng CPU AMD và bật nested virtualization (kvm_amd.nested=1), kernel ≥ 5.15.81 (trừ 5.10.y, 5.4.y, Intel VMX). RHEL 9/10, Ubuntu 22.04/24.04, Debian 12/13 chờ bản vá; SUSE SP7/16.x, Debian sid, DigitalOcean đã vá.", ja: "AMD CPU かつ nested 有効（kvm_amd.nested=1）な Linux KVM ホスト（カーネル 5.15.81 以降）のみ対象（Intel VMX・5.10.y は対象外）。RHEL 9/10・Ubuntu・Debian 12/13 は修正待ち、SUSE SP7/16.x・Debian sid・DigitalOcean は対応済み。"}
+    - sev: med
+      label: {vi: "Tạm thời", ja: "暫定対策"}
+      text: {vi: "Tắt nested virtualization trên host AMD KVM (modprobe -r kvm_amd && modprobe kvm_amd nested=0 và lưu vào /etc/modprobe.d/) nếu không cần chạy VM lồng nhau.", ja: "L2 仮想化が不要なら AMD KVM ホストで nested virtualization を無効化（modprobe -r kvm_amd && modprobe kvm_amd nested=0、/etc/modprobe.d/ へ永続化）。"}
+    - sev: low
+      label: {vi: "Triệt để", ja: "恒久対策"}
+      text: {vi: "Cập nhật kernel host lên 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2 (hoặc bản backport từ distro khi có) và reboot. Chưa có PoC công khai hay khai thác thực tế; chưa có trong CISA KEV (2026-11-21).", ja: "ホストカーネルを 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2（またはディストリの修正版）へ更新して再起動。公開 PoC や実環境での悪用未確認、CISA KEV 未掲載（2026-11-21 時点）。"}
+
+# disclosed: 2026-11-18
 - id: database-rce-narrow-grants
   category: vulnerability
   month: "2026-11"
@@ -100,6 +131,7 @@
       label: {vi: "Lưu ý", ja: "注意"}
       text: {vi: "Chưa ghi nhận khai thác ngoài thực tế, chưa có PoC đầy đủ công khai. Mức quyền theo nhà cung cấp và nhà nghiên cứu khác nhau; ClickHouse chưa có CVE và bản sửa xác nhận.", ja: "実環境での悪用は未確認、完全な PoC は未公開。ベンダーと研究者で必要権限の評価が異なる。ClickHouse は CVE・修正版とも未確認。"}
 
+# disclosed: 2026-11-18
 - id: ruby-ghsa-34m4-m9fh-gqp5
   category: vulnerability
   month: "2026-11"
@@ -126,29 +158,7 @@
       label: {vi: "Lưu ý", ja: "注意"}
       text: {vi: "Veria Labs dự kiến công bố PoC khoảng 1 tuần sau (~26-11); CVE đang chờ cấp. Chưa ghi nhận khai thác ngoài thực tế.", ja: "Veria Labs は約 1 週間後（〜11/26）に PoC 公開予定。CVE は申請中。実環境での悪用は未確認。"}
 
-- id: php-security-release-2026-11-19
-  category: vulnerability
-  month: "2026-11"
-  archived: true
-  path: "featured/php-security-release-2026-11-19/advisory/"
-  icon: "🐘"
-  accent: true
-  badge: {sev: crit, text: "CRITICAL · 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36"}
-  nav: {vi: "PHP bản vá 19/11", ja: "PHP 修正版 11/19"}
-  title: {vi: "PHP bản vá bảo mật CRITICAL 19-11: vá 17 CVE (gồm CVE-2026-115560), 7 lỗi CVSS 9.2", ja: "PHP の CRITICAL 級セキュリティ修正版（11/19）：17 件の CVE を修正（CVE-2026-115560 含む、CVSS 9.2 が 7 件）"}
-  date: {vi: "Cập nhật 2026-11-19 22:30 ICT (UTC+7) · Đã phát hành · 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 + 8.6.0 GA", ja: "2026年11月20日 00:30（JST）更新 · 公開済み · 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 ＋ 8.6.0 GA"}
-  link: {vi: "Xem danh sách CVE & việc cần làm →", ja: "CVE 一覧・対応事項を見る →"}
-  items:
-    - sev: crit
-      label: {vi: "Mức độ", ja: "重大度"}
-      text: {vi: "17 GHSA: 7 lỗi CVSS 9.2 (UAF engine/date/session, deserialization session, request smuggling PHP-FPM), 4 High, 6 Moderate. Lỗi CRITICAL cần cấu hình không mặc định hoặc thiết lập ít gặp.", ja: "GHSA 17 件：CVSS 9.2 が 7 件（エンジン/date/session の UAF、session デシリアライズ、PHP-FPM スマグリング）、High 4 件、Moderate 6 件。CRITICAL は非デフォルト設定または特殊な構成が前提。"}
-    - sev: low
-      label: {vi: "Bản vá", ja: "修正版"}
-      text: {vi: "Nâng lên 8.2.36 / 8.3.37 / 8.4.28 / 8.5.13 (hoặc 8.6.0), restart PHP-FPM/Apache và rebuild image. PHP 8.1 trở xuống không có bản vá.", ja: "8.2.36 / 8.3.37 / 8.4.28 / 8.5.13（または 8.6.0）へ更新し、PHP-FPM/Apache 再起動とイメージ再ビルド。8.1 以前は修正版なし。"}
-    - sev: high
-      label: {vi: "CVE-2026-115560", ja: "CVE-2026-115560"}
-      text: {vi: "cve.org: CVSS 4.0 9.2 (CWE-502). Lệch serializer session + upload progress dẫn tới RCE nếu có gadget. Tạm thời: session.upload_progress.enabled=0 ở php.ini/FPM rồi restart (chỉ giảm thiểu lỗi này).", ja: "cve.org：CVSS 4.0 9.2（CWE-502）。セッションシリアライザ不一致＋upload progress でガジェットがあれば RCE。暫定：php.ini/FPM で session.upload_progress.enabled=0 にして再起動（この脆弱性のみの緩和）。"}
-
+# disclosed: 2026-11-18
 - id: nginx-cve-2026-123007
   category: vulnerability
   month: "2026-11"
@@ -175,81 +185,7 @@
       label: {vi: "Triệt để", ja: "恒久対策"}
       text: {vi: "Nâng cấp lên nginx 1.30.7 / 1.31.9 (Plus 37.3.0.1 / 37.0.8.1) và restart; reload không thay binary.", ja: "nginx 1.30.7 / 1.31.9（Plus 37.3.0.1 / 37.0.8.1）へ更新して再起動。reload ではバイナリは置換されません。"}
 
-- id: rakuten-sec
-  category: incident
-  month: "2026-11"
-  path: "featured/rakuten-sec/rakuten_securities_security_incident_report/"
-  icon: "📈"
-  accent: true
-  badge: {sev: crit, text: "CRITICAL INCIDENT"}
-  nav: {vi: "Sự cố Rakuten Securities", ja: "楽天証券 インシデント"}
-  title: {vi: "楽天証券 (Rakuten Securities) — Có thể lộ tối đa 11,25 triệu tài khoản từ môi trường test", ja: "楽天証券 — テスト環境から最大1,125万口座の情報流出の恐れ"}
-  date: {vi: "Cập nhật 2026-11-20 · FSA ra lệnh báo cáo (19/11) · Miễn phí chuyển quỹ", ja: "2026年11月20日更新 · 金融庁が報告徴求命令（11/19） · 投信出庫手数料無料化"}
-  link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
-  items:
-    - sev: crit
-      label: {vi: "Quy mô", ja: "規模"}
-      text: {vi: "Tối đa ~11,25 triệu tài khoản (mã chi nhánh, mã khách hàng, ID đăng nhập) và tối đa ~4,47 triệu tài khoản lộ thêm họ tên, địa chỉ, SĐT, email, tài khoản rút tiền, thu nhập và tài sản (gồm người đã rút tài khoản).", ja: "最大約1,125万口座（部店・お客様コード、ログインID）、および最大約447万口座で氏名・住所・電話・メール・出金先口座・年収・金融資産等も対象（退会者含む）。"}
-    - sev: high
-      label: {vi: "Nguyên nhân &amp; Quản lý", ja: "原因・監督"}
-      text: {vi: "Đưa dữ liệu thật không che (unmasked) vào môi trường test để nâng cấp (báo chí); bị truy cập trái phép từ 11/11. FSA ban hành lệnh yêu cầu báo cáo ngày 19/11.", ja: "検証用に本番データを非マスクでテスト環境へ配置（報道）し、11/11に流出のおそれ。11月19日に金融庁が報告徴求命令を発出。"}
-    - sev: med
-      label: {vi: "Chưa xác nhận lộ", ja: "未確認事項"}
-      text: {vi: "Mật khẩu đăng nhập, mã PIN và thông tin giao dịch chưa xác nhận bị lộ; chưa ghi nhận giao dịch trái phép liên quan.", ja: "パスワード・暗証番号など取引に必要な情報の漏えいは未確認。本件起因の不正取引も確認されていません。"}
-    - sev: low
-      label: {vi: "Ứng phó", ja: "対応"}
-      text: {vi: "Miễn phí chuyển quỹ tín thác sang đối thủ từ 18/11, hoãn mở cửa hàng Shibuya (25/11); ghi nhận >15.000 người đăng ký khởi kiện tập thể; khuyến nghị passkey.", ja: "11/18より投信出庫手数料を当面無料化、渋谷店舗の開店延期。集団訴訟準備サイトに1.5万人超登録の動き。パスキー推奨。"}
-
-- id: microsoft-365-outage-2026-11
-  category: incident
-  month: "2026-11"
-  path: "featured/microsoft-365-outage-2026-11/incident_report/"
-  icon: "☁️"
-  accent: true
-  badge: {sev: high, text: "OPERATIONAL INCIDENT"}
-  nav: {vi: "Sự cố Microsoft 365", ja: "Microsoft 365 障害"}
-  title: {vi: "Microsoft 365 (12–14/11/2026) — Gián đoạn toàn cầu ~24–30h do \"triple failure\" tại gateway mạng", ja: "Microsoft 365（2026年11月12〜14日）— ゲートウェイの「三重障害」による約24〜30時間の大規模障害"}
-  date: {vi: "Cập nhật 2026-11-22 · EX1550543 / MO1550821 · 74+ quốc gia · Không phải tấn công mạng", ja: "2026年11月22日更新 · EX1550543 / MO1550821 · 74カ国以上 · サイバー攻撃ではない"}
-  link: {vi: "Xem phân tích sự cố chi tiết →", ja: "障害詳細レポートを見る →"}
-  items:
-    - sev: high
-      label: {vi: "Phạm vi", ja: "影響範囲"}
-      text: {vi: "Exchange Online/Outlook, Teams, SharePoint, OneDrive, Copilot &amp; Defender XDR gián đoạn tại 74+ quốc gia (~24–30h đến khi xác nhận ổn định 14/11); &gt;80% gateway mất phản hồi ở đỉnh.", ja: "Exchange Online/Outlook・Teams・SharePoint・OneDrive・Copilot・Defender XDR が74カ国以上で停止（11/14の安定確認まで約24〜30時間）。ピーク時に80%超のゲートウェイが応答不能。"}
-    - sev: crit
-      label: {vi: "Nguyên nhân", ja: "原因"}
-      text: {vi: "Triple failure nội bộ (không phải cyberattack): bug lock contention từ bản vá 07/2026 trên phần cứng nhiều nhân + mất -14% dung lượng gateway + Teams tự động failover sang gateway chính.", ja: "内部起因の三重障害（攻撃ではない）：2026年7月修正の多コア向けロック競合バグ＋前日からの容量14%減＋Teamsのプライマリゲートウェイへの自動フェイルオーバー。"}
-    - sev: med
-      label: {vi: "Rủi ro thứ cấp", ja: "二次リスク"}
-      text: {vi: "Microsoft Threat Intelligence cảnh báo phishing quy mô lớn giả mạo Service Health (dẫn mã EX1550543, dọa xóa email sau 24h) qua SendGrid chuyển hướng ra ngoài.", ja: "Microsoft Threat Intelligence が障害番号 EX1550543 を悪用し「24時間以内にメール削除」と偽る大規模フィッシング（SendGrid 経由の外部誘導）を警告。"}
-    - sev: low
-      label: {vi: "Khuyến cáo", ja: "対策"}
-      text: {vi: "Săn tìm email chủ đề \"Outage -\" / EX1550543; load test trên phần cứng nhiều nhân sát production; tách blast radius khi failover và chống retry storm.", ja: "件名 \"Outage -\" / EX1550543 の不審メールを調査；本番同等の多コア環境で負荷検証；フェイルオーバー時の影響分離とリトライストーム対策を実施。"}
-
-- id: muji
-  category: incident
-  month: "2026-10"
-  path: "featured/muji/muji_security_incident_report/"
-  icon: "🛍️"
-  accent: true
-  badge: {sev: crit, text: "CRITICAL INCIDENT"}
-  nav: {vi: "Sự cố MUJI", ja: "無印良品 インシデント"}
-  title: {vi: "無印良品 (MUJI / Ryohin Keikaku) — Rò rỉ tối đa 27,26 triệu tài khoản & 1,09 triệu số thẻ MUJI Card", ja: "無印良品（良品計画）— 最大2,726万件の会員情報 & MUJI Card 約109万件流出の恐れ"}
-  date: {vi: "Cập nhật 2026-11-20 · Net Store vẫn ngừng · Chưa có lịch mở lại", ja: "2026年11月20日更新 · ネットストア停止継続 · 再開時期未定"}
-  link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
-  items:
-    - sev: crit
-      label: {vi: "Quy mô", ja: "規模"}
-      text: {vi: "Tối đa ~27,26 triệu tài khoản (gồm người đã hủy), ~750.000 họ tên/địa chỉ/SĐT, ~1,09 triệu số thẻ MUJI Card 16 chữ số (~345.000 thẻ còn hiệu lực) và ~440.000 người nhận COD.", ja: "最大約2,726万件（退会者含む）、氏名・住所等約75万件、MUJI Card 16桁全桁約109万件（有効約34.5万件）、代引き受取先約44万件に影響の恐れ。"}
-    - sev: high
-      label: {vi: "Nguyên nhân", ja: "原因"}
-      text: {vi: "Lỗ hổng hệ thống + để tồn đọng 16 số thẻ không che suốt 5 năm (dù Credit Saison từng 2 lần yêu cầu xóa vào 2020 và 07/2021) &amp; không xóa tài khoản đã hủy; kết hợp credential stuffing (~270.000 tài khoản).", ja: "システム脆弱性に加え、クレディセゾンからの過去2回の削除依頼（2020年・21年7月）後も5年間マスクなし放置されたカード番号・退会者の削除漏れ。リスト型攻撃（約27万件）も判明。"}
-    - sev: med
-      label: {vi: "Tài chính & Quản lý", ja: "金融・監督官庁"}
-      text: {vi: "Credit Saison siết chặt giám sát gian lận dải BIN và miễn phí đổi thẻ; PPC yêu cầu nộp báo cáo giải trình chính thức (確報); METI điều tra tuân thủ Credit Card Security Guidelines.", ja: "クレディセゾンがBIN監視強化と無料再発行対応。PPCが正式確報を要求、経産省がセキュリティガイドライン違反を調査。"}
-    - sev: low
-      label: {vi: "Ứng phó & Bồi thường", ja: "対応・補償"}
-      text: {vi: "Đến 20/11, Net Store vẫn ngừng sang tuần thứ 2+ và MUJI App chỉ giữ mã vạch thành viên; Credit Saison hỗ trợ đổi thẻ miễn phí.", ja: "11月20日時点もネットストアは停止継続、MUJIアプリは会員証バーコード表示以外を停止。クレディセゾンはカードを無料再発行。"}
-
+# disclosed: 2026-11-17
 - id: java-cve-2026-114938
   category: vulnerability
   month: "2026-11"
@@ -276,6 +212,33 @@
       label: {vi: "Triệt để", ja: "恒久対策"}
       text: {vi: "Nâng JDK (Corretto 17.0.21.1.2), restart toàn bộ tiến trình Java, rebuild image. Temurin/distro chưa xác nhận bản vá.", ja: "JDK 更新（Corretto 17.0.21.1.2）、全 Java プロセス再起動、イメージ再ビルド。Temurin/ディストリビューションは修正未確認。"}
 
+# disclosed: 2026-11-17
+- id: rakuten-sec
+  category: incident
+  month: "2026-11"
+  path: "featured/rakuten-sec/rakuten_securities_security_incident_report/"
+  icon: "📈"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL INCIDENT"}
+  nav: {vi: "Sự cố Rakuten Securities", ja: "楽天証券 インシデント"}
+  title: {vi: "楽天証券 (Rakuten Securities) — Có thể lộ tối đa 11,25 triệu tài khoản từ môi trường test", ja: "楽天証券 — テスト環境から最大1,125万口座の情報流出の恐れ"}
+  date: {vi: "Cập nhật 2026-11-20 · FSA ra lệnh báo cáo (19/11) · Miễn phí chuyển quỹ", ja: "2026年11月20日更新 · 金融庁が報告徴求命令（11/19） · 投信出庫手数料無料化"}
+  link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Quy mô", ja: "規模"}
+      text: {vi: "Tối đa ~11,25 triệu tài khoản (mã chi nhánh, mã khách hàng, ID đăng nhập) và tối đa ~4,47 triệu tài khoản lộ thêm họ tên, địa chỉ, SĐT, email, tài khoản rút tiền, thu nhập và tài sản (gồm người đã rút tài khoản).", ja: "最大約1,125万口座（部店・お客様コード、ログインID）、および最大約447万口座で氏名・住所・電話・メール・出金先口座・年収・金融資産等も対象（退会者含む）。"}
+    - sev: high
+      label: {vi: "Nguyên nhân &amp; Quản lý", ja: "原因・監督"}
+      text: {vi: "Đưa dữ liệu thật không che (unmasked) vào môi trường test để nâng cấp (báo chí); bị truy cập trái phép từ 11/11. FSA ban hành lệnh yêu cầu báo cáo ngày 19/11.", ja: "検証用に本番データを非マスクでテスト環境へ配置（報道）し、11/11に流出のおそれ。11月19日に金融庁が報告徴求命令を発出。"}
+    - sev: med
+      label: {vi: "Chưa xác nhận lộ", ja: "未確認事項"}
+      text: {vi: "Mật khẩu đăng nhập, mã PIN và thông tin giao dịch chưa xác nhận bị lộ; chưa ghi nhận giao dịch trái phép liên quan.", ja: "パスワード・暗証番号など取引に必要な情報の漏えいは未確認。本件起因の不正取引も確認されていません。"}
+    - sev: low
+      label: {vi: "Ứng phó", ja: "対応"}
+      text: {vi: "Miễn phí chuyển quỹ tín thác sang đối thủ từ 18/11, hoãn mở cửa hàng Shibuya (25/11); ghi nhận >15.000 người đăng ký khởi kiện tập thể; khuyến nghị passkey.", ja: "11/18より投信出庫手数料を当面無料化、渋谷店舗の開店延期。集団訴訟準備サイトに1.5万人超登録の動き。パスキー推奨。"}
+
+# disclosed: 2026-11-16
 - id: brotli-cve-2026-111497
   category: vulnerability
   month: "2026-11"
@@ -299,6 +262,7 @@
       label: {vi: "Xử lý", ja: "対応"}
       text: {vi: "Áp dụng bản vá hoặc backport theo nhà cung cấp, rebuild image và khởi động lại; hạn chế giải nén dữ liệu không đáng tin cậy trong lúc chờ vá.", ja: "ベンダーの修正またはバックポートを適用し、イメージ再ビルドと再起動を実施。修正まで信頼できないデータの展開を制限。"}
 
+# disclosed: 2026-11-12
 - id: postgresql-cve-2026-6460
   category: vulnerability
   month: "2026-11"
@@ -325,6 +289,33 @@
       label: {vi: "PG14 EOL", ja: "PG14 EOL"}
       text: {vi: "PostgreSQL 14 chính thức hết hạn hỗ trợ (EOL) từ 12-11-2026 (bản 14.25 là cuối cùng); cần khẩn trương lập lộ trình nâng cấp lên PostgreSQL 15–18.", ja: "PostgreSQL 14 は 2026年11月12日をもって公式サポート終了（14.25 が最終版）。PostgreSQL 15〜18 への移行計画を至急策定。"}
 
+# disclosed: 2026-11-12
+- id: microsoft-365-outage-2026-11
+  category: incident
+  month: "2026-11"
+  path: "featured/microsoft-365-outage-2026-11/incident_report/"
+  icon: "☁️"
+  accent: true
+  badge: {sev: high, text: "OPERATIONAL INCIDENT"}
+  nav: {vi: "Sự cố Microsoft 365", ja: "Microsoft 365 障害"}
+  title: {vi: "Microsoft 365 (12–14/11/2026) — Gián đoạn toàn cầu ~24–30h do \"triple failure\" tại gateway mạng", ja: "Microsoft 365（2026年11月12〜14日）— ゲートウェイの「三重障害」による約24〜30時間の大規模障害"}
+  date: {vi: "Cập nhật 2026-11-22 · EX1550543 / MO1550821 · 74+ quốc gia · Không phải tấn công mạng", ja: "2026年11月22日更新 · EX1550543 / MO1550821 · 74カ国以上 · サイバー攻撃ではない"}
+  link: {vi: "Xem phân tích sự cố chi tiết →", ja: "障害詳細レポートを見る →"}
+  items:
+    - sev: high
+      label: {vi: "Phạm vi", ja: "影響範囲"}
+      text: {vi: "Exchange Online/Outlook, Teams, SharePoint, OneDrive, Copilot &amp; Defender XDR gián đoạn tại 74+ quốc gia (~24–30h đến khi xác nhận ổn định 14/11); &gt;80% gateway mất phản hồi ở đỉnh.", ja: "Exchange Online/Outlook・Teams・SharePoint・OneDrive・Copilot・Defender XDR が74カ国以上で停止（11/14の安定確認まで約24〜30時間）。ピーク時に80%超のゲートウェイが応答不能。"}
+    - sev: crit
+      label: {vi: "Nguyên nhân", ja: "原因"}
+      text: {vi: "Triple failure nội bộ (không phải cyberattack): bug lock contention từ bản vá 07/2026 trên phần cứng nhiều nhân + mất -14% dung lượng gateway + Teams tự động failover sang gateway chính.", ja: "内部起因の三重障害（攻撃ではない）：2026年7月修正の多コア向けロック競合バグ＋前日からの容量14%減＋Teamsのプライマリゲートウェイへの自動フェイルオーバー。"}
+    - sev: med
+      label: {vi: "Rủi ro thứ cấp", ja: "二次リスク"}
+      text: {vi: "Microsoft Threat Intelligence cảnh báo phishing quy mô lớn giả mạo Service Health (dẫn mã EX1550543, dọa xóa email sau 24h) qua SendGrid chuyển hướng ra ngoài.", ja: "Microsoft Threat Intelligence が障害番号 EX1550543 を悪用し「24時間以内にメール削除」と偽る大規模フィッシング（SendGrid 経由の外部誘導）を警告。"}
+    - sev: low
+      label: {vi: "Khuyến cáo", ja: "対策"}
+      text: {vi: "Săn tìm email chủ đề \"Outage -\" / EX1550543; load test trên phần cứng nhiều nhân sát production; tách blast radius khi failover và chống retry storm.", ja: "件名 \"Outage -\" / EX1550543 の不審メールを調査；本番同等の多コア環境で負荷検証；フェイルオーバー時の影響分離とリトライストーム対策を実施。"}
+
+# disclosed: 2026-11-11
 - id: apache-cve-2026-119618
   category: vulnerability
   month: "2026-11"
@@ -351,58 +342,7 @@
       label: {vi: "Triệt để", ja: "恒久対策"}
       text: {vi: "Nâng cấp Apache HTTP Server lên 2.4.71 trở lên (phát hành 11-11-2026), kiểm tra cấu hình và restart dịch vụ / rebuild image.", ja: "Apache HTTP Server を 2.4.71 以上（11月11日リリース）へ更新し、サービス再起動・コンテナ再ビルドを実施。"}
 
-- id: binance
-  category: incident
-  month: "2026-10"
-  archived: true
-  path: "featured/binance/binance_security_incident_report/"
-  icon: "💸"
-  accent: true
-  badge: {sev: crit, text: "CRITICAL INCIDENT"}
-  nav: {vi: "Sự cố Binance", ja: "Binance インシデント"}
-  title: {vi: "Binance (~6,3 tỷ USD) — Chuỗi xâm nhập phỏng vấn giả từ laptop DevOps vào dịch vụ ký ví", ja: "Binance（約63億米ドル流出）— DevOps 端末・偽装面接経由の多段階侵害"}
-  date: {vi: "Cập nhật 2026-11-20 · Đã khôi phục 100% · Lệnh phong tỏa ADGM 6,5 tỷ USD", ja: "2026年11月20日更新 · 100%補填・出金再開 · ADGM 65億ドル凍結命令"}
-  link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
-  items:
-    - sev: crit
-      label: {vi: "Quy mô", ja: "規模"}
-      text: {vi: "~6,34 tỷ USD rút trái phép từ ví nóng (29/10); lớn nhất lịch sử crypto (~4x Bybit 2025). Binance Japan không bị ảnh hưởng (ví lạnh riêng).", ja: "約63.4億ドル（Binance Japan はコールドウォレット分離管理により直接被害なし）。"}
-    - sev: high
-      label: {vi: "Nguyên nhân &amp; Quy kết", ja: "原因・特定"}
-      text: {vi: "FBI &amp; các hãng phân tích quy kết cho TraderTraitor (Triều Tiên): cài trojan Homebrew (06/2026), lừa phỏng vấn giả cài mã độc pyenv (09/2026) để chiếm token triển khai container.", ja: "FBI・分析企業は北朝鮮 TraderTraitor と特定。偽装採用面接での pyenv マルウェア等を経てコンテナトークンを窃取。"}
-    - sev: med
-      label: {vi: "Pháp lý &amp; Thu hồi", ja: "法的回収"}
-      text: {vi: "~2,85 tỷ USD đã phong tỏa sớm qua Tether/Circle; tòa ADGM (Abu Dhabi) ra lệnh phong tỏa toàn cầu 6,5 tỷ USD, tống đạt trực tiếp on-chain tới ~26.000 ví.", ja: "約28.5億ドルを早期凍結後、ADGM 裁判所が約26,000ウォレットへのオンチェーン送達を認める65億ドル凍結命令を発出。"}
-    - sev: low
-      label: {vi: "Khôi phục", ja: "復旧"}
-      text: {vi: "Đã mở lại rút tiền theo đợt từ 01/11, hoàn tất bù đắp 100% tài sản và công bố ZK Proof of Reserves cho 198 token (12–14/11).", ja: "11/1より出金を段階再開、100%資産補填完了し198トークンの ZK Proof of Reserves（11/12〜14）を公開。"}
-
-- id: gmo
-  category: incident
-  month: "2026-10"
-  archived: true
-  path: "featured/gmo/gmo_onamae_security_incident_report/"
-  icon: "🚨"
-  accent: true
-  badge: {sev: crit, text: "CRITICAL INCIDENT"}
-  nav: {vi: "Sự cố GMO Onamae", ja: "GMOお名前.com インシデント"}
-  title: {vi: "GMO Onamae Desktop Cloud — Chiếm quyền 26.739 VPS Windows, rò rỉ MT4/MT5", ja: "GMO お名前.com デスクトップクラウド — Windows VPS 26,739台乗っ取り・MT4/MT5情報漏えい"}
-  date: {vi: "Cập nhật 2026-11-20 · Công bố KQKD 13/11 · 1.049 tin Bounty đến 18/11", ja: "2026年11月20日更新 · 11/13決算説明 · 情報提供1,049件（11/18時点）"}
-  link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
-  items:
-    - sev: crit
-      label: {vi: "Hạ tầng", ja: "インフラ"}
-      text: {vi: "Chiếm quyền 26.739 máy chủ VPS Windows, rò rỉ thông tin đăng nhập MT4/MT5 tác động hơn 70 sàn chứng khoán & FX.", ja: "Windows VPSサーバー26,739台が乗っ取られ、MT4/MT5のログイン情報が漏えい。70以上の証券・FX会社に影響。"}
-    - sev: high
-      label: {vi: "Tống tiền", ja: "恐喝"}
-      text: {vi: "GMO từ chối yêu cầu 50 triệu USD và lập Quỹ Bounty tối đa 1 triệu USD; ghi nhận 1.049 tin báo đến 18:00 ngày 18/11, chưa đồng nghĩa với manh mối được xác minh.", ja: "GMOは5,000万米ドルの要求を拒否し、最大100万米ドルの懸賞金基金を設立。11月18日18時時点で情報提供は1,049件（有力情報の確定件数ではない）。"}
-    - sev: med
-      label: {vi: "Điều tra & Phòng thủ", ja: "捜査・防御"}
-      text: {vi: "Takedown tên miền rò rỉ sau 15,5 giờ; ngày 06/11 Tổng cục trưởng Cảnh sát Quốc gia Nhật Bản (NPA) chỉ thị lập Tổ điều tra liên ngành tại Sở Cảnh sát Tokyo.", ja: "流出ドメインを15.5時間でテイクダウン。11月6日、警察庁長官が警察法第61条の3に基づき警視庁への合同捜査本部設置を指示。"}
-    - sev: low
-      label: {vi: "Bồi thường", ja: "補償"}
-      text: {vi: "Đến 12/11, 2.943 tài khoản yêu cầu bồi thường khoảng 2,998 tỷ JPY; chi phí trực tiếp dự kiến 3,05 tỷ JPY, chưa phải số tiền chi trả đã xác nhận.", ja: "11月12日時点の損失補償申請は2,943口座・約29.98億円。直接費用は約30.5億円を見込むが、確定した支払額ではない。"}
-
+# disclosed: 2026-11-05
 - id: linux-cve-2026-98432
   category: vulnerability
   month: "2026-11"
@@ -429,6 +369,33 @@
       label: {vi: "Xử lý", ja: "対処"}
       text: {vi: "Cập nhật kernel và reboot. Tạm thời: tắt MPTCP (net.mptcp.enabled=0, GODEBUG=multipathtcp=0 cho Go), lọc IP options bằng nftables/iptables u32 hoặc AWS Network Firewall.", ja: "カーネル更新と再起動が恒久対策。暫定措置: MPTCP無効化（net.mptcp.enabled=0、Go向けGODEBUG=multipathtcp=0）、nftables/iptables u32またはAWS Network FirewallによるIPオプション遮断。"}
 
+# disclosed: 2026-10-30
+- id: muji
+  category: incident
+  month: "2026-10"
+  path: "featured/muji/muji_security_incident_report/"
+  icon: "🛍️"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL INCIDENT"}
+  nav: {vi: "Sự cố MUJI", ja: "無印良品 インシデント"}
+  title: {vi: "無印良品 (MUJI / Ryohin Keikaku) — Rò rỉ tối đa 27,26 triệu tài khoản & 1,09 triệu số thẻ MUJI Card", ja: "無印良品（良品計画）— 最大2,726万件の会員情報 & MUJI Card 約109万件流出の恐れ"}
+  date: {vi: "Cập nhật 2026-11-20 · Net Store vẫn ngừng · Chưa có lịch mở lại", ja: "2026年11月20日更新 · ネットストア停止継続 · 再開時期未定"}
+  link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Quy mô", ja: "規模"}
+      text: {vi: "Tối đa ~27,26 triệu tài khoản (gồm người đã hủy), ~750.000 họ tên/địa chỉ/SĐT, ~1,09 triệu số thẻ MUJI Card 16 chữ số (~345.000 thẻ còn hiệu lực) và ~440.000 người nhận COD.", ja: "最大約2,726万件（退会者含む）、氏名・住所等約75万件、MUJI Card 16桁全桁約109万件（有効約34.5万件）、代引き受取先約44万件に影響の恐れ。"}
+    - sev: high
+      label: {vi: "Nguyên nhân", ja: "原因"}
+      text: {vi: "Lỗ hổng hệ thống + để tồn đọng 16 số thẻ không che suốt 5 năm (dù Credit Saison từng 2 lần yêu cầu xóa vào 2020 và 07/2021) &amp; không xóa tài khoản đã hủy; kết hợp credential stuffing (~270.000 tài khoản).", ja: "システム脆弱性に加え、クレディセゾンからの過去2回の削除依頼（2020年・21年7月）後も5年間マスクなし放置されたカード番号・退会者の削除漏れ。リスト型攻撃（約27万件）も判明。"}
+    - sev: med
+      label: {vi: "Tài chính & Quản lý", ja: "金融・監督官庁"}
+      text: {vi: "Credit Saison siết chặt giám sát gian lận dải BIN và miễn phí đổi thẻ; PPC yêu cầu nộp báo cáo giải trình chính thức (確報); METI điều tra tuân thủ Credit Card Security Guidelines.", ja: "クレディセゾンがBIN監視強化と無料再発行対応。PPCが正式確報を要求、経産省がセキュリティガイドライン違反を調査。"}
+    - sev: low
+      label: {vi: "Ứng phó & Bồi thường", ja: "対応・補償"}
+      text: {vi: "Đến 20/11, Net Store vẫn ngừng sang tuần thứ 2+ và MUJI App chỉ giữ mã vạch thành viên; Credit Saison hỗ trợ đổi thẻ miễn phí.", ja: "11月20日時点もネットストアは停止継続、MUJIアプリは会員証バーコード表示以外を停止。クレディセゾンはカードを無料再発行。"}
+
+# disclosed: 2026-10-30
 - id: php2shell
   category: vulnerability
   month: "2026-10"
@@ -454,3 +421,57 @@
     - sev: low
       label: {vi: "Triệt để", ja: "恒久対策"}
       text: {vi: "Nâng lên 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35, restart, build lại image; lên kế hoạch rời PHP 8.1 trở xuống.", ja: "8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 へ更新して再起動、イメージ再ビルド。PHP 8.1 以下からの移行を計画。"}
+
+# disclosed: 2026-10-29
+- id: binance
+  category: incident
+  month: "2026-10"
+  archived: true
+  path: "featured/binance/binance_security_incident_report/"
+  icon: "💸"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL INCIDENT"}
+  nav: {vi: "Sự cố Binance", ja: "Binance インシデント"}
+  title: {vi: "Binance (~6,3 tỷ USD) — Chuỗi xâm nhập phỏng vấn giả từ laptop DevOps vào dịch vụ ký ví", ja: "Binance（約63億米ドル流出）— DevOps 端末・偽装面接経由の多段階侵害"}
+  date: {vi: "Cập nhật 2026-11-20 · Đã khôi phục 100% · Lệnh phong tỏa ADGM 6,5 tỷ USD", ja: "2026年11月20日更新 · 100%補填・出金再開 · ADGM 65億ドル凍結命令"}
+  link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Quy mô", ja: "規模"}
+      text: {vi: "~6,34 tỷ USD rút trái phép từ ví nóng (29/10); lớn nhất lịch sử crypto (~4x Bybit 2025). Binance Japan không bị ảnh hưởng (ví lạnh riêng).", ja: "約63.4億ドル（Binance Japan はコールドウォレット分離管理により直接被害なし）。"}
+    - sev: high
+      label: {vi: "Nguyên nhân &amp; Quy kết", ja: "原因・特定"}
+      text: {vi: "FBI &amp; các hãng phân tích quy kết cho TraderTraitor (Triều Tiên): cài trojan Homebrew (06/2026), lừa phỏng vấn giả cài mã độc pyenv (09/2026) để chiếm token triển khai container.", ja: "FBI・分析企業は北朝鮮 TraderTraitor と特定。偽装採用面接での pyenv マルウェア等を経てコンテナトークンを窃取。"}
+    - sev: med
+      label: {vi: "Pháp lý &amp; Thu hồi", ja: "法的回収"}
+      text: {vi: "~2,85 tỷ USD đã phong tỏa sớm qua Tether/Circle; tòa ADGM (Abu Dhabi) ra lệnh phong tỏa toàn cầu 6,5 tỷ USD, tống đạt trực tiếp on-chain tới ~26.000 ví.", ja: "約28.5億ドルを早期凍結後、ADGM 裁判所が約26,000ウォレットへのオンチェーン送達を認める65億ドル凍結命令を発出。"}
+    - sev: low
+      label: {vi: "Khôi phục", ja: "復旧"}
+      text: {vi: "Đã mở lại rút tiền theo đợt từ 01/11, hoàn tất bù đắp 100% tài sản và công bố ZK Proof of Reserves cho 198 token (12–14/11).", ja: "11/1より出金を段階再開、100%資産補填完了し198トークンの ZK Proof of Reserves（11/12〜14）を公開。"}
+
+# disclosed: 2026-10-21
+- id: gmo
+  category: incident
+  month: "2026-10"
+  archived: true
+  path: "featured/gmo/gmo_onamae_security_incident_report/"
+  icon: "🚨"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL INCIDENT"}
+  nav: {vi: "Sự cố GMO Onamae", ja: "GMOお名前.com インシデント"}
+  title: {vi: "GMO Onamae Desktop Cloud — Chiếm quyền 26.739 VPS Windows, rò rỉ MT4/MT5", ja: "GMO お名前.com デスクトップクラウド — Windows VPS 26,739台乗っ取り・MT4/MT5情報漏えい"}
+  date: {vi: "Cập nhật 2026-11-20 · Công bố KQKD 13/11 · 1.049 tin Bounty đến 18/11", ja: "2026年11月20日更新 · 11/13決算説明 · 情報提供1,049件（11/18時点）"}
+  link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Hạ tầng", ja: "インフラ"}
+      text: {vi: "Chiếm quyền 26.739 máy chủ VPS Windows, rò rỉ thông tin đăng nhập MT4/MT5 tác động hơn 70 sàn chứng khoán & FX.", ja: "Windows VPSサーバー26,739台が乗っ取られ、MT4/MT5のログイン情報が漏えい。70以上の証券・FX会社に影響。"}
+    - sev: high
+      label: {vi: "Tống tiền", ja: "恐喝"}
+      text: {vi: "GMO từ chối yêu cầu 50 triệu USD và lập Quỹ Bounty tối đa 1 triệu USD; ghi nhận 1.049 tin báo đến 18:00 ngày 18/11, chưa đồng nghĩa với manh mối được xác minh.", ja: "GMOは5,000万米ドルの要求を拒否し、最大100万米ドルの懸賞金基金を設立。11月18日18時時点で情報提供は1,049件（有力情報の確定件数ではない）。"}
+    - sev: med
+      label: {vi: "Điều tra & Phòng thủ", ja: "捜査・防御"}
+      text: {vi: "Takedown tên miền rò rỉ sau 15,5 giờ; ngày 06/11 Tổng cục trưởng Cảnh sát Quốc gia Nhật Bản (NPA) chỉ thị lập Tổ điều tra liên ngành tại Sở Cảnh sát Tokyo.", ja: "流出ドメインを15.5時間でテイクダウン。11月6日、警察庁長官が警察法第61条の3に基づき警視庁への合同捜査本部設置を指示。"}
+    - sev: low
+      label: {vi: "Bồi thường", ja: "補償"}
+      text: {vi: "Đến 12/11, 2.943 tài khoản yêu cầu bồi thường khoảng 2,998 tỷ JPY; chi phí trực tiếp dự kiến 3,05 tỷ JPY, chưa phải số tiền chi trả đã xác nhận.", ja: "11月12日時点の損失補償申請は2,943口座・約29.98億円。直接費用は約30.5億円を見込むが、確定した支払額ではない。"}

@@ -79,5 +79,5 @@ Every new vulnerability analysis page (`featured/<case>/analysis.html` + `ja/ana
 
 - Always "fan out subagents" to update the security news.
 - **Subagents for Search, Scan & Explore**: Always use the Haiku model (`model: "haiku"`) when spawning subagents via the `Agent` tool for search, scan, codebase exploration, or research tasks (e.g., `Explore` or `general-purpose` search agents).
-- **Featured sorting**: Keep `_data/featured.yml` ordered by initial disclosure/occurrence date (newest first) for both incidents and vulnerabilities.
+- **Featured sorting**: Keep `_data/featured.yml` ordered by initial disclosure/occurrence date (newest first) for both incidents and vulnerabilities, and annotate each entry with `# disclosed: YYYY-MM-DD` above `- id:` so future updates preserve the exact chronological order.
 
