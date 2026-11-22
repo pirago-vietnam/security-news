@@ -43,7 +43,7 @@ redirect_from:
 
 <div class="report-header">
   <h1>Microsoft 365 (12–14/11/2026) — Sự cố gián đoạn toàn cầu gần 24–30 giờ do "triple failure" tại gateway mạng</h1>
-  <p class="sub">Xảy ra / Công bố: <strong>2026-11-12</strong> · Cập nhật đến <strong>2026-11-22</strong>: Tổng hợp từ Post-Incident Report (PIR) sơ bộ của Microsoft, giải trình kỹ thuật của EVP Charles Lamanna và cảnh báo phishing ăn theo từ Microsoft Threat Intelligence. Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a>.</p>
+  <p class="sub">Xảy ra / Công bố: <strong>2026-11-12</strong> · Cập nhật đến <strong>2026-11-23</strong>: Tổng hợp từ <strong>Final Post-Incident Report (PIR)</strong> ngày 21/11 với 13 bước khắc phục của Microsoft, xin lỗi mở màn Microsoft Ignite của CEO Satya Nadella, giải trình của EVP Charles Lamanna, hạn nộp yêu cầu bồi thường SLA (<strong>31/12/2026</strong>) và cảnh báo phishing từ Microsoft Threat Intelligence. Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a>.</p>
 </div>
 
 <blockquote class="callout">
@@ -82,7 +82,7 @@ redirect_from:
 
 <section class="an-sec">
 <h2 id="root-cause">2. Cơ chế "Triple Failure" (Nguyên nhân kỹ thuật)</h2>
-<p>Trong Post-Incident Report (PIR) sơ bộ và giải trình của EVP Charles Lamanna (Microsoft Copilot, Agents &amp; Platform), Microsoft chỉ ra sự cố không đến từ một điểm lỗi đơn lẻ mà là sự cộng hưởng của <strong>3 yếu tố</strong>:</p>
+<p>Trong <strong>Final Post-Incident Report (PIR)</strong> công bố ngày 21/11/2026 (cùng 13 bước hành động khắc phục) và giải trình của EVP Charles Lamanna (Microsoft Copilot, Agents &amp; Platform), Microsoft thừa nhận kiểm thử đã không phản ánh đúng tổ hợp phần cứng và lưu lượng thực tế, đồng thời các cơ chế điều hướng tải dự phòng đã phản tác dụng khi dồn tải sang node khỏe và vùng khác. Sự cố xuất phát từ sự cộng hưởng của <strong>3 yếu tố</strong>:</p>
 
 <figure class="fig">
 <svg viewBox="0 0 740 245" role="img" aria-label="Sơ đồ cơ chế triple failure của sự cố Microsoft 365">
@@ -167,8 +167,9 @@ redirect_from:
   <tbody>
     <tr><td>Tháng 07/2026</td><td>Microsoft triển khai bản vá cho gateway mạng M365; vượt qua Safe Deployment Practices vì không tái hiện lỗi trên phần cứng lab ít nhân.</td></tr>
     <tr><td>11/11/2026 (trước đỉnh ~15h)</td><td>Sự cố riêng làm mất ~14% dung lượng gateway chính; Teams tự động failover lưu lượng từ gateway dự phòng sang gateway chính.</td></tr>
-    <tr><td>12/11/2026 (~18:26 UTC)</td><td>Bùng phát gián đoạn diện rộng: Outlook/Exchange Online (<code>EX1550543</code>), Teams, Copilot, SharePoint, Defender XDR (<code>MO1550821</code>) lỗi kết nối trên 74+ quốc gia; &gt;80% gateway mất phản hồi trong ~2 giờ.</td></tr>
-    <tr><td>13/11 – 14/11/2026</td><td>Microsoft điều hướng lại lưu lượng, vá image máy chủ gateway và khôi phục từng phần; xác nhận ổn định toàn cầu sau ~30 giờ và tiếp tục giải phóng hàng đợi email tồn đọng.</td></tr>
+    <tr><td>12/11/2026 (16:17–18:26 UTC)</td><td>Exchange Online bắt đầu ghi nhận gián đoạn từ khoảng <strong>16:17–16:20 UTC</strong> (<code>EX1550543</code>) trước khi mở rộng thành sự cố toàn hệ sinh thái lúc ~18:26 UTC (<code>MO1550821</code>): Outlook, Teams, Copilot, SharePoint, Defender XDR lỗi kết nối trên 74+ quốc gia; &gt;80% gateway mất phản hồi trong ~2 giờ.</td></tr>
+    <tr><td>13/11 – 14/11/2026</td><td>Microsoft điều hướng lại lưu lượng, vá image máy chủ gateway; các dịch vụ cốt lõi phục hồi khoảng <strong>16:10 UTC ngày 13/11</strong> (~23h50m) và xác nhận ổn định toàn cầu sau ~30 giờ vào ngày 14/11 cùng việc xả hàng đợi email tồn đọng.</td></tr>
+    <tr><td>16/11 – 21/11/2026</td><td><strong>Quốc hội Anh &amp; PIR chính thức:</strong> Bộ trưởng Anh giải trình trước Hạ viện (16/11) về tác động tới khu vực công (gồm NHS phải quay lại hồ sơ giấy); Microsoft Security Blog công bố chi tiết chiến dịch phishing <code>EX1550543</code> (16/11); CEO Satya Nadella xin lỗi tại khai mạc Microsoft Ignite; ngày 21/11 Microsoft phát hành <strong>Final PIR</strong> nêu <strong>13 bước khắc phục</strong> (hiện đại hóa lab đa nhân sát production và thiết kế lại cơ chế điều hướng lưu lượng). Hạn chót nộp yêu cầu <strong>SLA credit</strong> là <strong>31/12/2026</strong> (không tự động cấp).</td></tr>
   </tbody>
 </table>
 </div>
@@ -232,14 +233,16 @@ redirect_from:
   <li><strong>Kiểm thử tải sát phần cứng production:</strong> Khi thiết kế dịch vụ có đồng thời cao (Go, Java, .NET, C++), không chỉ test trên VM ít vCPU — các lỗi tranh chấp khóa (lock contention) và false sharing thường chỉ lộ diện ở cấu hình nhiều nhân.</li>
   <li><strong>Tách biệt blast radius và kiểm soát failover:</strong> Định nghĩa ngưỡng dung lượng tối thiểu (headroom) trước khi cho phép failover chéo giữa các dịch vụ lớn dùng chung lớp gateway/proxy; trang bị cơ chế warm-up hoặc load shedding để node mới khởi động không bị sập ngược bởi retry storm.</li>
   <li><strong>Không để công cụ bảo mật phụ thuộc đơn tuyến vào 1 SaaS:</strong> Đảm bảo kênh cảnh báo SOC/SIEM có đường dự phòng khi email/Teams nội bộ gián đoạn.</li>
+  <li><strong>Yêu cầu bồi thường SLA (nếu doanh nghiệp bị ảnh hưởng):</strong> Microsoft không tự động hoàn tiền SLA; khách hàng EA/Direct cần mở ticket Billing trên M365 Admin Center (khách hàng CSP liên hệ đối tác/reseller) viện dẫn mã <code>EX1550543</code> / <code>MO1550821</code> trước hạn chót <strong>31/12/2026</strong>.</li>
 </ol>
 </section>
 
 <section class="an-sec">
 <h2 id="sources">6. Nguồn tham khảo</h2>
 <ul>
-  <li><strong>Microsoft Post-Incident Report (PIR) &amp; Giải trình của EVP Charles Lamanna:</strong> Tổng hợp trên BleepingComputer, ComputerWeekly, ITPro, TechTarget, The Next Web (11/2026).</li>
-  <li><strong>Microsoft Threat Intelligence:</strong> Cảnh báo chiến dịch phishing lợi dụng mã sự cố <code>EX1550543</code> (đưa tin bởi SecurityWeek, Infosecurity Magazine, iTnews, eSentire).</li>
+  <li><strong>Microsoft Final Post-Incident Report (21/11/2026), Ignite Keynote &amp; EVP Charles Lamanna:</strong> <a href="https://www.geekwire.com/2026/microsofts-final-outlook-outage-report-details-testing-gaps-and-safeguards-that-backfired/" target="_blank" rel="noopener">GeekWire (Final PIR, 13 bước khắc phục)</a>, <a href="https://www.geekwire.com/2026/satya-nadella-kicks-off-microsoft-ignite-with-an-outlook-outage-mea-culpa-we-have-work-to-do/" target="_blank" rel="noopener">GeekWire (Satya Nadella Ignite)</a>, BleepingComputer, ComputerWeekly, ITPro, TechTarget (11/2026).</li>
+  <li><strong>Microsoft Threat Intelligence:</strong> <a href="https://www.microsoft.com/en-us/security/blog/2026/11/16/high-volume-phishing-campaign-uses-microsoft-365-outage-lures-target-multiple-industry-sectors-2/" target="_blank" rel="noopener">Microsoft Security Blog (16/11/2026)</a> về chiến dịch phishing lợi dụng mã <code>EX1550543</code> (đưa tin bởi SecurityWeek, Infosecurity Magazine, eSentire).</li>
+  <li><strong>Quốc hội Anh &amp; Hướng dẫn SLA Credit:</strong> <a href="https://hansard.parliament.uk/Commons/2026-11-16/debates/52FEDF8F-7F19-47A6-9FB7-1930054C9061/Microsoft365Outage" target="_blank" rel="noopener">UK Parliament Hansard (16/11/2026)</a>; <a href="https://www.softwareone.com/en-ie/blog/articles/2026/11/19/microsoft-365-outage-sla-credits-next-steps" target="_blank" rel="noopener">SoftwareOne (hạn chót SLA 31/12/2026)</a>.</li>
   <li><strong>Phân tích mạng &amp; tác động toàn cầu:</strong> ThousandEyes, Al Jazeera, The Guardian, ComputerWeekly (74+ quốc gia, ~24–30 giờ gián đoạn &amp; khôi phục).</li>
   <li><strong>Đối chiếu tin tức tuần 12–17/11/2026:</strong> <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo bảo mật tháng 11/2026 (PiraGo)</a>.</li>
 </ul>

@@ -3,7 +3,7 @@ layout: default
 image: "/featured/incidents/binance/binance-incident-og.png"
 lang: ja
 title: "Binance（約63億米ドル流出）— DevOps 端末侵害からサービスコンテナへ到達"
-description: "2026年11月20日更新：Binance 約63.4億ドル流出事案の最新経緯（TraderTraitor による偽装面接侵害チェーン、198トークン PoR による100%補填完了、ADGM 裁判所の65億ドル資産凍結命令）"
+description: "2026年11月23日更新：Binance 約63.4億ドル流出事案の最新経緯（米司法省による TraderTraitor 公式特定と12億ドル超押収、8.6億ドル相当 ETH 移動・2,310 BTC Coinjoin 洗浄、凍結28.2億ドル対回収3,200万ドル、ADGM 12/1審理予定）"
 category: "セキュリティインシデント"
 permalink: /ja/featured/incidents/binance/binance_security_incident_report/
 redirect_from:
@@ -22,7 +22,7 @@ redirect_from:
 
 <div class="report-header">
   <h1>Binance（約63億米ドル流出）— DevOps 端末侵害からサービスコンテナへ到達</h1>
-  <p class="sub">発生・公開日：<strong>2026-10-29</strong> · <strong>2026年11月20日 時点：出金再開・100%資産補填完了。</strong>グローバルな法的回収（ADGM 裁判所による65億ドル凍結命令）を継続中。月次レポート: <a href="{{ '/ja/monthly/2026-10/' | relative_url }}">2026年10月 セキュリティレポート</a>。</p>
+  <p class="sub">発生・公開日：<strong>2026-10-29</strong> · <strong>2026年11月23日 時点：87ネットワークで出金再開・100%資産補填完了。</strong>米司法省が12億ドル超を押収・TraderTraitor と公式特定、ADGM 裁判所は11/30資産開示期限・12/1審理を設定。一方、攻撃者は洗浄を加速（8.6億ドル相当の ETH 移動、2,310 BTC を Coinjoin）。月次レポート: <a href="{{ '/ja/monthly/2026-10/' | relative_url }}">2026年10月 セキュリティレポート</a>。</p>
 </div>
 
 <blockquote class="callout">
@@ -69,8 +69,9 @@ redirect_from:
     <tr><td>10月30日</td><td>CryptoTimes の見出しは「45 時間」で再開としているが（ページは読めず、スニペットのみ）、同じ 48 時間の見込みを後の時刻から数えたものと推測されます。</td><td><span class="badge high">未検証</span></td></tr>
     <tr><td>10月31日〜11月2日</td><td>上位10資産（BTC、ETH、USDT、BNB、SOL、USDC、XRP 等）の初期 ZK Proof of Reserves（PoR）スナップショットを公開。11月1日より主要ネットワークで出金を段階再開。</td><td><span class="badge low">確認済</span></td></tr>
     <tr><td>11月上旬</td><td>Binance Japan が直接影響なし（コールドウォレット分離管理）を確認し、出金を順次再開。ReversingLabs や The Hacker News 等が、6月からの偽装採用面接（Contagious Interview）を含む侵入チェーンを報じる。</td><td><span class="badge low">確認済</span> / <span class="badge med">報道</span></td></tr>
-    <tr><td>11月12日〜14日</td><td>影響資産の100%補填を完了し、<strong>198トークン</strong>を網羅する包括的な ZK PoR スナップショットを取得。数十の追加ブロックチェーンネットワークで出金を再開。</td><td><span class="badge low">確認済</span></td></tr>
-    <tr><td>11月中旬（〜11月20日）</td><td>ADGM 裁判所（アブダビ）の William Stone 判事が、約26,000ウォレットの動的リストに対するブロックチェーン上での直接送達を認める<strong>65億ドルの世界的資産凍結命令</strong>を発出（先行して Tether/Circle 等が約28.5億ドルを凍結済み）。</td><td><span class="badge med">報道</span></td></tr>
+    <tr><td>11月12日〜14日</td><td>影響資産の100%補填を完了し、<strong>198トークン</strong>を網羅する包括的な ZK PoR スナップショットを取得。11月14日までに計<strong>87ネットワーク</strong>で出金を再開。また11月12日、<strong>米司法省（DOJ）</strong>が FBI による北朝鮮 <strong>TraderTraitor</strong> の関与を公式確認し、<strong>12億ドル超</strong>の押収・保全措置を発表。</td><td><span class="badge low">DOJ / 確認済</span></td></tr>
+    <tr><td>11月17日〜20日</td><td><strong>ADGM 凍結命令と資金洗浄加速：</strong>ADGM 裁判所（William Stone 判事）が約26,000ウォレットへのオンチェーン送達を認める<strong>65億ドル凍結命令</strong>および Circle・BitGo 等<strong>18社</strong>を拘束する暫定命令を発出（資産開示期限 <strong>11/30</strong>、次回審理 <strong>12/1</strong>）。Elliptic・Crypto Briefing（11/20）によると、攻撃者は最大手 ETH アドレス9件中5件から約488,000 ETH（約8.6億ドル）を移動し、<strong>2,310 BTC（約1.49億ドル）</strong>を Coinjoin（主に Kruw / Wasabi）へ投入。凍結総額 <strong>28.2億ドル</strong>に対し実回収は <strong>3,200万ドル</strong>にとどまり、出金再開後の純流出は約47億ドルに達した。</td><td><span class="badge med">報道（Elliptic / Crypto Briefing）</span></td></tr>
+    <tr><td>11月21日〜23日</td><td>新たな裁判所判断や Binance の技術ポストモーテムの公表はなく、11月30日の開示期限および12月1日の ADGM 審理が焦点。</td><td><span class="badge low">継続監視</span></td></tr>
   </tbody>
 </table>
 </div>
@@ -145,7 +146,8 @@ redirect_from:
   <li>63.4 億ドル超の自己資金と準備金を補填に充当。約 50 億ドルは同じ対象トークンで既に保有しており、残りの約 13.4 億ドルを市場および OTC 取引で購入中。流動性と決済の制約で購入が遅れる可能性があると警告しています。<span class="badge low">確認済</span></li>
   <li>Yi He 氏: 買い戻しには自社保有の BTC と ETH も使う。報道の 1 つは、投稿が BTC/ETH を売却したとは述べていないと指摘。Binance は影響を受けた資産の復元を開始したが、戻った額や完了時期は示していません。<span class="badge med">報道</span></li>
   <li>自己資金・余剰保険・SAFU 基金により100%の補填を完了し、11月12〜14日に<strong>198トークン対象の包括的 ZK Proof of Reserves</strong> スナップショットを取得。<span class="badge low">確認済</span></li>
-  <li><strong>ADGM 裁判所による65億ドル世界的凍結命令（11月中旬）:</strong> Gibson Dunn 法律事務所を通じてアブダビ ADGM 裁判所から約26,000ウォレットの動的リストに対するブロックチェーン上での送達を含む資産凍結命令を取得し、先行凍結分（約28.5億ドル）の回収手続きを加速。<span class="badge med">報道</span></li>
+  <li><strong>ADGM 裁判所による65億ドル世界的凍結命令と回収状況（11/20時点）:</strong> Gibson Dunn 法律事務所を通じて取得した ADGM 命令（約26,000ウォレットへのオンチェーン送達）に加え、別個の暫定命令が Circle・BitGo Bank &amp; Trust を含む<strong>18社</strong>に凍結維持を義務付け。正体不明の攻撃者には <strong>11月30日</strong>までに5万ドル超の世界資産開示（宣誓書）を命じ、<strong>12月1日</strong>に延長・引渡審理を予定。Crypto Briefing（11/20）によると、発生3週間で<strong>28.2億ドル</strong>（うち USDT/USDC 約23億ドル）が凍結されたものの、Binance への実回収額は<strong>3,200万ドル</strong>にとどまり、出金再開後の純流出は約47億ドルに達しています。<span class="badge med">報道</span></li>
+  <li><strong>オンチェーン資金洗浄の加速（Elliptic 11/20分析）:</strong> 11月17日以降、攻撃者は大口 ETH アドレス9件中5件を空にし、約488,000 ETH（約8.6億ドル）を12,000 ETH 単位で移動（うち約39,000 ETH / 7,000万ドルを THORChain 経由で BTC へ交換）。交換後の <strong>2,310 BTC（約1.49億ドル）</strong>以上を Coinjoin（約90%が11/17〜20に集中、主に Kruw / Wasabi WabiSabi 経由）で洗浄する一方、直接窃取した 18,270 BTC は19アドレスで未移動。全体の追跡範囲は<strong>27,000超のウォレット・16以上のブロックチェーン</strong>に及び、約23.5億ドルが関連ウォレットに残存しています。<span class="badge med">報道</span></li>
 </ul>
 <h3>4.4. 出金、入金、市場、当局</h3>
 <ul>
@@ -166,7 +168,7 @@ redirect_from:
   <li><strong>Chainalysis <span class="badge med">報道</span>:</strong> CEO の Jonathan Levin 氏は、TraderTraitor による犯行の「可能性が高い（likely）」とソーシャルメディアで述べました。</li>
   <li>米財務省は TraderTraitor を Lazarus Group の一部と見ていると、CBS は伝えています。</li>
   <li><strong>Binance:</strong> 攻撃者を特定しておらず、誰が責任者かを確認するため法執行機関と協力していると、検索結果の要約は伝えています（一次情報では未確認）。</li>
-  <li><strong>FBI:</strong> CBS が FBI に言及しているのは 2025年の Bybit のみです（FBI IC3 PSA I-022625-PSA）。NPR のスニペットには、FBI が Binance の件も北朝鮮の TraderTraitor によるものとしたとの記述がありますが、確認できておらず、報道間で食い違っています。<strong>未確認</strong>として扱います。</li>
+  <li><strong>FBI・米司法省（DOJ）<span class="badge low">公式確認（2026年11月12日）</span>:</strong> 米司法省は11月12日の公式発表で、FBI が本件を北朝鮮軍のサイバー部隊 <strong>TraderTraitor</strong> による犯行と特定したことを公式確認し、裁判所命令に基づく<strong>12億ドル超</strong>の暗号資産の押収・凍結措置を公表しました。</li>
   <li><strong>Elliptic:</strong> 慎重な対応を促したとのスニペットのみ。<span class="badge high">未検証</span></li>
   <li><strong>Bybit との比較:</strong> Bybit は 2025年2月21日ごろ、約 15 億ドル。Binance は TRM の数字で約 4 倍です。共通点として情報源から言えるのは、暗号の突破ではなく、取引所の署名・運用基盤の侵害という型にとどまり、侵入経路が同じかは確認されていません。</li>
   <li><strong>IOC:</strong> 読めた記事には、アドレス、トランザクションハッシュ、ドメインなどの IOC は公開されていません。TRM の原文で確認してください。</li>
@@ -236,6 +238,9 @@ redirect_from:
   <li><a href="https://www.cbsnews.com/news/binance-hack-north-korea/" target="_blank" rel="noopener noreferrer">CBS News</a>、<a href="https://finance.yahoo.com/markets/crypto/articles/binance-6-3-billion-hack-083916125.html" target="_blank" rel="noopener noreferrer">Yahoo Finance</a></li>
   <li><a href="https://www.tokenpost.com/news/technology/44756" target="_blank" rel="noopener noreferrer">TokenPost (44756)</a>、<a href="https://www.tokenpost.com/news/technology/44715" target="_blank" rel="noopener noreferrer">TokenPost (44715)</a>、<a href="https://www.bitbase.com/news/binance-buys-back-stolen-altcoins-after-hack" target="_blank" rel="noopener noreferrer">Bitbase</a>（検索要約を含む）</li>
   <li>過去事例（Bybit）: <a href="https://ic3.gov/psa/2025/psa250226" target="_blank" rel="noopener noreferrer">FBI IC3 PSA</a>、<a href="https://thehackernews.com/2025/02/bybit-hack-traced-to-safewallet-supply.html" target="_blank" rel="noopener noreferrer">The Hacker News</a></li>
+  <li><a href="https://www.justice.gov/opa/pr/justice-department-announces-actions-disrupt-north-koreas-massive-theft-cryptocurrency" target="_blank" rel="noopener noreferrer">米司法省 DOJ（2026年11月12日）</a> — FBI による TraderTraitor 特定・12億ドル超押収の公式発表</li>
+  <li><a href="https://www.elliptic.co/insights/how-north-korea-is-laundering-the-6-4-billion-stolen-from-binance/" target="_blank" rel="noopener noreferrer">Elliptic（2026年11月20日）</a>・<a href="https://www.theblock.co/news/markets/2026-11-20-binance-hack-laundering-ramps-up-149-million-bitcoin-mixed-coinjoins-elliptic-444758" target="_blank" rel="noopener noreferrer">The Block（11月20日）</a> — 8.6億ドル相当 ETH 移動および 2,310 BTC Coinjoin 分析</li>
+  <li><a href="https://cryptobriefing.com/binance-hack-frozen-funds-recovery/" target="_blank" rel="noopener noreferrer">Crypto Briefing（11月20日）</a>・<a href="https://www.altcoinbuzz.io/binance-won-a-6-5b-freezing-order-what-does-it-actually-do" target="_blank" rel="noopener noreferrer">Altcoin Buzz（11月20日）</a> — 凍結28.2億ドル対回収3,200万ドル、ADGM 命令詳細</li>
 </ul>
 <h3>読めなかった、またはスニペットのみの情報源</h3>
 <ul>

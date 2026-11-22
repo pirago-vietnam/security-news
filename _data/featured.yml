@@ -222,7 +222,7 @@
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
   nav: {vi: "Sự cố Rakuten Securities", ja: "楽天証券 インシデント"}
   title: {vi: "楽天証券 (Rakuten Securities) — Có thể lộ tối đa 11,25 triệu tài khoản từ môi trường test", ja: "楽天証券 — テスト環境から最大1,125万口座の情報流出の恐れ"}
-  date: {vi: "Cập nhật 2026-11-20 · FSA ra lệnh báo cáo (19/11) · Miễn phí chuyển quỹ", ja: "2026年11月20日更新 · 金融庁が報告徴求命令（11/19） · 投信出庫手数料無料化"}
+  date: {vi: "Cập nhật 2026-11-23 · FSA ra lệnh báo cáo (19/11) · Hủy 5 hội thảo · >20.000 đăng ký kiện tập thể", ja: "2026年11月23日更新 · 金融庁が報告徴求命令（11/19） · セミナー5件中止 · 集団訴訟準備2万人超"}
   link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
   items:
     - sev: crit
@@ -236,7 +236,7 @@
       text: {vi: "Mật khẩu đăng nhập, mã PIN và thông tin giao dịch chưa xác nhận bị lộ; chưa ghi nhận giao dịch trái phép liên quan.", ja: "パスワード・暗証番号など取引に必要な情報の漏えいは未確認。本件起因の不正取引も確認されていません。"}
     - sev: low
       label: {vi: "Ứng phó", ja: "対応"}
-      text: {vi: "Miễn phí chuyển quỹ tín thác sang đối thủ từ 18/11, hoãn mở cửa hàng Shibuya (25/11); ghi nhận >15.000 người đăng ký khởi kiện tập thể; khuyến nghị passkey.", ja: "11/18より投信出庫手数料を当面無料化、渋谷店舗の開店延期。集団訴訟準備サイトに1.5万人超登録の動き。パスキー推奨。"}
+      text: {vi: "Miễn phí chuyển quỹ từ 18/11, hoãn mở cửa hàng Shibuya & hủy 5 hội thảo (20/11); >20.000 người đăng ký chuẩn bị khởi kiện tập thể; Bộ trưởng Katayama yêu cầu ứng phó tối đa; khuyến nghị passkey.", ja: "11/18より投信出庫無料化、渋谷店舗延期・セミナー5件中止（11/20）。集団訴訟準備サイトの登録2万人超。片山金融相が徹底対応を要請。パスキー推奨。"}
 
 # disclosed: 2026-11-16
 - id: brotli-cve-2026-111497
@@ -299,7 +299,7 @@
   badge: {sev: high, text: "OPERATIONAL INCIDENT"}
   nav: {vi: "Sự cố Microsoft 365", ja: "Microsoft 365 障害"}
   title: {vi: "Microsoft 365 (12–14/11/2026) — Gián đoạn toàn cầu ~24–30h do \"triple failure\" tại gateway mạng", ja: "Microsoft 365（2026年11月12〜14日）— ゲートウェイの「三重障害」による約24〜30時間の大規模障害"}
-  date: {vi: "Cập nhật 2026-11-22 · EX1550543 / MO1550821 · 74+ quốc gia · Không phải tấn công mạng", ja: "2026年11月22日更新 · EX1550543 / MO1550821 · 74カ国以上 · サイバー攻撃ではない"}
+  date: {vi: "Cập nhật 2026-11-23 · Final PIR (13 bước khắc phục) · Hạn SLA credit 31/12/2026 · 74+ quốc gia", ja: "2026年11月23日更新 · 最終PIR（13項目）公表 · SLA申請期限12/31 · 74カ国以上"}
   link: {vi: "Xem phân tích sự cố chi tiết →", ja: "障害詳細レポートを見る →"}
   items:
     - sev: high
@@ -313,7 +313,7 @@
       text: {vi: "Microsoft Threat Intelligence cảnh báo phishing quy mô lớn giả mạo Service Health (dẫn mã EX1550543, dọa xóa email sau 24h) qua SendGrid chuyển hướng ra ngoài.", ja: "Microsoft Threat Intelligence が障害番号 EX1550543 を悪用し「24時間以内にメール削除」と偽る大規模フィッシング（SendGrid 経由の外部誘導）を警告。"}
     - sev: low
       label: {vi: "Khuyến cáo", ja: "対策"}
-      text: {vi: "Săn tìm email chủ đề \"Outage -\" / EX1550543; load test trên phần cứng nhiều nhân sát production; tách blast radius khi failover và chống retry storm.", ja: "件名 \"Outage -\" / EX1550543 の不審メールを調査；本番同等の多コア環境で負荷検証；フェイルオーバー時の影響分離とリトライストーム対策を実施。"}
+      text: {vi: "Săn tìm email \"Outage -\" / EX1550543; nộp yêu cầu SLA credit trước 31/12/2026 (không tự động cấp); load test sát production nhiều nhân &amp; tách blast radius khi failover.", ja: "件名 \"Outage -\" / EX1550543 の不審メールを調査；SLAクレジットは12/31までに要申請（自動適用なし）；本番同等多コア検証とフェイルオーバー分離を実施。"}
 
 # disclosed: 2026-11-11
 - id: apache-cve-2026-119618
@@ -379,7 +379,7 @@
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
   nav: {vi: "Sự cố MUJI", ja: "無印良品 インシデント"}
   title: {vi: "無印良品 (MUJI / Ryohin Keikaku) — Rò rỉ tối đa 27,26 triệu tài khoản & 1,09 triệu số thẻ MUJI Card", ja: "無印良品（良品計画）— 最大2,726万件の会員情報 & MUJI Card 約109万件流出の恐れ"}
-  date: {vi: "Cập nhật 2026-11-20 · Net Store vẫn ngừng · Chưa có lịch mở lại", ja: "2026年11月20日更新 · ネットストア停止継続 · 再開時期未定"}
+  date: {vi: "Cập nhật 2026-11-23 · Net Store vẫn ngừng sang tuần 3 · Chưa có lịch mở lại", ja: "2026年11月23日更新 · ネットストア停止3週目も継続 · 再開時期未定"}
   link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
   items:
     - sev: crit
@@ -393,7 +393,7 @@
       text: {vi: "Credit Saison siết chặt giám sát gian lận dải BIN và miễn phí đổi thẻ; PPC yêu cầu nộp báo cáo giải trình chính thức (確報); METI điều tra tuân thủ Credit Card Security Guidelines.", ja: "クレディセゾンがBIN監視強化と無料再発行対応。PPCが正式確報を要求、経産省がセキュリティガイドライン違反を調査。"}
     - sev: low
       label: {vi: "Ứng phó & Bồi thường", ja: "対応・補償"}
-      text: {vi: "Đến 20/11, Net Store vẫn ngừng sang tuần thứ 2+ và MUJI App chỉ giữ mã vạch thành viên; Credit Saison hỗ trợ đổi thẻ miễn phí.", ja: "11月20日時点もネットストアは停止継続、MUJIアプリは会員証バーコード表示以外を停止。クレディセゾンはカードを無料再発行。"}
+      text: {vi: "Đến 23/11, Net Store vẫn ngừng (chưa có Báo cáo 5 hay lịch mở lại) và MUJI App chỉ giữ mã vạch thành viên; Credit Saison hỗ trợ đổi thẻ miễn phí.", ja: "11月23日時点もネットストアは停止継続（第5報・再開時期とも未定）、MUJIアプリは会員証バーコード表示以外を停止。クレディセゾンはカードを無料再発行。"}
 
 # disclosed: 2026-10-30
 - id: php2shell
@@ -433,7 +433,7 @@
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
   nav: {vi: "Sự cố Binance", ja: "Binance インシデント"}
   title: {vi: "Binance (~6,3 tỷ USD) — Chuỗi xâm nhập phỏng vấn giả từ laptop DevOps vào dịch vụ ký ví", ja: "Binance（約63億米ドル流出）— DevOps 端末・偽装面接経由の多段階侵害"}
-  date: {vi: "Cập nhật 2026-11-20 · Đã khôi phục 100% · Lệnh phong tỏa ADGM 6,5 tỷ USD", ja: "2026年11月20日更新 · 100%補填・出金再開 · ADGM 65億ドル凍結命令"}
+  date: {vi: "Cập nhật 2026-11-23 · DOJ thu giữ >1,2 tỷ USD · 2,82B phong tỏa / 32M thu hồi · Phiên ADGM 01/12", ja: "2026年11月23日更新 · 米司法省12億ドル超押収 · 凍結28.2億ドル/回収3,200万ドル · ADGM 12/1審理"}
   link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
   items:
     - sev: crit
@@ -441,10 +441,10 @@
       text: {vi: "~6,34 tỷ USD rút trái phép từ ví nóng (29/10); lớn nhất lịch sử crypto (~4x Bybit 2025). Binance Japan không bị ảnh hưởng (ví lạnh riêng).", ja: "約63.4億ドル（Binance Japan はコールドウォレット分離管理により直接被害なし）。"}
     - sev: high
       label: {vi: "Nguyên nhân &amp; Quy kết", ja: "原因・特定"}
-      text: {vi: "FBI &amp; các hãng phân tích quy kết cho TraderTraitor (Triều Tiên): cài trojan Homebrew (06/2026), lừa phỏng vấn giả cài mã độc pyenv (09/2026) để chiếm token triển khai container.", ja: "FBI・分析企業は北朝鮮 TraderTraitor と特定。偽装採用面接での pyenv マルウェア等を経てコンテナトークンを窃取。"}
+      text: {vi: "DOJ Mỹ (12/11) chính thức xác nhận FBI quy kết TraderTraitor (Triều Tiên) &amp; thu giữ &gt;1,2 tỷ USD; Elliptic (20/11) ghi nhận 860M USD ETH dịch chuyển &amp; 2.310 BTC qua Coinjoin.", ja: "米司法省（11/12）が FBI による北朝鮮 TraderTraitor 特定と12億ドル超押収を公式確認；Elliptic（11/20）は8.6億ドル ETH 移動と2,310 BTC の Coinjoin を報告。"}
     - sev: med
       label: {vi: "Pháp lý &amp; Thu hồi", ja: "法的回収"}
-      text: {vi: "~2,85 tỷ USD đã phong tỏa sớm qua Tether/Circle; tòa ADGM (Abu Dhabi) ra lệnh phong tỏa toàn cầu 6,5 tỷ USD, tống đạt trực tiếp on-chain tới ~26.000 ví.", ja: "約28.5億ドルを早期凍結後、ADGM 裁判所が約26,000ウォレットへのオンチェーン送達を認める65億ドル凍結命令を発出。"}
+      text: {vi: "Tòa ADGM ra lệnh phong tỏa 6,5 tỷ USD (tống đạt on-chain ~26.000 ví, ràng buộc 18 tổ chức), hạn kê khai 30/11 &amp; xét xử 01/12; 2,82 tỷ USD đã phong tỏa nhưng mới thu hồi 32 triệu USD.", ja: "ADGM が約26,000ウォレット送達・18社拘束の65億ドル凍結命令（11/30開示期限・12/1審理）。凍結28.2億ドルに対し実回収は3,200万ドル。"}
     - sev: low
       label: {vi: "Khôi phục", ja: "復旧"}
       text: {vi: "Đã mở lại rút tiền theo đợt từ 01/11, hoàn tất bù đắp 100% tài sản và công bố ZK Proof of Reserves cho 198 token (12–14/11).", ja: "11/1より出金を段階再開、100%資産補填完了し198トークンの ZK Proof of Reserves（11/12〜14）を公開。"}
@@ -460,7 +460,7 @@
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
   nav: {vi: "Sự cố GMO Onamae", ja: "GMOお名前.com インシデント"}
   title: {vi: "GMO Onamae Desktop Cloud — Chiếm quyền 26.739 VPS Windows, rò rỉ MT4/MT5", ja: "GMO お名前.com デスクトップクラウド — Windows VPS 26,739台乗っ取り・MT4/MT5情報漏えい"}
-  date: {vi: "Cập nhật 2026-11-20 · Công bố KQKD 13/11 · 1.049 tin Bounty đến 18/11", ja: "2026年11月20日更新 · 11/13決算説明 · 情報提供1,049件（11/18時点）"}
+  date: {vi: "Cập nhật 2026-11-23 · Công bố KQKD 13/11 · 1.134 tin Bounty đến 20/11", ja: "2026年11月23日更新 · 11/13決算説明 · 情報提供1,134件（11/20時点）"}
   link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
   items:
     - sev: crit
@@ -468,7 +468,7 @@
       text: {vi: "Chiếm quyền 26.739 máy chủ VPS Windows, rò rỉ thông tin đăng nhập MT4/MT5 tác động hơn 70 sàn chứng khoán & FX.", ja: "Windows VPSサーバー26,739台が乗っ取られ、MT4/MT5のログイン情報が漏えい。70以上の証券・FX会社に影響。"}
     - sev: high
       label: {vi: "Tống tiền", ja: "恐喝"}
-      text: {vi: "GMO từ chối yêu cầu 50 triệu USD và lập Quỹ Bounty tối đa 1 triệu USD; ghi nhận 1.049 tin báo đến 18:00 ngày 18/11, chưa đồng nghĩa với manh mối được xác minh.", ja: "GMOは5,000万米ドルの要求を拒否し、最大100万米ドルの懸賞金基金を設立。11月18日18時時点で情報提供は1,049件（有力情報の確定件数ではない）。"}
+      text: {vi: "GMO từ chối yêu cầu 50 triệu USD và lập Quỹ Bounty tối đa 1 triệu USD; ghi nhận 1.134 tin báo đến 18:00 ngày 20/11 (cập nhật T2–T6 trừ ngày lễ), chưa đồng nghĩa manh mối xác minh.", ja: "GMOは5,000万米ドルの要求を拒否し、最大100万米ドルの懸賞金基金を設立。11月20日18時時点で情報提供は1,134件（土日祝除く平日更新、確定数ではない）。"}
     - sev: med
       label: {vi: "Điều tra & Phòng thủ", ja: "捜査・防御"}
       text: {vi: "Takedown tên miền rò rỉ sau 15,5 giờ; ngày 06/11 Tổng cục trưởng Cảnh sát Quốc gia Nhật Bản (NPA) chỉ thị lập Tổ điều tra liên ngành tại Sở Cảnh sát Tokyo.", ja: "流出ドメインを15.5時間でテイクダウン。11月6日、警察庁長官が警察法第61条の3に基づき警視庁への合同捜査本部設置を指示。"}
