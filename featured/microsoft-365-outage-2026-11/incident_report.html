@@ -56,16 +56,16 @@ category: "Sự cố vận hành"
 </div>
 
 <nav class="an-nav" aria-label="Mục lục">
-  <a href="#tom-tat">1. Tóm tắt &amp; Phạm vi</a>
-  <a href="#nguyen-nhan">2. Cơ chế "Triple Failure"</a>
-  <a href="#dien-bien">3. Diễn biến &amp; Khôi phục</a>
+  <a href="#summary">1. Tóm tắt &amp; Phạm vi</a>
+  <a href="#root-cause">2. Cơ chế "Triple Failure"</a>
+  <a href="#timeline">3. Diễn biến &amp; Khôi phục</a>
   <a href="#phishing">4. Phishing ăn theo sự cố</a>
-  <a href="#khuyen-cao">5. Khuyến cáo PiraGo</a>
-  <a href="#nguon">6. Nguồn tham khảo</a>
+  <a href="#recommendations">5. Khuyến cáo PiraGo</a>
+  <a href="#sources">6. Nguồn tham khảo</a>
 </nav>
 
 <section class="an-sec">
-<h2 id="tom-tat">1. Tóm tắt &amp; Phạm vi ảnh hưởng</h2>
+<h2 id="summary">1. Tóm tắt &amp; Phạm vi ảnh hưởng</h2>
 <ul>
   <li><strong>Bản chất sự cố:</strong> Lỗi kỹ thuật dây chuyền (cascading failure) trong hạ tầng gateway mạng của Microsoft 365. Cả Microsoft và các cơ quan chức năng đều xác nhận <strong>không có dấu hiệu tấn công mạng</strong> hay liên quan đến chuỗi sự cố cùng tuần (FAA, Chase, NSANet, Apple iCloud) <span class="badge low">Xác nhận nội bộ</span>.</li>
   <li><strong>Mã theo dõi chính thức:</strong>
@@ -79,7 +79,7 @@ category: "Sự cố vận hành"
 </section>
 
 <section class="an-sec">
-<h2 id="nguyen-nhan">2. Cơ chế "Triple Failure" (Nguyên nhân kỹ thuật)</h2>
+<h2 id="root-cause">2. Cơ chế "Triple Failure" (Nguyên nhân kỹ thuật)</h2>
 <p>Trong Post-Incident Report (PIR) sơ bộ và giải trình của EVP Charles Lamanna (Microsoft Copilot, Agents &amp; Platform), Microsoft chỉ ra sự cố không đến từ một điểm lỗi đơn lẻ mà là sự cộng hưởng của <strong>3 yếu tố</strong>:</p>
 
 <figure class="fig">
@@ -129,7 +129,7 @@ category: "Sự cố vận hành"
 </section>
 
 <section class="an-sec">
-<h2 id="dien-bien">3. Diễn biến &amp; Lý do khôi phục kéo dài</h2>
+<h2 id="timeline">3. Diễn biến &amp; Lý do khôi phục kéo dài</h2>
 
 <figure class="fig">
 <svg viewBox="0 0 740 165" role="img" aria-label="Dòng thời gian sự cố Microsoft 365">
@@ -190,7 +190,7 @@ category: "Sự cố vận hành"
 </section>
 
 <section class="an-sec">
-<h2 id="khuyen-cao">5. Khuyến cáo cho đội ngũ kỹ thuật &amp; vận hành (PiraGo)</h2>
+<h2 id="recommendations">5. Khuyến cáo cho đội ngũ kỹ thuật &amp; vận hành (PiraGo)</h2>
 
 <figure class="fig">
 <svg viewBox="0 0 740 160" role="img" aria-label="4 trụ cột phòng ngừa sự cố vận hành và phishing ăn theo">
@@ -234,7 +234,7 @@ category: "Sự cố vận hành"
 </section>
 
 <section class="an-sec">
-<h2 id="nguon">6. Nguồn tham khảo</h2>
+<h2 id="sources">6. Nguồn tham khảo</h2>
 <ul>
   <li><strong>Microsoft Post-Incident Report (PIR) &amp; Giải trình của EVP Charles Lamanna:</strong> Tổng hợp trên BleepingComputer, ComputerWeekly, ITPro, TechTarget, The Next Web (11/2026).</li>
   <li><strong>Microsoft Threat Intelligence:</strong> Cảnh báo chiến dịch phishing lợi dụng mã sự cố <code>EX1550543</code> (đưa tin bởi SecurityWeek, Infosecurity Magazine, iTnews, eSentire).</li>

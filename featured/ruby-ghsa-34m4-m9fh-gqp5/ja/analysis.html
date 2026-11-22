@@ -37,17 +37,17 @@ permalink: /ja/featured/ruby-ghsa-34m4-m9fh-gqp5/analysis/
 </blockquote>
 
 <nav class="an-nav" aria-label="nav">
-  <a href="#non-tech">TL;DR</a>
-  <a href="#tom-tat">技術概要</a>
-  <a href="#pham-vi">影響範囲</a>
-  <a href="#kiem-tra">確認方法</a>
-  <a href="#khac-phuc">対策</a>
-  <a href="#do-tin-cay">情報の信頼性</a>
-  <a href="#nguon">参考情報</a>
+  <a href="#tldr">TL;DR</a>
+  <a href="#summary">技術概要</a>
+  <a href="#scope">影響範囲</a>
+  <a href="#check">確認方法</a>
+  <a href="#remediation">対策</a>
+  <a href="#confidence">情報の信頼性</a>
+  <a href="#sources">参考情報</a>
 </nav>
 
 <section class="an-sec">
-<h2 id="non-tech">TL;DR（かんたん解説）</h2>
+<h2 id="tldr">TL;DR（かんたん解説）</h2>
 <ul>
   <li><strong>何が起きた？</strong> 一部の古い 1 バイト文字コードで「ß」を大文字にすると「SS」の 2 バイトになりますが、Ruby の空き容量チェックが 1 バイト分しかなく、バッファ境界を 1 バイト超えて書き込みます。</li>
   <li><strong>どれくらい危険？</strong> Ruby 側は「一部のシナリオで <strong>リモートコード実行（RCE）</strong> に至る PoC を把握している」としています。Veria Labs によれば Rails と Sinatra（classic）は既定設定で影響を受けます。</li>
@@ -57,7 +57,7 @@ permalink: /ja/featured/ruby-ghsa-34m4-m9fh-gqp5/analysis/
 </section>
 
 <section class="an-sec">
-<h2 id="tom-tat">1. 技術概要</h2>
+<h2 id="summary">1. 技術概要</h2>
 <figure class="fig">
 <svg viewBox="0 0 740 170" role="img" aria-label="攻撃の流れ"><defs><marker id="r1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="16" width="167" height="70" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="83.5" y="49" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">信頼できない文字列</text><text x="83.5" y="67" text-anchor="middle" font-size="11" class="mut">旧 1 バイト文字コード</text><line x1="167" y1="51" x2="189" y2="51" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r1)"/><rect class="box" x="191" y="16" width="167" height="70" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="274.5" y="49" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">upcase / casecmp?</text><text x="274.5" y="67" text-anchor="middle" font-size="11" class="mut">ß → 「SS」（2 バイト）</text><line x1="358" y1="51" x2="380" y2="51" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r1)"/><rect class="box" x="382" y="16" width="167" height="70" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="465.5" y="49" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">1 バイト溢れ</text><text x="465.5" y="67" text-anchor="middle" font-size="11" class="mut">チェックは 1 バイト分のみ</text><line x1="549" y1="51" x2="571" y2="51" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r1)"/><rect class="box" x="573" y="16" width="167" height="70" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="656.5" y="49" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">RCE の恐れ</text><text x="656.5" y="67" text-anchor="middle" font-size="11" class="mut">PoC あり・未公開</text><rect x="0" y="112" width="740" height="40" rx="8" fill="var(--low)" opacity=".14"/><text x="370" y="137" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">根本対策：Ruby 3.3.14 / 3.4.13 / 4.0.10 へ更新 → 再ビルド＋再起動</text></svg>
 <figcaption>advisory と Veria Labs の説明に基づく概念図であり、攻撃の詳細ではありません。</figcaption>
@@ -76,7 +76,7 @@ permalink: /ja/featured/ruby-ghsa-34m4-m9fh-gqp5/analysis/
 </section>
 
 <section class="an-sec">
-<h2 id="pham-vi">2. 影響範囲</h2>
+<h2 id="scope">2. 影響範囲</h2>
 <figure class="fig">
 <svg viewBox="0 0 740 234" role="img" aria-label="バージョン範囲"><text x="0" y="14" font-size="11" font-weight="700" class="mut">ブランチ</text><text x="250" y="14" font-size="11" font-weight="700" class="mut">影響を受ける版</text><text x="520" y="14" font-size="11" font-weight="700" class="mut">修正版</text><rect class="box" x="0" y="24" width="740" height="38" rx="6"/><rect x="0" y="24" width="6" height="38" rx="3" fill="var(--crit)"/><text x="16" y="48" font-size="13" font-weight="700" fill="currentColor">Ruby 3.2 以下（EOL）</text><text x="250" y="48" font-size="12.5" fill="currentColor">全て（2.4.0 以降）</text><text x="520" y="48" font-size="12.5" font-weight="700" fill="currentColor">修正版なし</text><rect class="box" x="0" y="70" width="740" height="38" rx="6"/><rect x="0" y="70" width="6" height="38" rx="3" fill="var(--high)"/><text x="16" y="94" font-size="13" font-weight="700" fill="currentColor">Ruby 3.3</text><text x="250" y="94" font-size="12.5" fill="currentColor">2.4.0 〜 3.3.13</text><text x="520" y="94" font-size="12.5" font-weight="700" fill="currentColor">3.3.14</text><rect class="box" x="0" y="116" width="740" height="38" rx="6"/><rect x="0" y="116" width="6" height="38" rx="3" fill="var(--high)"/><text x="16" y="140" font-size="13" font-weight="700" fill="currentColor">Ruby 3.4</text><text x="250" y="140" font-size="12.5" fill="currentColor">3.4.0 〜 3.4.12</text><text x="520" y="140" font-size="12.5" font-weight="700" fill="currentColor">3.4.13</text><rect class="box" x="0" y="162" width="740" height="38" rx="6"/><rect x="0" y="162" width="6" height="38" rx="3" fill="var(--high)"/><text x="16" y="186" font-size="13" font-weight="700" fill="currentColor">Ruby 4.0</text><text x="250" y="186" font-size="12.5" fill="currentColor">4.0.0 〜 4.0.9</text><text x="520" y="186" font-size="12.5" font-weight="700" fill="currentColor">4.0.10</text></svg>
 <figcaption>GHSA-34m4-m9fh-gqp5 と Veria Labs による。コンテナや他社製品に同梱の Ruby は別途確認が必要です。</figcaption>
@@ -101,7 +101,7 @@ permalink: /ja/featured/ruby-ghsa-34m4-m9fh-gqp5/analysis/
 </section>
 
 <section class="an-sec">
-<h2 id="kiem-tra">3. 確認方法</h2>
+<h2 id="check">3. 確認方法</h2>
 <figure class="fig">
 <svg viewBox="0 0 740 230" role="img" aria-label="判断フロー"><defs><marker id="r4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="20" width="160" height="76" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="80" y="54" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Ruby を使っている？</text><text x="80" y="73" text-anchor="middle" font-size="11" class="mut">ホスト・コンテナ・製品</text><path d="M160 58 C 215 58 205 34 258 34" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r4)"/><rect class="box" x="262" y="8" width="478" height="56" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="278" y="32" font-size="12.5" font-weight="700" fill="currentColor">Ruby 3.2 以下</text><text x="278" y="51" font-size="11" class="mut">EOL：修正済みの 3.3 / 3.4 / 4.0 へ移行</text><path d="M160 58 C 215 58 205 106 258 106" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r4)"/><rect class="box" x="262" y="80" width="478" height="56" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="278" y="104" font-size="12.5" font-weight="700" fill="currentColor">Ruby 3.3〜4.0 で未修正</text><text x="278" y="123" font-size="11" class="mut">3.3.14 / 3.4.13 / 4.0.10 へ更新、再ビルド、再起動</text><path d="M160 58 C 215 58 205 178 258 178" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r4)"/><rect class="box" x="262" y="152" width="478" height="56" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="278" y="176" font-size="12.5" font-weight="700" fill="currentColor">製品に同梱の Ruby（GitLab、GHES など）</text><text x="278" y="195" font-size="11" class="mut">ベンダーのビルドを適用し、内部で ruby -v を再確認</text></svg>
 <figcaption>対応が必要なシステムと方法を素早く判断するための簡易フロー。</figcaption>
@@ -118,7 +118,7 @@ grep -rEn 'ruby ["'"'"']|^ruby ' Gemfile .ruby-version .tool-versions mise.toml 
 </section>
 
 <section class="an-sec">
-<h2 id="khac-phuc">4. 恒久対策と暫定対策</h2>
+<h2 id="remediation">4. 恒久対策と暫定対策</h2>
 
 <h3>方法 1：修正版 Ruby へ更新（推奨・唯一の恒久対策）</h3>
 <ol>
@@ -165,7 +165,7 @@ grep -rnE 'force_encoding|ISO-8859|Windows-125' app lib config 2&gt;/dev/null</c
 </section>
 
 <section class="an-sec">
-<h2 id="do-tin-cay">5. 情報の信頼性</h2>
+<h2 id="confidence">5. 情報の信頼性</h2>
 <ul>
   <li><strong>CVE：</strong> ruby-lang.org と GitHub は未割り当てとしています。二次情報の一部が <code>CVE-2026-132825</code> に言及していますが、レコードを確認できていないため主要な参照には使わないでください。</li>
   <li><strong>悪用状況：</strong> Ruby は RCE の PoC を把握としていますが非公開。Veria Labs は約 1 週間後（推定 2026-11-26）に公開予定。実環境での悪用を報告する情報源はありません。</li>
@@ -175,7 +175,7 @@ grep -rnE 'force_encoding|ISO-8859|Windows-125' app lib config 2&gt;/dev/null</c
 </section>
 
 <section class="an-sec">
-<h2 id="nguon">6. 参考情報</h2>
+<h2 id="sources">6. 参考情報</h2>
 <ul>
   <li><a href="https://cybersecuritynews.com/ruby2shell-rce/" target="_blank" rel="noopener noreferrer">Cyber Security News — ruby2ßhell</a></li>
   <li><a href="https://verialabs.com/ruby2shell/" target="_blank" rel="noopener noreferrer">Veria Labs — Ruby2Shell</a></li>

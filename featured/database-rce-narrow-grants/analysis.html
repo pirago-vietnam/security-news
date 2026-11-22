@@ -39,17 +39,17 @@ category: "Phân tích lỗ hổng"
 </blockquote>
 
 <nav class="an-nav" aria-label="nav">
-  <a href="#non-tech">TL;DR</a>
-  <a href="#tom-tat">Tóm tắt kỹ thuật</a>
-  <a href="#pham-vi">Phạm vi ảnh hưởng</a>
-  <a href="#kiem-tra">Kiểm tra nhanh</a>
-  <a href="#khac-phuc">Khắc phục</a>
-  <a href="#do-tin-cay">Độ tin cậy thông tin</a>
-  <a href="#nguon">Nguồn</a>
+  <a href="#tldr">TL;DR</a>
+  <a href="#summary">Tóm tắt kỹ thuật</a>
+  <a href="#scope">Phạm vi ảnh hưởng</a>
+  <a href="#check">Kiểm tra nhanh</a>
+  <a href="#remediation">Khắc phục</a>
+  <a href="#confidence">Độ tin cậy thông tin</a>
+  <a href="#sources">Nguồn</a>
 </nav>
 
 <section class="an-sec">
-<h2 id="non-tech">TL;DR (dễ hiểu)</h2>
+<h2 id="tldr">TL;DR (dễ hiểu)</h2>
 <ul>
   <li><strong>Chuyện gì xảy ra?</strong> Nhà nghiên cứu Zheng Yu (Depthfirst) chứng minh rằng một tài khoản database <strong>chỉ có quyền rất hẹp</strong> (không đọc được bảng nào của ứng dụng) vẫn có thể chạy lệnh trên máy chủ database, bằng cách kích hoạt lỗi bộ nhớ trong chính phần mềm database. Đã thử trên PostgreSQL, MySQL, Oracle và ClickHouse.</li>
   <li><strong>Vì sao đáng lo?</strong> Ta thường nghĩ "tài khoản chỉ có quyền tạo bảng tạm thì vô hại". Nghiên cứu này cho thấy phân quyền SQL chỉ quyết định <em>bảng nào</em> được đọc, không chặn được lỗi nằm trong code xử lý câu lệnh. Với Oracle, nhà nghiên cứu còn mô tả chuỗi tấn công qua ORDS (REST/GraphQL) chạy được <strong>trước khi đăng nhập</strong>.</li>
@@ -59,7 +59,7 @@ category: "Phân tích lỗ hổng"
 </section>
 
 <section class="an-sec">
-<h2 id="tom-tat">1. Tóm tắt kỹ thuật</h2>
+<h2 id="summary">1. Tóm tắt kỹ thuật</h2>
 <figure class="fig">
 <svg viewBox="0 0 740 262" role="img" aria-label="Chuỗi tấn công"><defs><marker id="d1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="16" width="167" height="70" rx="8" style="stroke:var(--med);stroke-width:1.6"/><text x="83.5" y="45" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Tài khoản SQL</text><text x="83.5" y="62" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">quyền thấp</text><text x="83.5" y="78" text-anchor="middle" font-size="10.5" class="mut">chỉ quyền bảng tạm</text><line x1="167" y1="51" x2="189" y2="51" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#d1)"/><rect class="box" x="191" y="16" width="167" height="70" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="274.5" y="49" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Tạo object tạm</text><text x="274.5" y="67" text-anchor="middle" font-size="11" class="mut">/ gửi đầu vào đặc biệt</text><line x1="358" y1="51" x2="380" y2="51" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#d1)"/><rect class="box" x="382" y="16" width="167" height="70" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="465.5" y="49" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Lỗi bộ nhớ C/C++</text><text x="465.5" y="67" text-anchor="middle" font-size="11" class="mut">type confusion / overflow</text><line x1="549" y1="51" x2="571" y2="51" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#d1)"/><rect class="box" x="573" y="16" width="167" height="70" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="656.5" y="45" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Chạy mã bằng user</text><text x="656.5" y="62" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">OS của database</text><text x="656.5" y="78" text-anchor="middle" font-size="10.5" class="mut">→ host, toàn bộ dữ liệu</text><text x="0" y="114" font-size="11" font-weight="700" class="mut">Nhánh Oracle (theo Depthfirst)</text><rect class="box" x="0" y="124" width="167" height="62" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="83.5" y="151" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">ORDS GraphQL lộ ra</text><text x="83.5" y="169" text-anchor="middle" font-size="11" class="mut">CVE-2026-91609</text><line x1="167" y1="155" x2="189" y2="155" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#d1)"/><rect class="box" x="191" y="124" width="167" height="62" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="274.5" y="151" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Oracle Text</text><text x="274.5" y="169" text-anchor="middle" font-size="11" class="mut">CVE-2026-114819</text><path d="M358 155 H465 V92" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#d1)"/><text x="480" y="146" font-size="11" font-weight="700" fill="var(--crit)">trước khi đăng nhập (Depthfirst)</text><text x="480" y="164" font-size="11" class="mut">Oracle: mỗi lỗi riêng đều cần quyền</text><rect x="0" y="210" width="740" height="40" rx="8" fill="var(--low)" opacity=".14"/><text x="370" y="235" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Chưa ghi nhận khai thác thực tế · chưa có PoC đầy đủ công khai</text></svg>
 <figcaption>Sơ đồ khái quát theo mô tả của Depthfirst và The Hacker News; không phải chi tiết khai thác.</figcaption>
@@ -79,7 +79,7 @@ category: "Phân tích lỗ hổng"
 </section>
 
 <section class="an-sec">
-<h2 id="pham-vi">2. Phạm vi ảnh hưởng</h2>
+<h2 id="scope">2. Phạm vi ảnh hưởng</h2>
 <figure class="fig">
 <svg viewBox="0 0 740 288" role="img" aria-label="Phạm vi phiên bản theo sản phẩm"><text x="0" y="14" font-size="11" font-weight="700" class="mut">Sản phẩm</text><text x="215" y="14" font-size="11" font-weight="700" class="mut">Bị ảnh hưởng</text><text x="470" y="14" font-size="11" font-weight="700" class="mut">Bản vá</text><rect class="box" x="0" y="24" width="740" height="46" rx="6"/><rect x="0" y="24" width="6" height="46" rx="3" fill="var(--high)"/><text x="16" y="44" font-size="13" font-weight="700" fill="currentColor">PostgreSQL 14–18</text><text x="16" y="61" font-size="10.5" class="mut">CVE-2026-116331 · CVSS 8.8</text><text x="215" y="52" font-size="12" fill="currentColor">trước các bản vá bên phải</text><text x="470" y="44" font-size="12" font-weight="700" fill="currentColor">18.7 / 17.12 / 16.16 / 15.20 / 14.25</text><text x="470" y="61" font-size="10.5" class="mut">2026-11-12 (14 đã EOL)</text><rect class="box" x="0" y="78" width="740" height="46" rx="6"/><rect x="0" y="78" width="6" height="46" rx="3" fill="var(--high)"/><text x="16" y="98" font-size="13" font-weight="700" fill="currentColor">MySQL Server / Cluster</text><text x="16" y="115" font-size="10.5" class="mut">CVE-2026-101786 · CVSS 7.2</text><text x="215" y="106" font-size="12" fill="currentColor">26.7.0 – 26.7.1</text><text x="470" y="98" font-size="12" font-weight="700" fill="currentColor">Bản sau 26.7.1</text><text x="470" y="115" font-size="10.5" class="mut">CPU 2026-10-20, xem release notes</text><rect class="box" x="0" y="132" width="740" height="46" rx="6"/><rect x="0" y="132" width="6" height="46" rx="3" fill="var(--crit)"/><text x="16" y="152" font-size="13" font-weight="700" fill="currentColor">Oracle DB (Oracle Text)</text><text x="16" y="169" font-size="10.5" class="mut">CVE-2026-114819 · CVSS 9.9</text><text x="215" y="152" font-size="12" fill="currentColor">19.3–19.32 · 21.3–21.24</text><text x="215" y="169" font-size="12" fill="currentColor">23.4.0–23.26.3</text><text x="470" y="152" font-size="12" font-weight="700" fill="currentColor">Bản cập nhật 11/2026</text><text x="470" y="169" font-size="10.5" class="mut">CSPU tháng 11/2026</text><rect class="box" x="0" y="186" width="740" height="46" rx="6"/><rect x="0" y="186" width="6" height="46" rx="3" fill="var(--med)"/><text x="16" y="206" font-size="13" font-weight="700" fill="currentColor">Oracle ORDS (GraphQL)</text><text x="16" y="223" font-size="10.5" class="mut">CVE-2026-91609 · CVSS 6.5</text><text x="215" y="214" font-size="12" fill="currentColor">24.2.0 – 26.2.1</text><text x="470" y="206" font-size="12" font-weight="700" fill="currentColor">ORDS mới nhất sau 26.2.1</text><text x="470" y="223" font-size="10.5" class="mut">CPU 2026-10-20</text><rect class="box" x="0" y="240" width="740" height="46" rx="6"/><rect x="0" y="240" width="6" height="46" rx="3" fill="var(--med)"/><text x="16" y="260" font-size="13" font-weight="700" fill="currentColor">ClickHouse</text><text x="16" y="277" font-size="10.5" class="mut">không có CVE</text><text x="215" y="268" font-size="12" fill="currentColor">đã thử trên 26.7.5.10</text><text x="470" y="268" font-size="12" font-weight="700" fill="var(--crit)">Chưa có bản vá xác nhận</text></svg>
 <figcaption>Theo advisory của PostgreSQL, MySQL, Oracle (CPU 10/2026, CSPU 11/2026) và Depthfirst. Dịch vụ managed (RDS / Aurora / Cloud SQL...) cần kiểm tra minor version riêng.</figcaption>
@@ -100,7 +100,7 @@ category: "Phân tích lỗ hổng"
 </section>
 
 <section class="an-sec">
-<h2 id="kiem-tra">3. Kiểm tra nhanh</h2>
+<h2 id="check">3. Kiểm tra nhanh</h2>
 <p>Kiểm tra phiên bản và tài khoản đang có quyền tạo bảng tạm. Các lệnh dưới đây chỉ đọc thông tin.</p>
 <h3>PostgreSQL</h3>
 <pre><code class="language-sql">SELECT version();
@@ -136,7 +136,7 @@ SELECT name, value, changed FROM system.settings
 </section>
 
 <section class="an-sec">
-<h2 id="khac-phuc">4. Khắc phục triệt để &amp; Biện pháp tạm thời</h2>
+<h2 id="remediation">4. Khắc phục triệt để &amp; Biện pháp tạm thời</h2>
 <figure class="fig">
 <svg viewBox="0 0 740 336" role="img" aria-label="Cây quyết định khắc phục"><defs><marker id="d4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="130" width="160" height="76" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="80" y="164" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Đang chạy DB nào?</text><text x="80" y="183" text-anchor="middle" font-size="11" class="mut">kể cả managed</text><path d="M160 168 C 215 168 205 36 258 36" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#d4)"/><rect class="box" x="262" y="8" width="478" height="56" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="278" y="32" font-size="12.5" font-weight="700" fill="currentColor">1. Oracle + ORDS lộ internet</text><text x="278" y="51" font-size="11" class="mut">chặn ORDS sau VPN / allowlist, áp CSPU 11/2026, nâng ORDS sau 26.2.1</text><path d="M160 168 C 215 168 205 102 258 102" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#d4)"/><rect class="box" x="262" y="74" width="478" height="56" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="278" y="98" font-size="12.5" font-weight="700" fill="currentColor">2. PostgreSQL chưa đạt bản 2026-11-12</text><text x="278" y="117" font-size="11" class="mut">nâng 18.7 / 17.12 / 16.16 / 15.20 / 14.25; tạm: REVOKE TEMPORARY FROM PUBLIC</text><path d="M160 168 L258 168" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#d4)"/><rect class="box" x="262" y="140" width="478" height="56" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="278" y="164" font-size="12.5" font-weight="700" fill="currentColor">3. MySQL 26.7.0 – 26.7.1</text><text x="278" y="183" font-size="11" class="mut">nâng bản sau 26.7.1; tạm: thu hồi CREATE TEMPORARY TABLES</text><path d="M160 168 C 215 168 205 234 258 234" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#d4)"/><rect class="box" x="262" y="206" width="478" height="56" rx="8" style="stroke:var(--med);stroke-width:1.6"/><text x="278" y="230" font-size="12.5" font-weight="700" fill="currentColor">4. ClickHouse</text><text x="278" y="249" font-size="11" class="mut">khoá format_binary_max_string_size, hạn chế CREATE TEMPORARY TABLE</text><path d="M160 168 C 215 168 205 300 258 300" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#d4)"/><rect class="box" x="262" y="272" width="478" height="56" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="278" y="296" font-size="12.5" font-weight="700" fill="currentColor">5. Managed (RDS / Aurora / Cloud SQL...)</text><text x="278" y="315" font-size="11" class="mut">kiểm tra minor version và lịch bảo trì; vẫn áp dụng thu hồi quyền</text></svg>
 <figcaption>Cây quyết định nhanh, đánh số theo thứ tự ưu tiên khuyến nghị.</figcaption>
@@ -180,7 +180,7 @@ GRANT TEMPORARY ON DATABASE &lt;db&gt; TO &lt;app_role&gt;;  -- chỉ role cần
 </section>
 
 <section class="an-sec">
-<h2 id="do-tin-cay">5. Độ tin cậy thông tin</h2>
+<h2 id="confidence">5. Độ tin cậy thông tin</h2>
 <ul>
   <li><strong>Oracle — vendor và nhà nghiên cứu khác nhau:</strong> Oracle chấm CVE-2026-114819 cần "Create Session" và CVE-2026-91609 cần PR:L, cả hai đều "remote without auth: No". Depthfirst mô tả chuỗi ghép hai lỗi qua endpoint ORDS lộ ra ngoài chạy được <strong>trước khi đăng nhập</strong>. Trang này trình bày cả hai quan điểm và xếp ORDS lộ internet là ưu tiên cao nhất.</li>
   <li><strong>MySQL — vendor và nhà nghiên cứu khác nhau:</strong> Oracle chấm PR:High (7.2); Depthfirst cho biết chỉ cần <code>CREATE TEMPORARY TABLES ON *.*</code>, hẹp hơn nhiều so với đánh giá của vendor.</li>
@@ -191,7 +191,7 @@ GRANT TEMPORARY ON DATABASE &lt;db&gt; TO &lt;app_role&gt;;  -- chỉ role cần
 </section>
 
 <section class="an-sec">
-<h2 id="nguon">6. Nguồn tham khảo</h2>
+<h2 id="sources">6. Nguồn tham khảo</h2>
 <ul>
   <li><a href="https://thehackernews.com/2026/11/researcher-demonstrates-database-rce.html" target="_blank" rel="noopener noreferrer">The Hacker News — Researcher Demonstrates Database RCE Exploits Affecting PostgreSQL, MySQL and Oracle</a></li>
   <li><a href="https://depthfirst.com/research/narrow-grants-wide-engines" target="_blank" rel="noopener noreferrer">Depthfirst — Narrow Grants, Wide Engines</a></li>

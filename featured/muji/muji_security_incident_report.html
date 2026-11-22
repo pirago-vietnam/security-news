@@ -60,17 +60,17 @@ category: "Sự cố an ninh"
 </div>
 
 <nav class="an-nav" aria-label="Mục lục">
-  <a href="#tom-tat">1. Tóm tắt &amp; Quy mô</a>
-  <a href="#dien-bien">2. Diễn biến &amp; Cập nhật 20/11</a>
-  <a href="#pham-vi">3. Phạm vi dữ liệu bị ảnh hưởng</a>
-  <a href="#nguyen-nhan">4. Phân tích nguyên nhân &amp; Kiến trúc</a>
-  <a href="#ung-pho">5. Ứng phó, Bồi thường &amp; Cơ quan quản lý</a>
-  <a href="#bai-hoc">6. Khuyến cáo từ PiraGo</a>
-  <a href="#nguon">7. Nguồn tham khảo</a>
+  <a href="#summary">1. Tóm tắt &amp; Quy mô</a>
+  <a href="#timeline">2. Diễn biến &amp; Cập nhật 20/11</a>
+  <a href="#scope">3. Phạm vi dữ liệu bị ảnh hưởng</a>
+  <a href="#root-cause">4. Phân tích nguyên nhân &amp; Kiến trúc</a>
+  <a href="#response">5. Ứng phó, Bồi thường &amp; Cơ quan quản lý</a>
+  <a href="#recommendations">6. Khuyến cáo từ PiraGo</a>
+  <a href="#sources">7. Nguồn tham khảo</a>
 </nav>
 
 <section class="an-sec">
-<h2 id="tom-tat">1. Tóm tắt &amp; Quy mô</h2>
+<h2 id="summary">1. Tóm tắt &amp; Quy mô</h2>
 <ul>
   <li><strong>Sự việc:</strong> Ngày 29/10/2026, Công ty Ryohin Keikaku (đơn vị vận hành chuỗi bán lẻ 無印良品 / MUJI) phát hiện truy cập trái phép từ bên ngoài vào hệ thống liên quan đến <strong>MUJI App</strong> và <strong>MUJI Net Store</strong> <span class="badge low">Công ty xác nhận</span>.</li>
   <li><strong>Quy mô ảnh hưởng:</strong> Tối đa khoảng <strong>27,26 triệu</strong> tài khoản có nguy cơ lộ email, ngày sinh, giới tính, ID thành viên; khoảng <strong>750.000</strong> hồ sơ gồm cả họ tên, địa chỉ, số điện thoại; khoảng <strong>1,09 triệu</strong> số thẻ tín dụng MUJI Card (đầy đủ 16 chữ số, trong đó có khoảng <strong>345.000 thẻ còn hiệu lực</strong>); và khoảng <strong>440.000</strong> thông tin người nhận hàng COD <span class="badge low">Công ty xác nhận</span>.</li>
@@ -79,7 +79,7 @@ category: "Sự cố an ninh"
 </section>
 
 <section class="an-sec">
-<h2 id="dien-bien">2. Diễn biến &amp; Cập nhật ngày 20/11/2026</h2>
+<h2 id="timeline">2. Diễn biến &amp; Cập nhật ngày 20/11/2026</h2>
 <figure class="fig">
 <svg viewBox="0 0 740 170" role="img" aria-label="timeline">
 <rect x="40" y="74" width="352" height="12" rx="6" fill="var(--crit)" opacity=".25"/>
@@ -133,7 +133,7 @@ category: "Sự cố an ninh"
 </section>
 
 <section class="an-sec">
-<h2 id="pham-vi">3. Phạm vi dữ liệu bị ảnh hưởng</h2>
+<h2 id="scope">3. Phạm vi dữ liệu bị ảnh hưởng</h2>
 <figure class="fig">
 <svg viewBox="0 0 720 250" role="img" aria-label="data scope">
 <text x="0" y="27" font-size="12.5" fill="currentColor">Tài khoản App &amp; Net Store</text>
@@ -203,7 +203,7 @@ category: "Sự cố an ninh"
 </section>
 
 <section class="an-sec">
-<h2 id="nguyen-nhan">4. Phân tích nguyên nhân &amp; Kiến trúc kỹ thuật</h2>
+<h2 id="root-cause">4. Phân tích nguyên nhân &amp; Kiến trúc kỹ thuật</h2>
 <figure class="fig">
 <svg viewBox="0 0 740 290" role="img" aria-label="attack flow"><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs>
 <rect class="box" x="0" y="20" width="210" height="66" rx="8" style="stroke:var(--crit)"/><text x="105.0" y="46" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Truy cập trái phép (29/10)</text><text x="105.0" y="66" text-anchor="middle" font-size="11" class="mut">Lỗ hổng ứng dụng</text>
@@ -260,7 +260,7 @@ category: "Sự cố an ninh"
 </section>
 
 <section class="an-sec">
-<h2 id="ung-pho">5. Ứng phó, Bồi thường &amp; Động thái từ đối tác tài chính</h2>
+<h2 id="response">5. Ứng phó, Bồi thường &amp; Động thái từ đối tác tài chính</h2>
 
 <h3>5.1. Phía Ryohin Keikaku</h3>
 <ul>
@@ -298,7 +298,7 @@ category: "Sự cố an ninh"
 </section>
 
 <section class="an-sec">
-<h2 id="bai-hoc">6. Khuyến cáo chuyên sâu từ PiraGo (PiraGo Engineering Playbook)</h2>
+<h2 id="recommendations">6. Khuyến cáo chuyên sâu từ PiraGo (PiraGo Engineering Playbook)</h2>
 <p>Sự cố rò rỉ dữ liệu của MUJI để lại nhiều bài học đắt giá cho các kỹ sư PiraGo khi thiết kế và vận hành các hệ thống thương mại điện tử, ứng dụng di động và cổng hội viên:</p>
 
 <ol>
@@ -337,7 +337,7 @@ category: "Sự cố an ninh"
 </section>
 
 <section class="an-sec">
-<h2 id="nguon">7. Nguồn tham khảo &amp; Tài liệu chính thức</h2>
+<h2 id="sources">7. Nguồn tham khảo &amp; Tài liệu chính thức</h2>
 <ul>
   <li>Ryohin Keikaku (株式会社良品計画) — Thông cáo báo chí chính thức:
     <ul>

@@ -36,15 +36,15 @@ category: "Phân tích lỗ hổng"
 </blockquote>
 
 <nav class="an-nav" aria-label="nav">
-  <a href="#tom-tat">Tóm tắt</a>
+  <a href="#summary">Tóm tắt</a>
   <a href="#cve-list">17 CVE</a>
-  <a href="#kiem-tra">Kiểm tra &amp; tạm thời</a>
-  <a href="#hanh-dong">Việc cần làm</a>
-  <a href="#nguon">Nguồn</a>
+  <a href="#check">Kiểm tra &amp; tạm thời</a>
+  <a href="#remediation">Việc cần làm</a>
+  <a href="#sources">Nguồn</a>
 </nav>
 
 <section class="an-sec">
-<h2 id="tom-tat">1. Tóm tắt phát hành</h2>
+<h2 id="summary">1. Tóm tắt phát hành</h2>
 <ul>
   <li><strong>Phiên bản:</strong> PHP <code>8.5.13</code>, <code>8.4.28</code>, <code>8.3.37</code>, <code>8.2.36</code> (bản bảo mật) và <code>8.6.0</code> (GA, phát hành cùng ngày), theo PHP.net archive. Tag tương ứng đã có trên GitHub.</li>
   <li><strong>Quy mô:</strong> 17 GHSA, trong đó <strong>7 lỗi CVSS 9.2 (Critical)</strong>: 4 lỗi UAF/bộ nhớ ở engine, ext/date, ext/session; 2 lỗi deserialization/RCE ở ext/session; 1 lỗi request smuggling ở PHP-FPM. 4 lỗi High, 6 lỗi Moderate. PHP.net lưu ý các lỗi CRITICAL <strong>cần cấu hình không mặc định hoặc thiết lập ít gặp</strong>.</li>
@@ -69,7 +69,7 @@ category: "Phân tích lỗ hổng"
 </section>
 
 <section class="an-sec">
-<h2 id="kiem-tra">3. Kiểm tra và khắc phục tạm thời theo từng CVE</h2>
+<h2 id="check">3. Kiểm tra và khắc phục tạm thời theo từng CVE</h2>
 <p>Các lệnh dưới đây chỉ đọc (read-only) và mang tính gợi ý: kết quả “không thấy” không chứng minh an toàn, và <code>php</code> CLI có thể dùng <code>php.ini</code> khác FPM/Apache (xem cấu hình thực tế bằng <code>php-fpm -tt</code> hoặc <code>phpinfo()</code> nội bộ). Đường dẫn <code>/etc/php*</code>, <code>/etc/nginx</code>… tùy distro. Mọi biện pháp tạm thời chỉ <strong>giảm bề mặt tấn công</strong>; cách khắc phục dứt điểm vẫn là nâng lên <strong>8.2.36 / 8.3.37 / 8.4.28 / 8.5.13 (hoặc 8.6.0)</strong>, rồi restart.</p>
 <h3>Kiểm tra chung (phiên bản, cấu hình, extension)</h3>
 <pre><code class="language-bash">php -v                       # CLI
@@ -238,7 +238,7 @@ location = /status { allow 127.0.0.1; deny all; add_header Content-Security-Poli
 <p>Các lỗi 9.2 như CVE-2026-129481 không có cấu hình tắt hoàn toàn; chỉ nâng phiên bản mới xử lý dứt điểm.</p></section>
 
 <section class="an-sec">
-<h2 id="hanh-dong">4. Việc cần làm</h2>
+<h2 id="remediation">4. Việc cần làm</h2>
 <figure class="fig">
 <svg viewBox="0 0 740 190" role="img" aria-label="Cây quyết định xử lý"><defs><marker id="q3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="60" width="180" height="70" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="90.0" y="92.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Đang chạy PHP</text><text x="90.0" y="110.0" text-anchor="middle" font-size="11" class="mut">nhánh 8.2–8.6?</text><line x1="180" y1="80" x2="238" y2="34" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q3)"/><line x1="180" y1="110" x2="238" y2="156" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q3)"/><text x="196" y="46" font-size="11" class="mut" transform="rotate(-24 196 46)">Có</text><text x="196" y="160" font-size="11" class="mut" transform="rotate(24 196 160)">Không</text><rect class="box" x="240" y="0" width="240" height="68" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="360.0" y="31.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Nâng lên bản vá</text><text x="360.0" y="49.0" text-anchor="middle" font-size="11" class="mut">8.2.36 / 8.3.37 / 8.4.28 / 8.5.13</text><rect class="box" x="240" y="122" width="240" height="68" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="360.0" y="153.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Nhánh hết hỗ trợ (≤ 8.1)</text><text x="360.0" y="171.0" text-anchor="middle" font-size="11" class="mut">Không có bản vá</text><line x1="480" y1="34" x2="528" y2="34" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q3)"/><rect class="box" x="530" y="0" width="210" height="68" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="635.0" y="31.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Restart + rebuild</text><text x="635.0" y="49.0" text-anchor="middle" font-size="11" class="mut">Docker image, FPM, CI/CD</text><line x1="480" y1="156" x2="528" y2="156" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q3)"/><rect class="box" x="530" y="122" width="210" height="68" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="635.0" y="153.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Nâng nhánh ngay</text><text x="635.0" y="171.0" text-anchor="middle" font-size="11" class="mut">Tạm: tắt upload progress, WAF</text></svg>
 <figcaption>Quy trình xử lý. Nhánh 8.1 trở xuống không có bản vá nên phải nâng nhánh.</figcaption>
@@ -255,7 +255,7 @@ location = /status { allow 127.0.0.1; deny all; add_header Content-Security-Poli
 </section>
 
 <section class="an-sec">
-<h2 id="nguon">5. Nguồn tham khảo</h2>
+<h2 id="sources">5. Nguồn tham khảo</h2>
 <ul>
   <li><a href="https://www.php.net/archive/2026.php" target="_blank" rel="noopener noreferrer">PHP.net — Archive 2026</a> (18-11 thông báo trước; 19-11 phát hành 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 / 8.6.0)</li>
   <li><a href="https://www.php.net/ChangeLog-8.php" target="_blank" rel="noopener noreferrer">PHP.net — ChangeLog 8</a></li>

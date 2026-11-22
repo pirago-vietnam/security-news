@@ -58,16 +58,16 @@ permalink: /ja/featured/microsoft-365-outage-2026-11/incident_report/
 </div>
 
 <nav class="an-nav" aria-label="目次">
-  <a href="#tom-tat">1. 概要と影響範囲</a>
-  <a href="#nguyen-nhan">2.「三重障害」のメカニズム</a>
-  <a href="#dien-bien">3. 経過と復旧が長引いた理由</a>
+  <a href="#summary">1. 概要と影響範囲</a>
+  <a href="#root-cause">2.「三重障害」のメカニズム</a>
+  <a href="#timeline">3. 経過と復旧が長引いた理由</a>
   <a href="#phishing">4. 便乗フィッシング警告</a>
-  <a href="#khuyen-cao">5. PiraGo エンジニア向け提言</a>
-  <a href="#nguon">6. 参考情報</a>
+  <a href="#recommendations">5. PiraGo エンジニア向け提言</a>
+  <a href="#sources">6. 参考情報</a>
 </nav>
 
 <section class="an-sec">
-<h2 id="tom-tat">1. 概要と影響範囲</h2>
+<h2 id="summary">1. 概要と影響範囲</h2>
 <ul>
   <li><strong>障害の性質：</strong> Microsoft 365 ネットワークゲートウェイ基盤における連鎖的障害（cascading failure）。Microsoft および当局は、<strong>サイバー攻撃の関与なし</strong>、かつ同週に発生した他社障害（FAA・Chase・NSANet・Apple iCloud）との連動性もないと説明しています <span class="badge low">内部起因と確定</span>。</li>
   <li><strong>公式トラッキング ID：</strong>
@@ -81,7 +81,7 @@ permalink: /ja/featured/microsoft-365-outage-2026-11/incident_report/
 </section>
 
 <section class="an-sec">
-<h2 id="nguyen-nhan">2.「三重障害（Triple Failure）」の技術メカニズム</h2>
+<h2 id="root-cause">2.「三重障害（Triple Failure）」の技術メカニズム</h2>
 <p>Microsoft の暫定 PIR および Charles Lamanna EVP（Copilot, Agents &amp; Platform 担当）の説明によると、今回の障害は単一障害点ではなく<strong>3つの要因が同時に重なった</strong>ことで発生しました。</p>
 
 <figure class="fig">
@@ -131,7 +131,7 @@ permalink: /ja/featured/microsoft-365-outage-2026-11/incident_report/
 </section>
 
 <section class="an-sec">
-<h2 id="dien-bien">3. 経過と復旧が長引いた理由</h2>
+<h2 id="timeline">3. 経過と復旧が長引いた理由</h2>
 
 <figure class="fig">
 <svg viewBox="0 0 740 165" role="img" aria-label="Microsoft 365 障害のタイムライン">
@@ -192,7 +192,7 @@ permalink: /ja/featured/microsoft-365-outage-2026-11/incident_report/
 </section>
 
 <section class="an-sec">
-<h2 id="khuyen-cao">5. PiraGo エンジニア・運用チームへの提言</h2>
+<h2 id="recommendations">5. PiraGo エンジニア・運用チームへの提言</h2>
 
 <figure class="fig">
 <svg viewBox="0 0 740 160" role="img" aria-label="運用障害と便乗フィッシングに備える4つの対策">
@@ -232,7 +232,7 @@ permalink: /ja/featured/microsoft-365-outage-2026-11/incident_report/
 </section>
 
 <section class="an-sec">
-<h2 id="nguon">6. 参考情報</h2>
+<h2 id="sources">6. 参考情報</h2>
 <ul>
   <li><strong>Microsoft 暫定 PIR・Charles Lamanna EVP 説明：</strong> BleepingComputer、ComputerWeekly、ITPro、TechTarget、The Next Web 報道（2026年11月）。</li>
   <li><strong>Microsoft Threat Intelligence 警告：</strong> <code>EX1550543</code> 悪用フィッシングに関する SecurityWeek、Infosecurity Magazine、iTnews、eSentire 報道。</li>

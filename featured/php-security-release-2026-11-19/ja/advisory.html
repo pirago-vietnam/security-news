@@ -38,15 +38,15 @@ permalink: /ja/featured/php-security-release-2026-11-19/advisory/
 </blockquote>
 
 <nav class="an-nav" aria-label="nav">
-  <a href="#tom-tat">概要</a>
+  <a href="#summary">概要</a>
   <a href="#cve-list">17 件の CVE</a>
-  <a href="#kiem-tra">確認と暫定策</a>
-  <a href="#hanh-dong">対応事項</a>
-  <a href="#nguon">参考情報</a>
+  <a href="#check">確認と暫定策</a>
+  <a href="#remediation">対応事項</a>
+  <a href="#sources">参考情報</a>
 </nav>
 
 <section class="an-sec">
-<h2 id="tom-tat">1. リリース概要</h2>
+<h2 id="summary">1. リリース概要</h2>
 <ul>
   <li><strong>バージョン：</strong>PHP <code>8.5.13</code>、<code>8.4.28</code>、<code>8.3.37</code>、<code>8.2.36</code>（セキュリティリリース）と <code>8.6.0</code>（GA、同日公開）。PHP.net アーカイブによる。GitHub にも対応タグがあります。</li>
   <li><strong>規模：</strong>GHSA 17 件、うち <strong>CVSS 9.2（Critical）が 7 件</strong>：エンジン／ext/date／ext/session のメモリ破壊（UAF）4 件、ext/session のデシリアライズ／RCE 2 件、PHP-FPM のリクエストスマグリング 1 件。High 4 件、Moderate 6 件。PHP.net は CRITICAL でも<strong>非デフォルト設定または稀な構成</strong>が必要としています。</li>
@@ -71,7 +71,7 @@ permalink: /ja/featured/php-security-release-2026-11-19/advisory/
 </section>
 
 <section class="an-sec">
-<h2 id="kiem-tra">3. CVE ごとの確認方法と暫定緩和策</h2>
+<h2 id="check">3. CVE ごとの確認方法と暫定緩和策</h2>
 <p>以下のコマンドは読み取り専用の目安です。「該当なし」の結果が安全を保証するものではなく、CLI の <code>php</code> は FPM／Apache と別の <code>php.ini</code> を使う場合があります（実際の設定は <code>php-fpm -tt</code> や社内限定の <code>phpinfo()</code> で確認）。<code>/etc/php*</code>、<code>/etc/nginx</code> などのパスはディストリにより異なります。暫定策は<strong>攻撃面を減らすだけ</strong>で、根本対策は <strong>8.2.36 / 8.3.37 / 8.4.28 / 8.5.13（または 8.6.0）</strong> への更新と再起動です。</p>
 <h3>共通の確認（バージョン・設定・拡張）</h3>
 <pre><code class="language-bash">php -v                       # CLI
@@ -240,7 +240,7 @@ location = /status { allow 127.0.0.1; deny all; add_header Content-Security-Poli
 <p>CVE-2026-129481 のように設定で完全に無効化できない脆弱性もあり、根本対策はバージョン更新のみです。</p></section>
 
 <section class="an-sec">
-<h2 id="hanh-dong">4. 対応事項</h2>
+<h2 id="remediation">4. 対応事項</h2>
 <figure class="fig">
 <svg viewBox="0 0 740 190" role="img" aria-label="対応の判断フロー"><defs><marker id="q3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="60" width="180" height="70" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="90.0" y="92.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">稼働中の PHP は</text><text x="90.0" y="110.0" text-anchor="middle" font-size="11" class="mut">8.2〜8.6 系?</text><line x1="180" y1="80" x2="238" y2="34" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q3)"/><line x1="180" y1="110" x2="238" y2="156" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q3)"/><text x="196" y="46" font-size="11" class="mut" transform="rotate(-24 196 46)">はい</text><text x="196" y="160" font-size="11" class="mut" transform="rotate(24 196 160)">いいえ</text><rect class="box" x="240" y="0" width="240" height="68" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="360.0" y="31.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">修正版へ更新</text><text x="360.0" y="49.0" text-anchor="middle" font-size="11" class="mut">8.2.36 / 8.3.37 / 8.4.28 / 8.5.13</text><rect class="box" x="240" y="122" width="240" height="68" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="360.0" y="153.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">サポート終了（≤ 8.1）</text><text x="360.0" y="171.0" text-anchor="middle" font-size="11" class="mut">修正版なし</text><line x1="480" y1="34" x2="528" y2="34" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q3)"/><rect class="box" x="530" y="0" width="210" height="68" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="635.0" y="31.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">再起動＋再ビルド</text><text x="635.0" y="49.0" text-anchor="middle" font-size="11" class="mut">Docker・FPM・CI/CD</text><line x1="480" y1="156" x2="528" y2="156" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#q3)"/><rect class="box" x="530" y="122" width="210" height="68" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="635.0" y="153.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">直ちにブランチ更新</text><text x="635.0" y="171.0" text-anchor="middle" font-size="11" class="mut">暫定: upload progress 無効・WAF</text></svg>
 <figcaption>対応フロー。8.1 以前は修正版がないためブランチ更新が必要です。</figcaption>
@@ -257,7 +257,7 @@ location = /status { allow 127.0.0.1; deny all; add_header Content-Security-Poli
 </section>
 
 <section class="an-sec">
-<h2 id="nguon">5. 参考情報</h2>
+<h2 id="sources">5. 参考情報</h2>
 <ul>
   <li><a href="https://www.php.net/archive/2026.php" target="_blank" rel="noopener noreferrer">PHP.net — Archive 2026</a>（11/18 予告、11/19 に 8.5.13 / 8.4.28 / 8.3.37 / 8.2.36 / 8.6.0 公開）</li>
   <li><a href="https://www.php.net/ChangeLog-8.php" target="_blank" rel="noopener noreferrer">PHP.net — ChangeLog 8</a></li>

@@ -41,17 +41,17 @@ permalink: /ja/featured/database-rce-narrow-grants/analysis/
 </blockquote>
 
 <nav class="an-nav" aria-label="nav">
-  <a href="#non-tech">TL;DR</a>
-  <a href="#tom-tat">技術概要</a>
-  <a href="#pham-vi">影響範囲</a>
-  <a href="#kiem-tra">確認方法</a>
-  <a href="#khac-phuc">対策</a>
-  <a href="#do-tin-cay">情報の信頼性</a>
-  <a href="#nguon">参考情報</a>
+  <a href="#tldr">TL;DR</a>
+  <a href="#summary">技術概要</a>
+  <a href="#scope">影響範囲</a>
+  <a href="#check">確認方法</a>
+  <a href="#remediation">対策</a>
+  <a href="#confidence">情報の信頼性</a>
+  <a href="#sources">参考情報</a>
 </nav>
 
 <section class="an-sec">
-<h2 id="non-tech">TL;DR（かんたん解説）</h2>
+<h2 id="tldr">TL;DR（かんたん解説）</h2>
 <ul>
   <li><strong>何が起きた？</strong> 研究者 Zheng Yu（Depthfirst）が、<strong>ごく狭い権限しかない</strong>データベースアカウント（アプリのテーブルを一切読めない）でも、データベース製品自体のメモリバグを突いてサーバー上でコマンドを実行できることを実証しました。PostgreSQL、MySQL、Oracle、ClickHouse で確認されています。</li>
   <li><strong>なぜ問題？</strong> 「一時テーブルを作れるだけのアカウントなら無害」と考えがちですが、SQL の権限が決めるのは<em>どのテーブル</em>を読めるかだけで、クエリを処理するコード内のバグは防げません。Oracle については、ORDS（REST／GraphQL）経由で<strong>ログイン前</strong>に到達できる連鎖を研究者が説明しています。</li>
@@ -61,7 +61,7 @@ permalink: /ja/featured/database-rce-narrow-grants/analysis/
 </section>
 
 <section class="an-sec">
-<h2 id="tom-tat">1. 技術概要</h2>
+<h2 id="summary">1. 技術概要</h2>
 <figure class="fig">
 <svg viewBox="0 0 740 262" role="img" aria-label="攻撃の流れ"><defs><marker id="d1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="16" width="167" height="70" rx="8" style="stroke:var(--med);stroke-width:1.6"/><text x="83.5" y="45" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">低権限の SQL</text><text x="83.5" y="62" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">アカウント</text><text x="83.5" y="78" text-anchor="middle" font-size="10.5" class="mut">一時テーブル権限のみ</text><line x1="167" y1="51" x2="189" y2="51" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#d1)"/><rect class="box" x="191" y="16" width="167" height="70" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="274.5" y="49" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">一時オブジェクト作成</text><text x="274.5" y="67" text-anchor="middle" font-size="11" class="mut">／細工した入力を送信</text><line x1="358" y1="51" x2="380" y2="51" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#d1)"/><rect class="box" x="382" y="16" width="167" height="70" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="465.5" y="49" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">C/C++ のメモリバグ</text><text x="465.5" y="67" text-anchor="middle" font-size="11" class="mut">type confusion / overflow</text><line x1="549" y1="51" x2="571" y2="51" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#d1)"/><rect class="box" x="573" y="16" width="167" height="70" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="656.5" y="45" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">DB の OS ユーザー</text><text x="656.5" y="62" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">でコード実行</text><text x="656.5" y="78" text-anchor="middle" font-size="10.5" class="mut">→ ホスト・全データ</text><text x="0" y="114" font-size="11" font-weight="700" class="mut">Oracle 経路（Depthfirst による）</text><rect class="box" x="0" y="124" width="167" height="62" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="83.5" y="151" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">ORDS GraphQL</text><text x="83.5" y="169" text-anchor="middle" font-size="11" class="mut">公開 · CVE-2026-91609</text><line x1="167" y1="155" x2="189" y2="155" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#d1)"/><rect class="box" x="191" y="124" width="167" height="62" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="274.5" y="151" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Oracle Text</text><text x="274.5" y="169" text-anchor="middle" font-size="11" class="mut">CVE-2026-114819</text><path d="M358 155 H465 V92" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#d1)"/><text x="480" y="146" font-size="11" font-weight="700" fill="var(--crit)">ログイン前に到達（Depthfirst）</text><text x="480" y="164" font-size="11" class="mut">Oracle：各脆弱性とも権限が必要</text><rect x="0" y="210" width="740" height="40" rx="8" fill="var(--low)" opacity=".14"/><text x="370" y="235" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">実環境での悪用は未確認・完全な PoC は非公開</text></svg>
 <figcaption>Depthfirst と The Hacker News の説明に基づく概念図であり、攻撃の詳細ではありません。</figcaption>
@@ -81,7 +81,7 @@ permalink: /ja/featured/database-rce-narrow-grants/analysis/
 </section>
 
 <section class="an-sec">
-<h2 id="pham-vi">2. 影響範囲</h2>
+<h2 id="scope">2. 影響範囲</h2>
 <figure class="fig">
 <svg viewBox="0 0 740 288" role="img" aria-label="製品ごとのバージョン範囲"><text x="0" y="14" font-size="11" font-weight="700" class="mut">製品</text><text x="215" y="14" font-size="11" font-weight="700" class="mut">影響範囲</text><text x="470" y="14" font-size="11" font-weight="700" class="mut">修正</text><rect class="box" x="0" y="24" width="740" height="46" rx="6"/><rect x="0" y="24" width="6" height="46" rx="3" fill="var(--high)"/><text x="16" y="44" font-size="13" font-weight="700" fill="currentColor">PostgreSQL 14–18</text><text x="16" y="61" font-size="10.5" class="mut">CVE-2026-116331 · CVSS 8.8</text><text x="215" y="52" font-size="12" fill="currentColor">右記の修正版より前</text><text x="470" y="44" font-size="12" font-weight="700" fill="currentColor">18.7 / 17.12 / 16.16 / 15.20 / 14.25</text><text x="470" y="61" font-size="10.5" class="mut">2026-11-12（14 は EOL）</text><rect class="box" x="0" y="78" width="740" height="46" rx="6"/><rect x="0" y="78" width="6" height="46" rx="3" fill="var(--high)"/><text x="16" y="98" font-size="13" font-weight="700" fill="currentColor">MySQL Server / Cluster</text><text x="16" y="115" font-size="10.5" class="mut">CVE-2026-101786 · CVSS 7.2</text><text x="215" y="106" font-size="12" fill="currentColor">26.7.0 – 26.7.1</text><text x="470" y="98" font-size="12" font-weight="700" fill="currentColor">26.7.1 より後の版</text><text x="470" y="115" font-size="10.5" class="mut">2026-10-20 CPU、リリースノート参照</text><rect class="box" x="0" y="132" width="740" height="46" rx="6"/><rect x="0" y="132" width="6" height="46" rx="3" fill="var(--crit)"/><text x="16" y="152" font-size="13" font-weight="700" fill="currentColor">Oracle DB（Oracle Text）</text><text x="16" y="169" font-size="10.5" class="mut">CVE-2026-114819 · CVSS 9.9</text><text x="215" y="152" font-size="12" fill="currentColor">19.3–19.32 · 21.3–21.24</text><text x="215" y="169" font-size="12" fill="currentColor">23.4.0–23.26.3</text><text x="470" y="152" font-size="12" font-weight="700" fill="currentColor">2026年11月の更新</text><text x="470" y="169" font-size="10.5" class="mut">2026年11月 CSPU</text><rect class="box" x="0" y="186" width="740" height="46" rx="6"/><rect x="0" y="186" width="6" height="46" rx="3" fill="var(--med)"/><text x="16" y="206" font-size="13" font-weight="700" fill="currentColor">Oracle ORDS（GraphQL）</text><text x="16" y="223" font-size="10.5" class="mut">CVE-2026-91609 · CVSS 6.5</text><text x="215" y="214" font-size="12" fill="currentColor">24.2.0 – 26.2.1</text><text x="470" y="206" font-size="12" font-weight="700" fill="currentColor">26.2.1 より後の最新版</text><text x="470" y="223" font-size="10.5" class="mut">2026-10-20 CPU</text><rect class="box" x="0" y="240" width="740" height="46" rx="6"/><rect x="0" y="240" width="6" height="46" rx="3" fill="var(--med)"/><text x="16" y="260" font-size="13" font-weight="700" fill="currentColor">ClickHouse</text><text x="16" y="277" font-size="10.5" class="mut">CVE なし</text><text x="215" y="268" font-size="12" fill="currentColor">26.7.5.10 で検証</text><text x="470" y="268" font-size="12" font-weight="700" fill="var(--crit)">確認済みの修正なし</text></svg>
 <figcaption>PostgreSQL・MySQL・Oracle（2026年10月 CPU、11月 CSPU）の advisory と Depthfirst に基づく。マネージドサービス（RDS / Aurora / Cloud SQL など）はマイナーバージョンを個別に確認してください。</figcaption>
@@ -102,7 +102,7 @@ permalink: /ja/featured/database-rce-narrow-grants/analysis/
 </section>
 
 <section class="an-sec">
-<h2 id="kiem-tra">3. 確認方法</h2>
+<h2 id="check">3. 確認方法</h2>
 <p>バージョンと、一時テーブル作成権限を持つアカウントを確認します。以下はいずれも参照のみのコマンドです。</p>
 <h3>PostgreSQL</h3>
 <pre><code class="language-sql">SELECT version();
@@ -138,7 +138,7 @@ SELECT name, value, changed FROM system.settings
 </section>
 
 <section class="an-sec">
-<h2 id="khac-phuc">4. 恒久対策と暫定策</h2>
+<h2 id="remediation">4. 恒久対策と暫定策</h2>
 <figure class="fig">
 <svg viewBox="0 0 740 336" role="img" aria-label="対策の判断フロー"><defs><marker id="d4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="130" width="160" height="76" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="80" y="164" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">どの DB を運用？</text><text x="80" y="183" text-anchor="middle" font-size="11" class="mut">マネージドも含む</text><path d="M160 168 C 215 168 205 36 258 36" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#d4)"/><rect class="box" x="262" y="8" width="478" height="56" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="278" y="32" font-size="12.5" font-weight="700" fill="currentColor">1. Oracle ＋ ORDS がインターネット公開</text><text x="278" y="51" font-size="11" class="mut">ORDS を VPN／許可リスト配下へ、11月 CSPU 適用、ORDS を 26.2.1 より後へ</text><path d="M160 168 C 215 168 205 102 258 102" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#d4)"/><rect class="box" x="262" y="74" width="478" height="56" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="278" y="98" font-size="12.5" font-weight="700" fill="currentColor">2. PostgreSQL が 2026-11-12 版未満</text><text x="278" y="117" font-size="11" class="mut">18.7 / 17.12 / 16.16 / 15.20 / 14.25 へ；暫定：TEMPORARY を REVOKE</text><path d="M160 168 L258 168" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#d4)"/><rect class="box" x="262" y="140" width="478" height="56" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="278" y="164" font-size="12.5" font-weight="700" fill="currentColor">3. MySQL 26.7.0 – 26.7.1</text><text x="278" y="183" font-size="11" class="mut">26.7.1 より後へ；暫定：CREATE TEMPORARY TABLES を剥奪</text><path d="M160 168 C 215 168 205 234 258 234" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#d4)"/><rect class="box" x="262" y="206" width="478" height="56" rx="8" style="stroke:var(--med);stroke-width:1.6"/><text x="278" y="230" font-size="12.5" font-weight="700" fill="currentColor">4. ClickHouse</text><text x="278" y="249" font-size="11" class="mut">format_binary_max_string_size を固定、CREATE TEMPORARY TABLE を制限</text><path d="M160 168 C 215 168 205 300 258 300" fill="none" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#d4)"/><rect class="box" x="262" y="272" width="478" height="56" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="278" y="296" font-size="12.5" font-weight="700" fill="currentColor">5. マネージド（RDS / Aurora / Cloud SQL など）</text><text x="278" y="315" font-size="11" class="mut">マイナーバージョンとメンテナンス枠を確認、権限の剥奪も実施</text></svg>
 <figcaption>対象と対応を素早く判断するためのフロー。番号は推奨する優先順位です。</figcaption>
@@ -182,7 +182,7 @@ GRANT TEMPORARY ON DATABASE &lt;db&gt; TO &lt;app_role&gt;;  -- 必要なロー�
 </section>
 
 <section class="an-sec">
-<h2 id="do-tin-cay">5. 情報の信頼性</h2>
+<h2 id="confidence">5. 情報の信頼性</h2>
 <ul>
   <li><strong>Oracle — ベンダーと研究者の見解が異なる：</strong> Oracle は CVE-2026-114819 を「Create Session」が必要、CVE-2026-91609 を PR:L とし、いずれも「認証なしでリモート悪用可能：No」としています。Depthfirst は、公開された ORDS エンドポイント経由で両者を連鎖させると<strong>ログイン前に</strong>実行できると説明しています。本ページは両方の見解を併記し、インターネット公開された ORDS を最優先としています。</li>
   <li><strong>MySQL — ベンダーと研究者の見解が異なる：</strong> Oracle の評価は PR:High（7.2）ですが、Depthfirst によれば <code>CREATE TEMPORARY TABLES ON *.*</code> のみで足り、ベンダー評価よりはるかに狭い権限です。</li>
@@ -193,7 +193,7 @@ GRANT TEMPORARY ON DATABASE &lt;db&gt; TO &lt;app_role&gt;;  -- 必要なロー�
 </section>
 
 <section class="an-sec">
-<h2 id="nguon">6. 参考情報</h2>
+<h2 id="sources">6. 参考情報</h2>
 <ul>
   <li><a href="https://thehackernews.com/2026/11/researcher-demonstrates-database-rce.html" target="_blank" rel="noopener noreferrer">The Hacker News — Researcher Demonstrates Database RCE Exploits Affecting PostgreSQL, MySQL and Oracle</a></li>
   <li><a href="https://depthfirst.com/research/narrow-grants-wide-engines" target="_blank" rel="noopener noreferrer">Depthfirst — Narrow Grants, Wide Engines</a></li>
