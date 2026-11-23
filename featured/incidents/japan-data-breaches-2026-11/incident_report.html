@@ -1,0 +1,340 @@
+---
+layout: default
+image: "/featured/incidents/japan-data-breaches-2026-11/japan-breaches-og.png"
+title: "Làn sóng rò rỉ dữ liệu tại Nhật (20–21/11/2026) — Tower Records, Peach Aviation (Ymirlink) & Infcurion Wallet Station / Payどん"
+description: "Gộp 3 sự cố công bố ngày 20–21/11/2026: Tower Records Online lộ ~11 triệu bản ghi, Peach Aviation lộ ~9 triệu bản ghi qua Ymirlink Cuenote FC, Infcurion Wallet Station lộ ~251 nghìn bản ghi và ngừng toàn bộ Payどん"
+category: "Sự cố an ninh"
+---
+<style>
+  .an-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
+  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--line); color: var(--text-muted); }
+  .an-nav a:hover { color: var(--pirago-blue); border-color: var(--pirago-blue); text-decoration: none; }
+  .an-sec { margin: 0 0 40px; }
+  .an-sec h2 { font-size: 21px; margin: 28px 0 14px; scroll-margin-top: 90px; }
+  .an-sec h3 { font-size: 17px; margin: 20px 0 8px; }
+  .an-sec ul, .an-sec ol { padding-left: 22px; }
+  .an-sec li { margin: 6px 0; }
+  .an-sec .table-wrap { overflow-x: auto; margin: 14px 0 20px; }
+  .an-sec code { word-break: break-all; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 20px 0 24px; }
+  .kpi-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); }
+  .kpi-num { font-size: 22px; font-weight: 800; font-family: var(--font-mono); color: var(--pirago-navy); line-height: 1.2; margin-bottom: 4px; }
+  html[data-theme="dark"] .kpi-num { color: #5ab0e8; }
+  .kpi-num.crit { color: var(--crit); }
+  .kpi-num.high { color: var(--high); }
+  .kpi-label { font-size: 12.5px; color: var(--text-muted); line-height: 1.4; }
+
+  .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
+  .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
+  .fig .mut { fill: var(--text-muted); }
+  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
+</style>
+
+<div class="report-header">
+  <h1>Làn sóng rò rỉ dữ liệu tại Nhật (20–21/11/2026) — Tower Records, Peach Aviation (Ymirlink) &amp; Infcurion Wallet Station / Payどん</h1>
+  <p class="sub">Xảy ra / Công bố: <strong>2026-11-20</strong> (Peach, Infcurion) và <strong>2026-11-21</strong> (Tower Records) · Cập nhật đến <strong>2026-11-23</strong> · Nguồn: thông cáo của từng công ty và báo chí Nhật · Trạng thái: <strong>đang diễn biến</strong>. Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a>.</p>
+</div>
+
+<blockquote class="callout">
+  <p><strong>TL;DR (dễ hiểu):</strong> Trong 2 ngày 20–21/11/2026, ba tổ chức Nhật Bản cùng báo có <strong>truy cập trái phép và nguy cơ lộ dữ liệu khách hàng</strong>:</p>
+  <ul>
+    <li><strong>Tower Records Online</strong> (cửa hàng đĩa nhạc trực tuyến): tối đa ~11 triệu bản ghi gồm email, mật khẩu đã băm, họ tên, địa chỉ, SĐT. <em>Không</em> có thẻ tín dụng. Cửa hàng online đang đóng.</li>
+    <li><strong>Peach Aviation</strong> (hãng bay giá rẻ): ~9 triệu bản ghi (họ tên, ngày sinh, địa chỉ, SĐT, email, lịch trình bay). Nguyên nhân <em>không phải hệ thống của Peach mà là nhà cung cấp gửi email Ymirlink (dịch vụ Cuenote FC)</em>. Không có thẻ, hộ chiếu.</li>
+    <li><strong>Infcurion Wallet Station / Payどん</strong> (nền tảng ví thanh toán): ~251 nghìn bản ghi có thể lộ, <strong>toàn bộ dịch vụ Payどん bị ngừng</strong>.</li>
+    <li><strong>Điểm chung:</strong> dữ liệu khách hàng nằm ở hệ thống bên thứ ba/nền tảng dùng chung, nên một điểm yếu có thể kéo theo nhiều thương hiệu.</li>
+    <li><strong>Việc cần làm:</strong> cảnh giác email/SMS/cuộc gọi giả mạo; đổi mật khẩu nếu dùng lại ở nơi khác; rà soát nhà cung cấp email/thanh toán của chính mình.</li>
+  </ul>
+</blockquote>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-num crit">~11M</div>
+    <div class="kpi-label">Tower Records: tối đa (10,21M thông tin đăng nhập · 2,78M hồ sơ thành viên · ~777K địa chỉ giao hàng)</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num crit">8.997.106</div>
+    <div class="kpi-label">Peach Aviation: bản ghi khách hàng lộ qua Ymirlink Cuenote FC</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num high">251.172</div>
+    <div class="kpi-label">Infcurion Wallet Station / Payどん: bản ghi có nguy cơ lộ</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num">3 dịch vụ ngừng</div>
+    <div class="kpi-label">Tower online store · Payどん (từ 20/11 06:20) · Peach: vận hành bình thường</div>
+  </div>
+</div>
+
+<nav class="an-nav" aria-label="Mục lục">
+  <a href="#summary">1. Tóm tắt &amp; Phạm vi</a>
+  <a href="#root-cause">2. Nguyên nhân &amp; Cơ chế</a>
+  <a href="#timeline">3. Diễn biến</a>
+  <a href="#impact">4. Tác động &amp; Rủi ro thứ cấp</a>
+  <a href="#recommendations">5. Khuyến cáo cho PiraGo</a>
+  <a href="#sources">6. Nguồn tham khảo</a>
+</nav>
+
+<section class="an-sec">
+<h2 id="summary">1. Tóm tắt &amp; Phạm vi ảnh hưởng</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 270" role="img" aria-label="Quy mô dữ liệu theo từng sự cố">
+<text x="0" y="27" font-size="12.5" fill="currentColor">Tower · thông tin đăng nhập</text>
+<rect x="250" y="10" width="340" height="24" rx="4" fill="var(--crit)"/>
+<text x="598" y="27" font-size="12.5" font-weight="700" fill="currentColor">~10,21M</text>
+<text x="0" y="65" font-size="12.5" fill="currentColor">Peach · bản ghi khách hàng</text>
+<rect x="250" y="48" width="300" height="24" rx="4" fill="var(--crit)"/>
+<text x="558" y="65" font-size="12.5" font-weight="700" fill="currentColor">~9,00M</text>
+<text x="0" y="103" font-size="12.5" fill="currentColor">Tower · hồ sơ thành viên</text>
+<rect x="250" y="86" width="93" height="24" rx="4" fill="var(--high)"/>
+<text x="351" y="103" font-size="12.5" font-weight="700" fill="currentColor">~2,78M</text>
+<text x="0" y="141" font-size="12.5" fill="currentColor">Tower · địa chỉ/SĐT giao hàng</text>
+<rect x="250" y="124" width="26" height="24" rx="4" fill="var(--high)"/>
+<text x="284" y="141" font-size="12.5" font-weight="700" fill="currentColor">~777K</text>
+<text x="0" y="179" font-size="12.5" fill="currentColor">Infcurion · Payどん</text>
+<rect x="250" y="162" width="8" height="24" rx="4" fill="var(--pirago-blue)"/>
+<text x="266" y="179" font-size="12.5" font-weight="700" fill="currentColor">251.172</text>
+<text x="0" y="225" font-size="11.5" class="mut">Thang tuyến tính. Các nhóm có thể chồng lấn (xem lưu ý bên dưới); "bản ghi" ≠ số người duy nhất.</text>
+</svg>
+<figcaption>Quy mô tối đa theo từng nhóm dữ liệu (số liệu theo công bố của từng công ty/báo chí).</figcaption>
+</figure>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Sự cố</th><th>Số lượng (tối đa)</th><th>Dữ liệu có nguy cơ lộ</th><th>Không bao gồm / Trạng thái dịch vụ</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Tower Records Online</strong> (タワーレコード オンライン)<br><span class="badge crit">Công bố 21/11</span></td>
+      <td>~11 triệu (hội viên hiện tại + người rời trong 3 năm): đăng nhập 10.214.652 · thành viên 2.784.514 · giao hàng 776.953</td>
+      <td>Email, ID thành viên, <strong>mật khẩu đã băm (hash)</strong>, họ tên, furigana, nickname, ngày sinh, giới tính, mã bưu điện, địa chỉ, tên người nhận, SĐT</td>
+      <td>Không có thông tin thẻ tín dụng (theo công ty). Cửa hàng online tạm ngừng; marketplace chưa có lịch mở lại; đơn đặt trước giao dần từ 23/11.</td>
+    </tr>
+    <tr>
+      <td><strong>Peach Aviation</strong> (ピーチ・アビエーション)<br><span class="badge crit">Công bố 20/11</span></td>
+      <td>8.997.106 bản ghi</td>
+      <td>Họ tên, ngày sinh, giới tính, địa chỉ, SĐT, email, lịch trình bay</td>
+      <td>Không có thẻ tín dụng, hộ chiếu; mật khẩu không nằm trong 7 nhóm trường được liệt kê (suy luận, chưa có tuyên bố rõ). Đặt vé, vận hành chuyến bay, hoàn tiền không bị ảnh hưởng.</td>
+    </tr>
+    <tr>
+      <td><strong>Infcurion Wallet Station / Payどん</strong><br><span class="badge high">Công bố 20/11</span></td>
+      <td>251.172 bản ghi</td>
+      <td>Họ tên, ngày sinh, SĐT, giới tính, email, <strong>mật khẩu</strong> (chưa rõ có băm hay không), thông tin tài khoản ngân hàng, số dư điểm / điểm thưởng địa phương, lịch sử giao dịch (thời gian, cửa hàng, số tiền), thông tin cửa hàng</td>
+      <td>Chưa thấy đề cập thẻ tín dụng. <strong>Toàn bộ dịch vụ Payどん ngừng từ 20/11 06:20</strong>, chưa có lịch khôi phục. Chưa xác nhận lạm dụng.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<ul>
+  <li><strong>Lưu ý số liệu Tower:</strong> ba nhóm đếm (10,21M + 2,78M + 0,78M ≈ 13,78M) lớn hơn con số tiêu đề "約1,100万件" trong chính thông cáo gốc của Tower (tổng các dòng = 13.776.119); thông cáo không giải thích chênh lệch — có thể tiêu đề đếm khách hàng duy nhất còn các dòng đếm bản ghi theo loại dữ liệu (suy luận, không phải thông tin được nêu). Theo thông cáo cập nhật lúc 22/11 18:30.</li>
+  <li><strong>Lưu ý số liệu Peach:</strong> 8,997M là số bản ghi của Peach; tổng ảnh hưởng toàn dịch vụ Cuenote FC lớn hơn nhiều (xem mục 2), và chưa xác định 8,997M có phải tập con của tổng đó hay không.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="root-cause">2. Nguyên nhân &amp; Cơ chế</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 330" role="img" aria-label="Nguyên nhân của ba sự cố">
+<defs><marker id="jb-ah1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs>
+<text x="10" y="18" font-size="12" font-weight="700" fill="currentColor">A. Chuỗi cung ứng email: Ymirlink Cuenote FC</text>
+<rect x="10" y="28" width="200" height="56" rx="8" class="box"/>
+<text x="110" y="52" text-anchor="middle" font-size="11.5" fill="currentColor">Lỗ hổng chương trình</text>
+<text x="110" y="68" text-anchor="middle" font-size="10.5" class="mut">→ lấy thông tin đăng nhập nhân viên</text>
+<rect x="270" y="28" width="200" height="56" rx="8" class="box"/>
+<text x="370" y="52" text-anchor="middle" font-size="11.5" fill="currentColor">Di chuyển ngang / CSV export</text>
+<text x="370" y="68" text-anchor="middle" font-size="10.5" class="mut">mã độc hoặc đánh cắp session</text>
+<rect x="530" y="28" width="200" height="56" rx="8" fill="none" stroke="var(--crit)" stroke-width="1.5"/>
+<text x="630" y="52" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--crit)">Danh sách email khách hàng</text>
+<text x="630" y="68" text-anchor="middle" font-size="10.5" class="mut">Peach ~9M · NTT PC (60,9K) …</text>
+<line x1="210" y1="56" x2="268" y2="56" stroke="var(--text-muted)" marker-end="url(#jb-ah1)"/>
+<line x1="470" y1="56" x2="528" y2="56" stroke="var(--text-muted)" marker-end="url(#jb-ah1)"/>
+<text x="10" y="120" font-size="12" font-weight="700" fill="currentColor">B. Tower Records Online (nguyên nhân chưa công bố)</text>
+<rect x="10" y="130" width="200" height="56" rx="8" class="box"/>
+<text x="110" y="154" text-anchor="middle" font-size="11.5" fill="currentColor">Truy cập trái phép từ bên ngoài</text>
+<text x="110" y="170" text-anchor="middle" font-size="10.5" class="mut">xác nhận 19/11 ~17:10</text>
+<rect x="270" y="130" width="200" height="56" rx="8" class="box"/>
+<text x="370" y="154" text-anchor="middle" font-size="11.5" fill="currentColor">Đóng khẩn cấp cửa hàng online</text>
+<text x="370" y="170" text-anchor="middle" font-size="10.5" class="mut">vector/lỗ hổng: chưa công bố</text>
+<rect x="530" y="130" width="200" height="56" rx="8" fill="none" stroke="var(--crit)" stroke-width="1.5"/>
+<text x="630" y="154" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--crit)">Đăng nhập + hồ sơ + giao hàng</text>
+<text x="630" y="170" text-anchor="middle" font-size="10.5" class="mut">gồm mật khẩu đã băm</text>
+<line x1="210" y1="158" x2="268" y2="158" stroke="var(--text-muted)" marker-end="url(#jb-ah1)"/>
+<line x1="470" y1="158" x2="528" y2="158" stroke="var(--text-muted)" marker-end="url(#jb-ah1)"/>
+<text x="10" y="222" font-size="12" font-weight="700" fill="currentColor">C. Infcurion Wallet Station (nguyên nhân chưa công bố)</text>
+<rect x="10" y="232" width="200" height="56" rx="8" class="box"/>
+<text x="110" y="256" text-anchor="middle" font-size="11.5" fill="currentColor">Truy cập trái phép bên thứ ba</text>
+<text x="110" y="272" text-anchor="middle" font-size="10.5" class="mut">xác nhận 19/11</text>
+<rect x="270" y="232" width="200" height="56" rx="8" class="box"/>
+<text x="370" y="256" text-anchor="middle" font-size="11.5" fill="currentColor">Vá khẩn cấp + chặn đường vào</text>
+<text x="370" y="272" text-anchor="middle" font-size="10.5" class="mut">ngừng cấp cho khách bị ảnh hưởng</text>
+<rect x="530" y="232" width="200" height="56" rx="8" fill="none" stroke="var(--high)" stroke-width="1.5"/>
+<text x="630" y="256" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--high)">Payどん ngừng hoàn toàn</text>
+<text x="630" y="272" text-anchor="middle" font-size="10.5" class="mut">251.172 bản ghi có nguy cơ lộ</text>
+<line x1="210" y1="260" x2="268" y2="260" stroke="var(--text-muted)" marker-end="url(#jb-ah1)"/>
+<line x1="470" y1="260" x2="528" y2="260" stroke="var(--text-muted)" marker-end="url(#jb-ah1)"/>
+<text x="10" y="318" font-size="11.5" class="mut">Chưa có bằng chứng ba sự cố liên quan trực tiếp; chỉ chung thời điểm và kiểu rủi ro bên thứ ba.</text>
+</svg>
+<figcaption>Ba chuỗi sự cố độc lập; chỉ chuỗi A (Ymirlink) có cơ chế kỹ thuật được nhà cung cấp mô tả.</figcaption>
+</figure>
+
+<h3>2.1 Peach Aviation ← Ymirlink Cuenote FC (đã được nhà cung cấp mô tả)</h3>
+<ul>
+  <li><strong>Phía Ymirlink (báo cáo thứ 3, 11/11, qua ScanNetSecurity):</strong> một lỗ hổng chương trình cho phép kẻ tấn công lấy thông tin đăng nhập của nhân viên hỗ trợ/QA, rồi thử trên các hệ thống khác. <em>Cách 1:</em> cài mã độc lên máy chủ, trích dữ liệu từ CSDL lõi và di chuyển ngang trong mạng quản trị nội bộ. <em>Cách 2:</em> đánh cắp phiên đăng nhập của người dùng và dùng chính chức năng xuất CSV. Ymirlink khẳng định <strong>không phải ransomware</strong>; đường xâm nhập và phạm vi đầy đủ vẫn đang điều tra.</li>
+  <li><strong>Phạm vi chung của Cuenote FC:</strong> báo cáo ngày 26/10 nêu tối đa 51.628.280 bản ghi trên 49 hệ thống (81 hệ thống có dấu hiệu truy cập); báo cáo thứ 3 điều chỉnh Cuenote FC còn 47.864.147 bản ghi và Cuenote BASE 190 bản ghi (công ty, họ tên, SĐT, email). Các khách hàng khác của Ymirlink cũng bị ảnh hưởng (ví dụ NTT PC Communications: 60.929 địa chỉ email, công bố 02/11).</li>
+  <li><strong>Mâu thuẫn ngày:</strong> Ymirlink phát hiện truy cập ngày 16/10; thông cáo Peach ghi xâm nhập nhà thầu ngày 18/10. Thông cáo Peach (JP) chỉ ghi 18/10 và xác nhận phạm vi ảnh hưởng ngày 06/11; mốc 16/10 chỉ có ở tóm tắt của ScanNetSecurity. Chưa giải thích được chênh lệch.</li>
+  <li><strong>Không nhầm với</strong> sự cố ransomware ngày 07/10/2026 tại nhà thầu email đặt chỗ IDCF Cloud (Peach công bố 09/10, khi đó chưa xác nhận lộ dữ liệu) — đây là sự cố riêng.</li>
+</ul>
+
+<h3>2.2 Tower Records Online</h3>
+<ul>
+  <li>Công ty chỉ nêu "truy cập trái phép từ bên ngoài"; <strong>đường vào và lỗ hổng bị khai thác chưa được công bố</strong>. Việc dữ liệu đăng nhập gồm hash mật khẩu cho thấy kẻ tấn công tiếp cận được CSDL tài khoản.</li>
+</ul>
+
+<h3>2.3 Infcurion Wallet Station / Payどん</h3>
+<ul>
+  <li>Infcurion xác nhận ngày 19/11 có bên thứ ba truy cập trái phép Wallet Station; Payどん cho biết đã "vá lỗ hổng khẩn cấp và chặn đường truy cập" nhưng <strong>không nêu lỗ hổng hay điểm vào</strong>.</li>
+  <li>Payどん dùng xác thực SMS với số điện thoại đăng ký ngân hàng nên theo công bố, riêng dữ liệu bị lộ chưa đủ để thực hiện giao dịch ngay (<em>nhận định của Payどん, chưa kiểm chứng độc lập</em>).</li>
+  <li>Infcurion cung cấp Wallet Station cho nhiều doanh nghiệp, đã dừng cung cấp cho các bên "bị ảnh hưởng" nhưng không nêu tên. Một số báo/blog đưa tin AEON Pay, HAPPAY bị ảnh hưởng — <strong>chưa có nguồn chính thức, chưa xác minh</strong>.</li>
+  <li>Trước đó, 28/10/2026, Payどん có sự cố riêng tại nhà thầu gửi email (ngừng thông báo email và đăng ký mới); không nhầm với sự cố này. Ngoài ra, thông báo 18/11 của Infcurion về dữ liệu tương tác Notion AI/Fireworks AI được công ty cho biết không phải xâm nhập hệ thống Infcurion — cũng là việc riêng.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="timeline">3. Diễn biến &amp; Khôi phục</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 190" role="img" aria-label="Dòng thời gian 16/10 đến 23/11/2026">
+<line x1="30" y1="95" x2="715" y2="95" stroke="var(--line)" stroke-width="2"/>
+<line x1="100" y1="95" x2="100" y2="62" stroke="var(--pirago-blue)"/><circle cx="100" cy="95" r="5" fill="var(--pirago-blue)"/>
+<text x="100" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">16–19/10</text><text x="100" y="52" text-anchor="middle" font-size="10.5" class="mut">Ymirlink phát hiện</text>
+<line x1="230" y1="95" x2="230" y2="130" stroke="var(--crit)"/><circle cx="230" cy="95" r="5" fill="var(--crit)"/>
+<text x="230" y="148" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">19/11</text><text x="230" y="162" text-anchor="middle" font-size="10.5" class="mut">Tower ~17:10 · Infcurion</text><text x="230" y="175" text-anchor="middle" font-size="10.5" class="mut">xác nhận truy cập trái phép</text>
+<line x1="380" y1="95" x2="380" y2="62" stroke="var(--crit)"/><circle cx="380" cy="95" r="5" fill="var(--crit)"/>
+<text x="380" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">20/11</text><text x="380" y="44" text-anchor="middle" font-size="10.5" class="mut">Peach · Infcurion công bố</text><text x="380" y="57" text-anchor="middle" font-size="10.5" class="mut">Payどん ngừng 06:20</text>
+<line x1="520" y1="95" x2="520" y2="130" stroke="var(--crit)"/><circle cx="520" cy="95" r="5" fill="var(--crit)"/>
+<text x="520" y="148" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">21/11</text><text x="520" y="162" text-anchor="middle" font-size="10.5" class="mut">Tower công bố</text>
+<line x1="615" y1="95" x2="615" y2="62" stroke="var(--pirago-blue)"/><circle cx="615" cy="95" r="5" fill="var(--pirago-blue)"/>
+<text x="615" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">22/11</text><text x="615" y="52" text-anchor="middle" font-size="10.5" class="mut">Tower cập nhật</text>
+<line x1="700" y1="95" x2="700" y2="130" stroke="var(--pirago-blue)"/><circle cx="700" cy="95" r="5" fill="var(--pirago-blue)"/>
+<text x="730" y="148" text-anchor="end" font-size="12" font-weight="700" fill="currentColor">23/11</text><text x="730" y="162" text-anchor="end" font-size="10.5" class="mut">Tower giao đơn đặt trước</text>
+</svg>
+<figcaption>Trục thời gian không theo tỉ lệ ở đoạn từ tháng 10 sang 19/11.</figcaption>
+</figure>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Thời điểm</th><th>Diễn biến chính</th><th>Độ tin cậy</th></tr></thead>
+  <tbody>
+    <tr><td>16/10/2026</td><td>Ymirlink phát hiện truy cập trái phép vào một số hệ thống (theo tóm tắt của ScanNetSecurity về báo cáo Ymirlink).</td><td><span class="badge med">Báo chí chuyên ngành</span></td></tr>
+    <tr><td>18/10/2026</td><td>Thời điểm xâm nhập nhà thầu theo thông cáo của Peach (lệch với 16/10 của Ymirlink).</td><td><span class="badge high">Thông cáo Peach</span></td></tr>
+    <tr><td>19/10/2026</td><td>Ymirlink công bố sự cố lần đầu (ước tính ban đầu ~9 triệu bản ghi); thông báo cho Peach.</td><td><span class="badge med">Báo chí chuyên ngành</span></td></tr>
+    <tr><td>26/10/2026</td><td>Ymirlink báo cáo lần 2: tối đa 51.628.280 bản ghi trên 49 hệ thống Cuenote FC (81 hệ thống có dấu hiệu truy cập).</td><td><span class="badge med">Impress Watch</span></td></tr>
+    <tr><td>06/11/2026</td><td>Peach xác nhận phạm vi ảnh hưởng.</td><td><span class="badge med">Thông cáo Peach (qua nguồn thứ cấp)</span></td></tr>
+    <tr><td>11/11/2026</td><td>Ymirlink báo cáo lần 3: Cuenote FC 47.864.147 bản ghi; Cuenote BASE 190 bản ghi; mô tả hai cách tấn công.</td><td><span class="badge med">ScanNetSecurity</span></td></tr>
+    <tr><td>19/11/2026</td><td><strong>Tower:</strong> xác nhận truy cập trái phép khoảng 17:10, đóng khẩn cấp cửa hàng online. <strong>Infcurion:</strong> xác nhận bên thứ ba truy cập trái phép Wallet Station.</td><td><span class="badge low">Công ty / nhiều nguồn</span></td></tr>
+    <tr><td>20/11/2026</td><td><strong>Peach</strong> công bố 8.997.106 bản ghi, báo cáo PPC và bắt đầu gửi email cho khách hàng. <strong>Infcurion / Payどん</strong> công bố (báo cáo đầu tiên lúc 06:00), <strong>ngừng toàn bộ dịch vụ Payどん lúc 06:20</strong>; các ngân hàng liên kết (Kagoshima, Minami-Nippon…) thông báo.</td><td><span class="badge low">Thông cáo chính thức</span></td></tr>
+    <tr><td>21/11/2026</td><td><strong>Tower Records</strong> công bố lần đầu (trạng thái đang điều tra): ~11 triệu bản ghi.</td><td><span class="badge high">Thông cáo gốc Tower</span></td></tr>
+    <tr><td>22/11/2026</td><td>Tower cập nhật: cửa hàng online vẫn đóng để kiểm tra toàn bộ hệ thống; đơn đặt trước giao dần từ 23/11; marketplace chưa có lịch mở lại. Tin "không đổi được mật khẩu khi dịch vụ ngừng" không có trong thông cáo gốc, chỉ ở một bản tóm tắt tìm kiếm, <em>chưa xác minh</em>.</td><td><span class="badge med">Business+IT / Bloomberg</span></td></tr>
+    <tr><td>23/11/2026</td><td>Rà soát: chưa thấy cập nhật chính thức về khôi phục Payどん hay mở lại Tower online; chưa có xác nhận lạm dụng dữ liệu ở cả ba vụ.</td><td><span class="badge med">Rà soát PiraGo</span></td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section class="an-sec">
+<h2 id="impact">4. Tác động &amp; Rủi ro thứ cấp</h2>
+<ul>
+  <li><strong>Phishing / vishing mạo danh:</strong> với họ tên, SĐT, email, ngày sinh và lịch trình bay (Peach), kẻ xấu có thể tạo email/SMS/cuộc gọi rất thuyết phục mạo danh hãng bay, Tower Records, Payどん/ngân hàng hoặc Infcurion. Cả ba công ty đều cảnh báo điều này.</li>
+  <li><strong>Credential stuffing (Tower, Payどん):</strong> mật khẩu hash (Tower) hoặc mật khẩu (Payどん) có thể bị crack/đem thử ở dịch vụ khác nếu người dùng dùng lại mật khẩu.</li>
+  <li><strong>Gián đoạn dịch vụ:</strong> Tower online store và Payどん ngừng; thanh toán địa phương và điểm thưởng qua Payどん không dùng được cho đến khi khôi phục.</li>
+  <li><strong>Rủi ro chuỗi cung ứng:</strong> Cuenote FC phục vụ rất nhiều tổ chức; chỉ một nhà cung cấp email bị xâm phạm đã kéo theo hàng chục triệu bản ghi trên nhiều thương hiệu. Wallet Station tương tự khi phục vụ nhiều đối tác.</li>
+  <li><strong>Pháp lý:</strong> Peach đã báo cáo Ủy ban Bảo vệ Thông tin Cá nhân (PPC). Chưa thấy lệnh xử lý cụ thể từ cơ quan quản lý cho Tower hay Infcurion tính đến 23/11.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="recommendations">5. Khuyến cáo cho PiraGo</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 130" role="img" aria-label="Bốn trụ cột phòng ngừa">
+<rect x="10" y="10" width="165" height="100" rx="8" class="box"/>
+<text x="92" y="38" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">1. Kiểm kê bên thứ ba</text>
+<text x="92" y="60" text-anchor="middle" font-size="10.5" class="mut">email, thanh toán,</text><text x="92" y="74" text-anchor="middle" font-size="10.5" class="mut">ví, SMS gateway</text>
+<rect x="190" y="10" width="165" height="100" rx="8" class="box"/>
+<text x="272" y="38" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">2. Tối thiểu hóa dữ liệu</text>
+<text x="272" y="60" text-anchor="middle" font-size="10.5" class="mut">chỉ gửi trường cần thiết,</text><text x="272" y="74" text-anchor="middle" font-size="10.5" class="mut">xóa danh sách cũ</text>
+<rect x="370" y="10" width="165" height="100" rx="8" class="box"/>
+<text x="452" y="38" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">3. Bảo vệ tài khoản</text>
+<text x="452" y="60" text-anchor="middle" font-size="10.5" class="mut">hash mạnh, MFA/Passkey,</text><text x="452" y="74" text-anchor="middle" font-size="10.5" class="mut">kiểm tra mật khẩu lộ</text>
+<rect x="550" y="10" width="180" height="100" rx="8" class="box"/>
+<text x="640" y="38" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">4. Ứng phó &amp; thông báo</text>
+<text x="640" y="60" text-anchor="middle" font-size="10.5" class="mut">kill-switch, quy trình</text><text x="640" y="74" text-anchor="middle" font-size="10.5" class="mut">báo cáo nhà cung cấp</text>
+</svg>
+<figcaption>Bốn trụ cột rút ra từ ba sự cố.</figcaption>
+</figure>
+<ol>
+  <li><strong>Kiểm kê và đánh giá nhà cung cấp (đặc biệt dịch vụ gửi email, ví/thanh toán):</strong>
+    <ul>
+      <li>Lập danh sách vendor đang giữ dữ liệu khách hàng của PiraGo/khách hàng của PiraGo; xác nhận ai dùng Ymirlink Cuenote FC, Wallet Station hoặc nền tảng tương tự và liên hệ vendor để kiểm tra có bị ảnh hưởng không.</li>
+      <li>Đưa vào hợp đồng: nghĩa vụ báo sự cố trong thời hạn cụ thể, quyền kiểm toán, xóa dữ liệu sau khi hết dùng, phạm vi dữ liệu tối thiểu.</li>
+    </ul>
+  </li>
+  <li><strong>Tối thiểu hóa và xóa dữ liệu gửi cho bên thứ ba:</strong>
+    <ul>
+      <li>Danh sách gửi email chỉ nên chứa email + ID ẩn danh; không đưa ngày sinh, địa chỉ, lịch trình vào hệ thống gửi thư nếu không bắt buộc.</li>
+      <li>Xóa/tách định kỳ danh sách của chiến dịch cũ và dữ liệu người dùng đã rời.</li>
+    </ul>
+  </li>
+  <li><strong>Bảo vệ tài khoản người dùng:</strong>
+    <ul>
+      <li>Băm mật khẩu bằng Argon2id/bcrypt có salt; không lưu mật khẩu dạng có thể phục hồi.</li>
+      <li>Bật MFA/Passkey, rate limit và bot mitigation ở <code>/login</code>; kiểm tra mật khẩu bị lộ (HIBP k-anonymity); sẵn sàng buộc đặt lại mật khẩu hàng loạt.</li>
+      <li>Với thao tác tài chính, xác thực lớp thứ hai độc lập (như SMS qua số đăng ký ngân hàng của Payどん) vẫn là chốt chặn quan trọng khi dữ liệu bị lộ.</li>
+    </ul>
+  </li>
+  <li><strong>Ứng phó sự cố:</strong>
+    <ul>
+      <li>Có công tắc bảo trì khẩn cấp và SLA cô lập rõ ràng (Tower, Payどん đóng dịch vụ trong ngày; hãy so sánh với 8 ngày chưa cô lập của MUJI).</li>
+      <li>Chuẩn bị sẵn mẫu thông báo khách hàng, kênh hỗ trợ và hướng dẫn nhận biết phishing.</li>
+    </ul>
+  </li>
+  <li><strong>Hướng dẫn cho người dùng/đồng nghiệp:</strong>
+    <ul>
+      <li>Không bấm link hoặc mở tệp trong email/SMS/cuộc gọi bất ngờ nhân danh Tower Records, Peach, Payどん/ngân hàng, Infcurion hay Ymirlink; không nhập ID, mật khẩu, mã xác thực, thông tin tài khoản.</li>
+      <li>Đổi mật khẩu Tower/Payどん (nếu thay đổi được) và mọi dịch vụ khác dùng chung mật khẩu — đây là khuyến nghị thông lệ, không phải chỉ dẫn chính thức đã xác minh.</li>
+      <li>Kiểm tra sao kê ngân hàng/giao dịch lạ. Đường dây Payどん: Digital Support Plaza (Kagoshima Bank), 0120-947-230, ngày thường 09:00–17:00.</li>
+    </ul>
+  </li>
+</ol>
+</section>
+
+<section class="an-sec">
+<h2 id="sources">6. Nguồn tham khảo</h2>
+<ul>
+  <li>Tower Records Online:
+    <ul>
+      <li><a href="https://tower.jp/" target="_blank" rel="noopener noreferrer">tower.jp</a> — thông cáo gốc "不正アクセスおよび個人情報流出に関するお詫びとお知らせ" (cập nhật 22/11 18:30)</li>
+      <li><a href="https://incidents.seory.co.jp/incidents/20261121-25a13c/" target="_blank" rel="noopener noreferrer">Seory Incidents — hồ sơ sự cố 2026-11-21</a></li>
+      <li><a href="https://cyber.spool.co.jp/cyber_news/20261123-tower-records-data-breach/" target="_blank" rel="noopener noreferrer">Cyber Spool — tổng hợp 23/11</a></li>
+      <li><a href="https://news.yahoo.co.jp/articles/2c435a45fad1b2e1a1a2b51fa3211f2e0b5f3144" target="_blank" rel="noopener noreferrer">Business+IT (Yahoo!ニュース) — cập nhật 22/11</a></li>
+      <li><a href="https://www.bloomberg.com/news/articles/2026-11-22/tower-records-becomes-latest-japan-retailer-hit-by-data-breach" target="_blank" rel="noopener noreferrer">Bloomberg — Tower Records becomes latest Japan retailer hit by data breach</a></li>
+      <li><a href="https://rocket-boys.co.jp/security-measures-lab/tower_records_online_1100man_password_hash_breach_2026/" target="_blank" rel="noopener noreferrer">Rocket Boys — chi tiết số liệu</a></li>
+    </ul>
+  </li>
+  <li>Peach Aviation / Ymirlink:
+    <ul>
+      <li><a href="https://www.flypeach.com/application/files/3617/9515/4415/20261120_INFO_JP.pdf" target="_blank" rel="noopener noreferrer">Peach — thông cáo 20/11 (JP, PDF)</a> · <a href="https://www.flypeach.com/application/files/5417/9515/4415/20261120_INFO_EN.pdf" target="_blank" rel="noopener noreferrer">EN (PDF)</a></li>
+      <li><a href="https://www.aviationwire.jp/archives/354926" target="_blank" rel="noopener noreferrer">AviationWire</a></li>
+      <li><a href="https://scan.netsecurity.ne.jp/article/2026/11/20/56860.html" target="_blank" rel="noopener noreferrer">ScanNetSecurity — báo cáo Ymirlink &amp; cách tấn công</a></li>
+      <li><a href="https://internet.watch.impress.co.jp/docs/news/2151309.html" target="_blank" rel="noopener noreferrer">Impress Watch — Ymirlink báo cáo lần 2</a></li>
+      <li><a href="https://www.flypeach.com/news/20261009" target="_blank" rel="noopener noreferrer">Peach — thông báo 09/10 (sự cố IDCF Cloud, riêng biệt)</a></li>
+    </ul>
+  </li>
+  <li>Infcurion Wallet Station / Payどん:
+    <ul>
+      <li><a href="https://infcurion.com/news/news-20261120_001/" target="_blank" rel="noopener noreferrer">Infcurion — thông báo 20/11</a></li>
+      <li><a href="https://paydon.jp/2026/11/20/newsrelease20261120" target="_blank" rel="noopener noreferrer">Payどん — thông cáo 20/11 (251.172 bản ghi)</a></li>
+      <li><a href="https://www.kagin.co.jp/important/20261120_094.html" target="_blank" rel="noopener noreferrer">Kagoshima Bank</a> · <a href="https://nangin.jp/information/important/post_1291.html" target="_blank" rel="noopener noreferrer">Minami-Nippon Bank</a></li>
+      <li><a href="https://innovatopia.jp/cyber-security/cyber-security-news/121476/" target="_blank" rel="noopener noreferrer">Innovatopia</a> · <a href="https://act1.co.jp/2026-11-20-06/" target="_blank" rel="noopener noreferrer">Act1</a> (nguồn thứ cấp)</li>
+      <li>Chưa xác minh: tin AEON Pay / HAPPAY bị ảnh hưởng (<a href="https://www.inatei.com/entry/aeon-pay-suspended-infcurion-unauthorized-access" target="_blank" rel="noopener noreferrer">blog</a>) — không có nguồn chính thức.</li>
+    </ul>
+  </li>
+</ul>
+</section>

@@ -4,6 +4,32 @@
 # `path` tính từ gốc ngôn ngữ (vi: "/", ja: "/ja/").
 
 # disclosed: 2026-11-20
+- id: japan-data-breaches-2026-11
+  category: incident
+  month: "2026-11"
+  path: "featured/incidents/japan-data-breaches-2026-11/incident_report/"
+  icon: "🗂️"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL INCIDENT"}
+  nav: {vi: "Rò rỉ Tower / Peach / Payどん", ja: "タワレコ・ピーチ・Payどん 流出"}
+  title: {vi: "Làn sóng rò rỉ dữ liệu tại Nhật — Tower Records (~11 triệu), Peach Aviation qua Ymirlink (~9 triệu) & Infcurion Wallet Station / Payどん (~251 nghìn)", ja: "国内相次ぐ情報流出 — タワーレコード（約1,100万件）、ピーチ（ユミルリンク経由 約900万件）、インフキュリオン Wallet Station / Payどん（約25万件）"}
+  date: {vi: "Công bố 20–21/11/2026 · Cập nhật đến 2026-11-23 · Payどん ngừng toàn bộ dịch vụ · Tower online store tạm đóng", ja: "2026年11月20〜21日公表 · 11月23日時点 · Payどん全面停止 · タワーレコード通販は一時停止"}
+  link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Quy mô", ja: "規模"}
+      text: {vi: "Tower Records Online (21/11): tối đa ~11 triệu bản ghi (10,21M đăng nhập gồm hash mật khẩu, 2,78M hồ sơ thành viên, ~777K địa chỉ/SĐT giao hàng; không gồm thẻ tín dụng). Peach Aviation (20/11): 8.997.106 bản ghi (họ tên, ngày sinh, địa chỉ, SĐT, email, lịch trình bay).", ja: "タワーレコード オンライン（11/21）：最大約1,100万件（ログイン情報1,021万・会員情報278万・配送先約77.7万、カード情報なし）。ピーチ（11/20）：8,997,106件（氏名・生年月日・住所・電話・メール・旅程）。"}
+    - sev: high
+      label: {vi: "Nguyên nhân", ja: "原因"}
+      text: {vi: "Peach: lộ qua nhà cung cấp email Ymirlink Cuenote FC (lỗ hổng chương trình, đánh cắp thông tin đăng nhập nhân viên/session, không phải ransomware; tổng ảnh hưởng Cuenote FC ~47,9 triệu bản ghi). Tower và Infcurion: truy cập trái phép, vector chưa công bố.", ja: "ピーチ：メール配信事業者ユミルリンク Cuenote FC 経由（プログラム脆弱性、担当者認証情報・セッション窃取、ランサムウェアではない。Cuenote FC 全体で約4,786万件）。タワー、インフキュリオン：不正アクセス、侵入経路は未公表。"}
+    - sev: crit
+      label: {vi: "Infcurion / Payどん", ja: "インフキュリオン / Payどん"}
+      text: {vi: "Nguy cơ lộ 251.172 bản ghi (họ tên, ngày sinh, SĐT, email, mật khẩu, tài khoản ngân hàng, số dư điểm, lịch sử giao dịch); toàn bộ dịch vụ Payどん ngừng từ 20/11 06:20, chưa có lịch khôi phục.", ja: "251,172件が流出の恐れ（氏名・生年月日・電話・メール・パスワード・銀行口座・ポイント残高・取引履歴）。Payどんは11/20 6:20から全サービス停止、復旧時期未定。"}
+    - sev: low
+      label: {vi: "Khuyến cáo", ja: "対策"}
+      text: {vi: "Cảnh giác email/SMS/cuộc gọi mạo danh, không nhập mật khẩu/mã xác thực; đổi mật khẩu dùng chung; rà soát vendor email/thanh toán và tối thiểu hóa dữ liệu gửi cho bên thứ ba.", ja: "なりすましメール・SMS・電話に注意し、パスワード・認証コードを入力しない。使い回しパスワードを変更。メール配信・決済委託先を棚卸しし、外部連携データを最小化。"}
+
+# disclosed: 2026-11-20
 - id: linux-cve-2026-99676
   category: vulnerability
   month: "2026-11"

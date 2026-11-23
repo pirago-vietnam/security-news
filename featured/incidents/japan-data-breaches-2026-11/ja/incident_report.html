@@ -1,0 +1,342 @@
+---
+layout: default
+lang: ja
+image: "/featured/incidents/japan-data-breaches-2026-11/japan-breaches-og.png"
+title: "国内相次ぐ情報流出（2026年11月20〜21日）— タワーレコード、ピーチ・アビエーション（ユミルリンク）、インフキュリオン Wallet Station / Payどん"
+description: "2026年11月20〜21日に公表された3件を集約：タワーレコードオンライン最大約1,100万件、ピーチ・アビエーション約900万件（ユミルリンク Cuenote FC 経由）、インフキュリオン Wallet Station 約25万件と Payどん 全面停止"
+category: "セキュリティインシデント"
+permalink: /ja/featured/incidents/japan-data-breaches-2026-11/incident_report/
+---
+<style>
+  .an-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
+  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--line); color: var(--text-muted); }
+  .an-nav a:hover { color: var(--pirago-blue); border-color: var(--pirago-blue); text-decoration: none; }
+  .an-sec { margin: 0 0 40px; }
+  .an-sec h2 { font-size: 21px; margin: 28px 0 14px; scroll-margin-top: 90px; }
+  .an-sec h3 { font-size: 17px; margin: 20px 0 8px; }
+  .an-sec ul, .an-sec ol { padding-left: 22px; }
+  .an-sec li { margin: 6px 0; }
+  .an-sec .table-wrap { overflow-x: auto; margin: 14px 0 20px; }
+  .an-sec code { word-break: break-all; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 20px 0 24px; }
+  .kpi-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); }
+  .kpi-num { font-size: 22px; font-weight: 800; font-family: var(--font-mono); color: var(--pirago-navy); line-height: 1.2; margin-bottom: 4px; }
+  html[data-theme="dark"] .kpi-num { color: #5ab0e8; }
+  .kpi-num.crit { color: var(--crit); }
+  .kpi-num.high { color: var(--high); }
+  .kpi-label { font-size: 12.5px; color: var(--text-muted); line-height: 1.4; }
+
+  .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
+  .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
+  .fig .mut { fill: var(--text-muted); }
+  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
+</style>
+
+<div class="report-header">
+  <h1>国内相次ぐ情報流出（2026年11月20〜21日）— タワーレコード、ピーチ・アビエーション（ユミルリンク）、インフキュリオン Wallet Station / Payどん</h1>
+  <p class="sub">発生・公開日：<strong>2026-11-20</strong>（ピーチ、インフキュリオン）／<strong>2026-11-21</strong>（タワーレコード） · <strong>2026-11-23</strong> 時点 · 出典：各社の公表と国内報道 · 状況：<strong>進行中</strong>。月次レポート：<a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月レポート</a>。</p>
+</div>
+
+<blockquote class="callout">
+  <p><strong>TL;DR（要点）：</strong>2026年11月20〜21日の2日間に、国内3組織が<strong>不正アクセスと顧客情報流出の恐れ</strong>を公表しました。</p>
+  <ul>
+    <li><strong>タワーレコード オンライン</strong>：最大約1,100万件（メールアドレス、パスワードのハッシュ値、氏名、住所、電話番号など）。クレジットカード情報は含まれず、オンラインストアは停止中。</li>
+    <li><strong>ピーチ・アビエーション</strong>：約900万件（氏名、生年月日、住所、電話番号、メール、旅程）。原因は<em>ピーチ自社ではなくメール配信事業者ユミルリンク（Cuenote FC）</em>。カード・パスポート情報は含まれません。</li>
+    <li><strong>インフキュリオン Wallet Station / Payどん</strong>：約25万件が流出の恐れ、<strong>Payどんの全サービスが停止</strong>。</li>
+    <li><strong>共通点：</strong>顧客データが外部事業者・共通基盤にあり、1か所の弱点が複数ブランドに波及します。</li>
+    <li><strong>やること：</strong>なりすましメール・SMS・電話への警戒、パスワード使い回しの変更、自社の委託先（メール配信・決済）の棚卸し。</li>
+  </ul>
+</blockquote>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-num crit">約1,100万件</div>
+    <div class="kpi-label">タワーレコード：最大（ログイン情報1,021万・会員情報278万・配送先約77.7万）</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num crit">8,997,106件</div>
+    <div class="kpi-label">ピーチ：ユミルリンク Cuenote FC 経由で流出した顧客情報</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num high">251,172件</div>
+    <div class="kpi-label">インフキュリオン Wallet Station / Payどん：流出の恐れ</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num">サービス停止</div>
+    <div class="kpi-label">タワー通販 · Payどん（11/20 6:20〜）· ピーチ：通常運航</div>
+  </div>
+</div>
+
+<nav class="an-nav" aria-label="目次">
+  <a href="#summary">1. 概要・影響範囲</a>
+  <a href="#root-cause">2. 原因・メカニズム</a>
+  <a href="#timeline">3. 経緯</a>
+  <a href="#impact">4. 影響・二次リスク</a>
+  <a href="#recommendations">5. PiraGo への推奨事項</a>
+  <a href="#sources">6. 参考情報</a>
+</nav>
+
+<section class="an-sec">
+<h2 id="summary">1. 概要・影響範囲</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 270" role="img" aria-label="インシデント別のデータ規模">
+<text x="0" y="27" font-size="12.5" fill="currentColor">タワー・ログイン情報</text>
+<rect x="250" y="10" width="340" height="24" rx="4" fill="var(--crit)"/>
+<text x="598" y="27" font-size="12.5" font-weight="700" fill="currentColor">約1,021万</text>
+<text x="0" y="65" font-size="12.5" fill="currentColor">ピーチ・顧客情報</text>
+<rect x="250" y="48" width="300" height="24" rx="4" fill="var(--crit)"/>
+<text x="558" y="65" font-size="12.5" font-weight="700" fill="currentColor">約900万</text>
+<text x="0" y="103" font-size="12.5" fill="currentColor">タワー・会員情報</text>
+<rect x="250" y="86" width="93" height="24" rx="4" fill="var(--high)"/>
+<text x="351" y="103" font-size="12.5" font-weight="700" fill="currentColor">約278万</text>
+<text x="0" y="141" font-size="12.5" fill="currentColor">タワー・配送先情報</text>
+<rect x="250" y="124" width="26" height="24" rx="4" fill="var(--high)"/>
+<text x="284" y="141" font-size="12.5" font-weight="700" fill="currentColor">約77.7万</text>
+<text x="0" y="179" font-size="12.5" fill="currentColor">インフキュリオン・Payどん</text>
+<rect x="250" y="162" width="8" height="24" rx="4" fill="var(--pirago-blue)"/>
+<text x="266" y="179" font-size="12.5" font-weight="700" fill="currentColor">251,172件</text>
+<text x="0" y="225" font-size="11.5" class="mut">線形スケール。区分間で重複の可能性あり。「件数」は一意の人数とは限りません。</text>
+</svg>
+<figcaption>データ区分ごとの最大規模（各社公表・報道ベース）。</figcaption>
+</figure>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>インシデント</th><th>件数（最大）</th><th>流出の恐れがある情報</th><th>対象外・サービス状況</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>タワーレコード オンライン</strong><br><span class="badge crit">11/21 公表</span></td>
+      <td>約1,100万件（現会員＋直近3年以内の退会者）：ログイン 10,214,652・会員 2,784,514・配送先 776,953</td>
+      <td>メールアドレス、会員ID、<strong>パスワード（ハッシュ値）</strong>、氏名、フリガナ、ニックネーム、生年月日、性別、郵便番号、住所、宛名、電話番号</td>
+      <td>クレジットカード情報は含まれない（同社）。通販は一時停止、マーケットプレイスは再開未定、予約商品は11/23から順次発送。</td>
+    </tr>
+    <tr>
+      <td><strong>ピーチ・アビエーション</strong><br><span class="badge crit">11/20 公表</span></td>
+      <td>8,997,106件</td>
+      <td>氏名、生年月日、性別、住所、電話番号、メールアドレス、旅程</td>
+      <td>クレジットカード・パスポート情報は含まれない。パスワードは列挙された7項目に含まれない（推測、明言なし）。予約・運航・返金に影響なし。</td>
+    </tr>
+    <tr>
+      <td><strong>インフキュリオン Wallet Station / Payどん</strong><br><span class="badge high">11/20 公表</span></td>
+      <td>251,172件</td>
+      <td>氏名、生年月日、電話番号、性別、メール、<strong>パスワード</strong>（ハッシュ化の有無は不明）、銀行口座情報、ポイント残高・地域振興券ポイント残高、取引履歴（日時・店舗・金額）、加盟店情報</td>
+      <td>カード情報への言及なし。<strong>Payどん全サービスを 11/20 6:20 から停止</strong>、復旧時期未定。不正利用は未確認。</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<ul>
+  <li><strong>タワーの件数に関する注意：</strong>3区分の合計（約13.78M）は公式お知らせ見出しの「約1,100万件」を上回ります（各行の合計＝13,776,119）。お知らせに差の説明はなく、見出しは重複排除した顧客数、各行はデータ種別ごとの件数という可能性があります（推測）。公式お知らせ（11/22 18:30 更新）に基づきます。</li>
+  <li><strong>ピーチの件数に関する注意：</strong>8,997,106件はピーチ分です。Cuenote FC 全体の影響はこれより大きく（2章参照）、ピーチ分がその一部かは未確定です。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="root-cause">2. 原因・メカニズム</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 330" role="img" aria-label="3件のインシデントの原因">
+<defs><marker id="jb-ah1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs>
+<text x="10" y="18" font-size="12" font-weight="700" fill="currentColor">A. メール配信のサプライチェーン：ユミルリンク Cuenote FC</text>
+<rect x="10" y="28" width="200" height="56" rx="8" class="box"/>
+<text x="110" y="52" text-anchor="middle" font-size="11.5" fill="currentColor">プログラムの脆弱性</text>
+<text x="110" y="68" text-anchor="middle" font-size="10.5" class="mut">→ 担当者の認証情報を取得</text>
+<rect x="270" y="28" width="200" height="56" rx="8" class="box"/>
+<text x="370" y="52" text-anchor="middle" font-size="11.5" fill="currentColor">横展開／CSV出力</text>
+<text x="370" y="68" text-anchor="middle" font-size="10.5" class="mut">マルウェア／セッション窃取</text>
+<rect x="530" y="28" width="200" height="56" rx="8" fill="none" stroke="var(--crit)" stroke-width="1.5"/>
+<text x="630" y="52" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--crit)">顧客メール配信先リスト</text>
+<text x="630" y="68" text-anchor="middle" font-size="10.5" class="mut">ピーチ約900万 · NTT PC 6.1万 他</text>
+<line x1="210" y1="56" x2="268" y2="56" stroke="var(--text-muted)" marker-end="url(#jb-ah1)"/>
+<line x1="470" y1="56" x2="528" y2="56" stroke="var(--text-muted)" marker-end="url(#jb-ah1)"/>
+<text x="10" y="120" font-size="12" font-weight="700" fill="currentColor">B. タワーレコード オンライン（原因は未公表）</text>
+<rect x="10" y="130" width="200" height="56" rx="8" class="box"/>
+<text x="110" y="154" text-anchor="middle" font-size="11.5" fill="currentColor">外部からの不正アクセス</text>
+<text x="110" y="170" text-anchor="middle" font-size="10.5" class="mut">11/19 17:10 ごろ確認</text>
+<rect x="270" y="130" width="200" height="56" rx="8" class="box"/>
+<text x="370" y="154" text-anchor="middle" font-size="11.5" fill="currentColor">通販を緊急停止</text>
+<text x="370" y="170" text-anchor="middle" font-size="10.5" class="mut">侵入経路・脆弱性：未公表</text>
+<rect x="530" y="130" width="200" height="56" rx="8" fill="none" stroke="var(--crit)" stroke-width="1.5"/>
+<text x="630" y="154" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--crit)">ログイン・会員・配送先</text>
+<text x="630" y="170" text-anchor="middle" font-size="10.5" class="mut">パスワードのハッシュ値を含む</text>
+<line x1="210" y1="158" x2="268" y2="158" stroke="var(--text-muted)" marker-end="url(#jb-ah1)"/>
+<line x1="470" y1="158" x2="528" y2="158" stroke="var(--text-muted)" marker-end="url(#jb-ah1)"/>
+<text x="10" y="222" font-size="12" font-weight="700" fill="currentColor">C. インフキュリオン Wallet Station（原因は未公表）</text>
+<rect x="10" y="232" width="200" height="56" rx="8" class="box"/>
+<text x="110" y="256" text-anchor="middle" font-size="11.5" fill="currentColor">第三者による不正アクセス</text>
+<text x="110" y="272" text-anchor="middle" font-size="10.5" class="mut">11/19 確認</text>
+<rect x="270" y="232" width="200" height="56" rx="8" class="box"/>
+<text x="370" y="256" text-anchor="middle" font-size="11.5" fill="currentColor">緊急パッチ＋経路遮断</text>
+<text x="370" y="272" text-anchor="middle" font-size="10.5" class="mut">影響先への提供を停止</text>
+<rect x="530" y="232" width="200" height="56" rx="8" fill="none" stroke="var(--high)" stroke-width="1.5"/>
+<text x="630" y="256" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--high)">Payどん 全面停止</text>
+<text x="630" y="272" text-anchor="middle" font-size="10.5" class="mut">251,172件が流出の恐れ</text>
+<line x1="210" y1="260" x2="268" y2="260" stroke="var(--text-muted)" marker-end="url(#jb-ah1)"/>
+<line x1="470" y1="260" x2="528" y2="260" stroke="var(--text-muted)" marker-end="url(#jb-ah1)"/>
+<text x="10" y="318" font-size="11.5" class="mut">3件が直接関連する証拠はなし。公表時期と外部事業者リスクが共通するのみ。</text>
+</svg>
+<figcaption>3つの独立した事案。技術的メカニズムが事業者から説明されているのは A（ユミルリンク）のみ。</figcaption>
+</figure>
+
+<h3>2.1 ピーチ・アビエーション ← ユミルリンク Cuenote FC（事業者が説明）</h3>
+<ul>
+  <li><strong>ユミルリンク第3報（11/11、ScanNetSecurity 経由）：</strong>プログラムの脆弱性を突いてサポート／QA担当者の認証情報を取得し、他システムで試行。<em>手法1：</em>サーバーにマルウェアを設置し、基幹DBからデータを抽出、管理ネットワーク内で横展開。<em>手法2：</em>ログイン中ユーザーのセッションを窃取し、標準のCSV出力機能を利用。同社は<strong>ランサムウェアではない</strong>と説明、侵入経路・全容は調査中。</li>
+  <li><strong>Cuenote FC 全体：</strong>10/26 の第2報では最大 51,628,280 件・49システム（81システムでアクセス痕跡）、第3報で Cuenote FC 47,864,147 件、Cuenote BASE 190 件（社名・氏名・電話・メール）に修正。他のユミルリンク顧客も影響（例：NTTPCコミュニケーションズ 60,929件、11/2 公表）。</li>
+  <li><strong>日付の食い違い：</strong>ユミルリンクのアクセス検知は 10/16、ピーチの公表では委託先への侵入は 10/18。ピーチ公表（JP）は 10/18 のみ記載し、影響範囲の確定は 11/6 とあります。10/16 は ScanNetSecurity の要約にのみ見られ、差の理由は未解明です。</li>
+  <li><strong>別件との区別：</strong>2026年10月7日の予約メール委託先 IDCF Cloud へのランサムウェア被害（ピーチ 10/9 公表、当時は流出未確認）は別の事案です。</li>
+</ul>
+
+<h3>2.2 タワーレコード オンライン</h3>
+<ul>
+  <li>公表は「外部からの不正アクセス」のみ。<strong>侵入経路・悪用された脆弱性は未公表</strong>。ログイン情報にハッシュ値が含まれることから、アカウントDBに到達されたとみられます。</li>
+</ul>
+
+<h3>2.3 インフキュリオン Wallet Station / Payどん</h3>
+<ul>
+  <li>インフキュリオンは 11/19 に第三者の不正アクセスを確認。Payどんは「緊急の脆弱性パッチを適用し、アクセス経路を遮断」と説明しますが、<strong>脆弱性や侵入点は非公表</strong>です。</li>
+  <li>Payどんは銀行登録の電話番号へのSMS認証を採用しており、流出データだけでは直ちに取引できないとしています（<em>Payどんの説明、独立検証なし</em>）。</li>
+  <li>Wallet Station は複数企業に提供されており、「影響のある」提供先への提供を一時停止（社名・件数は非公表）。AEON Pay・HAPPAY への影響を伝える報道・ブログもありますが、<strong>公式の裏付けなし、未検証</strong>です。</li>
+  <li>2026年10月28日にはPayどんのメール配信委託先で別件の事案があり、また 11/18 の Notion AI／Fireworks AI 関連の開示は同社システムへの侵害ではないと説明されています。いずれも別件です。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="timeline">3. 経緯・復旧</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 190" role="img" aria-label="10/16〜11/23 のタイムライン">
+<line x1="30" y1="95" x2="715" y2="95" stroke="var(--line)" stroke-width="2"/>
+<line x1="100" y1="95" x2="100" y2="62" stroke="var(--pirago-blue)"/><circle cx="100" cy="95" r="5" fill="var(--pirago-blue)"/>
+<text x="100" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">10/16〜19</text><text x="100" y="52" text-anchor="middle" font-size="10.5" class="mut">ユミルリンク 検知・公表</text>
+<line x1="230" y1="95" x2="230" y2="130" stroke="var(--crit)"/><circle cx="230" cy="95" r="5" fill="var(--crit)"/>
+<text x="230" y="148" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">11/19</text><text x="230" y="162" text-anchor="middle" font-size="10.5" class="mut">タワー17:10頃・インフキュリオン</text><text x="230" y="175" text-anchor="middle" font-size="10.5" class="mut">不正アクセスを確認</text>
+<line x1="380" y1="95" x2="380" y2="62" stroke="var(--crit)"/><circle cx="380" cy="95" r="5" fill="var(--crit)"/>
+<text x="380" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">11/20</text><text x="380" y="44" text-anchor="middle" font-size="10.5" class="mut">ピーチ・インフキュリオン公表</text><text x="380" y="57" text-anchor="middle" font-size="10.5" class="mut">Payどん 6:20 停止</text>
+<line x1="520" y1="95" x2="520" y2="130" stroke="var(--crit)"/><circle cx="520" cy="95" r="5" fill="var(--crit)"/>
+<text x="520" y="148" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">11/21</text><text x="520" y="162" text-anchor="middle" font-size="10.5" class="mut">タワー 公表</text>
+<line x1="615" y1="95" x2="615" y2="62" stroke="var(--pirago-blue)"/><circle cx="615" cy="95" r="5" fill="var(--pirago-blue)"/>
+<text x="615" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">11/22</text><text x="615" y="52" text-anchor="middle" font-size="10.5" class="mut">タワー 続報</text>
+<line x1="700" y1="95" x2="700" y2="130" stroke="var(--pirago-blue)"/><circle cx="700" cy="95" r="5" fill="var(--pirago-blue)"/>
+<text x="730" y="148" text-anchor="end" font-size="12" font-weight="700" fill="currentColor">11/23</text><text x="730" y="162" text-anchor="end" font-size="10.5" class="mut">予約商品の発送開始</text>
+</svg>
+<figcaption>10月から 11/19 までの区間は縮尺なし。</figcaption>
+</figure>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>日時</th><th>主な出来事</th><th>信頼度</th></tr></thead>
+  <tbody>
+    <tr><td>2026/10/16</td><td>ユミルリンクが一部システムへの不正アクセスを検知（ScanNetSecurity によるユミルリンク報告の要約）。</td><td><span class="badge med">専門メディア</span></td></tr>
+    <tr><td>2026/10/18</td><td>ピーチの公表における委託先への侵入日（ユミルリンクの 10/16 とずれ）。</td><td><span class="badge high">ピーチ公表</span></td></tr>
+    <tr><td>2026/10/19</td><td>ユミルリンクが初報（当初推定 約900万件）、ピーチへ連絡。</td><td><span class="badge med">専門メディア</span></td></tr>
+    <tr><td>2026/10/26</td><td>ユミルリンク第2報：最大 51,628,280 件・49システム（81システムでアクセス痕跡）。</td><td><span class="badge med">Impress Watch</span></td></tr>
+    <tr><td>2026/11/06</td><td>ピーチが影響範囲を確認。</td><td><span class="badge med">ピーチ公表（二次情報経由）</span></td></tr>
+    <tr><td>2026/11/11</td><td>ユミルリンク第3報：Cuenote FC 47,864,147 件、Cuenote BASE 190 件、2つの攻撃手法を説明。</td><td><span class="badge med">ScanNetSecurity</span></td></tr>
+    <tr><td>2026/11/19</td><td><strong>タワー：</strong>17:10 ごろ不正アクセスを確認、通販を緊急停止。<strong>インフキュリオン：</strong>Wallet Station への第三者の不正アクセスを確認。</td><td><span class="badge low">各社・複数報道</span></td></tr>
+    <tr><td>2026/11/20</td><td><strong>ピーチ</strong>が 8,997,106 件を公表、PPC へ報告、対象者へメール開始。<strong>インフキュリオン／Payどん</strong>が公表（第1報 6:00 時点）、<strong>6:20 に Payどん全サービスを停止</strong>。鹿児島銀行・南日本銀行ほか提携行も告知。</td><td><span class="badge low">公式発表</span></td></tr>
+    <tr><td>2026/11/21</td><td><strong>タワーレコード</strong>が初報（調査中）：約1,100万件。</td><td><span class="badge high">タワー公式お知らせ</span></td></tr>
+    <tr><td>2026/11/22</td><td>タワー続報：通販は全体確認のため停止継続、予約商品は 11/23 から順次発送、マーケットプレイスは再開未定。「停止中はパスワード変更不可」は公式お知らせに記載がなく、検索要約のみで<em>未検証</em>。</td><td><span class="badge med">Business+IT／Bloomberg</span></td></tr>
+    <tr><td>2026/11/23</td><td>確認時点：Payどんの復旧、タワー通販の再開に関する公式続報なし。3件とも不正利用は未確認。</td><td><span class="badge med">PiraGo 確認</span></td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section class="an-sec">
+<h2 id="impact">4. 影響・二次リスク</h2>
+<ul>
+  <li><strong>なりすまし（フィッシング／ビッシング）：</strong>氏名・電話・メール・生年月日・旅程（ピーチ）が揃うと、航空会社、タワーレコード、Payどん／銀行、インフキュリオンを装った精巧な詐欺が可能。3社とも注意喚起しています。</li>
+  <li><strong>パスワードリスト型攻撃（タワー、Payどん）：</strong>ハッシュ（タワー）やパスワード（Payどん）が解析・流用されると、使い回し先が狙われます。</li>
+  <li><strong>サービス停止：</strong>タワー通販とPayどんが停止し、Payどんでの地域決済・ポイント利用は復旧まで不可。</li>
+  <li><strong>サプライチェーンリスク：</strong>Cuenote FC は多数の組織が利用し、1社の侵害で複数ブランド・数千万件に波及。Wallet Station も同様です。</li>
+  <li><strong>法令対応：</strong>ピーチは個人情報保護委員会（PPC）へ報告済み。タワー、インフキュリオンへの行政対応は 11/23 時点で確認できていません。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="recommendations">5. PiraGo への推奨事項</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 130" role="img" aria-label="4つの対策の柱">
+<rect x="10" y="10" width="165" height="100" rx="8" class="box"/>
+<text x="92" y="38" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">1. 委託先の棚卸し</text>
+<text x="92" y="60" text-anchor="middle" font-size="10.5" class="mut">メール配信・決済・</text><text x="92" y="74" text-anchor="middle" font-size="10.5" class="mut">ウォレット・SMS</text>
+<rect x="190" y="10" width="165" height="100" rx="8" class="box"/>
+<text x="272" y="38" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">2. データ最小化</text>
+<text x="272" y="60" text-anchor="middle" font-size="10.5" class="mut">必要項目のみ連携、</text><text x="272" y="74" text-anchor="middle" font-size="10.5" class="mut">古いリストを削除</text>
+<rect x="370" y="10" width="165" height="100" rx="8" class="box"/>
+<text x="452" y="38" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">3. アカウント保護</text>
+<text x="452" y="60" text-anchor="middle" font-size="10.5" class="mut">強いハッシュ、MFA/パスキー、</text><text x="452" y="74" text-anchor="middle" font-size="10.5" class="mut">漏えいPW検査</text>
+<rect x="550" y="10" width="180" height="100" rx="8" class="box"/>
+<text x="640" y="38" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">4. 対応・通知</text>
+<text x="640" y="60" text-anchor="middle" font-size="10.5" class="mut">緊急停止スイッチ、</text><text x="640" y="74" text-anchor="middle" font-size="10.5" class="mut">委託先への報告手順</text>
+</svg>
+<figcaption>3件のインシデントから得られる4本柱。</figcaption>
+</figure>
+<ol>
+  <li><strong>委託先の棚卸しと評価（特にメール配信・ウォレット／決済）：</strong>
+    <ul>
+      <li>PiraGo／顧客の顧客データを保持するベンダーを一覧化し、ユミルリンク Cuenote FC、Wallet Station 等の利用有無を確認、該当時はベンダーへ影響確認を行う。</li>
+      <li>契約に、事故報告の期限、監査権、利用終了後のデータ削除、データ範囲の最小化を明記する。</li>
+    </ul>
+  </li>
+  <li><strong>外部へ渡すデータの最小化と削除：</strong>
+    <ul>
+      <li>配信リストはメール＋匿名IDに限定し、生年月日・住所・旅程などは必須でなければ連携しない。</li>
+      <li>過去キャンペーンのリストや退会者データを定期的に削除・分離する。</li>
+    </ul>
+  </li>
+  <li><strong>ユーザーアカウント保護：</strong>
+    <ul>
+      <li>Argon2id／bcrypt＋ソルトでハッシュ化し、復元可能な形で保存しない。</li>
+      <li>MFA／パスキー、<code>/login</code> のレート制限・ボット対策、漏えいパスワード検査（HIBP k-Anonymity）、一括パスワード再設定の準備。</li>
+      <li>金融操作では、独立した第2要素（PayどんのSMS認証のような）がデータ流出時の重要な歯止めになる。</li>
+    </ul>
+  </li>
+  <li><strong>インシデント対応：</strong>
+    <ul>
+      <li>緊急停止スイッチと封じ込めSLAを定める（タワー・Payどんは当日停止、MUJIの8日間未封じ込めと対比）。</li>
+      <li>顧客通知テンプレート、問い合わせ窓口、フィッシング見分け方の案内を事前準備する。</li>
+    </ul>
+  </li>
+  <li><strong>利用者・社内への周知：</strong>
+    <ul>
+      <li>タワーレコード、ピーチ、Payどん／銀行、インフキュリオン、ユミルリンクを名乗る予期しないメール・SMS・電話のリンクや添付を開かず、ID・パスワード・認証コード・口座情報を入力しない。</li>
+      <li>タワー／Payどんのパスワード（変更可能なら）と、同じパスワードを使う他サービスを変更する（一般的な推奨であり、公式に確認された指示ではない）。</li>
+      <li>銀行明細・取引の不審な動きを確認。Payどん窓口：デジタルサポートプラザ（鹿児島銀行）0120-947-230、平日 9:00〜17:00。</li>
+    </ul>
+  </li>
+</ol>
+</section>
+
+<section class="an-sec">
+<h2 id="sources">6. 参考情報</h2>
+<ul>
+  <li>タワーレコード オンライン：
+    <ul>
+      <li><a href="https://tower.jp/" target="_blank" rel="noopener noreferrer">tower.jp</a> — 公式お知らせ「不正アクセスおよび個人情報流出に関するお詫びとお知らせ」（11/22 18:30 更新）</li>
+      <li><a href="https://incidents.seory.co.jp/incidents/20261121-25a13c/" target="_blank" rel="noopener noreferrer">Seory Incidents — 2026-11-21 の記録</a></li>
+      <li><a href="https://cyber.spool.co.jp/cyber_news/20261123-tower-records-data-breach/" target="_blank" rel="noopener noreferrer">Cyber Spool — 11/23 まとめ</a></li>
+      <li><a href="https://news.yahoo.co.jp/articles/2c435a45fad1b2e1a1a2b51fa3211f2e0b5f3144" target="_blank" rel="noopener noreferrer">Business+IT（Yahoo!ニュース）— 11/22 続報</a></li>
+      <li><a href="https://www.bloomberg.com/news/articles/2026-11-22/tower-records-becomes-latest-japan-retailer-hit-by-data-breach" target="_blank" rel="noopener noreferrer">Bloomberg — Tower Records becomes latest Japan retailer hit by data breach</a></li>
+      <li><a href="https://rocket-boys.co.jp/security-measures-lab/tower_records_online_1100man_password_hash_breach_2026/" target="_blank" rel="noopener noreferrer">Rocket Boys — 数値の詳細</a></li>
+    </ul>
+  </li>
+  <li>ピーチ・アビエーション／ユミルリンク：
+    <ul>
+      <li><a href="https://www.flypeach.com/application/files/3617/9515/4415/20261120_INFO_JP.pdf" target="_blank" rel="noopener noreferrer">ピーチ — 11/20 お知らせ（JP, PDF）</a> · <a href="https://www.flypeach.com/application/files/5417/9515/4415/20261120_INFO_EN.pdf" target="_blank" rel="noopener noreferrer">EN (PDF)</a></li>
+      <li><a href="https://www.aviationwire.jp/archives/354926" target="_blank" rel="noopener noreferrer">AviationWire</a></li>
+      <li><a href="https://scan.netsecurity.ne.jp/article/2026/11/20/56860.html" target="_blank" rel="noopener noreferrer">ScanNetSecurity — ユミルリンク報告と攻撃手法</a></li>
+      <li><a href="https://internet.watch.impress.co.jp/docs/news/2151309.html" target="_blank" rel="noopener noreferrer">Impress Watch — ユミルリンク第2報</a></li>
+      <li><a href="https://www.flypeach.com/news/20261009" target="_blank" rel="noopener noreferrer">ピーチ — 10/9 のお知らせ（IDCF Cloud、別件）</a></li>
+    </ul>
+  </li>
+  <li>インフキュリオン Wallet Station / Payどん：
+    <ul>
+      <li><a href="https://infcurion.com/news/news-20261120_001/" target="_blank" rel="noopener noreferrer">インフキュリオン — 11/20 のお知らせ</a></li>
+      <li><a href="https://paydon.jp/2026/11/20/newsrelease20261120" target="_blank" rel="noopener noreferrer">Payどん — 11/20 ニュースリリース（251,172件）</a></li>
+      <li><a href="https://www.kagin.co.jp/important/20261120_094.html" target="_blank" rel="noopener noreferrer">鹿児島銀行</a> · <a href="https://nangin.jp/information/important/post_1291.html" target="_blank" rel="noopener noreferrer">南日本銀行</a></li>
+      <li><a href="https://innovatopia.jp/cyber-security/cyber-security-news/121476/" target="_blank" rel="noopener noreferrer">Innovatopia</a> · <a href="https://act1.co.jp/2026-11-20-06/" target="_blank" rel="noopener noreferrer">Act1</a>（二次情報）</li>
+      <li>未検証：AEON Pay／HAPPAY への影響報道（<a href="https://www.inatei.com/entry/aeon-pay-suspended-infcurion-unauthorized-access" target="_blank" rel="noopener noreferrer">ブログ</a>）— 公式の裏付けなし。</li>
+    </ul>
+  </li>
+</ul>
+</section>

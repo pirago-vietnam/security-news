@@ -47,9 +47,7 @@ When creating or modifying security reports, strictly follow `monthly/RULES.md`:
 
 ## Fetching Public Sources
 
-If a fetch of a public page returns HTTP `403 Forbidden` or requires browser rendering, use an available Playwright or Chrome DevTools tool to open the URL and extract the rendered content. Discover and activate the browser tool if available; if neither is available, use another accessible public source.
-
-Verify that the output contains the expected content, not an error, login, or challenge page. If access is still blocked or requires authentication, use another public source rather than trying to bypass the restriction.
+Do NOT use Playwright or Chrome DevTools (browser automation) to **search** — use WebSearch only. They ARE allowed to **fetch** a specific public URL when a normal fetch (WebFetch) fails for any reason (HTTP `403`/`503`, timeout, empty or truncated content, error) or requires browser rendering: discover and activate the browser tool (always in **headless** mode, never a visible browser window), then verify the output contains the expected content, not an error, login, or challenge page. If access is still blocked or requires authentication, use another public source (do not bypass the restriction) and mark the item "chưa xác minh trực tiếp".
 
 ## Deployment & Common Commands
 
