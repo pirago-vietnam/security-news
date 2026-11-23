@@ -149,7 +149,11 @@ Tham khảo chuẩn: `featured/microsoft-365-outage-2026-11/incident_report.html
 - **Màu sắc tương thích Dark/Light mode:**
   - Dùng `fill="currentColor"` cho chữ chính, `class="mut"` cho chữ phụ, `class="box"` cho khung nền.
   - Dùng `var(--crit)`, `var(--high)`, `var(--med)`, `var(--low)`, `var(--pirago-blue)`, `var(--line)`, `var(--text-muted)` cho stroke/accent.
-- **Kiểm tra hiển thị:** Sau khi viết xong, chụp ảnh các khối `<figure>` bằng headless Chrome (cả light và dark mode nếu cần) để đảm bảo chữ không bị tràn khung hoặc đè lên nhau.
+- **Tránh tràn khung & đè chữ trong hộp:**
+  - Chừa lề trong tối thiểu `8–10px` mỗi bên của `<rect>` (đặc biệt ở các hộp hẹp `width="124–126"` trong cây quyết định hoặc `width="220"` trong sơ đồ cơ chế); không nhồi tên hàm dài hoặc nhiều nhánh phiên bản trên một dòng.
+  - Khi nhãn dài hơn khung: ưu tiên **tách thành 2 dòng** (`<text>` cách nhau `15–16px` theo trục `y`), rút gọn ký hiệu (ví dụ `Kernel ≥ 5.5?` / `hoặc ≥ 5.4.208`), hoặc giảm `font-size` xuống `9.5–10.5px` cho dòng phụ.
+  - Nhãn nhánh (`Có` / `Không`, `はい` / `いいえ`) đặt lệch khỏi trục mũi tên tối thiểu `12–16px` để không chạm đầu mũi tên hoặc viền hộp.
+- **Kiểm tra hiển thị:** Sau khi viết xong, build Jekyll (`bundle exec jekyll build`) và chụp ảnh các khối `<figure>` qua HTTP cục bộ từ `_site` bằng headless Chrome (để nạp đủ `pirago-theme.css` và font thực tế, cả light và dark mode nếu cần), rà kỹ từng sơ đồ ở cả bản `vi` và `ja` để đảm bảo chữ không tràn khung hoặc đè lên nhau.
 
 ---
 

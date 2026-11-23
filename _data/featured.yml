@@ -3,6 +3,32 @@
 # Ghi chú `# disclosed: YYYY-MM-DD` ngay trên mỗi entry để đối chiếu cho các lần cập nhật sau.
 # `path` tính từ gốc ngôn ngữ (vi: "/", ja: "/ja/").
 
+# disclosed: 2026-11-20
+- id: linux-cve-2026-99676
+  category: vulnerability
+  month: "2026-11"
+  path: "featured/vulnerabilities/linux-cve-2026-99676/analysis/"
+  icon: "🐧"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL"}
+  nav: {vi: 'Linux Net CVE-2026-99676', ja: 'Linux Net CVE-2026-99676'}
+  title: {vi: 'Linux Kernel Net CVE-2026-99676 — Use-After-Free trong lockless socket lookup trên ARM64/POWER (CVSS 9.8 / 5.9)', ja: 'Linux Kernel Net CVE-2026-99676 — ARM64/POWER 環境のロックレスソケット検索における Use-After-Free（CVSS 9.8 / 5.9）'}
+  date: {vi: 'Cập nhật đến 2026-11-23 · CVSS 9.8 (CNA) / 5.9 (RH) · Ảnh hưởng Linux ≥ 5.5 / 5.4.208+ (ARM64/POWER) · Đã vá ở 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2', ja: '2026年11月23日 時点 · CVSS 9.8 (CNA) / 5.9 (RH) · Linux 5.5 以降 / 5.4.208+（ARM64/POWER）が対象 · 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2 で修正済み'}
+  link: {vi: 'Xem phân tích & hướng dẫn →', ja: '分析・対策ガイドを見る →'}
+  items:
+    - sev: crit
+      label: {vi: 'Nguy cơ', ja: 'リスク'}
+      text: {vi: 'Lỗi thứ tự ghi bộ nhớ refcount (weak memory ordering) trong lockless socket lookup (<code>__inet_lookup_skb</code> / <code>refcount_inc_not_zero</code>) trên kiến trúc ARM64/POWER: CPU xử lý gói tin có thể đọc thấy trạng thái chưa đồng bộ sau khi socket đã giải phóng → Use-After-Free (UAF) ở nhân Linux, gây kernel panic/DoS hoặc nguy cơ thực thi mã.', ja: 'ARM64/POWER 環境のロックレスソケット検索（<code>__inet_lookup_skb</code> / <code>refcount_inc_not_zero</code>）における refcount メモリ順序（weak memory ordering）の不具合。ソケット解放後にパケット処理側で不整合状態を参照し、カーネル空間での Use-After-Free（UAF）・パニック/DoS やコード実行の恐れ。'}
+    - sev: high
+      label: {vi: 'Phạm vi', ja: '影響範囲'}
+      text: {vi: 'Máy chủ Linux chạy trên kiến trúc weak-memory-ordering (ARM64/Graviton, POWER) với kernel ≥ 5.5 hoặc ≥ 5.4.208 mở cổng TCP/UDP nhận gói tin đồng thời. x86-64 (TSO) không bị race này. Debian đã phát hành DSA-6652-1; Red Hat (BZ #2577739), Ubuntu và Amazon Linux đang theo dõi/chờ vá.', ja: 'weak-memory-ordering アーキテクチャ（ARM64/Graviton、POWER）上で稼働する Linux カーネル 5.5 以降または 5.4.208+ の TCP/UDP 受信サーバーが対象。x86-64（TSO）は非該当。Debian は DSA-6652-1 を公開済み、Red Hat（BZ #2577739）・Ubuntu・Amazon Linux は対応確認中。'}
+    - sev: med
+      label: {vi: 'Lưu ý đánh giá', ja: '評価上の注意'}
+      text: {vi: 'Linux kernel CNA chấm CVSS 9.8 (Critical), trong khi Red Hat BZ #2577739 chấm 5.9 (Medium, AC:H) do đòi hỏi race timing chặt trên nhiều CPU; ngoài hạn chế lưu lượng mạng không tin cậy chưa có mitigation cấu hình khác.', ja: 'Linux カーネル CNA は CVSS 9.8（Critical）と評価する一方、Red Hat BZ #2577739 はマルチCPU間の厳密な競合タイミングを要するため 5.9（Medium、AC:H）と評価。不要な外部通信の制限以外の設定緩和策はなし。'}
+    - sev: low
+      label: {vi: 'Triệt để', ja: '恒久対策'}
+      text: {vi: 'Cập nhật kernel máy chủ ARM64/POWER lên bản đã vá upstream 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2 (hoặc Debian DSA-6652-1) và reboot. Chưa có PoC công khai và chưa có trong CISA KEV (2026-11-23).', ja: 'ARM64/POWER サーバーのカーネルを upstream 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2（または Debian DSA-6652-1）へ更新し再起動。公開 PoC なし、CISA KEV 未掲載（2026-11-23 確認）。'}
+
 # disclosed: 2026-11-19
 - id: linux-cve-2026-99362
   category: vulnerability
