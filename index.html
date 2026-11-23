@@ -3,7 +3,7 @@ layout: default
 title: "Báo cáo an ninh mạng & Lỗ hổng kỹ thuật"
 description: "Tổng hợp báo cáo sự cố an ninh mạng và lỗ hổng định kỳ theo tháng: AWS, GCP · NodeJS, PHP, Java, .NET · Next.js, Nuxt, Quasar, Laravel, Spring Boot - PiraGo"
 ---
-{% assign lang = page.lang | default: "vi" %}{% assign t = site.data.i18n[lang] %}{% if lang == 'ja' %}{% assign home_url = '/ja/' %}{% else %}{% assign home_url = '/' %}{% endif %}
+{% assign lang = page.lang | default: "vi" %}{% assign t = site.data.i18n[lang] %}{% if lang == 'ja' %}{% assign home_url = '/ja/' %}{% else %}{% assign home_url = '/' %}{% endif %}{% assign home = home_url | relative_url %}
 
 <div class="hero-section" style="margin-bottom: 32px;">
   <h1>Báo cáo bảo mật</h1>
@@ -124,7 +124,7 @@ description: "Tổng hợp báo cáo sự cố an ninh mạng và lỗ hổng đ
     <p class="date">{{ d.card.date[lang] }}</p>
     <ul>
       {%- for it in d.card.items %}
-      <li><span class="badge {{ it.sev }}">{{ it.label }}</span> {{ it.text[lang] }}</li>
+      <li><span class="badge {{ it.sev }}">{{ it.label }}</span> {{ it.text[lang] | replace: '@home@', home }}</li>
       {%- endfor %}
     </ul>
     <a href="{{ home_url | append: 'monthly/' | append: m[0] | append: '/' | relative_url }}" class="card-link-btn">{{ t.view_full }}</a>
