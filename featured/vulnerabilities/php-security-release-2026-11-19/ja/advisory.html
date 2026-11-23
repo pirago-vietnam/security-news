@@ -36,16 +36,27 @@ redirect_from:
 </div>
 
 <blockquote class="callout">
-  <p><strong>対応：</strong>PHP を <strong>8.2.36 / 8.3.37 / 8.4.28 / 8.5.13</strong>（または 8.6.0）へ更新し、PHP-FPM／Apache の再起動とイメージ再ビルドを実施してください。<strong>8.1 以前は修正版なし</strong>。すぐに更新できない場合は <code>session.upload_progress.enabled</code> を無効化（CVE-2026-115560 のみの暫定策で、他の脆弱性は防げません）。実環境での悪用を報告した情報源は確認できていません。</p>
+  <p><strong>先にお読みください：</strong>PHP を <strong>8.2.36 / 8.3.37 / 8.4.28 / 8.5.13</strong>（または 8.6.0）へ更新し、PHP-FPM／Apache の再起動とイメージ再ビルドを実施してください。<strong>8.1 以前は修正版なし</strong>。すぐに更新できない場合は <code>session.upload_progress.enabled</code> を無効化（CVE-2026-115560 のみの暫定策で、他の脆弱性は防げません）。本ページには攻撃コードは含まれません。実環境での悪用を報告した情報源は確認できていません。</p>
 </blockquote>
 
 <nav class="an-nav" aria-label="nav">
+  <a href="#tldr">TL;DR</a>
   <a href="#summary">概要</a>
   <a href="#cve-list">17 件の CVE</a>
   <a href="#check">確認と暫定策</a>
   <a href="#remediation">対応事項</a>
   <a href="#sources">参考情報</a>
 </nav>
+
+<section class="an-sec">
+<h2 id="tldr">TL;DR（かんたん解説）</h2>
+<ul>
+  <li><strong>何が起きた？</strong> 2026年11月19日、PHP 開発チームが <strong>17 件の脆弱性</strong>を一度に修正するセキュリティ更新を公開しました。うち 7 件は最も深刻なレベル（CVSS 9.2）です。</li>
+  <li><strong>どれくらい危険？</strong> 悪用されると、Web サーバー上でメモリが破壊されたり、第三者にプログラムを実行されたりする恐れがあります。ただし深刻な脆弱性の多くは、デフォルトではない設定や珍しい構成が前提です。現時点で実際の攻撃は確認されていません。</li>
+  <li><strong>自分たちのプロジェクトは影響を受ける？</strong> PHP を使うすべてのプロジェクト（Laravel、WordPress など）が確認対象です。PHP 8.1 以前は<strong>修正版がない</strong>ため、バージョンの引き上げが必要です。</li>
+  <li><strong>PM・管理者がすべきこと</strong> PHP のバージョン棚卸しをエンジニアに依頼し、8.2.36 / 8.3.37 / 8.4.28 / 8.5.13 への更新と再起動を直近の計画に組み込んでください。8.1 以前を使うプロジェクトは大きめの移行計画が必要です。</li>
+</ul>
+</section>
 
 <section class="an-sec">
 <h2 id="summary">1. リリース概要</h2>

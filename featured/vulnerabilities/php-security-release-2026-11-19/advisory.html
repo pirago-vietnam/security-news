@@ -34,16 +34,27 @@ redirect_from:
 </div>
 
 <blockquote class="callout">
-  <p><strong>Hành động:</strong> nâng PHP lên <strong>8.2.36 / 8.3.37 / 8.4.28 / 8.5.13</strong> (hoặc 8.6.0), restart PHP-FPM/Apache và rebuild image. Nhánh <strong>8.1 trở xuống không có bản vá</strong>. Chưa thể vá ngay: tắt <code>session.upload_progress.enabled</code> (chỉ giảm thiểu CVE-2026-115560, không che các lỗi khác).</p>
+  <p><strong>Đọc trước:</strong> nâng PHP lên <strong>8.2.36 / 8.3.37 / 8.4.28 / 8.5.13</strong> (hoặc 8.6.0), restart PHP-FPM/Apache và rebuild image. Nhánh <strong>8.1 trở xuống không có bản vá</strong>. Chưa thể vá ngay: tắt <code>session.upload_progress.enabled</code> (chỉ giảm thiểu CVE-2026-115560, không che các lỗi khác). Trang này không chứa mã khai thác.</p>
 </blockquote>
 
 <nav class="an-nav" aria-label="nav">
+  <a href="#tldr">TL;DR</a>
   <a href="#summary">Tóm tắt</a>
   <a href="#cve-list">17 CVE</a>
   <a href="#check">Kiểm tra &amp; tạm thời</a>
   <a href="#remediation">Việc cần làm</a>
   <a href="#sources">Nguồn</a>
 </nav>
+
+<section class="an-sec">
+<h2 id="tldr">TL;DR (dễ hiểu)</h2>
+<ul>
+  <li><strong>Chuyện gì xảy ra?</strong> Ngày 19/11/2026, nhóm PHP phát hành bản cập nhật bảo mật vá cùng lúc <strong>17 lỗ hổng</strong>, trong đó 7 lỗi ở mức nghiêm trọng nhất (CVSS 9.2).</li>
+  <li><strong>Nguy hiểm thế nào?</strong> Nếu bị khai thác, kẻ xấu có thể làm hỏng bộ nhớ hoặc chạy mã trên máy chủ web. Tuy nhiên các lỗi nghiêm trọng thường chỉ xảy ra với cấu hình không mặc định hoặc ít gặp. Hiện chưa ghi nhận tấn công thực tế.</li>
+  <li><strong>Dự án có bị ảnh hưởng không?</strong> Mọi dự án chạy PHP (Laravel, WordPress...) đều cần kiểm tra. Nhánh PHP 8.1 trở xuống <strong>không có bản vá</strong> nên phải nâng cấp nhánh.</li>
+  <li><strong>PM / Quản lý cần làm gì?</strong> Yêu cầu kỹ sư kiểm kê phiên bản PHP, đưa việc nâng lên 8.2.36 / 8.3.37 / 8.4.28 / 8.5.13 vào lịch gần nhất rồi khởi động lại dịch vụ. Dự án còn dùng PHP 8.1 trở xuống cần lên kế hoạch nâng cấp lớn.</li>
+</ul>
+</section>
 
 <section class="an-sec">
 <h2 id="summary">1. Tóm tắt phát hành</h2>

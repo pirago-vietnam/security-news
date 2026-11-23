@@ -100,6 +100,7 @@ Mọi trang trong `featured/` đều tuân theo thứ tự các khối sau:
 2. **Hộp tóm tắt hành động / Đọc trước (`blockquote.callout`)**:
    - Với **Lỗ hổng**: `<strong>Đọc trước:</strong>` nêu bản vá triệt để, workaround tạm thời (nếu có), và lưu ý *"Trang này không chứa mã khai thác."* (`本ページには攻撃コードは含まれません。`).
    - Với **Sự cố**: `<strong>TL;DR (dễ hiểu):</strong>` tóm tắt ngắn gọn chuyện gì đã xảy ra, quy mô, nguyên nhân gốc và trạng thái hiện tại. **Viết phù hợp cho cả người non-tech** (PM, quản lý, nhân sự không chuyên kỹ thuật): giải thích dễ hiểu bằng ngôn ngữ phổ thông, tránh thuật ngữ chuyên sâu chưa được diễn giải, nêu rõ tác động thực tế và việc cần làm.
+   - **Định dạng bắt buộc: gạch đầu dòng, không viết một đoạn văn dài.** Dùng 1 câu dẫn `<p><strong>TL;DR (dễ hiểu):</strong> …</p>` rồi `<ul>` gồm 3–5 `<li>`, mỗi ý ngắn 1–2 câu, mở đầu bằng nhãn in đậm: *Chuyện gì xảy ra / Quy mô / Nguyên nhân / Hiện trạng / Cần làm gì?* (`ja`: `何が起きた？ / 規模 / 原因 / 現状 / やること`).
 3. **KPI Grid (`.kpi-grid`)** *(dành cho trang Sự cố, hoặc lỗ hổng có nhiều số liệu nổi bật)*:
    - 3–4 `.kpi-card` hiển thị các con số chốt (thời gian gián đoạn, số tài khoản/quốc gia ảnh hưởng, thiệt hại, mã sự cố / trạng thái).
 4. **Thanh điều hướng nhanh (`nav.an-nav`)**:
@@ -118,7 +119,7 @@ Tham khảo chuẩn: `featured/nginx-cve-2026-123007/analysis.html`, `featured/l
 
 | Thứ tự | ID neo (`#`) | Tiêu đề mục | Nội dung bắt buộc |
 | :--- | :--- | :--- | :--- |
-| 0 | `#tldr` | **TL;DR (dễ hiểu)** | **Viết cho cả người non-tech** (PM, quản lý, khách hàng): giải thích công nghệ là gì bằng ngôn ngữ đời thường, nguy hiểm ra sao, dự án có bị ảnh hưởng không, PM/Quản lý cần làm gì (tránh thuật ngữ kỹ thuật nặng). |
+| 0 | `#tldr` | **TL;DR (dễ hiểu)** | **Viết cho cả người non-tech** (PM, quản lý, khách hàng): giải thích công nghệ là gì bằng ngôn ngữ đời thường, nguy hiểm ra sao, dự án có bị ảnh hưởng không, PM/Quản lý cần làm gì (tránh thuật ngữ kỹ thuật nặng). **Định dạng: `<ul>` 3–5 gạch đầu dòng ngắn, mỗi ý mở đầu bằng nhãn in đậm** (*Là gì? / Nguy hiểm thế nào? / Dự án có bị ảnh hưởng không? / PM cần làm gì?*), không viết đoạn văn dài. Tiêu đề mục cố định `TL;DR (dễ hiểu)` / `TL;DR（かんたん解説）`. |
 | 1 | `#summary` | **1. Tóm tắt kỹ thuật** | SVG chuỗi tấn công + (nếu có) SVG cơ chế lỗi/bản vá; bản chất lỗ hổng (CVE/GHSA/CWE), điều kiện khai thác, CVSS theo các nguồn, commit/phiên bản vá. |
 | 2 | `#scope` | **2. Phạm vi ảnh hưởng & Trạng thái bản vá** | SVG biểu đồ phạm vi phiên bản hoặc ma trận trạng thái theo distro/vendor + bảng chi tiết (`Thành phần`, `Phạm vi bị ảnh hưởng`, `Phiên bản đã vá`, `Ghi chú triển khai`). |
 | 3 | `#check` | **3. Kiểm tra nhanh trên máy chủ** | SVG cây quyết định nhanh + các lệnh CLI kiểm tra phiên bản/cấu hình (VM, Docker/K8s nếu áp dụng). |

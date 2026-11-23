@@ -49,7 +49,13 @@ redirect_from:
 </div>
 
 <blockquote class="callout">
-  <p><strong>TL;DR（要点）：</strong> <strong>2026年11月12日</strong>（18:26 UTC 頃 / JST 11月13日 03:26）、Microsoft 365 エコシステム（Exchange Online / Outlook、Teams、SharePoint Online、OneDrive、Microsoft 365 Copilot、Microsoft Defender XDR）で少なくとも <strong>74カ国以上</strong>に及ぶ世界規模の障害が発生し、ピーク時約24時間・完全復旧確認まで約<strong>30時間</strong>（11月14日まで）を要しました。Microsoft は<strong>サイバー攻撃や AI エージェントによるものではなく、内部運用起因の「三重障害（triple failure）」</strong>であると確定しています。2026年7月導入のパッチに潜んでいた多コア環境向け<em>ロック競合（lock contention）</em>バグが、前日からのゲートウェイ容量約14%減と Teams の自動フェイルオーバーによる負荷急増で顕在化し、最大80%超のゲートウェイが応答不能となりました。直後には障害番号（<code>EX1550543</code>）を悪用した大規模フィッシングも確認されています。</p>
+  <p><strong>TL;DR（かんたん解説）：</strong> <strong>2026年11月12日</strong>（18:26 UTC 頃 / JST 11月13日 03:26）、Microsoft 365（Outlook、Teams、SharePoint、OneDrive、Copilot、Defender XDR）で世界的な障害が発生しました。</p>
+  <ul>
+    <li><strong>規模：</strong> 少なくとも <strong>74 カ国</strong>。ピーク時約 24 時間、完全復旧の確認まで約 <strong>30 時間</strong>（11月14日）。</li>
+    <li><strong>原因：</strong> Microsoft は<strong>サイバー攻撃や AI エージェントではなく内部運用起因</strong>と確定。2026年7月のパッチに潜んでいたバグが、ゲートウェイ容量の約14%減と Teams の自動フェイルオーバーによる負荷増で顕在化しました。</li>
+    <li><strong>関連リスク：</strong> 障害番号（<code>EX1550543</code>）を悪用した大規模フィッシングが確認されています。</li>
+    <li><strong>やること：</strong> サービス状況は Microsoft の公式チャネルのみで確認し、メールや Teams が止まった場合の代替連絡手段を用意する。</li>
+  </ul>
 </blockquote>
 
 <div class="kpi-grid">

@@ -47,7 +47,13 @@ redirect_from:
 </div>
 
 <blockquote class="callout">
-  <p><strong>TL;DR (dễ hiểu):</strong> Từ ngày <strong>12/11/2026</strong> (~18:26 UTC / 01:26 ICT ngày 13/11), hệ sinh thái Microsoft 365 (Exchange Online / Outlook, Microsoft Teams, SharePoint Online, OneDrive, Microsoft 365 Copilot và Microsoft Defender XDR) gặp sự cố gián đoạn toàn cầu tại ít nhất <strong>74 quốc gia</strong>, kéo dài gần 24 giờ ở mức cao điểm và mất khoảng <strong>30 giờ</strong> để xác nhận khôi phục hoàn toàn vào ngày 14/11. Microsoft xác nhận đây là <strong>sự cố vận hành nội bộ ("triple failure") — không phải tấn công mạng hay AI agent</strong>: một lỗi tiềm ẩn từ bản vá tháng 7/2026 gây <em>lock contention</em> trên phần cứng nhiều nhân mới đã bùng phát khi gateway chính vừa mất ~14% dung lượng từ hôm trước lại vừa gánh thêm lưu lượng Teams tự động failover. Ngay sau sự cố, tin tặc đã tung chiến dịch phishing quy mô lớn giả mạo thông báo Service Health (<code>EX1550543</code>).</p>
+  <p><strong>TL;DR (dễ hiểu):</strong> Từ <strong>12/11/2026</strong> (~18:26 UTC / 01:26 ICT ngày 13/11), Microsoft 365 (Outlook, Teams, SharePoint, OneDrive, Copilot, Defender XDR) gián đoạn toàn cầu.</p>
+  <ul>
+    <li><strong>Quy mô:</strong> Ít nhất <strong>74 quốc gia</strong>; gần 24 giờ ở mức cao điểm, khoảng <strong>30 giờ</strong> để xác nhận khôi phục hoàn toàn (14/11).</li>
+    <li><strong>Nguyên nhân:</strong> Microsoft xác nhận là <strong>lỗi vận hành nội bộ, không phải tấn công mạng hay AI agent</strong>: một lỗi tiềm ẩn từ bản vá tháng 7/2026 bùng phát khi gateway vừa mất ~14% dung lượng vừa phải gánh thêm lưu lượng Teams tự động chuyển dự phòng.</li>
+    <li><strong>Rủi ro kèm theo:</strong> Tin tặc tung chiến dịch phishing giả mạo thông báo Service Health (<code>EX1550543</code>).</li>
+    <li><strong>Cần làm gì?</strong> Chỉ xem tình trạng dịch vụ trên kênh chính thức của Microsoft; chuẩn bị phương án liên lạc dự phòng khi email/Teams ngừng.</li>
+  </ul>
 </blockquote>
 
 <div class="kpi-grid">
