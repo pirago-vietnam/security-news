@@ -39,21 +39,21 @@
   badge: {sev: crit, text: "CRITICAL"}
   nav: {vi: 'Linux Net CVE-2026-99676', ja: 'Linux Net CVE-2026-99676'}
   title: {vi: 'Linux Kernel Net CVE-2026-99676 — Use-After-Free trong lockless socket lookup trên ARM64/POWER (CVSS 9.8 / 5.9)', ja: 'Linux Kernel Net CVE-2026-99676 — ARM64/POWER 環境のロックレスソケット検索における Use-After-Free（CVSS 9.8 / 5.9）'}
-  date: {vi: 'Cập nhật đến 2026-11-23 · CVSS 9.8 (CNA) / 5.9 (RH) · Ảnh hưởng Linux ≥ 5.5 / 5.4.208+ (ARM64/POWER) · Đã vá ở 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2', ja: '2026年11月23日 時点 · CVSS 9.8 (CNA) / 5.9 (RH) · Linux 5.5 以降 / 5.4.208+（ARM64/POWER）が対象 · 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2 で修正済み'}
+  date: {vi: 'Cập nhật đến 2026-11-25 · CVSS 9.8 (CNA) / 5.9 (RH/AWS) · Ảnh hưởng Linux ≥ 5.5 / 5.4.208+ (ARM64/POWER) · Đã vá ở 6.12.118+ / 6.18.64+ / 7.3.5+ / 7.4-rc2', ja: '2026年11月25日 時点 · CVSS 9.8 (CNA) / 5.9 (RH/AWS) · Linux 5.5 以降 / 5.4.208+（ARM64/POWER）が対象 · 6.12.118+ / 6.18.64+ / 7.3.5+ / 7.4-rc2 で修正済み'}
   link: {vi: 'Xem phân tích & hướng dẫn →', ja: '分析・対策ガイドを見る →'}
   items:
     - sev: crit
       label: {vi: 'Nguy cơ', ja: 'リスク'}
-      text: {vi: 'Lỗi thứ tự ghi bộ nhớ refcount (weak memory ordering) trong lockless socket lookup (<code>__inet_lookup_skb</code> / <code>refcount_inc_not_zero</code>) trên kiến trúc ARM64/POWER: CPU xử lý gói tin có thể đọc thấy trạng thái chưa đồng bộ sau khi socket đã giải phóng → Use-After-Free (UAF) ở nhân Linux, gây kernel panic/DoS hoặc nguy cơ thực thi mã.', ja: 'ARM64/POWER 環境のロックレスソケット検索（<code>__inet_lookup_skb</code> / <code>refcount_inc_not_zero</code>）における refcount メモリ順序（weak memory ordering）の不具合。ソケット解放後にパケット処理側で不整合状態を参照し、カーネル空間での Use-After-Free（UAF）・パニック/DoS やコード実行の恐れ。'}
+      text: {vi: 'Lỗi thứ tự ghi bộ nhớ refcount (weak memory ordering) trong lockless socket lookup (<code>refcount_inc_not_zero</code>) trên kiến trúc ARM64/Graviton, POWER, RISC-V: CPU có thể đọc nhầm dữ liệu socket trước khi giữ refcount → Use-After-Free (<code>dst_entry</code>) hoặc kernel oops/DoS. Là bản vá đi kèm bắt buộc của NoisyTCP (<code>CVE-2026-99288</code>).', ja: 'ARM64/Graviton・POWER・RISC-V 環境のロックレスソケット検索（<code>refcount_inc_not_zero</code>）におけるメモリ順序欠如。refcount 確定前にソケット情報を先読みし、<code>dst_entry</code> UAF やカーネル oops/DoS を招く恐れ。NoisyTCP（<code>CVE-2026-99288</code>）の必須追加パッチ。'}
     - sev: high
       label: {vi: 'Phạm vi', ja: '影響範囲'}
-      text: {vi: 'Máy chủ Linux chạy trên kiến trúc weak-memory-ordering (ARM64/Graviton, POWER) với kernel ≥ 5.5 hoặc ≥ 5.4.208 mở cổng TCP/UDP nhận gói tin đồng thời. x86-64 (TSO) không bị race này. Debian đã phát hành DSA-6652-1; Red Hat (BZ #2577739), Ubuntu và Amazon Linux đang theo dõi/chờ vá.', ja: 'weak-memory-ordering アーキテクチャ（ARM64/Graviton、POWER）上で稼働する Linux カーネル 5.5 以降または 5.4.208+ の TCP/UDP 受信サーバーが対象。x86-64（TSO）は非該当。Debian は DSA-6652-1 を公開済み、Red Hat（BZ #2577739）・Ubuntu・Amazon Linux は対応確認中。'}
+      text: {vi: 'Máy chủ Linux ARM64/Graviton, POWER, RISC-V với kernel ≥ 5.5 hoặc ≥ 5.4.208 mở cổng TCP. Debian 13 (<code>DSA-6652-1</code>) &amp; <code>sid/forky</code> đã vá; các nhánh LTS cũ (<code>6.6 / 6.1 / 5.15 / 5.10</code>) lỗi auto-backport chưa có fix (<code>5.4.y</code> đã EOL); Ubuntu, AL2023/AL2, RHEL 9–10 và SUSE đang chờ vá.', ja: 'ARM64/Graviton・POWER・RISC-V 上の Linux 5.5+ / 5.4.208+（TCP 受付）が対象。Debian 13（<code>DSA-6652-1</code>）・<code>sid/forky</code> は修正済み。旧 LTS（<code>6.6 / 6.1 / 5.15 / 5.10</code>）はバックポート失敗で未修正（<code>5.4.y</code> は EOL）、Ubuntu・AL2023/AL2・RHEL 9–10・SUSE は修正待ち。'}
     - sev: med
       label: {vi: 'Lưu ý đánh giá', ja: '評価上の注意'}
-      text: {vi: 'Linux kernel CNA chấm CVSS 9.8 (Critical), trong khi Red Hat BZ #2577739 chấm 5.9 (Medium, AC:H) do đòi hỏi race timing chặt trên nhiều CPU; ngoài hạn chế lưu lượng mạng không tin cậy chưa có mitigation cấu hình khác.', ja: 'Linux カーネル CNA は CVSS 9.8（Critical）と評価する一方、Red Hat BZ #2577739 はマルチCPU間の厳密な競合タイミングを要するため 5.9（Medium、AC:H）と評価。不要な外部通信の制限以外の設定緩和策はなし。'}
+      text: {vi: 'Linux CNA chấm CVSS 9.8 (Critical), trong khi Red Hat, Amazon Linux và SUSE chấm 5.9 (Medium/Moderate) do đòi hỏi race timing chặt trên nhiều CPU; không có <code>sysctl</code> tắt lỗi ngoài siết cổng TCP.', ja: 'Linux CNA は CVSS 9.8（Critical）、Red Hat・Amazon Linux・SUSE は厳密な競合タイミングを要するため 5.9（Medium/Moderate）と評価。<code>sysctl</code> 回避策はなく公開 TCP 制限で緩和。'}
     - sev: low
       label: {vi: 'Triệt để', ja: '恒久対策'}
-      text: {vi: 'Cập nhật kernel máy chủ ARM64/POWER lên bản đã vá upstream 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2 (hoặc Debian DSA-6652-1) và reboot. Chưa có PoC công khai và chưa có trong CISA KEV (2026-11-23).', ja: 'ARM64/POWER サーバーのカーネルを upstream 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2（または Debian DSA-6652-1）へ更新し再起動。公開 PoC なし、CISA KEV 未掲載（2026-11-23 確認）。'}
+      text: {vi: 'Cập nhật kernel ARM64/POWER lên bản đã vá (<code>6.12.118+ / 6.18.64+ / 7.3.5+ / 7.4-rc2</code> hoặc Debian <code>DSA-6652-1</code>) và reboot. Chưa ghi nhận khai thác, chưa có PoC công khai và chưa có trong CISA KEV (2026-11-25).', ja: 'ARM64/POWER サーバを修正済みカーネル（<code>6.12.118+ / 6.18.64+ / 7.3.5+ / 7.4-rc2</code> または Debian <code>DSA-6652-1</code>）へ更新し再起動。悪用報告・公開 PoC なし、CISA KEV 未掲載（2026-11-25 確認）。'}
 
 # disclosed: 2026-11-19
 - id: linux-cve-2026-99362
