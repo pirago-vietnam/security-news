@@ -3,7 +3,7 @@ layout: default
 image: "/featured/incidents/binance/binance-incident-og.png"
 lang: ja
 title: "Binance（約63億米ドル流出）— DevOps 端末侵害からサービスコンテナへ到達"
-description: "2026年11月23日更新：Binance 約63.4億ドル流出事案の最新経緯（米司法省による TraderTraitor 公式特定と12億ドル超押収、8.6億ドル相当 ETH 移動・2,310 BTC Coinjoin 洗浄、凍結28.2億ドル対回収3,200万ドル、ADGM 12/1審理予定）"
+description: "2026年11月25日更新：Binance 約63.4億ドル流出事案の最新経緯（11/23 米司法省が11億ドル超 USDC 没収訴訟を提起し押収・凍結総額29億ドル超に、3,930 BTC / 2.47億ドル Coinjoin 洗浄、Mandiant 等による独立監査、ADGM 12/1審理）"
 category: "セキュリティインシデント"
 permalink: /ja/featured/incidents/binance/binance_security_incident_report/
 redirect_from:
@@ -22,7 +22,7 @@ redirect_from:
 
 <div class="report-header">
   <h1>Binance（約63億米ドル流出）— DevOps 端末侵害からサービスコンテナへ到達</h1>
-  <p class="sub">発生・公開日：<strong>2026-10-29</strong> · <strong>2026年11月23日 時点：87ネットワークで出金再開・100%資産補填完了。</strong>米司法省が12億ドル超を押収・TraderTraitor と公式特定、ADGM 裁判所は11/30資産開示期限・12/1審理を設定。一方、攻撃者は洗浄を加速（8.6億ドル相当の ETH 移動、2,310 BTC を Coinjoin）。月次レポート: <a href="{{ '/ja/monthly/2026-10/' | relative_url }}">2026年10月 セキュリティレポート</a>。</p>
+  <p class="sub">発生・公開日：<strong>2026-10-29</strong> · <strong>2026年11月25日 時点：87ネットワークで出金再開・100%資産補填完了。</strong>11月23日、米司法省が11億ドル超の USDC 民事没収訴訟を提起（押収・凍結・返還累計<strong>29億ドル超</strong>）、ADGM 裁判所は11/30開示期限・12/1審理を設定。攻撃者は THORChain 交換を再開し Coinjoin 洗浄が累計<strong>3,930 BTC（2.47億ドル）</strong>に拡大。Binance は Mandiant・SlowMist・Verichains による事後監査を公表。月次レポート: <a href="{{ '/ja/monthly/2026-10/' | relative_url }}">2026年10月 セキュリティレポート</a>。</p>
 </div>
 
 <blockquote class="callout">
@@ -81,7 +81,8 @@ redirect_from:
     <tr><td>11月上旬</td><td>Binance Japan が直接影響なし（コールドウォレット分離管理）を確認し、出金を順次再開。ReversingLabs や The Hacker News 等が、6月からの偽装採用面接（Contagious Interview）を含む侵入チェーンを報じる。</td><td><span class="badge low">確認済</span> / <span class="badge med">報道</span></td></tr>
     <tr><td>11月12日〜14日</td><td>影響資産の100%補填を完了し、<strong>198トークン</strong>を網羅する包括的な ZK PoR スナップショットを取得。11月14日までに計<strong>87ネットワーク</strong>で出金を再開。また11月12日、<strong>米司法省（DOJ）</strong>が FBI による北朝鮮 <strong>TraderTraitor</strong> の関与を公式確認し、<strong>12億ドル超</strong>の押収・保全措置を発表。</td><td><span class="badge low">DOJ / 確認済</span></td></tr>
     <tr><td>11月17日〜20日</td><td><strong>ADGM 凍結命令と資金洗浄加速：</strong>ADGM 裁判所（William Stone 判事）が約26,000ウォレットへのオンチェーン送達を認める<strong>65億ドル凍結命令</strong>および Circle・BitGo 等<strong>18社</strong>を拘束する暫定命令を発出（資産開示期限 <strong>11/30</strong>、次回審理 <strong>12/1</strong>）。Elliptic・Crypto Briefing（11/20）によると、攻撃者は最大手 ETH アドレス9件中5件から約488,000 ETH（約8.6億ドル）を移動し、<strong>2,310 BTC（約1.49億ドル）</strong>を Coinjoin（主に Kruw / Wasabi）へ投入。凍結総額 <strong>28.2億ドル</strong>に対し実回収は <strong>3,200万ドル</strong>にとどまり、出金再開後の純流出は約47億ドルに達した。</td><td><span class="badge med">報道（Elliptic / Crypto Briefing）</span></td></tr>
-    <tr><td>11月21日〜23日</td><td>新たな裁判所判断や Binance の技術ポストモーテムの公表はなく、11月30日の開示期限および12月1日の ADGM 審理が焦点。</td><td><span class="badge low">継続監視</span></td></tr>
+    <tr><td>11月23日</td><td><strong>米司法省が11億ドル超 USDC 没収訴訟＆洗浄最新動向：</strong>米司法省（DOJ）がコロンビア特別区連邦地裁に11億ドル超の Circle 発行 USDC に対する民事没収訴訟を提起し、連携機関を含む凍結・押収・返還累計が<strong>29億ドル超</strong>に到達。Gibson Dunn および Fountain Court は ADGM 裁判所（William Stone SBS KC 判事）の65億ドル世界的凍結命令（約26,000アドレスの「Living List」へのオンチェーン送達）を正式公表。Elliptic（09:30 UTC 更新）によると、攻撃者は2日間の休止後 06:50 UTC に THORChain 経由の ETH→BTC 交換を再開（11/17以降計約58,000 ETH / 1億ドル）、Kruw Coinjoin 洗浄は累計<strong>3,930 BTC（2.47億ドル）</strong>に達した。同日 Binance は <strong>Mandiant・SlowMist・Verichains</strong> による独立セキュリティ監査の実施を公表。</td><td><span class="badge low">DOJ / Elliptic / Binance</span></td></tr>
+    <tr><td>11月24日〜25日</td><td>Binance は11月25日 06:00 UTC に予定ウォレットメンテナンス（約60分間の出金一時停止、取引は継続）を実施。11月30日の開示期限および12月1日の ADGM 審理を控えた状況が継続。</td><td><span class="badge low">Binance / 継続監視</span></td></tr>
   </tbody>
 </table>
 </div>
@@ -238,6 +239,10 @@ redirect_from:
 <p>本レポートは、報道とアナリストの記事に基づく二次情報です。Binance の公式発表ページは見出し（Security Incident Update (2026-10-30)）のみで本文を読めませんでした。再確認は一次情報で行ってください。</p>
 <h3>読めた情報源</h3>
 <ul>
+  <li><a href="https://www.justice.gov/opa/pr/united-states-files-action-recover-more-1-billion-cryptocurrency-assets-stolen-north-korean" target="_blank" rel="noopener noreferrer">米司法省 DOJ（2026年11月23日）</a> — 11億ドル超 USDC 没収訴訟（凍結・押収累計29億ドル超）</li>
+  <li><a href="https://www.gibsondunn.com/gibson-dunn-secures-6-5-billion-worldwide-freezing-order-for-binance/" target="_blank" rel="noopener noreferrer">Gibson Dunn（11月23日）</a>・<a href="https://fountaincourt.uk/2026/11/binance-secures-largest-freezing-injunction-ever-granted-from-adgm-court-following-cryptoasset-fraud/" target="_blank" rel="noopener noreferrer">Fountain Court（11月23日）</a> — ADGM 65億ドル凍結命令</li>
+  <li><a href="https://decrypt.co/383844/north-korea-247-million-binance-hack-bitcoin-mixers" target="_blank" rel="noopener noreferrer">Decrypt / Elliptic（11月23日）</a> — 3,930 BTC（2.47億ドル）Coinjoin 洗浄と THORChain 再開</li>
+  <li><a href="https://www.binance.com/en/square/post/391477004415089" target="_blank" rel="noopener noreferrer">Binance Square（11月23日）</a> — Mandiant・SlowMist・Verichains による独立監査</li>
   <li><a href="https://techcrunch.com/2026/10/29/binance-pauses-withdrawals-as-hackers-suspected-of-stealing-billions-in-crypto/" target="_blank" rel="noopener noreferrer">TechCrunch</a></li>
   <li><a href="https://www.helpnetsecurity.com/2026/10/30/binance-crypto-hack/" target="_blank" rel="noopener noreferrer">Help Net Security</a></li>
   <li><a href="https://businessupturn.com/finance/cryptocurrency/binance-withdrawals-to-resume-within-48-hours-says-yi-he-after-record-6-36-billion-crypto-hack/" target="_blank" rel="noopener noreferrer">Business Upturn</a></li>

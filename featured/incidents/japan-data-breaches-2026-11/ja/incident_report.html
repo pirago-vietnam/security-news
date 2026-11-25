@@ -36,15 +36,15 @@ permalink: /ja/featured/incidents/japan-data-breaches-2026-11/incident_report/
 
 <div class="report-header">
   <h1>国内相次ぐ情報流出（2026年11月20〜21日）— タワーレコード、ピーチ・アビエーション（ユミルリンク）、インフキュリオン Wallet Station / Payどん</h1>
-  <p class="sub">発生・公開日：<strong>2026-11-20</strong>（ピーチ、インフキュリオン）／<strong>2026-11-21</strong>（タワーレコード） · <strong>2026-11-23</strong> 時点 · 出典：各社の公表と国内報道 · 状況：<strong>進行中</strong>。月次レポート：<a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月レポート</a>。</p>
+  <p class="sub">発生・公開日：<strong>2026-11-20</strong>（ピーチ、インフキュリオン）／<strong>2026-11-21</strong>（タワーレコード） · <strong>2026-11-25</strong> 時点 · 出典：各社の公表と国内報道 · 状況：<strong>Payどん は11/26午後再開へ、タワー通販は停止継続</strong>。月次レポート：<a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月レポート</a>。</p>
 </div>
 
 <blockquote class="callout">
   <p><strong>TL;DR（かんたん解説）：</strong>2026年11月20〜21日の2日間に、国内3組織が<strong>不正アクセスと顧客情報流出の恐れ</strong>を公表しました。</p>
   <ul>
-    <li><strong>タワーレコード オンライン</strong>：最大約1,100万件（メールアドレス、パスワードのハッシュ値、氏名、住所、電話番号など）。クレジットカード情報は含まれず、オンラインストアは停止中。</li>
+    <li><strong>タワーレコード オンライン</strong>：最大約1,100万件（メールアドレス、パスワードのハッシュ値、氏名、住所、電話番号など）。クレジットカード情報は含まれず、11/25時点もオンラインストアは停止中（再開時期未定）。</li>
     <li><strong>ピーチ・アビエーション</strong>：約900万件（氏名、生年月日、住所、電話番号、メール、旅程）。原因は<em>ピーチ自社ではなくメール配信事業者ユミルリンク（Cuenote FC）</em>。カード・パスポート情報は含まれません。</li>
-    <li><strong>インフキュリオン Wallet Station / Payどん</strong>：約25万件が流出の恐れ、<strong>Payどんの全サービスが停止</strong>。</li>
+    <li><strong>インフキュリオン Wallet Station / Payどん</strong>：約25万件が流出の恐れ。11/25、インフキュリオン（第4報）および Payどん が安全対策・外部評価の完了を公表し、<strong>11/26午後より順次サービス再開</strong>（初回ログイン時にパスワード・口座情報の再設定が必須、流出パスワードは復元困難な文字列へ変換済み）。</li>
     <li><strong>共通点：</strong>顧客データが外部事業者・共通基盤にあり、1か所の弱点が複数ブランドに波及します。</li>
     <li><strong>やること：</strong>なりすましメール・SMS・電話への警戒、パスワード使い回しの変更、自社の委託先（メール配信・決済）の棚卸し。</li>
   </ul>
@@ -64,8 +64,8 @@ permalink: /ja/featured/incidents/japan-data-breaches-2026-11/incident_report/
     <div class="kpi-label">インフキュリオン Wallet Station / Payどん：流出の恐れ</div>
   </div>
   <div class="kpi-card">
-    <div class="kpi-num">サービス停止</div>
-    <div class="kpi-label">タワー通販 · Payどん（11/20 6:20〜）· ピーチ：通常運航</div>
+    <div class="kpi-num">Payどん 11/26再開</div>
+    <div class="kpi-label">Payどん 11/26午後再開（要再設定）· タワー通販停止継続 · ピーチ通常運航</div>
   </div>
 </div>
 
@@ -121,8 +121,8 @@ permalink: /ja/featured/incidents/japan-data-breaches-2026-11/incident_report/
     <tr>
       <td><strong>インフキュリオン Wallet Station / Payどん</strong><br><span class="badge high">11/20 公表</span></td>
       <td>251,172件</td>
-      <td>氏名、生年月日、電話番号、性別、メール、<strong>パスワード</strong>（ハッシュ化の有無は不明）、銀行口座情報、ポイント残高・地域振興券ポイント残高、取引履歴（日時・店舗・金額）、加盟店情報</td>
-      <td>カード情報への言及なし。<strong>Payどん全サービスを 11/20 6:20 から停止</strong>、復旧時期未定。不正利用は未確認。</td>
+      <td>氏名、生年月日、電話番号、性別、メール、<strong>パスワード</strong>（11/25公表で復元困難な別文字列に変換済みと説明）、銀行口座情報、ポイント残高・地域振興券ポイント残高、取引履歴（日時・店舗・金額）、加盟店情報</td>
+      <td>カード情報への言及なし。11/20 6:20 から停止し、<strong>2026年11月26日午後より順次再開予定</strong>（初回ログイン時にパスワード・口座情報の再設定が必須）。不正利用は未確認。</td>
     </tr>
   </tbody>
 </table>
@@ -196,7 +196,7 @@ permalink: /ja/featured/incidents/japan-data-breaches-2026-11/incident_report/
 <ul>
   <li>インフキュリオンは 11/19 に第三者の不正アクセスを確認。Payどんは「緊急の脆弱性パッチを適用し、アクセス経路を遮断」と説明しますが、<strong>脆弱性や侵入点は非公表</strong>です。</li>
   <li>Payどんは銀行登録の電話番号へのSMS認証を採用しており、流出データだけでは直ちに取引できないとしています（<em>Payどんの説明、独立検証なし</em>）。</li>
-  <li>Wallet Station は複数企業に提供されており、「影響のある」提供先への提供を一時停止（社名・件数は非公表）。AEON Pay・HAPPAY への影響を伝える報道・ブログもありますが、<strong>公式の裏付けなし、未検証</strong>です。</li>
+  <li>Wallet Station は複数企業に提供されており、緊急点検のため一部提供先で停止が発生。11/24〜25までに状況が整理され、<strong>ファミペイ</strong>は顧客情報流出なしを確認のうえ 11/24 11:15 に街のお店でのコード決済を再開、<strong>AEON Pay</strong>・<strong>くまモン!Pay</strong>・<strong>ジャックス</strong>も流出なしを確認し 11/21 に再開しました。<strong>モッピーペイ</strong>は停止継続（12月1日の口座維持手数料は非徴収）。なお HAPPAY の停止（11/9告知）はインフキュリオン事案より前の別件です。</li>
   <li>2026年10月28日にはPayどんのメール配信委託先で別件の事案があり、また 11/18 の Notion AI／Fireworks AI 関連の開示は同社システムへの侵害ではないと説明されています。いずれも別件です。</li>
 </ul>
 </section>
@@ -235,7 +235,9 @@ permalink: /ja/featured/incidents/japan-data-breaches-2026-11/incident_report/
     <tr><td>2026/11/20</td><td><strong>ピーチ</strong>が 8,997,106 件を公表、PPC へ報告、対象者へメール開始。<strong>インフキュリオン／Payどん</strong>が公表（第1報 6:00 時点）、<strong>6:20 に Payどん全サービスを停止</strong>。鹿児島銀行・南日本銀行ほか提携行も告知。</td><td><span class="badge low">公式発表</span></td></tr>
     <tr><td>2026/11/21</td><td><strong>タワーレコード</strong>が初報（調査中）：約1,100万件。</td><td><span class="badge high">タワー公式お知らせ</span></td></tr>
     <tr><td>2026/11/22</td><td>タワー続報：通販は全体確認のため停止継続、予約商品は 11/23 から順次発送、マーケットプレイスは再開未定。「停止中はパスワード変更不可」は公式お知らせに記載がなく、検索要約のみで<em>未検証</em>。</td><td><span class="badge med">Business+IT／Bloomberg</span></td></tr>
-    <tr><td>2026/11/23</td><td>確認時点：Payどんの復旧、タワー通販の再開に関する公式続報なし。3件とも不正利用は未確認。</td><td><span class="badge med">PiraGo 確認</span></td></tr>
+    <tr><td>2026/11/23</td><td>タワーレコードが予約商品の順次発送を開始（通販サイトは停止継続）。</td><td><span class="badge med">タワー公式発表</span></td></tr>
+    <tr><td>2026/11/24</td><td><strong>ファミペイ</strong>が顧客情報流出なしを確認し 11:15 に街のコード決済を再開。<strong>モッピーペイ</strong>は再開時期未定で停止継続（12月分の維持手数料を見送り）。</td><td><span class="badge low">各社公式発表</span></td></tr>
+    <tr><td>2026/11/25</td><td><strong>インフキュリオン（第4報・17:00）：</strong>安全対策と外部専門家による安全性確認を完了し、<strong>11/26 より当該提供先への Wallet Station 提供再開</strong>を発表。<strong>Payどん</strong>も <strong>11/26 午後より順次再開</strong>を告知（初回ログイン時にパスワード・口座情報の再設定必須、流出パスワードは復元困難な文字列に変換済みと明記、地域振興券の取扱いは11/26案内）。<strong>アイスタイル（@cosme）</strong>も Cuenote FC 利用再開と対象者への個別連絡完了を公表。<strong>タワー通販</strong>は停止継続（HTTP 503）。</td><td><span class="badge low">公式発表</span></td></tr>
   </tbody>
 </table>
 </div>
@@ -331,11 +333,10 @@ permalink: /ja/featured/incidents/japan-data-breaches-2026-11/incident_report/
   </li>
   <li>インフキュリオン Wallet Station / Payどん：
     <ul>
-      <li><a href="https://infcurion.com/news/news-20261120_001/" target="_blank" rel="noopener noreferrer">インフキュリオン — 11/20 のお知らせ</a></li>
-      <li><a href="https://paydon.jp/2026/11/20/newsrelease20261120" target="_blank" rel="noopener noreferrer">Payどん — 11/20 ニュースリリース（251,172件）</a></li>
-      <li><a href="https://www.kagin.co.jp/important/20261120_094.html" target="_blank" rel="noopener noreferrer">鹿児島銀行</a> · <a href="https://nangin.jp/information/important/post_1291.html" target="_blank" rel="noopener noreferrer">南日本銀行</a></li>
-      <li><a href="https://innovatopia.jp/cyber-security/cyber-security-news/121476/" target="_blank" rel="noopener noreferrer">Innovatopia</a> · <a href="https://act1.co.jp/2026-11-20-06/" target="_blank" rel="noopener noreferrer">Act1</a>（二次情報）</li>
-      <li>未検証：AEON Pay／HAPPAY への影響報道（<a href="https://www.inatei.com/entry/aeon-pay-suspended-infcurion-unauthorized-access" target="_blank" rel="noopener noreferrer">ブログ</a>）— 公式の裏付けなし。</li>
+      <li><a href="https://infcurion.com/news/news-20261125_001/" target="_blank" rel="noopener noreferrer">インフキュリオン — 第4報（2026年11月25日）</a> · <a href="https://infcurion.com/news/news-20261120_001/" target="_blank" rel="noopener noreferrer">11/20 のお知らせ</a></li>
+      <li><a href="https://paydon.jp/2026/11/25/newsrelease20261125" target="_blank" rel="noopener noreferrer">Payどん — 11/26 再開のお知らせ（2026年11月25日）</a> · <a href="https://paydon.jp/2026/11/20/newsrelease20261120" target="_blank" rel="noopener noreferrer">11/20 ニュースリリース（251,172件）</a></li>
+      <li>提携・関連サービス：<a href="https://famipay.famidigi.jp/info/2026/11/24/206062/" target="_blank" rel="noopener noreferrer">ファミペイ（11/24）</a> · <a href="https://pc.moppy.jp/news/detail.php?news_id=3522" target="_blank" rel="noopener noreferrer">モッピーペイ（11/24）</a> · <a href="https://www.kagin.co.jp/important/20261120_094.html" target="_blank" rel="noopener noreferrer">鹿児島銀行</a> · <a href="https://nangin.jp/information/important/post_1291.html" target="_blank" rel="noopener noreferrer">南日本銀行</a></li>
+      <li><a href="https://www.istyle.co.jp/news/info/2026/11/1109-2.html" target="_blank" rel="noopener noreferrer">アイスタイル（@cosme）— Cuenote FC 利用再開（2026年11月25日）</a></li>
     </ul>
   </li>
 </ul>

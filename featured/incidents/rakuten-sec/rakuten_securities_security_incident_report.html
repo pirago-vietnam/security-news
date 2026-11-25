@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "楽天証券 (Rakuten Securities) — Có thể lộ tối đa 11,25 triệu tài khoản từ môi trường test"
-description: "Cập nhật 23/11/2026 sự cố Rakuten Securities: Lệnh yêu cầu báo cáo từ FSA (19/11), hủy 5 hội thảo, >20.000 người đăng ký chuẩn bị kiện tập thể, phát biểu Bộ trưởng Tài chính và khuyến cáo"
+title: "楽天証券 (Rakuten Securities) — Xác nhận lộ ~11,98 triệu ID đăng nhập & ~4,41 triệu hồ sơ cá nhân từ môi trường test"
+description: "Cập nhật 25/11/2026 sự cố Rakuten Securities: Báo cáo thứ 2 (24/11) xác nhận rò rỉ ~11,98 triệu tài khoản & ~4,41 triệu thông tin cá nhân (gồm 1,19 triệu người chưa mở tài khoản); Rakuten Group hủy phát hành trái phiếu ~151 tỷ yên"
 image: "/featured/incidents/rakuten-sec/rakuten-securities-og.png"
 category: "Sự cố an ninh"
 redirect_from:
@@ -42,26 +42,26 @@ redirect_from:
 </style>
 
 <div class="report-header">
-  <h1>楽天証券 (Rakuten Securities) — Có thể lộ tối đa 11,25 triệu tài khoản từ môi trường test</h1>
-  <p class="sub">Xảy ra / Công bố: <strong>2026-11-17</strong> · Cập nhật đến <strong>2026-11-23</strong>: ngày <strong>19/11 công ty nhận Lệnh yêu cầu báo cáo từ FSA</strong>; ngày 20/11 hủy 5 hội thảo, Bộ trưởng Tài chính Katayama yêu cầu ứng phó tối đa, nhóm đăng ký chuẩn bị kiện tập thể vượt 20.000 người; đến 23/11 chưa ghi nhận giao dịch trái phép hay lộ mật khẩu mới. Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a>.</p>
+  <h1>楽天証券 (Rakuten Securities) — Xác nhận lộ ~11,98 triệu ID đăng nhập &amp; ~4,41 triệu hồ sơ cá nhân từ môi trường test</h1>
+  <p class="sub">Xảy ra / Công bố: <strong>2026-11-17</strong> · Cập nhật đến <strong>2026-11-25</strong>: Ngày <strong>24/11 công ty ra Báo cáo thứ 2 (第2報)</strong> nâng mức từ "có thể" lên <strong>xác nhận rò rỉ</strong> (~11,98 triệu ID đăng nhập, ~4,41 triệu hồ sơ cá nhân gồm ~1,19 triệu người chưa mở tài khoản, bổ sung 7 trường dữ liệu và ~1,68 triệu bản ghi tài sản theo sản phẩm); cùng ngày Rakuten Group hủy đợt phát hành trái phiếu vĩnh viễn tới 151 tỷ yên. Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a>.</p>
 </div>
 
 <blockquote class="callout">
-  <p><strong>TL;DR (dễ hiểu):</strong> Rakuten Securities (chứng khoán trực tuyến, hơn 15 triệu tài khoản) xác nhận ngày 11/11/2026 rằng một phần thông tin trong môi trường test có thể đã bị rò rỉ.</p>
+  <p><strong>TL;DR (dễ hiểu):</strong> Rakuten Securities (chứng khoán trực tuyến, hơn 15 triệu tài khoản) công bố Báo cáo thứ 2 ngày 24/11/2026, <strong>xác nhận dữ liệu khách hàng trong môi trường test đã bị rò rỉ</strong> (sau lần truy cập trái phép phát hiện 11–16/11).</p>
   <ul>
-    <li><strong>Diễn biến:</strong> Ngày 16/11 phát hiện khả năng bên thứ ba truy cập trái phép, chặn truy cập và khắc phục; công bố và xin lỗi ngày 17/11.</li>
+    <li><strong>Diễn biến:</strong> Công bố ban đầu ngày 17/11; nhận lệnh yêu cầu báo cáo từ FSA ngày 19/11; đến <strong>24/11 xác nhận rò rỉ</strong> với số liệu chi tiết hơn (gồm cả người từng đăng ký nhưng chưa mở tài khoản).</li>
     <li><strong>Nguyên nhân:</strong> Báo chí Nhật đưa tin công ty đặt dữ liệu khách hàng thật không che (unmasked) vào môi trường test để kiểm thử nâng cấp.</li>
-    <li><strong>Quy mô:</strong> Tối đa <strong>~11,25 triệu tài khoản</strong> (mã chi nhánh, mã khách hàng, ID đăng nhập); trong đó <strong>~4,47 triệu</strong> lộ thêm thông tin cá nhân và tài chính.</li>
-    <li><strong>Hiện trạng:</strong> 18/11 miễn phí chuyển quỹ tín thác sang đối thủ; 19/11 nhận <strong>lệnh yêu cầu báo cáo từ FSA</strong>. Chưa ghi nhận lộ mật khẩu/mã PIN hay giao dịch trái phép.</li>
-    <li><strong>Cần làm gì?</strong> Không dùng dữ liệu thật chưa che trong môi trường test; cảnh giác email/SMS giả mạo.</li>
+    <li><strong>Quy mô xác nhận (24/11):</strong> <strong>~11,98 triệu tài khoản</strong> lộ mã chi nhánh, mã khách hàng, ID đăng nhập; <strong>~4,41 triệu hồ sơ</strong> lộ thêm thông tin cá nhân (3,22 triệu chủ tài khoản + <strong>1,19 triệu người chưa mở tài khoản</strong>) và ~1,68 triệu bản ghi tài sản theo sản phẩm.</li>
+    <li><strong>Hiện trạng (25/11):</strong> Chưa ghi nhận lộ mật khẩu/mã PIN hay giao dịch trái phép. Rakuten Group hủy chào bán trái phiếu 151 tỷ yên (24/11), cổ phiếu giảm tới 3,9% (25/11); khai trương cửa hàng Shibuya (dự kiến 25/11) vẫn hoãn.</li>
+    <li><strong>Cần làm gì?</strong> Không dùng dữ liệu thật chưa che trong môi trường test; cảnh giác email/SMS giả mạo; bật passkey.</li>
   </ul>
 </blockquote>
 
 <div class="kpi-grid">
-  <div class="kpi-card"><div class="kpi-num crit">~11,25M</div><div class="kpi-label">Tài khoản có thể lộ mã chi nhánh, mã khách hàng, ID đăng nhập (tối đa)</div></div>
-  <div class="kpi-card"><div class="kpi-num crit">~4,47M</div><div class="kpi-label">Tài khoản có thể lộ thêm thông tin cá nhân &amp; tài chính (tối đa)</div></div>
-  <div class="kpi-card"><div class="kpi-num high">Môi trường test</div><div class="kpi-label">Đặt dữ liệu thật không masking (theo báo chí); gồm người đã rút tài khoản</div></div>
-  <div class="kpi-card"><div class="kpi-num crit">Lệnh FSA</div><div class="kpi-label">Nhận lệnh yêu cầu báo cáo ngày 19/11 (chi tiết xâm nhập đang điều tra)</div></div>
+  <div class="kpi-card"><div class="kpi-num crit">~11,98M</div><div class="kpi-label">Tài khoản xác nhận lộ mã chi nhánh, mã KH, ID đăng nhập (Báo cáo 2)</div></div>
+  <div class="kpi-card"><div class="kpi-num crit">~4,41M</div><div class="kpi-label">Hồ sơ xác nhận lộ thông tin cá nhân (3,22M tài khoản + 1,19M chưa mở TK)</div></div>
+  <div class="kpi-card"><div class="kpi-num high">~1,68M</div><div class="kpi-label">Bản ghi thông tin tài sản theo sản phẩm (kèm 2,71M mã tài sản tự khai)</div></div>
+  <div class="kpi-card"><div class="kpi-num crit">Hủy trái phiếu</div><div class="kpi-label">Rakuten Group hủy phát hành 151 tỷ yên (24/11) sau lệnh FSA 19/11</div></div>
 </div>
 
 <nav class="an-nav" aria-label="Mục lục">
@@ -113,7 +113,9 @@ redirect_from:
     <tr><td>18/11 (Thứ Tư)</td><td>Thông báo miễn phí xuất lưu/chuyển quỹ tín thác sang công ty khác (thông thường 3.300 yên/mã gồm thuế) áp dụng cho hồ sơ tiếp nhận từ ngày 18/11; hoãn khai trương cửa hàng vật lý "Rakuten Securities Store Shibuya" (vốn dự kiến 25/11).</td></tr>
     <tr><td>19/11 (Thứ Năm)</td><td>Nhận <strong>Lệnh yêu cầu báo cáo (報告徴求命令)</strong> từ Cơ quan Dịch vụ Tài chính Nhật Bản (FSA) theo Điều 56-2 Khoản 1 Luật Giao dịch &amp; Công cụ Tài chính và Điều 146 Khoản 1 Luật Bảo vệ Thông tin Cá nhân.</td></tr>
     <tr><td>20/11 (Thứ Sáu)</td><td>Công bố rộng rãi lệnh yêu cầu báo cáo của FSA; Bộ trưởng Tài chính / FSA Satsuki Katayama phát biểu sự việc "hết sức đáng tiếc", yêu cầu xác minh/báo cáo ngay nếu có phản ánh giao dịch bất thường và phối hợp cảnh sát cùng NCO (国家サイバー統括室). Rakuten Securities thông báo <strong>hủy 5 hội thảo</strong> (21/11–23/01/2027); trang đăng ký chuẩn bị khởi kiện tập thể (Văn phòng Luật sư Makino) vượt <strong>20.000 người</strong> lúc 14:00 JST; cổ phiếu Rakuten Group giảm hơn 7%.</td></tr>
-    <tr><td>21–23/11</td><td>Cuối tuần xuất hiện cảnh báo tránh tin giả trên SNS (ảnh chụp màn hình bồi thường từ vụ việc cũ) và lừa đảo phishing ăn theo. Tính đến <strong>23/11/2026</strong>, chưa có thông báo chính thức mới về kết quả điều tra nguyên nhân hay giao dịch trái phép phát sinh.</td></tr>
+    <tr><td>21–23/11</td><td>Cuối tuần xuất hiện cảnh báo tránh tin giả trên SNS (ảnh chụp màn hình bồi thường từ vụ việc cũ) và lừa đảo phishing ăn theo.</td></tr>
+    <tr><td>24/11 (Thứ Ba)</td><td><strong>Báo cáo thứ 2 (第2報) — Xác nhận rò rỉ:</strong> Nâng từ "có thể" lên <strong>xác nhận rò rỉ</strong> với <strong>~11,98 triệu tài khoản</strong> (mã chi nhánh/KH/ID đăng nhập) và <strong>~4,41 triệu hồ sơ cá nhân</strong> (3,22M tài khoản + <strong>1,19M người chưa mở tài khoản</strong>), bổ sung 7 trường mới (giới tính, quốc tịch, FAX, tài khoản nạp tiền, trạng thái mở/đăng ký/hủy, khảo sát) cùng ~1,68M bản ghi tài sản theo sản phẩm, 2,71M mã tài sản tự khai và ~14.000 mã thu nhập. Cùng ngày, công ty mẹ <strong>Rakuten Group</strong> nộp bản sửa đổi hủy đợt phát hành trái phiếu vĩnh viễn tới 151 tỷ yên.</td></tr>
+    <tr><td>25/11 (Thứ Tư)</td><td>Khai trương cửa hàng "Rakuten Securities Store Shibuya" (vốn dự kiến 16:00 JST ngày 25/11) tiếp tục hoãn. Cổ phiếu Rakuten Group giảm tới 3,9% xuống mức thấp nhất từ tháng 11/2023. Chưa ghi nhận lộ mật khẩu/mã PIN hay giao dịch trái phép.</td></tr>
   </tbody>
 </table>
 </div>
@@ -127,18 +129,19 @@ redirect_from:
 <text x="0" y="27" font-size="12.5" fill="currentColor">Tổng tài khoản (tham chiếu)</text>
 <rect x="250" y="10" width="360" height="24" rx="4" fill="var(--line)"/><text x="618" y="27" font-size="12.5" font-weight="700" fill="currentColor">15M+</text>
 <text x="0" y="67" font-size="12.5" fill="currentColor">Mã chi nhánh, mã KH, ID</text>
-<rect x="250" y="50" width="270" height="24" rx="4" fill="var(--crit)"/><text x="528" y="67" font-size="12.5" font-weight="700" fill="currentColor">~11,25M</text>
-<text x="0" y="107" font-size="12.5" fill="currentColor">+ Thông tin cá nhân & tài chính</text>
-<rect x="250" y="90" width="107" height="24" rx="4" fill="var(--high)"/><text x="365" y="107" font-size="12.5" font-weight="700" fill="currentColor">~4,47M</text>
+<rect x="250" y="50" width="288" height="24" rx="4" fill="var(--crit)"/><text x="546" y="67" font-size="12.5" font-weight="700" fill="currentColor">~11,98M</text>
+<text x="0" y="107" font-size="12.5" fill="currentColor">+ Thông tin cá nhân (xác nhận)</text>
+<rect x="250" y="90" width="106" height="24" rx="4" fill="var(--high)"/><text x="364" y="107" font-size="12.5" font-weight="700" fill="currentColor">~4,41M</text>
 </svg>
-<figcaption>Quy mô tối đa (thang tuyến tính, đơn vị triệu tài khoản). Công bố liệt kê hai nhóm riêng biệt, không nên cộng gộp; 15 triệu là số tổng theo NHK tại 02/11.</figcaption>
+<figcaption>Quy mô xác nhận theo Báo cáo thứ 2 ngày 24/11 (thang tuyến tính, đơn vị triệu). 15 triệu là số tổng theo NHK tại 02/11.</figcaption>
 </figure>
 <div class="table-wrap">
 <table>
-  <thead><tr><th>Nhóm</th><th>Số lượng (tối đa)</th><th>Trường dữ liệu có nguy cơ bị lộ</th></tr></thead>
+  <thead><tr><th>Nhóm (Báo cáo 2 — 24/11)</th><th>Số lượng xác nhận</th><th>Trường dữ liệu bị lộ</th></tr></thead>
   <tbody>
-    <tr><td>Nhóm 1</td><td>~11,25 triệu tài khoản</td><td>Mã chi nhánh, mã khách hàng, ID đăng nhập (khác với Rakuten ID).</td></tr>
-    <tr><td>Nhóm 2</td><td>~4,47 triệu tài khoản</td><td>Các mục của nhóm 1 cùng họ tên, tên kana, ngày sinh, địa chỉ, số điện thoại, email, nơi làm việc, thông tin tài khoản rút tiền (ngân hàng, số tài khoản, tên chủ tài khoản), thu nhập hằng năm tự khai, thông tin tài sản tài chính, tài sản theo sản phẩm, ngày đăng nhập gần nhất. Gồm cả khách hàng đã rút tài khoản.</td></tr>
+    <tr><td>Nhóm 1 (ID đăng nhập)</td><td>~11,98 triệu tài khoản</td><td>Mã chi nhánh, mã khách hàng, ID đăng nhập (khác với Rakuten ID; tăng từ ~11,25M ở Báo cáo 1).</td></tr>
+    <tr><td>Nhóm 2 (Thông tin cá nhân)</td><td>~4,41 triệu bản ghi (3,22M tài khoản + 1,19M chưa mở TK)</td><td>Họ tên, tên kana, ngày sinh, địa chỉ, SĐT, email, nơi làm việc, tài khoản rút tiền &amp; <strong>7 trường mới xác nhận</strong>: giới tính, quốc tịch, số FAX, thông tin tài khoản nạp tiền (của công ty), trạng thái mở/đăng ký/hủy, khảo sát đăng ký và tình trạng đăng ký (có thể trùng lặp nếu hủy giữa chừng rồi đăng ký lại).</td></tr>
+    <tr><td>Nhóm 3 (Tài sản &amp; thu nhập)</td><td>~1,68M tài sản SP · ~2,71M tài sản tự khai · ~14K thu nhập</td><td>Tài sản theo sản phẩm (~1,68M, chỉ tài khoản có số dư lưu ký; không gồm mã cổ phiếu/giao dịch hay Money Bridge); thông tin tài sản tự khai (~2,71M) và thu nhập hằng năm tự khai (~14.000) chỉ là mã lựa chọn, không gồm số tiền cụ thể.</td></tr>
   </tbody>
 </table>
 </div>
@@ -183,6 +186,8 @@ redirect_from:
 <section class="an-sec">
 <h2 id="sources">6. Nguồn tham khảo</h2>
 <ul>
+  <li><a href="https://www.rakuten-sec.co.jp/web/info/info20261124-04.html" target="_blank" rel="noopener">Rakuten Securities — Báo cáo thứ 2 chính thức (24/11/2026)</a> · <a href="https://www.watch.impress.co.jp/docs/news/2158909.html" target="_blank" rel="noopener">Impress Watch (24/11)</a></li>
+  <li><strong>Rakuten Group hủy phát hành trái phiếu &amp; diễn biến cổ phiếu (24–25/11):</strong> <a href="https://c-eye.co.jp/topics-dt/121579" target="_blank" rel="noopener">Capital Eye (24/11)</a> · <a href="https://theedgemalaysia.com/node/827013" target="_blank" rel="noopener">Bloomberg / The Edge (25/11)</a></li>
   <li><a href="https://www3.nhk.or.jp/nhkworld/news/20261117de77429/" target="_blank" rel="noopener">NHK WORLD — Tin ngày 17/11/2026</a></li>
   <li><a href="https://www.rakuten-sec.co.jp/web/info/info20261117-02.html" target="_blank" rel="noopener">Rakuten Securities — Thông báo chính thức (17/11/2026)</a></li>
   <li><a href="https://www.rakuten-sec.co.jp/web/company/newsrelease/pdf/press2026111702.pdf" target="_blank" rel="noopener">Rakuten Securities — Thông cáo báo chí (PDF)</a></li>

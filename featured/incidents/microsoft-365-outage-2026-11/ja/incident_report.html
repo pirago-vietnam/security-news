@@ -45,7 +45,7 @@ redirect_from:
 
 <div class="report-header">
   <h1>Microsoft 365（2026年11月12〜14日）— ネットワークゲートウェイの「三重障害」による約24〜30時間の大規模障害</h1>
-  <p class="sub">発生・公開日：<strong>2026-11-12</strong> · <strong>2026年11月23日</strong>時点：Microsoft が11月21日に公表した<strong>最終ポストインシデントレポート（Final PIR・13項目の再発防止策）</strong>、Satya Nadella CEO の Microsoft Ignite 基調講演での謝罪、Charles Lamanna EVP の技術説明、<strong>SLA クレジット申請期限（2026年12月31日）</strong>、および Microsoft Threat Intelligence の便乗フィッシング警告を整理。月次レポート：<a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月セキュリティレポート</a>。</p>
+  <p class="sub">発生・公開日：<strong>2026-11-12</strong> · <strong>2026年11月25日</strong>時点：Microsoft が11月21日に公表した<strong>最終ポストインシデントレポート（Final PIR・13項目の再発防止策）</strong>、11月24日の Reuters 独占報道による社内<strong>「Code Red」メモ</strong>（グローバル復旧1時間目標・AI 診断導入）、<strong>SLA クレジット申請期限（2026年12月31日）</strong>、および Microsoft Threat Intelligence の便乗フィッシング警告を整理。月次レポート：<a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月セキュリティレポート</a>。</p>
 </div>
 
 <blockquote class="callout">
@@ -178,6 +178,7 @@ redirect_from:
     <tr><td>11月12日（16:17〜18:26 UTC）</td><td>Exchange Online（<code>EX1550543</code>）で <strong>16:17〜16:20 UTC 頃</strong>から初期影響が始まり、18:26 UTC 頃に M365 全体（<code>MO1550821</code>）へ拡大。74カ国以上で接続不能となり、約2時間で80%超のゲートウェイが応答停止。</td></tr>
     <tr><td>11月13日〜14日</td><td>トラフィック再配分・イメージ修正を実施し、主要サービスは <strong>11月13日 16:10 UTC 頃</strong>（約23時間50分）に復旧、約30時間後の11月14日にグローバルでの全面安定を確認。</td></tr>
     <tr><td>11月16日〜21日</td><td><strong>英議会答弁と最終 PIR：</strong>11月16日に英政府閣僚が下院で公共機関（NHS の紙運用への一時切替等）への影響を答弁、同日 Microsoft Security Blog が <code>EX1550543</code> 悪用フィッシングを公表。Satya Nadella CEO が Ignite 基調講演で謝罪し、11月21日に<strong>13項目の再発防止策</strong>を含む<strong>最終 PIR</strong>を公表（本番同等環境での検証刷新やトラフィック保護機構の再設計）。なお SLA クレジットは自動付与されず、<strong>2026年12月31日</strong>までに申請が必要。</td></tr>
+    <tr><td>11月23日〜25日</td><td><strong>社内「Code Red」メモ報道（Reuters 11/24）：</strong>M365 Core プレジデント Jason Henderson 氏による「Code Red」宣言（11/20）に続く11月23日付 Amanda Silver CVP の社内メモを Reuters が独占報道。障害対応中は11の Teams チャットで<strong>11,000件超のメッセージ</strong>が飛び交う混乱状態にあり、Charles Lamanna EVP は該当コンポーネントが「約10年分の許容障害」を一気に受けたと説明。負荷遮断・地域別トラフィック分割・高速復旧・AI 診断の5領域で刷新を進め、将来の障害を<strong>1時間以内にグローバル復旧</strong>する目標を設定。</td></tr>
   </tbody>
 </table>
 </div>
@@ -244,6 +245,7 @@ redirect_from:
 <section class="an-sec">
 <h2 id="sources">6. 参考情報</h2>
 <ul>
+  <li><strong>社内「Code Red」メモ（11/20〜24）：</strong> <a href="https://www.ctvnews.ca/sci-tech/article/microsoft-declares-code-red-after-historic-outage-internal-memos-show-reuters-exclusive/" target="_blank" rel="noopener">Reuters / CTV News（2026年11月24日）</a>（5領域の刷新とグローバル1時間復旧目標）。</li>
   <li><strong>Microsoft 最終 PIR（11/21公表）・Ignite 基調講演・Charles Lamanna EVP 説明：</strong> <a href="https://www.geekwire.com/2026/microsofts-final-outlook-outage-report-details-testing-gaps-and-safeguards-that-backfired/" target="_blank" rel="noopener">GeekWire（最終 PIR・13項目）</a>、<a href="https://www.geekwire.com/2026/satya-nadella-kicks-off-microsoft-ignite-with-an-outlook-outage-mea-culpa-we-have-work-to-do/" target="_blank" rel="noopener">GeekWire（Satya Nadella CEO 謝罪）</a>、BleepingComputer、ComputerWeekly、ITPro（2026年11月）。</li>
   <li><strong>Microsoft Threat Intelligence 警告：</strong> <a href="https://www.microsoft.com/en-us/security/blog/2026/11/16/high-volume-phishing-campaign-uses-microsoft-365-outage-lures-target-multiple-industry-sectors-2/" target="_blank" rel="noopener">Microsoft Security Blog（2026年11月16日）</a>（<code>EX1550543</code> 悪用フィッシング、SecurityWeek・Infosecurity Magazine 等報道）。</li>
   <li><strong>英議会答弁・SLA クレジット申請案内：</strong> <a href="https://hansard.parliament.uk/Commons/2026-11-16/debates/52FEDF8F-7F19-47A6-9FB7-1930054C9061/Microsoft365Outage" target="_blank" rel="noopener">UK Parliament Hansard（2026年11月16日）</a>、<a href="https://www.softwareone.com/en-ie/blog/articles/2026/11/19/microsoft-365-outage-sla-credits-next-steps" target="_blank" rel="noopener">SoftwareOne（12月31日申請期限）</a>。</li>

@@ -3,7 +3,7 @@ layout: default
 image: "/featured/incidents/muji/muji-incident-og.png"
 lang: ja
 title: "無印良品（良品計画）— 最大2,726万件の会員情報 & MUJI Card 約109万件流出の恐れ"
-description: "2026年11月23日時点のサービス停止状況、情報流出事案、ガバナンス課題、カード再発行対応と利用者向け対策"
+description: "2026年11月25日時点のサービス停止状況、情報流出事案、株主優待の紙カード切替・発送延期（12/11）、カード再発行対応と利用者向け対策"
 category: "セキュリティインシデント"
 permalink: /ja/featured/incidents/muji/muji_security_incident_report/
 redirect_from:
@@ -37,7 +37,7 @@ redirect_from:
 
 <div class="report-header">
   <h1>無印良品（良品計画）— 最大2,726万件の会員情報 &amp; MUJI Card 約109万件流出の恐れ</h1>
-  <p class="sub">発生・公開日：<strong>2026-10-30</strong> · <strong>2026年11月23日時点</strong>のサービス状況：ネットストアは停止3週目に入っても再開時期未定（実店舗は通常営業）、MUJIアプリは会員証バーコード表示以外を停止。ステータス: <strong>進行中</strong>。月次レポート: <a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月 セキュリティレポート</a>。</p>
+  <p class="sub">発生・公開日：<strong>2026-10-30</strong> · <strong>2026年11月25日時点</strong>のサービス状況：ネットストアは停止3週目に入っても再開時期未定（実店舗は通常営業）、MUJIアプリは会員証バーコード表示以外を停止し、株主優待も紙カードへ切替（11/24発送予定を12/11へ延期）。ステータス: <strong>進行中</strong>。月次レポート: <a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月 セキュリティレポート</a>。</p>
 </div>
 
 <blockquote class="callout">
@@ -45,7 +45,7 @@ redirect_from:
   <ul>
     <li><strong>規模：</strong> 退会者を含む<strong>最大約2,726万件</strong>の会員情報と、MUJI Card の<strong>約109万件</strong>のカード番号（有効カード約34.5万件）が流出の恐れ。</li>
     <li><strong>原因（11月12日の会見で認めた内容）：</strong> システムの脆弱性、2021年7月の刷新時に破棄すべき16桁カード番号をマスキングせず5年間放置（クレディセゾンの削除依頼2回も未実行）、退会者データの未削除、リスト型攻撃（不正ログイン）。</li>
-    <li><strong>現状（11月23日）：</strong> ネットストアは再開時期未定で停止中。クレディセゾンがカード再発行を全額無償で対応し、個人情報保護委員会（PPC）と経産省が調査中です。</li>
+    <li><strong>現状（11月25日）：</strong> ネットストアは第5報・再開時期とも未定で停止継続。株主優待は電子クーポンを中止し紙カードへ切替（12月11日発送へ延期）。クレディセゾンがカード再発行を全額無償で対応し、個人情報保護委員会（PPC）と経産省が調査中です。</li>
     <li><strong>やること：</strong> 不要データの削除、カード番号を平文で保持しない、リスト型攻撃対策（多要素認証・ログイン試行制限）。</li>
   </ul>
 </blockquote>
@@ -65,7 +65,7 @@ redirect_from:
   </div>
   <div class="kpi-card">
     <div class="kpi-num">停止中</div>
-    <div class="kpi-label">ネットストア再開時期未定（11/23時点）</div>
+    <div class="kpi-label">ネットストア再開時期未定（11/25時点）</div>
   </div>
 </div>
 
@@ -138,6 +138,7 @@ redirect_from:
       • <strong>経営・ガバナンスの死角:</strong> 3期連続の過去最高益（営業利益1,000億円超）という好業績の裏で、ITガバナンス・セキュリティ投資が追いついていなかった構造的課題がクローズアップされている。<br>
       • <strong>顧客対応:</strong> 個別連絡（11/10〜）、専用窓口（<code>0120-36-0470</code>）およびクレディセゾンによるカード無償再発行を継続中。</td><td><span class="badge med">ITmedia / 東洋経済 / 文春 · 11/18〜20</span></td></tr>
     <tr><td>2026/11/21〜23</td><td><strong>11月23日時点の確認:</strong> 第5報や個人情報保護委員会（PPC）向け確報の新たな公表は確認されておらず、ネットストアは「再開時期未定」のまま停止を継続（実店舗は通常営業）。良品計画株（TSE: 7453）は EC 機会損失の長期化や対策コスト懸念から、11月上旬の5,100円台から4,800円前後へ軟調に推移（繊研新聞・株探報道）。</td><td><span class="badge med">株探 / 繊研新聞 / Fashionsnap · 11/23</span></td></tr>
+    <tr><td>2026/11/24〜25</td><td><strong>11月25日時点の確認:</strong> 第5報・確報の公表はなく、ネットストアは再開時期未定のまま停止継続。11月24日、<a href="https://www.itmedia.co.jp/news/article/2611/24/2000003419/" target="_blank" rel="noopener noreferrer">ITmedia NEWS</a> がアプリ機能制限に伴う2026年8月期株主優待への影響を報道（電子クーポンを中止し<strong>紙の株主優待カード</strong>へ切替、有人レジのみ7%割引・セルフレジやネットストア不可、11/24発送予定を<strong>12月11日</strong>へ延期し有効期限を2027年5月31日まで延長）。</td><td><span class="badge med">ITmedia / Oricon · 11/24〜25</span></td></tr>
   </tbody>
 </table>
 </div>

@@ -34,15 +34,15 @@ category: "Sự cố an ninh"
 
 <div class="report-header">
   <h1>Làn sóng rò rỉ dữ liệu tại Nhật (20–21/11/2026) — Tower Records, Peach Aviation (Ymirlink) &amp; Infcurion Wallet Station / Payどん</h1>
-  <p class="sub">Xảy ra / Công bố: <strong>2026-11-20</strong> (Peach, Infcurion) và <strong>2026-11-21</strong> (Tower Records) · Cập nhật đến <strong>2026-11-23</strong> · Nguồn: thông cáo của từng công ty và báo chí Nhật · Trạng thái: <strong>đang diễn biến</strong>. Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a>.</p>
+  <p class="sub">Xảy ra / Công bố: <strong>2026-11-20</strong> (Peach, Infcurion) và <strong>2026-11-21</strong> (Tower Records) · Cập nhật đến <strong>2026-11-25</strong> · Nguồn: thông cáo của từng công ty và báo chí Nhật · Trạng thái: <strong>Payどん mở lại từ chiều 26/11; Tower Records Online vẫn đóng</strong>. Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a>.</p>
 </div>
 
 <blockquote class="callout">
   <p><strong>TL;DR (dễ hiểu):</strong> Trong 2 ngày 20–21/11/2026, ba tổ chức Nhật Bản cùng báo có <strong>truy cập trái phép và nguy cơ lộ dữ liệu khách hàng</strong>:</p>
   <ul>
-    <li><strong>Tower Records Online</strong> (cửa hàng đĩa nhạc trực tuyến): tối đa ~11 triệu bản ghi gồm email, mật khẩu đã băm, họ tên, địa chỉ, SĐT. <em>Không</em> có thẻ tín dụng. Cửa hàng online đang đóng.</li>
+    <li><strong>Tower Records Online</strong> (cửa hàng đĩa nhạc trực tuyến): tối đa ~11 triệu bản ghi gồm email, mật khẩu đã băm, họ tên, địa chỉ, SĐT. <em>Không</em> có thẻ tín dụng. Tính đến 25/11, cửa hàng online vẫn đóng (chưa có lịch mở lại).</li>
     <li><strong>Peach Aviation</strong> (hãng bay giá rẻ): ~9 triệu bản ghi (họ tên, ngày sinh, địa chỉ, SĐT, email, lịch trình bay). Nguyên nhân <em>không phải hệ thống của Peach mà là nhà cung cấp gửi email Ymirlink (dịch vụ Cuenote FC)</em>. Không có thẻ, hộ chiếu.</li>
-    <li><strong>Infcurion Wallet Station / Payどん</strong> (nền tảng ví thanh toán): ~251 nghìn bản ghi có thể lộ, <strong>toàn bộ dịch vụ Payどん bị ngừng</strong>.</li>
+    <li><strong>Infcurion Wallet Station / Payどん</strong> (nền tảng ví thanh toán): ~251 nghìn bản ghi có nguy cơ lộ. Ngày 25/11, Infcurion (Báo cáo 4) và Payどん xác nhận đã hoàn tất khắc phục/kiểm tra an toàn và sẽ <strong>mở lại dịch vụ từ chiều 26/11</strong> (bắt buộc đổi mật khẩu và đặt lại thông tin ngân hàng khi đăng nhập lần đầu); mật khẩu rò rỉ đã được chuyển đổi thành chuỗi khó khôi phục.</li>
     <li><strong>Điểm chung:</strong> dữ liệu khách hàng nằm ở hệ thống bên thứ ba/nền tảng dùng chung, nên một điểm yếu có thể kéo theo nhiều thương hiệu.</li>
     <li><strong>Việc cần làm:</strong> cảnh giác email/SMS/cuộc gọi giả mạo; đổi mật khẩu nếu dùng lại ở nơi khác; rà soát nhà cung cấp email/thanh toán của chính mình.</li>
   </ul>
@@ -62,8 +62,8 @@ category: "Sự cố an ninh"
     <div class="kpi-label">Infcurion Wallet Station / Payどん: bản ghi có nguy cơ lộ</div>
   </div>
   <div class="kpi-card">
-    <div class="kpi-num">3 dịch vụ ngừng</div>
-    <div class="kpi-label">Tower online store · Payどん (từ 20/11 06:20) · Peach: vận hành bình thường</div>
+    <div class="kpi-num">Payどん mở 26/11</div>
+    <div class="kpi-label">Payどん mở lại chiều 26/11 (reset bắt buộc) · Tower online vẫn đóng · Peach bình thường</div>
   </div>
 </div>
 
@@ -119,8 +119,8 @@ category: "Sự cố an ninh"
     <tr>
       <td><strong>Infcurion Wallet Station / Payどん</strong><br><span class="badge high">Công bố 20/11</span></td>
       <td>251.172 bản ghi</td>
-      <td>Họ tên, ngày sinh, SĐT, giới tính, email, <strong>mật khẩu</strong> (chưa rõ có băm hay không), thông tin tài khoản ngân hàng, số dư điểm / điểm thưởng địa phương, lịch sử giao dịch (thời gian, cửa hàng, số tiền), thông tin cửa hàng</td>
-      <td>Chưa thấy đề cập thẻ tín dụng. <strong>Toàn bộ dịch vụ Payどん ngừng từ 20/11 06:20</strong>, chưa có lịch khôi phục. Chưa xác nhận lạm dụng.</td>
+      <td>Họ tên, ngày sinh, SĐT, giới tính, email, <strong>mật khẩu</strong> (thông cáo 25/11 xác nhận đã chuyển thành chuỗi khó khôi phục), thông tin tài khoản ngân hàng, số dư điểm / điểm thưởng địa phương, lịch sử giao dịch (thời gian, cửa hàng, số tiền), thông tin cửa hàng</td>
+      <td>Chưa thấy đề cập thẻ tín dụng. Ngừng từ 20/11 06:20; <strong>mở lại tuần tự từ chiều 26/11/2026</strong> (bắt buộc đổi mật khẩu &amp; thông tin ngân hàng lần đầu). Chưa xác nhận lạm dụng.</td>
     </tr>
   </tbody>
 </table>
@@ -194,7 +194,7 @@ category: "Sự cố an ninh"
 <ul>
   <li>Infcurion xác nhận ngày 19/11 có bên thứ ba truy cập trái phép Wallet Station; Payどん cho biết đã "vá lỗ hổng khẩn cấp và chặn đường truy cập" nhưng <strong>không nêu lỗ hổng hay điểm vào</strong>.</li>
   <li>Payどん dùng xác thực SMS với số điện thoại đăng ký ngân hàng nên theo công bố, riêng dữ liệu bị lộ chưa đủ để thực hiện giao dịch ngay (<em>nhận định của Payどん, chưa kiểm chứng độc lập</em>).</li>
-  <li>Infcurion cung cấp Wallet Station cho nhiều doanh nghiệp, đã dừng cung cấp cho các bên "bị ảnh hưởng" nhưng không nêu tên. Một số báo/blog đưa tin AEON Pay, HAPPAY bị ảnh hưởng — <strong>chưa có nguồn chính thức, chưa xác minh</strong>.</li>
+  <li>Infcurion cung cấp Wallet Station cho nhiều doanh nghiệp, đã dừng cung cấp cho các bên liên quan để kiểm tra khẩn cấp. Đến 24–25/11, tình trạng các đối tác đã được làm rõ: <strong>FamiPay</strong> xác nhận không lộ dữ liệu và mở lại thanh toán ngoài cửa hàng lúc 11:15 ngày 24/11; <strong>AEON Pay</strong>, <strong>Kumamon!Pay</strong> và <strong>JACCS</strong> đã mở lại từ 21/11 sau khi xác nhận không rò rỉ; <strong>Moppy Pay</strong> vẫn tạm ngừng (miễn phí duy trì ngày 01/12). Lưu ý: thông báo tạm ngừng HAPPAY (Tsuruha / Drug Eleven) từ 09/11 là sự việc trước khi xảy ra vụ Infcurion.</li>
   <li>Trước đó, 28/10/2026, Payどん có sự cố riêng tại nhà thầu gửi email (ngừng thông báo email và đăng ký mới); không nhầm với sự cố này. Ngoài ra, thông báo 18/11 của Infcurion về dữ liệu tương tác Notion AI/Fireworks AI được công ty cho biết không phải xâm nhập hệ thống Infcurion — cũng là việc riêng.</li>
 </ul>
 </section>
@@ -233,7 +233,9 @@ category: "Sự cố an ninh"
     <tr><td>20/11/2026</td><td><strong>Peach</strong> công bố 8.997.106 bản ghi, báo cáo PPC và bắt đầu gửi email cho khách hàng. <strong>Infcurion / Payどん</strong> công bố (báo cáo đầu tiên lúc 06:00), <strong>ngừng toàn bộ dịch vụ Payどん lúc 06:20</strong>; các ngân hàng liên kết (Kagoshima, Minami-Nippon…) thông báo.</td><td><span class="badge low">Thông cáo chính thức</span></td></tr>
     <tr><td>21/11/2026</td><td><strong>Tower Records</strong> công bố lần đầu (trạng thái đang điều tra): ~11 triệu bản ghi.</td><td><span class="badge high">Thông cáo gốc Tower</span></td></tr>
     <tr><td>22/11/2026</td><td>Tower cập nhật: cửa hàng online vẫn đóng để kiểm tra toàn bộ hệ thống; đơn đặt trước giao dần từ 23/11; marketplace chưa có lịch mở lại. Tin "không đổi được mật khẩu khi dịch vụ ngừng" không có trong thông cáo gốc, chỉ ở một bản tóm tắt tìm kiếm, <em>chưa xác minh</em>.</td><td><span class="badge med">Business+IT / Bloomberg</span></td></tr>
-    <tr><td>23/11/2026</td><td>Rà soát: chưa thấy cập nhật chính thức về khôi phục Payどん hay mở lại Tower online; chưa có xác nhận lạm dụng dữ liệu ở cả ba vụ.</td><td><span class="badge med">Rà soát PiraGo</span></td></tr>
+    <tr><td>23/11/2026</td><td>Tower Records bắt đầu giao dần các đơn đặt trước; cửa hàng online vẫn đóng.</td><td><span class="badge med">Thông cáo Tower</span></td></tr>
+    <tr><td>24/11/2026</td><td><strong>FamiPay</strong> xác nhận không rò rỉ dữ liệu khách hàng và mở lại thanh toán mã ngoài cửa hàng lúc 11:15. <strong>Moppy Pay</strong> cập nhật tiếp tục tạm ngừng (miễn phí duy trì tài khoản tháng 12).</td><td><span class="badge low">Thông cáo FamiPay / Moppy</span></td></tr>
+    <tr><td>25/11/2026</td><td><strong>Infcurion (Báo cáo 4, 17:00 JST):</strong> hoàn tất khắc phục và đánh giá an toàn bởi chuyên gia bên ngoài, xác nhận nối lại <code>Wallet Station</code> cho đối tác bị xâm nhập từ <strong>26/11</strong>. <strong>Payどん</strong> thông báo mở lại tuần tự từ <strong>chiều 26/11</strong> (bắt buộc reset mật khẩu &amp; thông tin ngân hàng lần đầu; xác nhận mật khẩu rò rỉ đã chuyển thành chuỗi khó khôi phục; công bố xử lý phiếu ưu đãi địa phương vào 26/11). <strong>istyle / @cosme</strong> xác nhận đã dùng lại Cuenote FC và hoàn tất thông báo khách hàng. <strong>Tower Records Online</strong> vẫn đóng (HTTP 503), chưa có lịch mở lại.</td><td><span class="badge low">Thông cáo chính thức</span></td></tr>
   </tbody>
 </table>
 </div>
@@ -329,11 +331,10 @@ category: "Sự cố an ninh"
   </li>
   <li>Infcurion Wallet Station / Payどん:
     <ul>
-      <li><a href="https://infcurion.com/news/news-20261120_001/" target="_blank" rel="noopener noreferrer">Infcurion — thông báo 20/11</a></li>
-      <li><a href="https://paydon.jp/2026/11/20/newsrelease20261120" target="_blank" rel="noopener noreferrer">Payどん — thông cáo 20/11 (251.172 bản ghi)</a></li>
-      <li><a href="https://www.kagin.co.jp/important/20261120_094.html" target="_blank" rel="noopener noreferrer">Kagoshima Bank</a> · <a href="https://nangin.jp/information/important/post_1291.html" target="_blank" rel="noopener noreferrer">Minami-Nippon Bank</a></li>
-      <li><a href="https://innovatopia.jp/cyber-security/cyber-security-news/121476/" target="_blank" rel="noopener noreferrer">Innovatopia</a> · <a href="https://act1.co.jp/2026-11-20-06/" target="_blank" rel="noopener noreferrer">Act1</a> (nguồn thứ cấp)</li>
-      <li>Chưa xác minh: tin AEON Pay / HAPPAY bị ảnh hưởng (<a href="https://www.inatei.com/entry/aeon-pay-suspended-infcurion-unauthorized-access" target="_blank" rel="noopener noreferrer">blog</a>) — không có nguồn chính thức.</li>
+      <li><a href="https://infcurion.com/news/news-20261125_001/" target="_blank" rel="noopener noreferrer">Infcurion — Báo cáo thứ 4 (25/11/2026)</a> · <a href="https://infcurion.com/news/news-20261120_001/" target="_blank" rel="noopener noreferrer">Báo cáo 20/11</a></li>
+      <li><a href="https://paydon.jp/2026/11/25/newsrelease20261125" target="_blank" rel="noopener noreferrer">Payどん — Thông báo mở lại dịch vụ 26/11 (25/11/2026)</a> · <a href="https://paydon.jp/2026/11/20/newsrelease20261120" target="_blank" rel="noopener noreferrer">Thông cáo 20/11 (251.172 bản ghi)</a></li>
+      <li>Đối tác Wallet Station: <a href="https://famipay.famidigi.jp/info/2026/11/24/206062/" target="_blank" rel="noopener noreferrer">FamiPay (24/11)</a> · <a href="https://pc.moppy.jp/news/detail.php?news_id=3522" target="_blank" rel="noopener noreferrer">Moppy Pay (24/11)</a> · <a href="https://www.kagin.co.jp/important/20261120_094.html" target="_blank" rel="noopener noreferrer">Kagoshima Bank</a> · <a href="https://nangin.jp/information/important/post_1291.html" target="_blank" rel="noopener noreferrer">Minami-Nippon Bank</a></li>
+      <li><a href="https://www.istyle.co.jp/news/info/2026/11/1109-2.html" target="_blank" rel="noopener noreferrer">istyle / @cosme — Cập nhật dùng lại Cuenote FC (25/11/2026)</a></li>
     </ul>
   </li>
 </ul>

@@ -1,8 +1,8 @@
 ---
 layout: default
 lang: ja
-title: "楽天証券 — テスト環境から最大1,125万口座の情報流出の恐れ"
-description: "2026年11月23日更新：金融庁による報告徴求命令（11/19受領）、セミナー5件中止、集団訴訟準備サイトの登録2万人超、片山金融相発言、影響範囲と利用者向け対策"
+title: "楽天証券 — テスト環境から約1,198万口座のログインID・約441万件の個人情報流出を確認"
+description: "2026年11月25日更新：第2報（11/24）で流出を確定（約1,198万口座・個人情報約441万件・口座未開設者119万件含む）、楽天グループの永久劣後債（最大1,510億円）起債見送り"
 image: "/featured/incidents/rakuten-sec/rakuten-securities-og.png"
 category: "セキュリティインシデント"
 permalink: /ja/featured/incidents/rakuten-sec/rakuten_securities_security_incident_report/
@@ -44,26 +44,26 @@ redirect_from:
 </style>
 
 <div class="report-header">
-  <h1>楽天証券 — テスト環境から最大1,125万口座の情報流出の恐れ</h1>
-  <p class="sub">発生・公開日：<strong>2026-11-17</strong> · <strong>2026年11月23日</strong>時点：11月19日の金融庁・報告徴求命令に続き、20日に自社主催セミナー5件の中止公表、片山さつき金融担当相の閣議後会見発言、集団訴訟準備サイトの登録2万人超を確認。21〜23日にかけて新たな公式調査結果や不正取引は確認されていません。月次レポート：<a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月 月次レポート</a>。</p>
+  <h1>楽天証券 — テスト環境から約1,198万口座のログインID・約441万件の個人情報流出を確認</h1>
+  <p class="sub">発生・公開日：<strong>2026-11-17</strong> · <strong>2026年11月25日</strong>時点：<strong>11月24日公表の第2報</strong>により「流出のおそれ」から<strong>流出確認</strong>へ引き上げ（ログインID等約1,198万口座、個人情報約441万件・うち口座未開設者約119万件、7項目の追加確認、商品別資産情報約168万件）。同日、親会社・楽天グループが最大1,510億円の永久劣後債発行を中止。月次レポート：<a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月 月次レポート</a>。</p>
 </div>
 
 <blockquote class="callout">
-  <p><strong>TL;DR（かんたん解説）：</strong> 楽天証券（15百万超の口座）は、2026年11月11日にテスト環境内の一部情報が漏えいしたおそれを確認しました。</p>
+  <p><strong>TL;DR（かんたん解説）：</strong> 楽天証券（1,500万超の口座）は、2026年11月24日公表の<strong>第2報</strong>で、テスト環境内の顧客情報が外部へ<strong>流出したことを確認</strong>しました。</p>
   <ul>
-    <li><strong>経緯：</strong> 11月16日に第三者による不正アクセスの可能性を検知し遮断・修正、11月17日に公表・謝罪しました。</li>
+    <li><strong>経緯：</strong> 11月16日に第三者による不正アクセス可能性を検知・遮断、17日に公表・謝罪、19日に金融庁から報告徴求命令を受領。<strong>24日に流出確定と詳細件数を公表</strong>（口座未開設の申込者も含む）。</li>
     <li><strong>原因：</strong> システム更新の検証用に本番データをマスキングなしでテスト環境へ配置していたと報じられています。</li>
-    <li><strong>規模：</strong> <strong>最大約1,125万口座</strong>（部店・お客様コード、ログインID）、うち<strong>最大約447万口座</strong>は氏名・住所等の個人情報や金融情報も対象。</li>
-    <li><strong>現状：</strong> 11月18日に投資信託の出庫手数料を当面無料化、11月19日に<strong>金融庁から報告徴求命令</strong>を受領。パスワード・暗証番号の漏えいや不正取引は未確認です。</li>
-    <li><strong>やること：</strong> 本番データをマスキングなしでテスト環境に置かない。なりすましメール・SMSに警戒する。</li>
+    <li><strong>確定規模（11/24時点）：</strong> <strong>約1,198万口座</strong>（部店・お客様コード、ログインID）、<strong>約441万件</strong>の個人情報（口座保有者約322万＋<strong>口座未開設者約119万</strong>）、商品別資産情報約168万件。</li>
+    <li><strong>現状（11/25時点）：</strong> パスワード・暗証番号の漏えいや不正取引は引き続き未確認。親会社の楽天グループが1,510億円規模の劣後債発行を中止（24日）し、25日の株価は一時3.9%下落。渋谷店舗の開店（当初25日予定）は延期継続。</li>
+    <li><strong>やること：</strong> 本番データをマスキングなしでテスト環境に置かない。なりすましメール・SMSに警戒しパスキーを有効化する。</li>
   </ul>
 </blockquote>
 
 <div class="kpi-grid">
-  <div class="kpi-card"><div class="kpi-num crit">~1,125万</div><div class="kpi-label">部店・お客様コード、ログインID（最大口座数）</div></div>
-  <div class="kpi-card"><div class="kpi-num crit">~447万</div><div class="kpi-label">個人情報・金融情報を含む（最大口座数）</div></div>
-  <div class="kpi-card"><div class="kpi-num high">テスト環境</div><div class="kpi-label">本番データを非マスクで一時配置（報道）。退会者含む</div></div>
-  <div class="kpi-card"><div class="kpi-num crit">報告徴求命令</div><div class="kpi-label">11/19 金融庁より受領（原因詳細は調査中）</div></div>
+  <div class="kpi-card"><div class="kpi-num crit">約1,198万</div><div class="kpi-label">部店・お客様コード、ログインID流出確認（第2報）</div></div>
+  <div class="kpi-card"><div class="kpi-num crit">約441万件</div><div class="kpi-label">個人情報流出確認（口座保有322万＋未開設119万）</div></div>
+  <div class="kpi-card"><div class="kpi-num high">約168万件</div><div class="kpi-label">商品別資産情報（自己申告資産コード約271万件も）</div></div>
+  <div class="kpi-card"><div class="kpi-num crit">起債中止</div><div class="kpi-label">楽天グループが永久劣後債（最大1,510億円）を11/24に中止</div></div>
 </div>
 
 <nav class="an-nav" aria-label="目次">
@@ -115,7 +115,9 @@ redirect_from:
     <tr><td>11月18日（水）</td><td>投資信託の出庫手数料（通常1銘柄あたり税込3,300円）を当日の受付分より当面無料化すると発表。11月25日予定だった「楽天証券ストア 渋谷」の開店延期も発表。</td></tr>
     <tr><td>11月19日（木）</td><td>金融庁より金融商品取引法第56条の2第1項および個人情報保護法第146条第1項に基づく<strong>報告徴求命令</strong>を受領。</td></tr>
     <tr><td>11月20日（金）</td><td>報告徴求命令の報道に加え、片山さつき金融担当相が閣議後会見で「非常に遺憾」と述べ、不正取引照会時の即時検証・報告と警察・国家サイバー統括室（NCO）との連携を表明。楽天証券は<strong>主催セミナー5件の中止</strong>（11/21〜2027/1/23）を発表。牧野裕貴弁護士の集団訴訟準備サイトは同日14時時点で<strong>20,000人超</strong>が登録し、楽天グループ株は7%超下落。</td></tr>
-    <tr><td>11月21日〜23日</td><td>週末にかけて SNS 上の過去の補償画像等による誤情報や便乗フィッシングへの注意喚起が継続。<strong>11月23日時点</strong>で新たな公式調査結果や不正取引の報告はありません。</td></tr>
+    <tr><td>11月21日〜23日</td><td>週末にかけて SNS 上の過去の補償画像等による誤情報や便乗フィッシングへの注意喚起が継続。</td></tr>
+    <tr><td>11月24日（火）</td><td><strong>第2報公表・流出確定：</strong>「流出のおそれ」から<strong>流出確認</strong>へ引き上げ。ログインID等 <strong>約1,198万口座</strong>、個人情報 <strong>約441万件</strong>（口座保有者約322万＋<strong>口座未開設者約119万</strong>）を確認し、7項目（性別・国籍・FAX番号・入金先口座情報・口座開設/受付/解約状況・口座登録アンケート・口座登録状況）を追加特定。商品別資産情報約168万件、自己申告資産コード約271万件、同年収コード約1.4万件も公表。同日、親会社の<strong>楽天グループ</strong>が最大1,510億円の永久劣後債発行を中止（訂正発行登録書を提出）。</td></tr>
+    <tr><td>11月25日（水）</td><td>当初16時開店予定だった「楽天証券ストア 渋谷」の延期が継続。楽天グループ株は一時3.9%下落（2023年11月以来の安値水準）。パスワード・暗証番号の漏えいや不正取引は引き続き未確認。</td></tr>
   </tbody>
 </table>
 </div>
@@ -129,18 +131,19 @@ redirect_from:
 <text x="0" y="27" font-size="12.5" fill="currentColor">総口座数（参考）</text>
 <rect x="250" y="10" width="360" height="24" rx="4" fill="var(--line)"/><text x="618" y="27" font-size="12.5" font-weight="700" fill="currentColor">15M+</text>
 <text x="0" y="67" font-size="12.5" fill="currentColor">部店・顧客コード、ID</text>
-<rect x="250" y="50" width="270" height="24" rx="4" fill="var(--crit)"/><text x="528" y="67" font-size="12.5" font-weight="700" fill="currentColor">~11,25M</text>
-<text x="0" y="107" font-size="12.5" fill="currentColor">＋個人・金融情報</text>
-<rect x="250" y="90" width="107" height="24" rx="4" fill="var(--high)"/><text x="365" y="107" font-size="12.5" font-weight="700" fill="currentColor">~4,47M</text>
+<rect x="250" y="50" width="288" height="24" rx="4" fill="var(--crit)"/><text x="546" y="67" font-size="12.5" font-weight="700" fill="currentColor">約1,198万</text>
+<text x="0" y="107" font-size="12.5" fill="currentColor">＋個人情報（流出確認）</text>
+<rect x="250" y="90" width="106" height="24" rx="4" fill="var(--high)"/><text x="364" y="107" font-size="12.5" font-weight="700" fill="currentColor">約441万</text>
 </svg>
-<figcaption>最大規模（線形スケール、単位：百万口座）。発表は二つの区分を別項目で列挙しており、単純合算はできません。1,500万はNHKが報じた11月2日時点の総口座数です。</figcaption>
+<figcaption>第2報（11/24）に基づく確定規模（線形スケール、単位：万）。1,500万はNHKが報じた11月2日時点の総口座数です。</figcaption>
 </figure>
 <div class="table-wrap">
 <table>
-  <thead><tr><th>区分</th><th>件数（最大）</th><th>流出の恐れがある情報</th></tr></thead>
+  <thead><tr><th>区分（第2報・11/24）</th><th>確認件数</th><th>流出が確認された情報</th></tr></thead>
   <tbody>
-    <tr><td>区分1</td><td>約447万口座</td><td>部店・お客様コード、ログインID（楽天IDとは別）、氏名、カナ氏名、生年月日、住所、電話番号、メールアドレス、勤務先、出金先口座（金融機関・口座番号・名義人）、年収・金融資産（お客様ご申告情報）、商品別資産情報、最終ログイン日。退会者を含む。</td></tr>
-    <tr><td>区分2</td><td>約1,125万口座</td><td>部店・お客様コード、ログインID。</td></tr>
+    <tr><td>区分1（ログインID等）</td><td>約1,198万口座</td><td>部店・お客様コード、ログインID（楽天IDとは別。第1報の約1,125万から精査）。</td></tr>
+    <tr><td>区分2（個人情報）</td><td>約441万件（保有322万＋未開設119万）</td><td>氏名・カナ氏名・生年月日・住所・電話・メール・勤務先・出金先口座に加え、<strong>新たに7項目を確認</strong>：性別、国籍、FAX番号、入金先口座情報（当社口座情報）、口座開設・受付・解約状況、口座登録アンケート情報、口座登録状況（途中解約後の再申込等による重複の可能性あり）。</td></tr>
+    <tr><td>区分3（資産・年収情報）</td><td>商品別約168万 · 申告資産約271万 · 年収約1.4万</td><td>商品別資産情報（約168万件、預り残高ありのみ・個別銘柄/取引履歴やマネーブリッジ残高は除外）。自己申告の資産情報（約271万件）および年収情報（約1.4万件）は選択肢コードのみで具体額は含まず。</td></tr>
   </tbody>
 </table>
 </div>
@@ -185,6 +188,8 @@ redirect_from:
 <section class="an-sec">
 <h2 id="sources">6. 参考情報</h2>
 <ul>
+  <li><a href="https://www.rakuten-sec.co.jp/web/info/info20261124-04.html" target="_blank" rel="noopener">楽天証券 — 第2報 公式お知らせ（2026年11月24日）</a> · <a href="https://www.watch.impress.co.jp/docs/news/2158909.html" target="_blank" rel="noopener">Impress Watch（11月24日）</a></li>
+  <li><strong>楽天グループ永久劣後債の中止・株価動向（11/24〜25）：</strong> <a href="https://c-eye.co.jp/topics-dt/121579" target="_blank" rel="noopener">キャピタルアイ（11/24）</a> · <a href="https://theedgemalaysia.com/node/827013" target="_blank" rel="noopener">Bloomberg / The Edge（11/25）</a></li>
   <li><a href="https://www3.nhk.or.jp/nhkworld/news/20261117de77429/" target="_blank" rel="noopener">NHK WORLD（2026年11月17日）</a></li>
   <li><a href="https://www.rakuten-sec.co.jp/web/info/info20261117-02.html" target="_blank" rel="noopener">楽天証券 — 公式お知らせ（2026年11月17日）</a></li>
   <li><a href="https://www.rakuten-sec.co.jp/web/company/newsrelease/pdf/press2026111702.pdf" target="_blank" rel="noopener">楽天証券 — プレスリリース（PDF）</a></li>
