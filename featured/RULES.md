@@ -115,7 +115,12 @@ Mọi trang trong `featured/` đều tuân theo thứ tự các khối sau:
 
 ### A. Trang Phân tích Lỗ hổng (`category: vulnerability`)
 
-Tham khảo chuẩn: `featured/nginx-cve-2026-123007/analysis.html`, `featured/linux-cve-2026-99312/analysis.html`.
+Tham khảo chuẩn: `featured/vulnerabilities/ruby-ghsa-34m4-m9fh-gqp5/analysis.html`, `featured/vulnerabilities/nginx-cve-2026-123007/analysis.html`, `featured/vulnerabilities/linux-cve-2026-99312/analysis.html`.
+
+> **Nguyên tắc viết ngắn gọn & ưu tiên sơ đồ:**
+> - **Lấy sơ đồ và KPI card làm trung tâm:** Mở đầu bằng `.kpi-grid` (4 thẻ) và dẫn dắt các mục chính bằng sơ đồ SVG (`<figure class="fig">`: chuỗi tấn công, cơ chế, tổng quan trạng thái bản vá, cây quyết định, quy trình xử lý 4 bước) để người đọc nắm bức tranh tổng thể ngay khi lướt qua.
+> - **Giảm độ khó & tránh dàn trải:** Mỗi mục giải thích chỉ giữ **3–4 gạch đầu dòng ngắn** (1–2 câu dễ hiểu mỗi ý); tránh nhồi chuỗi vector CVSS thô, chi tiết cấp phát bộ nhớ/ASLR quá sâu hay liệt kê hàng chục link rời rạc.
+> - **Gộp bảng phạm vi:** Nhóm các distro/sản phẩm thành **~6–8 dòng tóm tắt** thay vì tách bảng quá dài.
 
 | Thứ tự | ID neo (`#`) | Tiêu đề mục | Nội dung bắt buộc |
 | :--- | :--- | :--- | :--- |
@@ -206,6 +211,7 @@ Thêm entry mới vào `_data/featured.yml` để trang tự động hiển th�
 - [ ] Đủ 2 bản HTML (`vi` và `ja`, bản `ja` có `lang: ja` và `permalink: /ja/featured/...`).
 - [ ] Front Matter `image:` trỏ đúng file `-og.png` (1200×630), nội dung trên ảnh **bằng tiếng Anh**.
 - [ ] Tất cả `<figure class="fig">` hiển thị rõ, không tràn/chồng chữ, mỗi `<marker>` có `id` riêng.
+- [ ] Nội dung ngắn gọn, dễ đọc, ưu tiên sơ đồ SVG + KPI card làm overview; mỗi mục không quá 3–4 gạch đầu dòng ngắn, bảng phạm vi gộp gọn (~6–8 dòng).
 - [ ] Đã đăng ký vào `_data/featured.yml` đúng thứ tự ngày công bố/xảy ra ban đầu và đúng `month: "YYYY-MM"`.
 - [ ] Nếu là lỗ hổng: tuyệt đối không chứa mã khai thác (exploit code).
 - [ ] Kiểm tra build Jekyll cục bộ (`bundle exec jekyll build` hoặc `jekyll serve`) không báo lỗi.
