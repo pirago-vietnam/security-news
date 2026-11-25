@@ -1,0 +1,278 @@
+---
+layout: default
+lang: ja
+title: "京王電鉄グループ — ランサムウェア被害（Qilin）で約1,063万人超に個人情報流出の恐れ"
+description: "京王電鉄グループのランサムウェア被害（2026年9月26日検知・11月24日確報）の分析：グループ46社が対象、顧客・取引先等約1,063万人に流出の恐れ（ホテル宿泊者パスポート写し約160万件・クレジットカード番号約2万件等）、鉄道運行は別系統で影響なし。"
+image: "/featured/incidents/keio-group-2026/keio-group-og.png"
+category: "セキュリティインシデント"
+permalink: /ja/featured/incidents/keio-group-2026/incident_report/
+---
+<style>
+  .an-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
+  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--line); color: var(--text-muted); }
+  .an-nav a:hover { color: var(--pirago-blue); border-color: var(--pirago-blue); text-decoration: none; }
+  .an-sec { margin: 0 0 40px; }
+  .an-sec h2 { font-size: 21px; margin: 28px 0 14px; scroll-margin-top: 90px; }
+  .an-sec h3 { font-size: 17px; margin: 20px 0 8px; }
+  .an-sec ul, .an-sec ol { padding-left: 22px; }
+  .an-sec li { margin: 6px 0; }
+  .an-sec .table-wrap { overflow-x: auto; margin: 14px 0 20px; }
+  .an-sec code { word-break: break-all; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 20px 0 24px; }
+  .kpi-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); }
+  .kpi-num { font-size: 22px; font-weight: 800; font-family: var(--font-mono); color: var(--pirago-navy); line-height: 1.2; margin-bottom: 4px; }
+  html[data-theme="dark"] .kpi-num { color: #5ab0e8; }
+  .kpi-num.crit { color: var(--crit); }
+  .kpi-num.high { color: var(--high); }
+  .kpi-label { font-size: 12.5px; color: var(--text-muted); line-height: 1.4; }
+  .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
+  .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
+  .fig .mut { fill: var(--text-muted); }
+  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
+</style>
+
+<div class="report-header">
+  <h1>京王電鉄グループ — ランサムウェア被害（Qilin）で約1,063万人超に個人情報流出の恐れ</h1>
+  <p class="sub">発生・公開日：<strong>2026-09-26</strong> · <strong>2026年11月25日</strong>時点（11月24日 個人情報保護委員会へ<strong>確報</strong>提出） · 対象：<strong>グループ46社</strong> · 鉄道運行システムは別系統のため影響なし。月次レポート：<a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月 月次レポート</a>。 <span class="badge crit">CRITICAL INCIDENT</span></p>
+</div>
+
+<blockquote class="callout">
+  <p><strong>TL;DR（かんたん解説）：</strong> <strong>2026年9月26日未明</strong>、京王電鉄グループの社内サーバーがランサムウェア攻撃を受けました。</p>
+  <ul>
+    <li><strong>何が起きた？</strong> 当日中にネットワークを遮断しましたが、攻撃組織（<strong>Qilin</strong>）が10月に一部情報の公開を主張。<strong>11月24日</strong>に調査結果の最終報告（確報）を公表しました。</li>
+    <li><strong>規模：</strong> 従業員・応募者・賃借人など約12,310人分の流出が確定し、顧客・取引先など<strong>約1,063万人</strong>に流出の恐れ（ホテル宿泊者の<strong>パスポート写し約160万件</strong>、<strong>クレジットカード番号約2万件</strong>、不動産本人確認書類約4.6万件、マイナンバー124件を含む）。</li>
+    <li><strong>実務影響：</strong> 鉄道運行と PASMO は<strong>通常稼働</strong>（別ネットワーク）である一方、京王プレッソインの新規予約停止により宿泊収入が<strong>約18億円減収</strong>見込み、第2四半期決算発表も12月4日へ延期されました。</li>
+    <li><strong>現状とやること：</strong> 二次被害・不正利用は未確認。京王グループを装う不審メール・SMS・電話に警戒し、該当カードや百貨店カードの利用明細を確認してください。</li>
+  </ul>
+</blockquote>
+
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-num crit">約1,063万人</div><div class="kpi-label">顧客・取引先等に流出の恐れ（各区分単純合算は延べ約1,108万人）</div></div>
+  <div class="kpi-card"><div class="kpi-num crit">約160万 + 約2万</div><div class="kpi-label">ホテル外国人客パスポート写し約160万件・クレカ番号約2万件</div></div>
+  <div class="kpi-card"><div class="kpi-num high">46社 · 約18億円</div><div class="kpi-label">グループ46社が調査対象；プレッソインで約18億円の減収見込み</div></div>
+  <div class="kpi-card"><div class="kpi-num">鉄道運行 影響0</div><div class="kpi-label">運行システムは別系統で安全；二次被害も現時点で未確認</div></div>
+</div>
+
+<nav class="an-nav" aria-label="目次">
+  <a href="#summary">1. 概要と影響範囲</a>
+  <a href="#root-cause">2. 原因とネットワーク構成</a>
+  <a href="#timeline">3. 経緯と復旧状況</a>
+  <a href="#impact">4. 事業影響と二次リスク</a>
+  <a href="#recommendations">5. PiraGo への提言</a>
+  <a href="#sources">6. 参考情報</a>
+</nav>
+
+<section class="an-sec">
+<h2 id="summary">1. 概要と影響範囲</h2>
+<ul>
+  <li><strong>事案の概要：</strong> 2026年9月26日未明、京王電鉄グループのサーバーに対するランサムウェア攻撃を確認 <span class="badge low">公式発表</span>。10月中旬にランサムウェア集団 <strong>Qilin</strong> がダークウェブ上で犯行を主張しました <span class="badge med">国内報道</span>。</li>
+  <li><strong>件数の見方：</strong> 11月24日公表の確報では重複の可能性から単一の合算値は示されておらず、各区分の単純合算は<strong>延べ約1,108万人分</strong>（顧客・取引先等 約1,063万＋応募者 約36万＋従業員等 約7.7万＋流出確定 約1.23万）となります。</li>
+  <li><strong>影響を受けなかった領域：</strong> 鉄道の運行管理システム（京王線・井の頭線）および PASMO 等の交通系 IC システムは<strong>別系統のネットワーク</strong>で運用されており、運行への支障は発生していません <span class="badge low">公式発表</span>。</li>
+</ul>
+
+<figure class="fig">
+<svg viewBox="0 0 740 245" role="img" aria-label="京王グループ インシデント影響件数の内訳">
+<text x="10" y="26" font-size="12" fill="currentColor">顧客・取引先等（流出の恐れ）</text>
+<rect x="240" y="10" width="380" height="22" rx="4" fill="var(--crit)"/>
+<text x="628" y="26" font-size="12" font-weight="700" fill="currentColor">約1,063万人</text>
+
+<text x="10" y="60" font-size="12" fill="currentColor">↳ ホテル宿泊者パスポート写し</text>
+<rect x="240" y="44" width="58" height="22" rx="4" fill="var(--crit)"/>
+<text x="306" y="60" font-size="12" font-weight="700" fill="currentColor">約160万件</text>
+
+<text x="10" y="94" font-size="12" fill="currentColor">採用応募者（流出の恐れ）</text>
+<rect x="240" y="78" width="16" height="22" rx="4" fill="var(--high)"/>
+<text x="264" y="94" font-size="12" font-weight="700" fill="currentColor">約36万人</text>
+
+<text x="10" y="128" font-size="12" fill="currentColor">従業員・退職者・家族（恐れ）</text>
+<rect x="240" y="112" width="8" height="22" rx="4" fill="var(--high)"/>
+<text x="256" y="128" font-size="12" font-weight="700" fill="currentColor">約7.7万人</text>
+
+<text x="10" y="162" font-size="12" fill="currentColor">↳ 不動産本人確認／クレカ番号</text>
+<rect x="240" y="146" width="6" height="22" rx="4" fill="var(--med)"/>
+<text x="254" y="162" font-size="12" font-weight="700" fill="currentColor">約4.6万件 KYC · 約20,491件 カード</text>
+
+<text x="10" y="196" font-size="12" fill="currentColor">流出確定（従業員・応募者・賃貸）</text>
+<rect x="240" y="180" width="5" height="22" rx="4" fill="var(--pirago-blue)"/>
+<text x="253" y="196" font-size="12" font-weight="700" fill="currentColor">約12,310人（1.2万＋160＋150）</text>
+
+<text x="10" y="230" font-size="11" class="mut">出典：京王電鉄 公式確報（2026年11月24日）。区分間で重複の可能性があるため単純合算はできません。</text>
+</svg>
+<figcaption>京王グループ 11月24日確報に基づく影響区分別の規模。</figcaption>
+</figure>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>区分</th><th>対象者</th><th>件数</th><th>主な項目</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><span class="badge crit">流出確定</span></td>
+      <td>従業員・退職者とその扶養家族</td>
+      <td>約12,000人</td>
+      <td>氏名、人事情報など。</td>
+    </tr>
+    <tr>
+      <td><span class="badge crit">流出確定</span></td>
+      <td>採用応募者・京王電鉄所有賃貸の契約者</td>
+      <td>約160人＋約150人</td>
+      <td>氏名、住所、電話番号、応募書類（160人）；氏名、住所等（150人）。</td>
+    </tr>
+    <tr>
+      <td><span class="badge high">流出の恐れ</span></td>
+      <td>顧客・取引先等（グループ46社）</td>
+      <td>約1,063万人</td>
+      <td>氏名・住所・電話・メールに加え、<strong>パスポート写し約160万件</strong>（プレッソイン、京王プラザ、札幌、高山グリーンホテル）＋65件・番号のみ942件、<strong>京王百貨店専用クレカ番号約2万件</strong>＋382件（京王プラザ2012〜18年）＋109件（クローゼット）、<strong>不動産本人確認書類約4.6万件</strong>（京王不動産・リビタ）、マイナンバー写し6件。</td>
+    </tr>
+    <tr>
+      <td><span class="badge high">流出の恐れ</span></td>
+      <td>採用応募者・従業員等</td>
+      <td>約36万人＋約7.7万人</td>
+      <td>応募書類等（約36万人）；人事情報およびマイナンバー118件（リビタ住民票116件、京王不動産カード写し2件）を含む（約7.7万人）。</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section class="an-sec">
+<h2 id="root-cause">2. 原因とネットワーク構成</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 215" role="img" aria-label="京王グループの鉄道運行ネットワークとグループIT基盤の分離図">
+<defs><marker id="keio-ja-ah1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs>
+<rect class="box" x="10" y="16" width="190" height="76" rx="8" style="stroke:var(--crit);stroke-width:1.6"/>
+<text x="105" y="40" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">攻撃組織 Qilin（RaaS）</text>
+<text x="105" y="58" text-anchor="middle" font-size="10.5" class="mut">初期侵入経路は非公表</text>
+<text x="105" y="74" text-anchor="middle" font-size="10.5" class="mut">（警察・専門家と調査中）</text>
+
+<line x1="200" y1="54" x2="245" y2="54" stroke="var(--crit)" stroke-width="1.8" marker-end="url(#keio-ja-ah1)"/>
+
+<rect class="box" x="248" y="16" width="225" height="76" rx="8" style="stroke:var(--crit);stroke-width:1.6"/>
+<text x="360" y="40" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">グループ IT 網（46社）</text>
+<text x="360" y="58" text-anchor="middle" font-size="10.5" class="mut">社内サーバー・経理・ホテル・</text>
+<text x="360" y="74" text-anchor="middle" font-size="10.5" class="mut">小売 POS・過去データ（2012〜）</text>
+
+<line x1="473" y1="54" x2="518" y2="54" stroke="var(--crit)" stroke-width="1.8" marker-end="url(#keio-ja-ah1)"/>
+
+<rect class="box" x="520" y="16" width="210" height="76" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+<text x="625" y="40" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">遮断・情報流出</text>
+<text x="625" y="58" text-anchor="middle" font-size="10.5" class="mut">9/26 遮断、10/16 Qilin 主張</text>
+<text x="625" y="74" text-anchor="middle" font-size="10.5" class="mut">約1,063万人分に流出の恐れ</text>
+
+<rect class="box" x="10" y="124" width="720" height="70" rx="8" style="stroke:var(--low);stroke-width:1.6"/>
+<text x="370" y="150" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">鉄道運行システム（OT 網）— 完全分離（別系統）</text>
+<text x="370" y="170" text-anchor="middle" font-size="11" class="mut">京王線・井の頭線の運行制御および PASMO 等の交通系 IC は影響を受けず正常稼働。</text>
+</svg>
+<figcaption>被害を受けたグループ IT ネットワーク（46社）と、別系統で保護された鉄道運行システム。</figcaption>
+</figure>
+<ul>
+  <li><strong>侵入経路（非公表）：</strong> 4回の公式発表および11月17日の IR 資料でも技術的な侵入経路（VPN・AD・脆弱性等）は明らかにされておらず、IT ガバナンス上の課題を洗い出して抜本見直しを進めるとしています。</li>
+  <li><strong>調査に約2カ月を要した背景：</strong> 対象が<strong>グループ46社</strong>（交通8・不動産4・ホテル6・建設設備5・生活サービス23）に跨がり、外部専門家によるフルフォレンジックと2012〜2018年分を含む過去データの精査が必要でした。</li>
+  <li><strong>攻撃者（Qilin）：</strong> 10月中旬にダークウェブで <code>KEIO CORPORATION</code> として業務委託契約書など27枚の画像サンプルを掲載。身代金要求の有無について京王電鉄は回答を控えています。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="timeline">3. 経緯と復旧状況</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 160" role="img" aria-label="京王グループ インシデントのタイムライン">
+<line x1="40" y1="68" x2="700" y2="68" stroke="var(--line)" stroke-width="3"/>
+<circle cx="80" cy="68" r="10" fill="var(--crit)"/>
+<circle cx="240" cy="68" r="10" fill="var(--high)"/>
+<circle cx="385" cy="68" r="10" fill="var(--crit)"/>
+<circle cx="530" cy="68" r="10" fill="var(--pirago-blue)"/>
+<circle cx="660" cy="68" r="10" fill="var(--low)"/>
+
+<text x="80" y="38" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">9/26</text>
+<text x="240" y="38" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">10/9〜16</text>
+<text x="385" y="38" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">10/21</text>
+<text x="530" y="38" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">10/30〜11/17</text>
+<text x="660" y="38" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">11/24</text>
+
+<text x="80" y="100" text-anchor="middle" font-size="11.5" font-weight="700" fill="currentColor">検知・遮断</text>
+<text x="80" y="116" text-anchor="middle" font-size="10.5" class="mut">第1報・PPC速報</text>
+
+<text x="240" y="100" text-anchor="middle" font-size="11.5" font-weight="700" fill="currentColor">被害届 / Qilin</text>
+<text x="240" y="116" text-anchor="middle" font-size="10.5" class="mut">警視庁受理 · 第2報</text>
+
+<text x="385" y="100" text-anchor="middle" font-size="11.5" font-weight="700" fill="currentColor">公開確認</text>
+<text x="385" y="116" text-anchor="middle" font-size="10.5" class="mut">外部専門家報告（第3報）</text>
+
+<text x="530" y="100" text-anchor="middle" font-size="11.5" font-weight="700" fill="currentColor">決算延期・IR</text>
+<text x="530" y="116" text-anchor="middle" font-size="10.5" class="mut">宿泊18億円減収見込</text>
+
+<text x="660" y="100" text-anchor="middle" font-size="11.5" font-weight="700" fill="currentColor">確報提出</text>
+<text x="660" y="116" text-anchor="middle" font-size="10.5" class="mut">約1,063万人公表</text>
+</svg>
+<figcaption>京王電鉄グループのランサムウェア被害タイムライン（2026年9月〜11月）。</figcaption>
+</figure>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>日時</th><th>主な経緯</th><th>信頼度</th></tr></thead>
+  <tbody>
+    <tr><td>2026/09/26</td><td>未明にランサムウェア攻撃を検知し、ネットワーク遮断・警察通報・PPC 速報を実施、<strong>第1報</strong>を公表。鉄道運行に影響なし。</td><td><span class="badge low">京王公式</span></td></tr>
+    <tr><td>09/29〜10/20</td><td>小売店の決済機能（9/29〜30）および京王ポイントサービス（10/10〜20）を順次再開。</td><td><span class="badge low">京王 IR 資料</span></td></tr>
+    <tr><td>10/09・10/16</td><td>警視庁が被害届を受理（10/9、報道）。10/16、攻撃組織（Qilin）による情報公開主張を確認し<strong>第2報</strong>を公表。</td><td><span class="badge med">京王／国内報道</span></td></tr>
+    <tr><td>2026/10/21</td><td><strong>第3報：</strong>外部専門家から情報公開の報告を受け、個人情報流出の可能性について PPC へ報告。</td><td><span class="badge low">京王公式</span></td></tr>
+    <tr><td>10/30・11/17</td><td>経理関連システム停止に伴い第2四半期決算発表を11/10から<strong>12月4日</strong>へ延期。11/17の IR 資料で京王プレッソインの約18億円減収見込みを公表。</td><td><span class="badge low">適時開示 IR</span></td></tr>
+    <tr><td>2026/11/24</td><td>PPC へ<strong>確報</strong>を提出し公表：流出確定約1.23万人・流出の恐れ約1,063万人（顧客等）を明示、専用窓口（<code>0120-089-925</code>）を設置。</td><td><span class="badge low">京王公式</span></td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section class="an-sec">
+<h2 id="impact">4. 事業影響と二次リスク</h2>
+<ul>
+  <li><strong>宿泊事業・業績への影響：</strong> <strong>京王プレッソイン</strong>は9月26日以降の新規予約受付を停止中（12月中に再開見込み）で、稼働率は10月約30%減・11月約70%減・12月約80%減、宿泊収入は<strong>約18億円の減収</strong>を見込んでいます。</li>
+  <li><strong>機微情報（パスポート・本人確認・マイナンバー）のリスク：</strong> 約160万件のパスポート写しや約4.6万件の不動産本人確認書類、124件のマイナンバーが含まれるため、なりすまし口座開設・契約や標的型詐欺の二次リスクに注意が必要です。</li>
+  <li><strong>窓口・注意喚起：</strong> 専用窓口 <code>0120-089-925</code> / <code>customer@keio.co.jp</code>（平日 10:00〜17:00）。現時点で金銭賠償の案内はなく、カード明細確認とフィッシング警戒が呼びかけられています。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="recommendations">5. PiraGo への提言</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 145" role="img" aria-label="マルチ企業グループにおけるランサムウェア対策の4本柱">
+<rect class="box" x="6" y="12" width="174" height="118" rx="8" style="stroke:var(--low);stroke-width:1.5"/>
+<text x="93" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">1. OT / IT 網の完全分離</text>
+<text x="93" y="60" text-anchor="middle" font-size="10.5" class="mut">重要インフラ・基幹系を</text>
+<text x="93" y="76" text-anchor="middle" font-size="10.5" class="mut">社内 IT ネットワークから</text>
+<text x="93" y="92" text-anchor="middle" font-size="10.5" class="mut">物理・論理的に分離維持</text>
+
+<rect class="box" x="190" y="12" width="174" height="118" rx="8" style="stroke:var(--crit);stroke-width:1.5"/>
+<text x="277" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">2. 過去 PII の自動削除</text>
+<text x="277" y="60" text-anchor="middle" font-size="10.5" class="mut">パスポート写し・KYC・</text>
+<text x="277" y="76" text-anchor="middle" font-size="10.5" class="mut">2012〜18年カード情報等</text>
+<text x="277" y="92" text-anchor="middle" font-size="10.5" class="mut">に保存期限と暗号化を適用</text>
+
+<rect class="box" x="374" y="12" width="174" height="118" rx="8" style="stroke:var(--pirago-blue);stroke-width:1.5"/>
+<text x="461" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">3. 子会社ガバナンス</text>
+<text x="461" y="60" text-anchor="middle" font-size="10.5" class="mut">全グループ会社へ MFA・</text>
+<text x="461" y="76" text-anchor="middle" font-size="10.5" class="mut">EDR を統一適用し、</text>
+<text x="461" y="92" text-anchor="middle" font-size="10.5" class="mut">横展開経路を遮断</text>
+
+<rect class="box" x="558" y="12" width="176" height="118" rx="8" style="stroke:var(--high);stroke-width:1.5"/>
+<text x="646" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">4. 経理・予約の保全</text>
+<text x="646" y="60" text-anchor="middle" font-size="10.5" class="mut">イミュータブルバックアップ</text>
+<text x="646" y="76" text-anchor="middle" font-size="10.5" class="mut">で決算遅延・長期停止の</text>
+<text x="646" y="92" text-anchor="middle" font-size="10.5" class="mut">事業ダメージを最小化</text>
+</svg>
+<figcaption>京王電鉄グループの事例から得られる4つの技術・ガバナンス教訓。</figcaption>
+</figure>
+<ol>
+  <li><strong>OT / コア基盤のネットワーク分離：</strong> 本件では鉄道運行系統を別ネットワークとしていたことで社会インフラの停止を回避できました。決済や本番サービス基盤でも同様に管理網・一般 OA 網からの分離を徹底すべきです。</li>
+  <li><strong>機微書類（パスポート・本人確認・マイナンバー）のライフサイクル管理：</strong> 過去の申込書やホテルチェックイン時のスキャン画像が共有サーバーに残存すると被害が拡大します。法定保存期間後の自動パージとアクセス権最小化が不可欠です。</li>
+  <li><strong>グループ・関連会社を含めた統一防御と不変バックアップ：</strong> 関連会社間の横展開を防ぐゼロトラスト分離と、経理・予約システムのイミュータブル（改ざん不可）バックアップにより事業停止期間を短縮します。</li>
+</ol>
+</section>
+
+<section class="an-sec">
+<h2 id="sources">6. 参考情報</h2>
+<ul>
+  <li><strong>京王電鉄 公式発表：</strong> <a href="https://www.keio.co.jp/news/update/news_release/news_release2026/pdf/nr20261124_newsrelease.pdf" target="_blank" rel="noopener noreferrer">確報（2026年11月24日 PDF）</a> · <a href="https://www.nikkei.com/markets/ir/irftp/data/tdnr/tdnetg3/20261117/g8gu5x/140120261116581333.pdf" target="_blank" rel="noopener noreferrer">TDnet IR 資料（11月17日 PDF）</a> · <a href="https://www.keio.co.jp/news/update/news_release/news_release2026/pdf/nr20261021_newsrelease.pdf" target="_blank" rel="noopener noreferrer">第3報（10/21）</a> · <a href="https://www.keio.co.jp/news/update/news_release/news_release2026/pdf/nr20261016_newsrelease.pdf" target="_blank" rel="noopener noreferrer">第2報（10/16）</a> · <a href="https://www.keio.co.jp/news/update/announce/nr260926v13404/" target="_blank" rel="noopener noreferrer">第1報（9/26）</a>。</li>
+  <li><strong>専門メディア・国内報道：</strong> <a href="https://internet.watch.impress.co.jp/docs/news/2159048.html" target="_blank" rel="noopener noreferrer">INTERNET Watch（11/25）</a> · <a href="https://www.itmedia.co.jp/news/article/2611/25/2000003429/" target="_blank" rel="noopener noreferrer">ITmedia NEWS（11/25）</a> · <a href="https://www.yomiuri.co.jp/national/20261124-GYT1T00326/" target="_blank" rel="noopener noreferrer">読売新聞（11/24）</a> · <a href="https://www.fnn.jp/articles/-/1158409?display=full" target="_blank" rel="noopener noreferrer">FNN プライムオンライン（11/24）</a> · <a href="https://www.traicy.com/posts/20261122389090/" target="_blank" rel="noopener noreferrer">TRAICY（11/22）</a> · <a href="https://www.risktaisaku.com/articles/-/116384" target="_blank" rel="noopener noreferrer">リスク対策.com（10/21）</a>。</li>
+</ul>
+</section>

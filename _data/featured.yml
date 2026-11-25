@@ -553,3 +553,29 @@
     - sev: low
       label: {vi: "Bồi thường", ja: "補償"}
       text: {vi: "Đến 12/11, 2.943 tài khoản yêu cầu bồi thường khoảng 2,998 tỷ JPY; chi phí trực tiếp dự kiến 3,05 tỷ JPY, chưa phải số tiền chi trả đã xác nhận.", ja: "11月12日時点の損失補償申請は2,943口座・約29.98億円。直接費用は約30.5億円を見込むが、確定した支払額ではない。"}
+
+# disclosed: 2026-09-26
+- id: keio-group-2026
+  category: incident
+  month: "2026-09"
+  path: "featured/incidents/keio-group-2026/incident_report/"
+  icon: "🚆"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL INCIDENT"}
+  nav: {vi: "Sự cố Keio Group", ja: "京王電鉄グループ インシデント"}
+  title: {vi: "Keio Group (京王電鉄) — Ransomware Qilin làm lộ/nguy cơ lộ ~10,63 triệu dữ liệu từ 46 công ty", ja: "京王電鉄グループ — ランサムウェア（Qilin）で約1,063万人超に流出の恐れ"}
+  date: {vi: "Công bố 26/09/2026 · Báo cáo 確報 24/11/2026 · 46 công ty thành viên · Hụt ~1,8 tỷ JPY tại Presso Inn", ja: "2026年9月26日公表 · 11月24日確報 · グループ46社対象 · プレッソイン約18億円減収見込み"}
+  link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Quy mô", ja: "規模"}
+      text: {vi: "Xác nhận lộ ~12.310 hồ sơ (12K NV/gia đình, 160 ứng viên, 150 người thuê) và nguy cơ lộ ~10,63 triệu khách hàng/đối tác (gồm ~1,6M ảnh hộ chiếu khách sạn, ~20K thẻ Keio Dept Store, ~46K KYC BĐS, 124 hồ sơ My Number).", ja: "約12,310人分（従業員等1.2万・応募者160・賃貸150）の流出を確定し、顧客・取引先約1,063万人に流出の恐れ（パスポート写し約160万件・百貨店クレカ約2万件・不動産KYC約4.6万件・マイナンバー124件）。"}
+    - sev: high
+      label: {vi: "Nguyên nhân", ja: "原因"}
+      text: {vi: "Tấn công ransomware (Qilin nhận trách nhiệm tháng 10/2026, đường xâm nhập chưa công bố) vào mạng IT 46 công ty. Hệ thống chạy tàu điện &amp; PASMO tách mạng hoàn toàn nên không bị ảnh hưởng.", ja: "グループ46社の IT 網へのランサムウェア攻撃（10月に Qilin が犯行主張、侵入経路は非公表）。鉄道運行・PASMO は別系統ネットワークのため影響なし。"}
+    - sev: med
+      label: {vi: "Tác động", ja: "影響"}
+      text: {vi: "Keio Presso Inn ngừng nhận đặt phòng mới (ước hụt ~1,8 tỷ JPY, dự kiến mở lại tháng 12); hoãn công bố BCTC quý 2 sang 04/12/2026; đã nộp 確報 cho PPC (24/11).", ja: "京王プレッソインの新規予約停止で約18億円の減収見込み（12月再開見込み）。第2四半期決算発表を12月4日へ延期、11月24日に PPC へ確報提出。"}
+    - sev: low
+      label: {vi: "Ứng phó", ja: "対応"}
+      text: {vi: "Chưa ghi nhận gian lận thứ cấp; tổng đài hỗ trợ 0120-089-925 (10:00–17:00 T2–T6). Cảnh giác email/SMS/cuộc gọi mạo danh và kiểm tra sao kê thẻ.", ja: "二次被害は未確認。専用窓口 0120-089-925（平日10:00〜17:00）。なりすましメール・SMSに注意しカード明細を確認。"}

@@ -1,0 +1,276 @@
+---
+layout: default
+title: "Keio Group (京王電鉄) — Ransomware Qilin làm lộ/nguy cơ lộ ~10,63 triệu dữ liệu từ 46 công ty thành viên"
+description: "Báo cáo sự cố ransomware tại Tập đoàn Keio (phát hiện 26/09/2026, 確報 24/11/2026): nguy cơ lộ ~10,63 triệu khách hàng/đối tác (gồm ~1,6 triệu ảnh hộ chiếu khách sạn, ~20 nghìn thẻ tín dụng), xác nhận lộ ~12,3 nghìn hồ sơ; tàu điện tách mạng không bị ảnh hưởng."
+image: "/featured/incidents/keio-group-2026/keio-group-og.png"
+category: "Sự cố an ninh"
+---
+<style>
+  .an-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
+  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--line); color: var(--text-muted); }
+  .an-nav a:hover { color: var(--pirago-blue); border-color: var(--pirago-blue); text-decoration: none; }
+  .an-sec { margin: 0 0 40px; }
+  .an-sec h2 { font-size: 21px; margin: 28px 0 14px; scroll-margin-top: 90px; }
+  .an-sec h3 { font-size: 17px; margin: 20px 0 8px; }
+  .an-sec ul, .an-sec ol { padding-left: 22px; }
+  .an-sec li { margin: 6px 0; }
+  .an-sec .table-wrap { overflow-x: auto; margin: 14px 0 20px; }
+  .an-sec code { word-break: break-all; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 20px 0 24px; }
+  .kpi-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); }
+  .kpi-num { font-size: 22px; font-weight: 800; font-family: var(--font-mono); color: var(--pirago-navy); line-height: 1.2; margin-bottom: 4px; }
+  html[data-theme="dark"] .kpi-num { color: #5ab0e8; }
+  .kpi-num.crit { color: var(--crit); }
+  .kpi-num.high { color: var(--high); }
+  .kpi-label { font-size: 12.5px; color: var(--text-muted); line-height: 1.4; }
+  .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
+  .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
+  .fig .mut { fill: var(--text-muted); }
+  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
+</style>
+
+<div class="report-header">
+  <h1>Keio Group (京王電鉄) — Ransomware Qilin làm lộ/nguy cơ lộ ~10,63 triệu dữ liệu khách hàng &amp; đối tác</h1>
+  <p class="sub">Xảy ra / Công bố: <strong>2026-09-26</strong> · Cập nhật đến <strong>2026-11-25</strong> (Báo cáo chính thức 確報 ngày <strong>24/11/2026</strong>) · Phạm vi: <strong>46 công ty thành viên Tập đoàn Keio</strong> · Hệ thống chạy tàu tách mạng, không bị ảnh hưởng. Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a>. <span class="badge crit">CRITICAL INCIDENT</span></p>
+</div>
+
+<blockquote class="callout">
+  <p><strong>TL;DR (dễ hiểu):</strong> Rạng sáng <strong>26/09/2026</strong>, hệ thống máy chủ nội bộ của <strong>Tập đoàn Keio</strong> (đường sắt, khách sạn, bách hóa, bất động sản tại Tokyo) bị tấn công mã độc tống tiền (ransomware).</p>
+  <ul>
+    <li><strong>Chuyện gì xảy ra?</strong> Keio ngắt mạng khẩn cấp ngay trong ngày 26/09; nhóm tin tặc <strong>Qilin</strong> sau đó tung một phần dữ liệu lên dark web (tháng 10/2026). Ngày <strong>24/11/2026</strong>, Keio nộp báo cáo điều tra chính thức (確報).</li>
+    <li><strong>Quy mô:</strong> Xác nhận bị lộ ~12.310 hồ sơ (nhân viên, ứng viên, người thuê nhà) và <strong>nguy cơ lộ ~10,63 triệu</strong> khách hàng/đối tác — gồm <strong>~1,6 triệu ảnh hộ chiếu</strong> khách sạn, <strong>~20.000 số thẻ tín dụng</strong>, ~46.000 giấy tờ tùy thân bất động sản và 124 hồ sơ My Number.</li>
+    <li><strong>Tác động thực tế:</strong> Tàu điện Keio &amp; thẻ PASMO <strong>hoạt động bình thường</strong> (mạng tách riêng), nhưng chuỗi khách sạn Keio Presso Inn phải ngừng nhận đặt phòng mới (ước tính mất <strong>~1,8 tỷ yên</strong> doanh thu) và công ty phải hoãn công bố BCTC quý 2 sang 04/12.</li>
+    <li><strong>Hiện trạng &amp; Cần làm gì?</strong> Chưa ghi nhận thiệt hại tài chính hay gian lận thứ cấp; cảnh giác email/SMS/cuộc gọi mạo danh Keio và kiểm tra sao kê thẻ nếu từng giao dịch tại Keio Department Store hoặc khách sạn thuộc tập đoàn.</li>
+  </ul>
+</blockquote>
+
+<div class="kpi-grid">
+  <div class="kpi-card"><div class="kpi-num crit">~10,63M</div><div class="kpi-label">Khách hàng &amp; đối tác có nguy cơ lộ (~11,08M lượt cộng gộp các nhóm)</div></div>
+  <div class="kpi-card"><div class="kpi-num crit">~1,6M + ~20K</div><div class="kpi-label">~1,6 triệu bản sao hộ chiếu khách sạn &amp; ~20 nghìn số thẻ tín dụng</div></div>
+  <div class="kpi-card"><div class="kpi-num high">46 công ty · 1,8B¥</div><div class="kpi-label">46 công ty thành viên bị rà soát; Presso Inn ước tính hụt ~1,8 tỷ yên</div></div>
+  <div class="kpi-card"><div class="kpi-num">0 sự cố tàu</div><div class="kpi-label">Hệ thống vận hành tàu tách mạng; chưa ghi nhận gian lận thứ cấp</div></div>
+</div>
+
+<nav class="an-nav" aria-label="Mục lục">
+  <a href="#summary">1. Tóm tắt &amp; Phạm vi</a>
+  <a href="#root-cause">2. Nguyên nhân &amp; Kiến trúc</a>
+  <a href="#timeline">3. Diễn biến &amp; Khôi phục</a>
+  <a href="#impact">4. Tác động &amp; Rủi ro thứ cấp</a>
+  <a href="#recommendations">5. Khuyến cáo cho PiraGo</a>
+  <a href="#sources">6. Nguồn tham khảo</a>
+</nav>
+
+<section class="an-sec">
+<h2 id="summary">1. Tóm tắt &amp; Phạm vi ảnh hưởng</h2>
+<ul>
+  <li><strong>Bản chất sự cố:</strong> Tấn công mã độc tống tiền (ransomware) vào máy chủ nội bộ của Tập đoàn Keio, phát hiện rạng sáng 26/09/2026 <span class="badge low">Công ty xác nhận</span>. Nhóm RaaS <strong>Qilin</strong> nhận trách nhiệm trên dark web vào giữa tháng 10/2026 <span class="badge med">Báo chí Nhật Bản</span>.</li>
+  <li><strong>Lưu ý số liệu chính thức:</strong> Thông cáo ngày 24/11/2026 không đưa ra một con số tổng duy nhất vì một người có thể xuất hiện ở nhiều nhóm; tổng cộng gộp cơ học các dòng là <strong>~11,08 triệu lượt</strong> (báo chí Nhật ghi nhận "hơn 11 triệu lượt"), trong đó riêng nhóm khách hàng &amp; đối tác là <strong>~10,63 triệu</strong>.</li>
+  <li><strong>Hệ thống không bị ảnh hưởng:</strong> Hệ thống vận hành tàu điện (Keio Line / Inokashira Line) và thẻ IC PASMO chạy trên <strong>mạng tách biệt</strong> nên không bị gián đoạn <span class="badge low">Công ty xác nhận</span>.</li>
+</ul>
+
+<figure class="fig">
+<svg viewBox="0 0 740 245" role="img" aria-label="Phân bổ quy mô dữ liệu bị ảnh hưởng tại Keio Group">
+<text x="10" y="26" font-size="12" fill="currentColor">Khách hàng &amp; đối tác (nguy cơ)</text>
+<rect x="240" y="10" width="380" height="22" rx="4" fill="var(--crit)"/>
+<text x="628" y="26" font-size="12" font-weight="700" fill="currentColor">~10,63 triệu</text>
+
+<text x="10" y="60" font-size="12" fill="currentColor">↳ Bản sao hộ chiếu (khách sạn)</text>
+<rect x="240" y="44" width="58" height="22" rx="4" fill="var(--crit)"/>
+<text x="306" y="60" font-size="12" font-weight="700" fill="currentColor">~1,6 triệu</text>
+
+<text x="10" y="94" font-size="12" fill="currentColor">Ứng viên tuyển dụng (nguy cơ)</text>
+<rect x="240" y="78" width="16" height="22" rx="4" fill="var(--high)"/>
+<text x="264" y="94" font-size="12" font-weight="700" fill="currentColor">~360.000</text>
+
+<text x="10" y="128" font-size="12" fill="currentColor">Nhân viên &amp; gia đình (nguy cơ)</text>
+<rect x="240" y="112" width="8" height="22" rx="4" fill="var(--high)"/>
+<text x="256" y="128" font-size="12" font-weight="700" fill="currentColor">~77.000</text>
+
+<text x="10" y="162" font-size="12" fill="currentColor">↳ Giấy tờ tùy thân BĐS / Thẻ TD</text>
+<rect x="240" y="146" width="6" height="22" rx="4" fill="var(--med)"/>
+<text x="254" y="162" font-size="12" font-weight="700" fill="currentColor">~46.000 KYC · ~20.491 thẻ</text>
+
+<text x="10" y="196" font-size="12" fill="currentColor">Đã xác nhận lộ (NV / ứng viên / thuê)</text>
+<rect x="240" y="180" width="5" height="22" rx="4" fill="var(--pirago-blue)"/>
+<text x="253" y="196" font-size="12" font-weight="700" fill="currentColor">~12.310 (12K + 160 + 150)</text>
+
+<text x="10" y="230" font-size="11" class="mut">Nguồn: Thông cáo chính thức Keio (24/11/2026). Các nhóm có thể trùng lặp, không cộng gộp đơn thuần.</text>
+</svg>
+<figcaption>Quy mô phân loại theo báo cáo chính thức (確報) ngày 24/11/2026 của Tập đoàn Keio.</figcaption>
+</figure>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Mức độ</th><th>Nhóm đối tượng</th><th>Số lượng</th><th>Dữ liệu chi tiết</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><span class="badge crit">Xác nhận lộ</span></td>
+      <td>Nhân viên, người nghỉ hưu &amp; gia đình</td>
+      <td>~12.000</td>
+      <td>Họ tên, thông tin nhân sự.</td>
+    </tr>
+    <tr>
+      <td><span class="badge crit">Xác nhận lộ</span></td>
+      <td>Ứng viên tuyển dụng &amp; người thuê BĐS Keio</td>
+      <td>~160 + ~150</td>
+      <td>Họ tên, địa chỉ, SĐT, hồ sơ ứng tuyển (160); họ tên, địa chỉ người thuê (150).</td>
+    </tr>
+    <tr>
+      <td><span class="badge high">Nguy cơ lộ</span></td>
+      <td>Khách hàng &amp; đối tác (46 công ty)</td>
+      <td>~10,63 triệu</td>
+      <td>Họ tên, địa chỉ, SĐT, email; gồm <strong>~1,6M ảnh hộ chiếu</strong> khách nước ngoài (Presso Inn, Keio Plaza Tokyo/Sapporo, Takayama Green Hotel) + 65 ảnh &amp; 942 số hộ chiếu; <strong>~20.000 thẻ Keio Dept Store</strong> + 382 thẻ Keio Plaza (2012–2018) + 109 thẻ Keio Closet; <strong>~46.000 hồ sơ KYC BĐS</strong> (Keio Real Estate, ReBITA); 6 bản sao thẻ My Number.</td>
+    </tr>
+    <tr>
+      <td><span class="badge high">Nguy cơ lộ</span></td>
+      <td>Ứng viên &amp; Nhân viên/gia đình</td>
+      <td>~360K + ~77K</td>
+      <td>Hồ sơ ứng tuyển (~360.000); thông tin nhân sự &amp; 118 hồ sơ My Number (116 giấy cư trú ReBITA, 2 thẻ Keio Real Estate) trong nhóm ~77.000.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section class="an-sec">
+<h2 id="root-cause">2. Nguyên nhân &amp; Kiến trúc mạng</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 215" role="img" aria-label="Sơ đồ tách biệt mạng OT đường sắt và mạng IT tập đoàn Keio">
+<defs><marker id="keio-ah1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs>
+<rect class="box" x="10" y="16" width="190" height="76" rx="8" style="stroke:var(--crit);stroke-width:1.6"/>
+<text x="105" y="40" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">Tác nhân Qilin (RaaS)</text>
+<text x="105" y="58" text-anchor="middle" font-size="10.5" class="mut">Đường xâm nhập ban đầu:</text>
+<text x="105" y="74" text-anchor="middle" font-size="10.5" class="mut">chưa công bố (đang điều tra)</text>
+
+<line x1="200" y1="54" x2="245" y2="54" stroke="var(--crit)" stroke-width="1.8" marker-end="url(#keio-ah1)"/>
+
+<rect class="box" x="248" y="16" width="225" height="76" rx="8" style="stroke:var(--crit);stroke-width:1.6"/>
+<text x="360" y="40" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">Mạng IT Tập đoàn (46 công ty)</text>
+<text x="360" y="58" text-anchor="middle" font-size="10.5" class="mut">Máy chủ nhóm, kế toán, khách sạn,</text>
+<text x="360" y="74" text-anchor="middle" font-size="10.5" class="mut">POS bán lẻ &amp; dữ liệu cũ (2012–2018)</text>
+
+<line x1="473" y1="54" x2="518" y2="54" stroke="var(--crit)" stroke-width="1.8" marker-end="url(#keio-ah1)"/>
+
+<rect class="box" x="520" y="16" width="210" height="76" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+<text x="625" y="40" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">Ngắt mạng &amp; Rò rỉ</text>
+<text x="625" y="58" text-anchor="middle" font-size="10.5" class="mut">Cô lập 26/09; Qilin đăng mẫu 16/10;</text>
+<text x="625" y="74" text-anchor="middle" font-size="10.5" class="mut">~10,63M dữ liệu có nguy cơ lộ</text>
+
+<rect class="box" x="10" y="124" width="720" height="70" rx="8" style="stroke:var(--low);stroke-width:1.6"/>
+<text x="370" y="150" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Mạng Vận hành Đường sắt (OT) — Tách biệt hoàn toàn (別系統)</text>
+<text x="370" y="170" text-anchor="middle" font-size="11" class="mut">Tàu Keio Line / Inokashira Line, tín hiệu và thẻ IC PASMO không bị ảnh hưởng trong suốt sự cố.</text>
+</svg>
+<figcaption>Phân tách giữa mạng IT tập đoàn (bị ảnh hưởng trên 46 công ty) và mạng OT vận hành đường sắt (an toàn).</figcaption>
+</figure>
+<ul>
+  <li><strong>Điểm xâm nhập ban đầu (chưa công bố):</strong> Trong cả 4 thông cáo và tài liệu IR, Keio chưa công bố lỗ hổng hay điểm vào kỹ thuật (VPN, AD hay máy chủ cụ thể); chỉ cho biết đang phối hợp cảnh sát và chuyên gia forensic điều tra, đồng thời rà soát "các vấn đề quản trị IT" (ITガバナンス上の課題).</li>
+  <li><strong>Vì sao điều tra kéo dài ~2 tháng?</strong> Phạm vi bao phủ tới <strong>46 công ty thành viên</strong> (gồm Giao thông 8, Bất động sản 4, Khách sạn 6, Xây dựng-Thiết bị 5, Dịch vụ đời sống 23) và nhiều kho lưu trữ lịch sử tồn đọng (như hồ sơ thẻ tín dụng từ 03/2012–01/2018 hay ảnh hộ chiếu khách sạn).</li>
+  <li><strong>Nhóm tống tiền Qilin:</strong> Giữa tháng 10/2026, Qilin đăng tên <code>KEIO CORPORATION</code> kèm 27 ảnh mẫu (hợp đồng thuê ngoài, email nội bộ, bảng nhân sự); Keio từ chối bình luận về việc có bị đòi tiền chuộc hay không.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="timeline">3. Diễn biến &amp; Khôi phục</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 160" role="img" aria-label="Dòng thời gian sự cố Keio Group từ tháng 9 đến tháng 11 năm 2026">
+<line x1="40" y1="68" x2="700" y2="68" stroke="var(--line)" stroke-width="3"/>
+<circle cx="80" cy="68" r="10" fill="var(--crit)"/>
+<circle cx="240" cy="68" r="10" fill="var(--high)"/>
+<circle cx="385" cy="68" r="10" fill="var(--crit)"/>
+<circle cx="530" cy="68" r="10" fill="var(--pirago-blue)"/>
+<circle cx="660" cy="68" r="10" fill="var(--low)"/>
+
+<text x="80" y="38" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">26/09</text>
+<text x="240" y="38" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">09–16/10</text>
+<text x="385" y="38" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">21/10</text>
+<text x="530" y="38" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">30/10–17/11</text>
+<text x="660" y="38" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">24/11</text>
+
+<text x="80" y="100" text-anchor="middle" font-size="11.5" font-weight="700" fill="currentColor">Phát hiện</text>
+<text x="80" y="116" text-anchor="middle" font-size="10.5" class="mut">Ngắt mạng &amp; Báo cáo 1</text>
+
+<text x="240" y="100" text-anchor="middle" font-size="11.5" font-weight="700" fill="currentColor">Trình báo / Qilin</text>
+<text x="240" y="116" text-anchor="middle" font-size="10.5" class="mut">MPD nhận đơn · Báo cáo 2</text>
+
+<text x="385" y="100" text-anchor="middle" font-size="11.5" font-weight="700" fill="currentColor">Xác nhận lộ</text>
+<text x="385" y="116" text-anchor="middle" font-size="10.5" class="mut">Chuyên gia xác nhận (BC 3)</text>
+
+<text x="530" y="100" text-anchor="middle" font-size="11.5" font-weight="700" fill="currentColor">Hoãn BCTC &amp; IR</text>
+<text x="530" y="116" text-anchor="middle" font-size="10.5" class="mut">Presso Inn -1,8 tỷ ¥</text>
+
+<text x="660" y="100" text-anchor="middle" font-size="11.5" font-weight="700" fill="currentColor">Báo cáo 確報</text>
+<text x="660" y="116" text-anchor="middle" font-size="10.5" class="mut">Nộp PPC · ~10,63M</text>
+</svg>
+<figcaption>Dòng thời gian sự cố Tập đoàn Keio (26/09 – 24/11/2026).</figcaption>
+</figure>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Thời điểm</th><th>Diễn biến chính</th><th>Độ tin cậy</th></tr></thead>
+  <tbody>
+    <tr><td>26/09/2026</td><td>Phát hiện tấn công ransomware vào rạng sáng; ngắt mạng khẩn cấp, trình báo cảnh sát và PPC (速報), phát hành <strong>Báo cáo 1</strong>. Tàu điện vẫn chạy bình thường.</td><td><span class="badge low">Thông cáo Keio</span></td></tr>
+    <tr><td>29/09 – 20/10</td><td>Khôi phục dần thanh toán POS bán lẻ (29–30/09) và dịch vụ điểm Keio Point tại các trung tâm thương mại, siêu thị, bách hóa (10–20/10).</td><td><span class="badge low">Tài liệu IR Keio</span></td></tr>
+    <tr><td>09/10 &amp; 16/10</td><td>Sở Cảnh sát Tokyo (MPD) tiếp nhận đơn trình báo hình sự (09/10, báo chí Nhật). Ngày 16/10, Keio ra <strong>Báo cáo 2</strong> về việc tổ chức nhận trách nhiệm (Qilin) tuyên bố công bố dữ liệu.</td><td><span class="badge med">Keio / Báo chí Nhật</span></td></tr>
+    <tr><td>21/10/2026</td><td><strong>Báo cáo 3:</strong> Chuyên gia bên ngoài xác nhận dữ liệu bị rao bán/công bố trên dark web; cập nhật báo cáo cho PPC.</td><td><span class="badge low">Thông cáo Keio</span></td></tr>
+    <tr><td>30/10 &amp; 17/11</td><td>Hoãn công bố BCTC quý 2 năm tài chính 2027/03 từ 10/11 sang <strong>04/12/2026</strong>; tài liệu IR ngày 17/11 ước tính Keio Presso Inn giảm ~1,8 tỷ yên doanh thu phòng (Q3).</td><td><span class="badge low">TDnet IR Keio</span></td></tr>
+    <tr><td>24/11/2026</td><td>Công bố <strong>Báo cáo chính thức (確報)</strong> và nộp PPC: xác nhận ~12,3 nghìn hồ sơ bị lộ và ~10,63 triệu khách hàng/đối tác có nguy cơ lộ; mở tổng đài <code>0120-089-925</code>.</td><td><span class="badge low">Thông cáo Keio</span></td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section class="an-sec">
+<h2 id="impact">4. Tác động &amp; Rủi ro thứ cấp</h2>
+<ul>
+  <li><strong>Thiệt hại vận hành &amp; tài chính:</strong> Chuỗi khách sạn <strong>Keio Presso Inn</strong> phải tạm ngừng nhận đặt phòng mới từ 26/09 (dự kiến mở lại trong tháng 12/2026), công suất phòng ước giảm ~30% (tháng 10), ~70% (tháng 11) và ~80% (tháng 12), kéo theo mức hụt doanh thu ước tính <strong>~1,8 tỷ yên</strong>.</li>
+  <li><strong>Rủi ro lộ hộ chiếu, KYC &amp; My Number:</strong> Với ~1,6 triệu bản sao hộ chiếu khách sạn, ~46.000 giấy tờ tùy thân bất động sản và 124 hồ sơ My Number trong diện nguy cơ, người bị ảnh hưởng đối mặt rủi ro mạo danh mở tài khoản, vay tín dụng hoặc lừa đảo nhắm đích.</li>
+  <li><strong>Kênh hỗ trợ &amp; cảnh báo người dùng:</strong> Tổng đài Keio Group: <code>0120-089-925</code> / <code>customer@keio.co.jp</code> (10:00–17:00 ngày thường). Keio không công bố gói bồi thường tiền mặt; khuyến cáo kiểm tra sao kê thẻ và cảnh giác email/SMS/cuộc gọi mạo danh.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="recommendations">5. Khuyến cáo cho PiraGo</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 145" role="img" aria-label="4 bài học phòng thủ ransomware cho hệ thống đa công ty">
+<rect class="box" x="6" y="12" width="174" height="118" rx="8" style="stroke:var(--low);stroke-width:1.5"/>
+<text x="93" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">1. Tách mạng OT / IT</text>
+<text x="93" y="60" text-anchor="middle" font-size="10.5" class="mut">Tách hẳn hệ thống lõi</text>
+<text x="93" y="76" text-anchor="middle" font-size="10.5" class="mut">vận hành khỏi mạng văn</text>
+<text x="93" y="92" text-anchor="middle" font-size="10.5" class="mut">phòng &amp; dịch vụ phụ</text>
+
+<rect class="box" x="190" y="12" width="174" height="118" rx="8" style="stroke:var(--crit);stroke-width:1.5"/>
+<text x="277" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">2. Xóa PII tồn đọng</text>
+<text x="277" y="60" text-anchor="middle" font-size="10.5" class="mut">Áp TTL/xóa tự động ảnh</text>
+<text x="277" y="76" text-anchor="middle" font-size="10.5" class="mut">hộ chiếu, KYC, số thẻ cũ</text>
+<text x="277" y="92" text-anchor="middle" font-size="10.5" class="mut">từ 2012–2018 &amp; My Number</text>
+
+<rect class="box" x="374" y="12" width="174" height="118" rx="8" style="stroke:var(--pirago-blue);stroke-width:1.5"/>
+<text x="461" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">3. Cô lập đa công ty</text>
+<text x="461" y="60" text-anchor="middle" font-size="10.5" class="mut">Chuẩn hóa VPN/AD/EDR</text>
+<text x="461" y="76" text-anchor="middle" font-size="10.5" class="mut">đồng bộ cho công ty con,</text>
+<text x="461" y="92" text-anchor="middle" font-size="10.5" class="mut">tránh lan truyền ngang</text>
+
+<rect class="box" x="558" y="12" width="176" height="118" rx="8" style="stroke:var(--high);stroke-width:1.5"/>
+<text x="646" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">4. Kịch bản BCTC / IR</text>
+<text x="646" y="60" text-anchor="middle" font-size="10.5" class="mut">Backup bất biến cho hệ</text>
+<text x="646" y="76" text-anchor="middle" font-size="10.5" class="mut">thống kế toán &amp; đặt phòng</text>
+<text x="646" y="92" text-anchor="middle" font-size="10.5" class="mut">để giảm downtime 2 tháng</text>
+</svg>
+<figcaption>4 bài học kỹ thuật và quản trị rút ra từ sự cố Keio Group.</figcaption>
+</figure>
+<ol>
+  <li><strong>Phân tách mạng triệt để (Segmentation):</strong> Mô hình tách mạng OT vận hành tàu của Keio giúp dịch vụ cốt lõi sống sót hoàn toàn — cần áp dụng tương tự để tách môi trường production/giao dịch khỏi mạng văn phòng và các công ty con.</li>
+  <li><strong>Tối thiểu hóa &amp; đặt hạn lưu trữ (Retention/TTL) cho KYC, hộ chiếu, thẻ:</strong> Không giữ bản sao hộ chiếu, giấy tờ tùy thân hay số thẻ tín dụng lịch sử (2012–2018) trên file server dùng chung; mã hóa hoặc xóa tự động ngay khi hết nghĩa vụ pháp lý.</li>
+  <li><strong>Quản trị tập trung &amp; backup bất biến:</strong> Áp MFA/EDR đồng bộ trên toàn bộ công ty thành viên, phân đoạn Active Directory và lưu backup bất biến (immutable/offline) cho hệ thống kế toán và đặt phòng.</li>
+</ol>
+</section>
+
+<section class="an-sec">
+<h2 id="sources">6. Nguồn tham khảo</h2>
+<ul>
+  <li><strong>Thông cáo chính thức của Tập đoàn Keio (京王電鉄):</strong> <a href="https://www.keio.co.jp/news/update/news_release/news_release2026/pdf/nr20261124_newsrelease.pdf" target="_blank" rel="noopener noreferrer">Báo cáo chính thức 確報 (24/11/2026, PDF)</a> · <a href="https://www.nikkei.com/markets/ir/irftp/data/tdnr/tdnetg3/20261117/g8gu5x/140120261116581333.pdf" target="_blank" rel="noopener noreferrer">Tài liệu IR TDnet (17/11/2026, PDF)</a> · <a href="https://www.keio.co.jp/news/update/news_release/news_release2026/pdf/nr20261021_newsrelease.pdf" target="_blank" rel="noopener noreferrer">Báo cáo 3 (21/10)</a> · <a href="https://www.keio.co.jp/news/update/news_release/news_release2026/pdf/nr20261016_newsrelease.pdf" target="_blank" rel="noopener noreferrer">Báo cáo 2 (16/10)</a> · <a href="https://www.keio.co.jp/news/update/announce/nr260926v13404/" target="_blank" rel="noopener noreferrer">Báo cáo 1 (26/09)</a>.</li>
+  <li><strong>Báo chí chuyên ngành &amp; Nhật Bản:</strong> <a href="https://internet.watch.impress.co.jp/docs/news/2159048.html" target="_blank" rel="noopener noreferrer">INTERNET Watch (25/11)</a> · <a href="https://www.itmedia.co.jp/news/article/2611/25/2000003429/" target="_blank" rel="noopener noreferrer">ITmedia NEWS (25/11)</a> · <a href="https://www.yomiuri.co.jp/national/20261124-GYT1T00326/" target="_blank" rel="noopener noreferrer">Yomiuri Shimbun (24/11)</a> · <a href="https://www.fnn.jp/articles/-/1158409?display=full" target="_blank" rel="noopener noreferrer">FNN Prime Online (24/11)</a> · <a href="https://www.traicy.com/posts/20261122389090/" target="_blank" rel="noopener noreferrer">TRAICY (22/11)</a> · <a href="https://www.risktaisaku.com/articles/-/116384" target="_blank" rel="noopener noreferrer">Risk Taisaku.com (21/10)</a>.</li>
+</ul>
+</section>
