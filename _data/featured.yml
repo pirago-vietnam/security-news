@@ -326,19 +326,19 @@
   accent: true
   badge: {sev: high, text: "HIGH"}
   nav: {vi: "Brotli CVE-2026-111497", ja: "Brotli CVE-2026-111497"}
-  title: {vi: "Brotli CVE-2026-111497 — Lỗi bộ nhớ khi giải nén dữ liệu không đáng tin cậy", ja: "Brotli CVE-2026-111497 — 信頼できないデータ展開時のメモリ破壊"}
-  date: {vi: "Cập nhật 2026-11-16 · Brotli decoder · Bản vá phụ thuộc sản phẩm", ja: "2026年11月16日 時点 · Brotli デコーダー · 製品別に修正を確認"}
+  title: {vi: "Brotli CVE-2026-111497 — Lỗi bộ nhớ khi giải nén dữ liệu không đáng tin cậy (Node2Shell)", ja: "Brotli CVE-2026-111497 — 信頼できないデータ展開時のメモリ破壊（Node2Shell）"}
+  date: {vi: "Cập nhật đến 2026-11-25 · CISA KEV (khai thác thực tế) · CVSS 9.8 (NVD) / 8.1 (RH)", ja: "2026年11月25日 時点 · CISA KEV（悪用確認済み）· CVSS 9.8 (NVD) / 8.1 (RH)"}
   link: {vi: "Xem phân tích & hướng dẫn →", ja: "分析・対策ガイドを見る →"}
   items:
     - sev: high
       label: {vi: "Nguy cơ", ja: "リスク"}
-      text: {vi: "Dữ liệu Brotli độc hại được giải nén có thể gây hỏng bộ nhớ, gián đoạn dịch vụ, rò rỉ dữ liệu hoặc có khả năng thực thi mã.", ja: "細工された Brotli データの展開により、メモリ破壊、サービス停止、情報漏えいやコード実行の恐れ。"}
+      text: {vi: "Ghi ngoài vùng nhớ trong c/dec/decode.c gây DoS, rò rỉ dữ liệu hoặc RCE (đã có PoC & khai thác thực tế theo CISA KEV 27/10).", ja: "c/dec/decode.c の領域外書き込みにより DoS・情報漏えい・RCE の恐れ（PoC 公開・CISA KEV 10/27 登録済み）。"}
     - sev: high
       label: {vi: "Phạm vi", ja: "影響範囲"}
-      text: {vi: "Rà soát Brotli hệ thống và bản nhúng trong runtime, ứng dụng, trình duyệt và container; nguy cơ phụ thuộc đường giải nén dữ liệu không đáng tin cậy.", ja: "システムおよびランタイム・アプリ・ブラウザー・コンテナーに同梱された Brotli を確認。リスクは信頼できない入力の展開経路に依存。"}
+      text: {vi: "Brotli 1.0.3–1.2.0 và bản nhúng trong Node.js, .NET, Bun, Python, Envoy, PAN-OS, Ubuntu, AL2023, RHEL.", ja: "Brotli 1.0.3–1.2.0 および Node.js、.NET、Bun、Python、Envoy、PAN-OS、Ubuntu、AL2023、RHEL 同梱版。"}
     - sev: med
       label: {vi: "Xử lý", ja: "対応"}
-      text: {vi: "Áp dụng bản vá hoặc backport theo nhà cung cấp, rebuild image và khởi động lại; hạn chế giải nén dữ liệu không đáng tin cậy trong lúc chờ vá.", ja: "ベンダーの修正またはバックポートを適用し、イメージ再ビルドと再起動を実施。修正まで信頼できないデータの展開を制限。"}
+      text: {vi: "Vá Brotli 1.0.10/1.1.1/1.2.1, Node 22/24/26, .NET 8/9/10, OS; rebuild & restart. Edge WAF chỉ chặn được chiều inbound.", ja: "Brotli 1.0.10/1.1.1/1.2.1、Node 22/24/26、.NET 8/9/10、OS を更新し再ビルド・再起動。WAF は Inbound のみ防御。"}
 
 # disclosed: 2026-11-12
 - id: postgresql-cve-2026-6460
