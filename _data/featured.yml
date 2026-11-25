@@ -3,6 +3,32 @@
 # Ghi chú `# disclosed: YYYY-MM-DD` ngay trên mỗi entry để đối chiếu cho các lần cập nhật sau.
 # `path` tính từ gốc ngôn ngữ (vi: "/", ja: "/ja/").
 
+# disclosed: 2026-11-23
+- id: chrome-cve-2026-134401
+  category: vulnerability
+  month: "2026-11"
+  path: "featured/vulnerabilities/chrome-cve-2026-134401/analysis/"
+  icon: "🌐"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL"}
+  nav: {vi: "Chrome CVE-2026-134401", ja: "Chrome CVE-2026-134401"}
+  title: {vi: "Google Chrome CVE-2026-134401 — Lỗ hổng Critical trong Variations cho phép thực thi mã ngoài sandbox (CVSS 9.6)", ja: "Google Chrome CVE-2026-134401 — Variations の重大な入力検証不備によりサンドボックス外でコード実行の恐れ（CVSS 9.6）"}
+  date: {vi: "Công bố 2026-11-23 · Cập nhật đến 2026-11-25 · CVSS 9.6 (CISA-ADP) · Ảnh hưởng Chrome < 158.0.8127.88 · Đã vá ở 158.0.8127.88/.89 / Ext 156.0.8078.114", ja: "2026年11月23日公表 · 2026年11月25日時点 · CVSS 9.6（CISA-ADP）· Chrome 158.0.8127.88 未満が対象 · 158.0.8127.88/.89・Ext 156.0.8078.114 で修正済み"}
+  link: {vi: "Xem phân tích & hướng dẫn →", ja: "分析・対策ガイドを見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Nguy cơ", ja: "リスク"}
+      text: {vi: "Lỗi kiểm tra đầu vào (<code>CWE-20</code>) trong thành phần <strong>Variations</strong> cho phép trang HTML độc hại vượt ranh giới sandbox trình duyệt và thực thi mã tùy ý trên máy người dùng.", ja: "<strong>Variations</strong> コンポーネントの入力検証不備（<code>CWE-20</code>）により、細工された HTML ページ経由でブラウザのサンドボックス境界を突破し任意コードを実行される恐れ。"}
+    - sev: high
+      label: {vi: "Phạm vi", ja: "影響範囲"}
+      text: {vi: "Google Chrome Desktop <code>&lt; 158.0.8127.88</code> (Win/macOS/Linux), Extended Stable <code>&lt; 156.0.8078.114</code>, Android, và các trình duyệt nhân Chromium (Brave đã có <code>v1.100.59</code>; Edge Desktop đang chờ bản vá).", ja: "Google Chrome Desktop <code>158.0.8127.88</code> 未満（Win/macOS/Linux）、Extended Stable <code>156.0.8078.114</code> 未満、Android、および Chromium 系ブラウザ（Brave は <code>v1.100.59</code> 公開済み、Edge Desktop は修正待ち）。"}
+    - sev: med
+      label: {vi: "Lưu ý vận hành", ja: "運用の注意"}
+      text: {vi: "Bản cập nhật tải ngầm chưa bảo vệ phiên trình duyệt đang mở — bắt buộc nhấn <strong>Relaunch</strong> và xác minh lại số build trong <code>chrome://settings/help</code>.", ja: "バックグラウンドで取得された更新はブラウザを再起動するまで有効になりません。必ず <strong>Relaunch</strong> し、<code>chrome://settings/help</code> でビルド番号を確認してください。"}
+    - sev: low
+      label: {vi: "Triệt để", ja: "恒久対策"}
+      text: {vi: "Cập nhật lên Chrome <code>158.0.8127.88/.89</code> (Linux <code>158.0.8127.88</code>, Ext <code>156.0.8078.114</code>, Android <code>158.0.8127.92</code>). Chưa ghi nhận khai thác thực tế, chưa có PoC công khai và chưa có trong CISA KEV (2026-11-25).", ja: "Chrome <code>158.0.8127.88/.89</code>（Linux <code>158.0.8127.88</code>、Ext <code>156.0.8078.114</code>、Android <code>158.0.8127.92</code>）へ更新。悪用報告・公開 PoC なし、CISA KEV 未掲載（2026-11-25 確認）。"}
+
 # disclosed: 2026-11-20
 - id: japan-data-breaches-2026-11
   category: incident
