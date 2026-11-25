@@ -145,11 +145,20 @@
             "name": {{ t.home | jsonify }},
             "item": {{ home_url | absolute_url | jsonify }}
           },
-          {%- if page_category %}
+          {%- assign category_item_url = nil -%}
+          {%- if page_category -%}
+            {%- if page.url contains '/featured/vulnerabilities/' -%}
+              {%- assign category_item_url = home_url | append: 'vulnerabilities/' | absolute_url -%}
+            {%- elsif page.url contains '/featured/incidents/' -%}
+              {%- assign category_item_url = home_url | append: 'incidents/' | absolute_url -%}
+            {%- endif -%}
+          {%- endif -%}
+          {%- if category_item_url %}
           {
             "@type": "ListItem",
             "position": 2,
-            "name": {{ page_category | jsonify }}
+            "name": {{ page_category | jsonify }},
+            "item": {{ category_item_url | jsonify }}
           },
           {
             "@type": "ListItem",
