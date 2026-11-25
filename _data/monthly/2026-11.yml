@@ -14,8 +14,8 @@ h1:
   vi: Báo cáo bảo mật tháng 11/2026
   ja: 2026年11月 セキュリティレポート
 sub:
-  vi: 'Số liệu tính đến <strong>2026-11-25</strong> (cập nhật lỗ hổng Critical thoát sandbox Chrome CVE-2026-134401 trên Chrome 158.0.8127.88/.89, lỗ hổng Linux kernel Net refcount ordering CVE-2026-99676, lỗ hổng Linux kernel NFSD CVE-2026-99362, cảnh báo FBI FLASH-20261113-001 về ARTEX &amp; sự cố/xâm nhập giữa tháng 11, lỗ hổng Linux KVM AMD CVE-2026-99312, nghiên cứu RCE engine cơ sở dữ liệu PostgreSQL/MySQL/Oracle/ClickHouse, đợt phát hành bảo mật PostgreSQL 52 CVEs, Patch Tuesday Microsoft, Chrome Zero-Day, Apache HTTP Server 2.4.71 và các bản tin an ninh định kỳ).'
-  ja: '<strong>2026年11月25日</strong>時点の情報です（Google Chrome の Critical サンドボックス脱出脆弱性 CVE-2026-134401・Chrome 158.0.8127.88/.89 修正、Linux カーネル Net refcount 順序脆弱性 CVE-2026-99676、Linux カーネル NFSD 脆弱性 CVE-2026-99362、FBI FLASH-20261113-001（ARTEX）および11月中旬の障害・侵入事案、Linux KVM AMD 脆弱性 CVE-2026-99312、データベースエンジン RCE 研究（PostgreSQL/MySQL/Oracle/ClickHouse）、PostgreSQL 52件の脆弱性修正リリース、Microsoft Patch Tuesday、Chrome ゼロデイ緊急リリース、Apache HTTP Server 2.4.71 および定期セキュリティ情報に対応）。'
+  vi: 'Số liệu tính đến <strong>2026-11-25</strong> (cập nhật công cụ bảo vệ runtime Linux bằng eBPF <strong>Shirudo</strong> từ OpenAI &amp; Cisco, lỗ hổng Critical thoát sandbox Chrome CVE-2026-134401 trên Chrome 158.0.8127.88/.89, lỗ hổng Linux kernel Net refcount ordering CVE-2026-99676, lỗ hổng Linux kernel NFSD CVE-2026-99362, cảnh báo FBI FLASH-20261113-001 về ARTEX &amp; sự cố/xâm nhập giữa tháng 11, lỗ hổng Linux KVM AMD CVE-2026-99312, nghiên cứu RCE engine cơ sở dữ liệu PostgreSQL/MySQL/Oracle/ClickHouse, đợt phát hành bảo mật PostgreSQL 52 CVEs, Patch Tuesday Microsoft, Chrome Zero-Day, Apache HTTP Server 2.4.71 và các bản tin an ninh định kỳ).'
+  ja: '<strong>2026年11月25日</strong>時点の情報です（OpenAI・Cisco による eBPF ベース Linux ランタイム防御ツール <strong>Shirudo</strong> の公開、Google Chrome の Critical サンドボックス脱出脆弱性 CVE-2026-134401・Chrome 158.0.8127.88/.89 修正、Linux カーネル Net refcount 順序脆弱性 CVE-2026-99676、Linux カーネル NFSD 脆弱性 CVE-2026-99362、FBI FLASH-20261113-001（ARTEX）および11月中旬の障害・侵入事案、Linux KVM AMD 脆弱性 CVE-2026-99312、データベースエンジン RCE 研究（PostgreSQL/MySQL/Oracle/ClickHouse）、PostgreSQL 52件の脆弱性修正リリース、Microsoft Patch Tuesday、Chrome ゼロデイ緊急リリース、Apache HTTP Server 2.4.71 および定期セキュリティ情報に対応）。'
 placeholder:
   vi: '🔍 Tìm kiếm CVE, framework, thư viện (vd: PostgreSQL, MySQL, Oracle, VS Code, Chrome, .NET, Tomcat, Next.js, AWS, ARTEX)...'
   ja: '🔍 CVE、フレームワーク、ライブラリで検索（例: PostgreSQL, MySQL, Oracle, VS Code, Chrome, .NET, Tomcat, Next.js, AWS, ARTEX）...'
@@ -104,168 +104,138 @@ sections:
   type: actions
   rows:
   - task:
-      vi: 'Rà soát máy chủ <strong>Linux ARM64/Graviton &amp; POWER</strong> (kernel ≥ 5.5 hoặc ≥ 5.4.208): lên kế hoạch cập nhật kernel vá <strong>CVE-2026-99676</strong> (CVSS 9.8 CNA / 5.9 RH, <code>6.12.118</code> / <code>6.18.64</code> / <code>7.3.5</code> / <code>7.4-rc2</code> hoặc Debian <code>DSA-6652-1</code>) và reboot. Xem <a href="@home@featured/vulnerabilities/linux-cve-2026-99676/analysis/">phân tích</a>'
-      ja: '<strong>Linux ARM64/Graviton・POWER サーバー</strong>（カーネル 5.5 以降または 5.4.208+）を点検：<strong>CVE-2026-99676</strong> 修正カーネル（CVSS 9.8 CNA / 5.9 RH、<code>6.12.118</code> / <code>6.18.64</code> / <code>7.3.5</code> / <code>7.4-rc2</code> または Debian <code>DSA-6652-1</code>）への更新・再起動を計画（<a href="@home@featured/vulnerabilities/linux-cve-2026-99676/analysis/">分析</a>）'
+      vi: 'Vá kernel <strong>Linux ARM64/Graviton &amp; POWER</strong> (≥ 5.5 / 5.4.208+) lên <strong>6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2</strong> (Debian <code>DSA-6652-1</code>) cho <strong>CVE-2026-99676</strong> và reboot. Xem <a href="@home@featured/vulnerabilities/linux-cve-2026-99676/analysis/">phân tích</a>'
+      ja: '<strong>Linux ARM64/Graviton・POWER</strong>（5.5+ / 5.4.208+）を <strong>6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2</strong>（Debian <code>DSA-6652-1</code>）へ更新し再起動（<strong>CVE-2026-99676</strong>、<a href="@home@featured/vulnerabilities/linux-cve-2026-99676/analysis/">分析</a>）'
     sev: crit
     due:
-      vi: Ngay khi có bản vá distro (ưu tiên máy chủ ARM64/Graviton mở TCP)
-      ja: ディストリ修正版公開後速やかに（TCP公開 ARM64/Graviton を優先）
-    impact:
-      vi: 'Máy chủ Linux kiến trúc weak-memory-ordering (ARM64/Graviton, POWER) chạy kernel ≥ 5.5 hoặc ≥ 5.4.208 có mở cổng TCP/UDP công khai. x86-64 (TSO) không bị ảnh hưởng bởi race này. Xem <a href="@home@featured/vulnerabilities/linux-cve-2026-99676/analysis/">phân tích</a>.'
-      ja: 'weak-memory-ordering アーキテクチャ（ARM64/Graviton、POWER）上で稼働し TCP/UDP ポートを公開している Linux カーネル 5.5 以降または 5.4.208+ サーバー。x86-64（TSO）は非該当（<a href="@home@featured/vulnerabilities/linux-cve-2026-99676/analysis/">分析</a>）。'
-    fix:
-      vi: 'Cập nhật kernel lên <strong>6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2</strong> (hoặc Debian <code>DSA-6652-1</code>) rồi reboot. Trong lúc chờ bản vá distro, hạn chế tối đa các cổng TCP/UDP không cần thiết bằng firewall/security group. Xem <a href="@home@featured/vulnerabilities/linux-cve-2026-99676/analysis/">phân tích &amp; hướng dẫn</a>.'
-      ja: 'カーネルを <strong>6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2</strong>（または Debian <code>DSA-6652-1</code>）へ更新して再起動。ディストリ修正版を待つ間はファイアウォール／セキュリティグループで不要な TCP/UDP ポートを制限（<a href="@home@featured/vulnerabilities/linux-cve-2026-99676/analysis/">分析・対策ガイド</a>）。'
+      vi: Ngay khi có bản vá distro (ưu tiên ARM64 mở TCP)
+      ja: ディストリ修正公開後速やかに（TCP公開 ARM64 優先）
   - task:
-      vi: 'Rà soát máy chủ <strong>Linux NFS (nfsd NFSv4.1+)</strong>: cập nhật kernel vá <strong>CVE-2026-99362</strong> (CVSS 9.8, <code>6.12.117</code> / <code>6.18.61</code> / <code>7.3.2</code> / <code>7.4-rc1</code> hoặc Debian DLA-4927-1) và reboot, hoặc siết firewall cổng 2049 / tắt tạm NFSv4.1+. Xem <a href="@home@featured/vulnerabilities/linux-cve-2026-99362/analysis/">phân tích</a>'
-      ja: '<strong>Linux NFS サーバー（nfsd NFSv4.1+）</strong>を点検：<strong>CVE-2026-99362</strong> 修正カーネル（CVSS 9.8、<code>6.12.117</code> / <code>6.18.61</code> / <code>7.3.2</code> / <code>7.4-rc1</code> または Debian DLA-4927-1）へ更新・再起動、または 2049番ポートのファイアウォール制限／NFSv4.1+ 一時無効化を実施（<a href="@home@featured/vulnerabilities/linux-cve-2026-99362/analysis/">分析</a>）'
+      vi: 'Vá kernel <strong>Linux NFS (nfsd NFSv4.1+)</strong> lên <strong>6.12.117 / 6.18.61 / 7.3.2 / 7.4-rc1</strong> (Debian <code>DLA-4927-1</code>) cho <strong>CVE-2026-99362</strong>, hoặc siết firewall cổng 2049 / tắt NFSv4.1+. Xem <a href="@home@featured/vulnerabilities/linux-cve-2026-99362/analysis/">phân tích</a>'
+      ja: '<strong>Linux NFS（nfsd NFSv4.1+）</strong>を <strong>6.12.117 / 6.18.61 / 7.3.2 / 7.4-rc1</strong>（Debian <code>DLA-4927-1</code>）へ更新（<strong>CVE-2026-99362</strong>）、または 2049番制限・NFSv4.1+ 無効化（<a href="@home@featured/vulnerabilities/linux-cve-2026-99362/analysis/">分析</a>）'
     sev: crit
     due:
       vi: Ngay lập tức
       ja: 即時対応
-    impact:
-      vi: 'Máy chủ Linux kernel ≥ 3.16 chạy <code>nfsd</code> có bật NFSv4.1+ (cổng TCP/UDP 2049), đặc biệt file server dùng chung mạng nội bộ đa tenant hoặc mở cổng ra ngoài. Xem <a href="@home@featured/vulnerabilities/linux-cve-2026-99362/analysis/">phân tích</a>.'
-      ja: 'NFSv4.1+ を有効にして <code>nfsd</code> を稼働させている Linux カーネル 3.16 以降のサーバー（TCP/UDP 2049番ポート）。マルチテナント内部網や外部公開環境で特に影響大（<a href="@home@featured/vulnerabilities/linux-cve-2026-99362/analysis/">分析</a>）。'
-    fix:
-      vi: 'Cập nhật kernel lên <strong>6.12.117 / 6.18.61 / 7.3.2 / 7.4-rc1</strong> (hoặc Debian <code>DLA-4927-1</code>) rồi reboot. Tạm thời: chỉ cho phép IP client tin cậy vào cổng 2049 hoặc tắt NFSv4.1/4.2. Xem <a href="@home@featured/vulnerabilities/linux-cve-2026-99362/analysis/">phân tích &amp; hướng dẫn</a>.'
-      ja: 'カーネルを <strong>6.12.117 / 6.18.61 / 7.3.2 / 7.4-rc1</strong>（または Debian <code>DLA-4927-1</code>）へ更新して再起動。暫定：2049番ポートを信頼済みクライアント IP のみに制限するか NFSv4.1/4.2 を無効化（<a href="@home@featured/vulnerabilities/linux-cve-2026-99362/analysis/">分析・対策ガイド</a>）。'
   - task:
-      vi: 'Kiểm kê và nâng cấp <strong>Spring Security</strong> lên <strong>7.1.3 / 7.0.9 / 7.2.0</strong> (hoặc <strong>Spring Boot 4.1.3 / 4.0.10 / 4.2.0</strong>) để vá <strong>CVE-2026-59273</strong> (CVSS 9.8, RCE qua <code>ELRequestMatcher</code> khi bind input ngoài). Xem <a href="@home@featured/vulnerabilities/spring-security-cve-2026-59273/analysis/">phân tích</a>'
-      ja: '<strong>Spring Security</strong> を <strong>7.1.3 / 7.0.9 / 7.2.0</strong>（または <strong>Spring Boot 4.1.3 / 4.0.10 / 4.2.0</strong>）へ更新し <strong>CVE-2026-59273</strong>（CVSS 9.8、外部入力バインド時の <code>ELRequestMatcher</code> 経由 RCE）を修正（<a href="@home@featured/vulnerabilities/spring-security-cve-2026-59273/analysis/">分析</a>）'
+      vi: 'Nâng cấp <strong>Spring Security</strong> lên <strong>7.1.3 / 7.0.9 / 7.2.0</strong> (Spring Boot <strong>4.1.3 / 4.0.10 / 4.2.0</strong>) vá <strong>CVE-2026-59273</strong> (RCE qua <code>ELRequestMatcher</code>). Xem <a href="@home@featured/vulnerabilities/spring-security-cve-2026-59273/analysis/">phân tích</a>'
+      ja: '<strong>Spring Security</strong> を <strong>7.1.3 / 7.0.9 / 7.2.0</strong>（Spring Boot <strong>4.1.3 / 4.0.10 / 4.2.0</strong>）へ更新し <strong>CVE-2026-59273</strong> を修正（<a href="@home@featured/vulnerabilities/spring-security-cve-2026-59273/analysis/">分析</a>）'
     sev: crit
     due:
-      vi: Ngay khi có thể (ưu tiên dự án dùng <code>ELRequestMatcher</code> với data binding)
-      ja: できるだけ早く（データバインドで <code>ELRequestMatcher</code> を使う案件を優先）
+      vi: Ngay khi có thể (ưu tiên dự án bind <code>ELRequestMatcher</code>)
+      ja: できるだけ早く（<code>ELRequestMatcher</code> バインド案件優先）
   - task:
-      vi: 'Vá <strong>PHP</strong> lên <strong>8.2.36 / 8.3.37 / 8.4.28 / 8.5.13</strong> (hoặc 8.6.0): restart PHP-FPM/Apache, rebuild image; nhánh 8.1 trở xuống cần nâng nhánh. Xem <a href="@home@featured/vulnerabilities/php-security-release-2026-11-19/advisory/">phân tích</a>'
-      ja: '<strong>PHP</strong> を <strong>8.2.36 / 8.3.37 / 8.4.28 / 8.5.13</strong>（または 8.6.0）へ更新：PHP-FPM/Apache 再起動、イメージ再ビルド。8.1 以前はブランチ更新が必要（<a href="@home@featured/vulnerabilities/php-security-release-2026-11-19/advisory/">分析</a>）'
+      vi: 'Vá <strong>PHP</strong> lên <strong>8.2.36 / 8.3.37 / 8.4.28 / 8.5.13</strong> (hoặc 8.6.0), restart PHP-FPM/Apache và rebuild image; nâng nhánh 8.1 trở xuống. Xem <a href="@home@featured/vulnerabilities/php-security-release-2026-11-19/advisory/">phân tích</a>'
+      ja: '<strong>PHP</strong> を <strong>8.2.36 / 8.3.37 / 8.4.28 / 8.5.13</strong>（または 8.6.0）へ更新し再起動・再ビルド（8.1 以前はブランチ移行、<a href="@home@featured/vulnerabilities/php-security-release-2026-11-19/advisory/">分析</a>）'
     sev: crit
     due:
-      vi: Ngay trong ngày 19-11-2026 (bản vá đã phát hành, vá + restart sớm nhất có thể)
-      ja: 2026-11-19 当日（修正版は公開済み。できるだけ早く更新＋再起動）
-    impact:
-      vi: 'Mọi ứng dụng PHP (PHP-FPM, mod_php, FrankenPHP, Laravel, WordPress), Docker image <code>php:*</code>, hosting managed.'
-      ja: 'すべての PHP アプリケーション（PHP-FPM、mod_php、FrankenPHP、Laravel、WordPress）、<code>php:*</code> イメージ、マネージドホスティング。'
-    fix:
-      vi: 'Sau khi có bản vá: nâng PHP, restart (reload không đủ), rebuild image. PHP 8.1 trở xuống dự kiến không có bản vá, cần nâng nhánh.'
-      ja: '修正版公開後：PHP を更新して再起動（reload では不十分）、イメージ再ビルド。PHP 8.1 以下は修正版が出ない見込みのためブランチ移行が必要。'
+      vi: Ngay lập tức (đã có bản vá từ 19-11-2026)
+      ja: 即時（2026-11-19 修正版公開済み）
   - task:
-      vi: 'Vá <strong>engine cơ sở dữ liệu</strong> theo nghiên cứu "Narrow Grants, Wide Engines": <strong>Oracle Database</strong> bản cập nhật CSPU 11/2026 (<strong>CVE-2026-114819</strong>, CVSS 9.9) + <strong>ORDS</strong> bản sau 26.2.1 từ CPU 10/2026 (<strong>CVE-2026-91609</strong>) và không để ORDS lộ internet; <strong>MySQL Server/Cluster 26.7.x</strong> lên bản sau 26.7.1 (<strong>CVE-2026-101786</strong>); xác nhận <strong>PostgreSQL</strong> đã ở 18.7 / 17.12 / 16.16 / 15.20 / 14.25 (<strong>CVE-2026-116331</strong> vá cùng bản); <strong>ClickHouse</strong>: hạn chế quyền tạo bảng tạm và khóa <code>format_binary_max_string_size</code> bằng settings constraints; rà soát quyền <code>TEMPORARY</code> / <code>CREATE TEMPORARY TABLES</code>. Xem <a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">phân tích</a>'
-      ja: '研究「Narrow Grants, Wide Engines」を受けた<strong>データベースエンジン</strong>の更新：<strong>Oracle Database</strong> に 2026年11月 CSPU（<strong>CVE-2026-114819</strong>、CVSS 9.9）、<strong>ORDS</strong> を 2026年10月 CPU の 26.2.1 より新しい版へ（<strong>CVE-2026-91609</strong>）更新し ORDS をインターネットに公開しない。<strong>MySQL Server/Cluster 26.7.x</strong> を 26.7.1 より新しい版へ（<strong>CVE-2026-101786</strong>）。<strong>PostgreSQL</strong> が 18.7 / 17.12 / 16.16 / 15.20 / 14.25 であることを確認（<strong>CVE-2026-116331</strong> は同リリースで修正）。<strong>ClickHouse</strong> は一時テーブル作成権限を制限し、settings constraints で <code>format_binary_max_string_size</code> を固定。<code>TEMPORARY</code> / <code>CREATE TEMPORARY TABLES</code> 権限を棚卸し（<a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">分析</a>）'
+      vi: 'Vá <strong>DB engines</strong> ("Narrow Grants, Wide Engines"): <strong>Oracle DB</strong> (CSPU 11/2026) + <strong>ORDS</strong> (&gt;26.2.1, chặn lộ internet); <strong>MySQL 26.7.x</strong> (&gt;26.7.1); <strong>PostgreSQL</strong> (18.7/17.12/16.16/15.20/14.25); <strong>ClickHouse</strong> (khóa tạo bảng tạm &amp; <code>format_binary_max_string_size</code>). Xem <a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">phân tích</a>'
+      ja: '<strong>DBエンジン</strong>更新：<strong>Oracle DB</strong>（11月 CSPU）＋ <strong>ORDS</strong>（26.2.1超、外部非公開）、<strong>MySQL 26.7.x</strong>（26.7.1超）、<strong>PostgreSQL</strong>（18.7〜14.25）、<strong>ClickHouse</strong>（一時テーブル・設定制限）。<a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">分析</a>参照'
     sev: crit
     due:
-      vi: Ngay lập tức với ORDS lộ internet và Oracle DB; MySQL 26.7.x / ClickHouse trước 26-11-2026
-      ja: インターネット公開の ORDS と Oracle DB は即時、MySQL 26.7.x / ClickHouse は 2026年11月26日まで
-    impact:
-      vi: 'Oracle Database 19.3–19.32 / 21.3–21.24 / 23.4.0–23.26.3, ORDS 24.2.0–26.2.1, MySQL Server/Cluster 26.7.0–26.7.1, PostgreSQL 14–18 chưa lên bản 12-11, ClickHouse cho phép user tự đổi <code>format_binary_max_string_size</code>. Dịch vụ managed (RDS/Aurora, Cloud SQL...) do nhà cung cấp vá theo lịch bảo trì, chưa xác minh từng nhà cung cấp.'
-      ja: 'Oracle Database 19.3〜19.32 / 21.3〜21.24 / 23.4.0〜23.26.3、ORDS 24.2.0〜26.2.1、MySQL Server/Cluster 26.7.0〜26.7.1、11/12 リリース未適用の PostgreSQL 14〜18、ユーザーが <code>format_binary_max_string_size</code> を変更できる ClickHouse。マネージドサービス（RDS/Aurora、Cloud SQL など）は事業者がメンテナンスで適用（事業者ごとの確認は未実施）。'
-    fix:
-      vi: 'Áp bản vá Oracle (CSPU 11/2026) và ORDS (CPU 10/2026), MySQL bản sau 26.7.1 (xem release notes), PostgreSQL 18.7/17.12/16.16/15.20/14.25. Giảm bề mặt (không thay bản vá): <code>REVOKE TEMPORARY ON DATABASE &lt;db&gt; FROM PUBLIC;</code> với role không cần; thu hồi <code>CREATE TEMPORARY TABLES</code> ở MySQL/ClickHouse. REVOKE TEMPORARY không giúp gì cho đường tấn công Oracle.'
-      ja: 'Oracle（2026年11月 CSPU）と ORDS（2026年10月 CPU）、MySQL は 26.7.1 より新しい版（リリースノート参照）、PostgreSQL は 18.7/17.12/16.16/15.20/14.25 を適用。攻撃面の縮小（修正の代替ではない）：不要なロールに <code>REVOKE TEMPORARY ON DATABASE &lt;db&gt; FROM PUBLIC;</code>、MySQL/ClickHouse の <code>CREATE TEMPORARY TABLES</code> を剥奪。REVOKE TEMPORARY は Oracle の経路には効果なし。'
+      vi: Ngay lập tức với ORDS/Oracle DB; MySQL/ClickHouse trước 26-11-2026
+      ja: 公開 ORDS・Oracle DB は即時、MySQL・ClickHouse は 2026-11-26 まで
   - task:
-      vi: 'Nâng cấp <strong>Apache HTTP Server</strong> lên <strong>2.4.71 trở lên</strong> (vá lỗ hổng RCE nghiêm trọng <strong>CVE-2026-119618</strong> trong <code>mod_http2</code>); nếu chưa thể nâng cấp ngay, tạm thời vô hiệu hóa <code>mod_http2</code> / giao thức <code>h2</code>. Xem <a href="@home@featured/vulnerabilities/apache-cve-2026-119618/analysis/">hướng dẫn chi tiết</a>'
-      ja: '<strong>Apache HTTP Server</strong> を <strong>2.4.71 以上</strong>にアップグレードし、<code>mod_http2</code> の重大な RCE 脆弱性 <strong>CVE-2026-119618</strong> を修正する。即時更新が困難な場合は一時的に <code>mod_http2</code> / <code>h2</code> を無効化（<a href="@home@featured/vulnerabilities/apache-cve-2026-119618/analysis/">詳細ガイド</a>）'
+      vi: 'Nâng cấp <strong>Apache HTTP Server</strong> lên <strong>2.4.71+</strong> (vá RCE <strong>CVE-2026-119618</strong> trong <code>mod_http2</code>) hoặc tạm tắt <code>mod_http2</code>. Xem <a href="@home@featured/vulnerabilities/apache-cve-2026-119618/analysis/">phân tích</a>'
+      ja: '<strong>Apache HTTP Server</strong> を <strong>2.4.71+</strong> へ更新（<code>mod_http2</code> RCE <strong>CVE-2026-119618</strong>）、困難時は <code>mod_http2</code> を無効化（<a href="@home@featured/vulnerabilities/apache-cve-2026-119618/analysis/">分析</a>）'
     sev: crit
     due:
-      vi: Ngay lập tức (toàn bộ web server &amp; reverse proxy dùng Apache httpd 2.4.55–2.4.70)
-      ja: 即時（Apache httpd 2.4.55〜2.4.70 を利用する全Webサーバー・リバースプロキシ）
+      vi: Ngay lập tức (bản 2.4.55–2.4.70 bật HTTP/2)
+      ja: 即時（HTTP/2 有効な 2.4.55〜2.4.70）
   - task:
-      vi: 'Nâng cấp <strong>nginx</strong> lên <strong>1.30.7 / 1.31.9 trở lên</strong> (NGINX Plus 37.3.0.1 / 37.0.8.1) để vá <strong>CVE-2026-123007</strong> (hỏng bộ nhớ HTTP/2, nguy cơ RCE) rồi <strong>restart</strong>; nếu chưa thể nâng cấp, tắt HTTP/2. Xem <a href="@home@featured/vulnerabilities/nginx-cve-2026-123007/analysis/">hướng dẫn chi tiết</a>'
-      ja: '<strong>nginx</strong> を <strong>1.30.7 / 1.31.9 以上</strong>（NGINX Plus は 37.3.0.1 / 37.0.8.1）へ更新し、<strong>CVE-2026-123007</strong>（HTTP/2 メモリ破壊、RCE の恐れ）を修正して<strong>再起動</strong>。更新が困難な場合は HTTP/2 を無効化（<a href="@home@featured/vulnerabilities/nginx-cve-2026-123007/analysis/">詳細ガイド</a>）'
+      vi: 'Nâng cấp <strong>nginx</strong> lên <strong>1.30.7 / 1.31.9+</strong> (Plus 37.3.0.1 / 37.0.8.1) vá <strong>CVE-2026-123007</strong> và <strong>restart</strong>, hoặc tắt HTTP/2. Xem <a href="@home@featured/vulnerabilities/nginx-cve-2026-123007/analysis/">phân tích</a>'
+      ja: '<strong>nginx</strong> を <strong>1.30.7 / 1.31.9+</strong>（Plus 37.3.0.1 / 37.0.8.1）へ更新し<strong>再起動</strong>（<strong>CVE-2026-123007</strong>）、困難時は HTTP/2 無効化（<a href="@home@featured/vulnerabilities/nginx-cve-2026-123007/analysis/">分析</a>）'
     sev: crit
     due:
-      vi: Ngay lập tức (toàn bộ nginx 1.9.5–1.31.8 có bật HTTP/2, gồm container &amp; ingress)
-      ja: 即時（HTTP/2 を有効にした nginx 1.9.5〜1.31.8 すべて。コンテナ・ingress 含む）
-    impact:
-      vi: 'Web server, reverse proxy, load balancer, Docker image và ingress dùng nginx có bật HTTP/2.'
-      ja: 'HTTP/2 を有効にした nginx を使う Webサーバー、リバースプロキシ、ロードバランサー、Docker イメージ、ingress。'
-    fix:
-      vi: 'Nâng cấp lên 1.30.7 / 1.31.9 và restart (reload không đủ); tạm thời đặt <code>http2 off;</code>.'
-      ja: '1.30.7 / 1.31.9 へ更新して再起動（reload では不十分）。暫定的に <code>http2 off;</code> を設定。'
+      vi: Ngay lập tức (1.9.5–1.31.8 bật HTTP/2)
+      ja: 即時（HTTP/2 有効な 1.9.5〜1.31.8）
   - task:
-      vi: 'Nâng cấp <strong>Visual Studio Code</strong> lên <strong>1.145.3 trở lên</strong> (khắc phục lỗ hổng RCE nghiêm trọng CVE-2026-120779 và CVE-2026-120780); bật <strong>Workspace Trust</strong> khi mở mã nguồn bên ngoài'
-      ja: '<strong>Visual Studio Code</strong> を <strong>1.145.3 以上</strong>にアップグレードする（重大なRCE脆弱性 CVE-2026-120779 および CVE-2026-120780 を修正）。外部コードを開く際は <strong>Workspace Trust</strong> を必ず有効化'
+      vi: 'Nâng cấp <strong>VS Code</strong> lên <strong>1.145.3+</strong> (vá RCE CVE-2026-120779 / 120780) và bật <strong>Workspace Trust</strong>'
+      ja: '<strong>VS Code</strong> を <strong>1.145.3+</strong> へ更新（RCE CVE-2026-120779 / 120780 修正）し <strong>Workspace Trust</strong> を有効化'
     sev: crit
     due:
-      vi: Ngay lập tức (toàn bộ máy kỹ sư &amp; máy ảo)
-      ja: 即時（全開発者マシンおよび仮想環境）
+      vi: Ngay lập tức (toàn bộ máy kỹ sư &amp; VM)
+      ja: 即時（全開発端末・VM）
   - task:
-      vi: 'Cập nhật <strong>Google Chrome Stable</strong> lên <strong>158.0.8127.88 / .89 trở lên</strong> (Linux: <strong>158.0.8127.88</strong>; Extended Stable: <strong>156.0.8078.114</strong>; Android: <strong>158.0.8127.92</strong>) để vá lỗ hổng Critical thoát sandbox <strong>CVE-2026-134401</strong> (và 204 lỗi của Chrome 158); bắt buộc <strong>khởi động lại (Relaunch)</strong> trình duyệt và xác minh build đang chạy. Xem <a href="@home@featured/vulnerabilities/chrome-cve-2026-134401/analysis/">phân tích</a>'
-      ja: '<strong>Google Chrome Stable</strong> を <strong>158.0.8127.88 / .89 以上</strong>（Linux: <strong>158.0.8127.88</strong>、Extended Stable: <strong>156.0.8078.114</strong>、Android: <strong>158.0.8127.92</strong>）へ更新し、Critical サンドボックス脱出脆弱性 <strong>CVE-2026-134401</strong>（および Chrome 158 の204件）を修正。必ずブラウザを<strong>再起動（Relaunch）</strong>して実行中ビルドを確認（<a href="@home@featured/vulnerabilities/chrome-cve-2026-134401/analysis/">分析</a>）'
+      vi: 'Cập nhật <strong>Google Chrome</strong> lên <strong>158.0.8127.88/.89+</strong> (Ext <strong>156.0.8078.114</strong>, Android <strong>158.0.8127.92</strong>) vá <strong>CVE-2026-134401</strong> và <strong>Relaunch</strong>. Xem <a href="@home@featured/vulnerabilities/chrome-cve-2026-134401/analysis/">phân tích</a>'
+      ja: '<strong>Google Chrome</strong> を <strong>158.0.8127.88/.89+</strong>（Ext <strong>156.0.8078.114</strong>、Android <strong>158.0.8127.92</strong>）へ更新し <strong>Relaunch</strong>（<strong>CVE-2026-134401</strong>、<a href="@home@featured/vulnerabilities/chrome-cve-2026-134401/analysis/">分析</a>）'
     sev: crit
     due:
-      vi: Ngay lập tức (toàn bộ máy trạm &amp; thiết bị duyệt web)
-      ja: 即時（全クライアント端末およびWebブラウザ環境）
+      vi: Ngay lập tức (toàn bộ máy trạm)
+      ja: 即時（全クライアント端末）
   - task:
-      vi: 'Nâng cấp <strong>PostgreSQL</strong> lên các phiên bản vá <strong>18.7 / 17.12 / 16.16 / 15.20 / 14.25</strong> (khắc phục 52 CVEs, trong đó 32 lỗi CVSS 8.8 gồm RCE do Type Confusion <strong>CVE-2026-6460</strong>); thực hiện <strong>REINDEX</strong> các chỉ mục bị ảnh hưởng, tạo ngay bản <strong>Full Backup</strong> mới nếu dùng incremental backup, và lập lộ trình nâng cấp khẩn cấp đối với <strong>PostgreSQL 14</strong> (đã chính thức EOL từ 12-11-2026). Xem <a href="@home@featured/vulnerabilities/postgresql-cve-2026-6460/analysis/">hướng dẫn chi tiết</a>'
-      ja: '<strong>PostgreSQL</strong> を修正済みバージョン <strong>18.7 / 17.12 / 16.16 / 15.20 / 14.25</strong> へアップグレードする（型混乱 RCE <strong>CVE-2026-6460</strong> を含む32件の CVSS 8.8 を含む計52件のCVEを修正）。影響を受けるインデックスの <strong>REINDEX</strong>、増分バックアップ運用時の新規 <strong>フルバックアップ</strong> 取得、および公式 EOL となった <strong>PostgreSQL 14</strong> からの移行を速やかに実施（<a href="@home@featured/vulnerabilities/postgresql-cve-2026-6460/analysis/">詳細ガイド</a>）'
+      vi: 'Nâng cấp <strong>PostgreSQL</strong> lên <strong>18.7 / 17.12 / 16.16 / 15.20 / 14.25</strong> (52 CVEs, gồm CVE-2026-6460), <code>REINDEX</code>, chụp Full Backup mới và di chuyển khỏi <strong>PG 14 (EOL)</strong>. Xem <a href="@home@featured/vulnerabilities/postgresql-cve-2026-6460/analysis/">phân tích</a>'
+      ja: '<strong>PostgreSQL</strong> を <strong>18.7 / 17.12 / 16.16 / 15.20 / 14.25</strong> へ更新（52件修正）、<code>REINDEX</code>・フルバックアップ取得、<strong>PG 14（EOL）</strong>から移行（<a href="@home@featured/vulnerabilities/postgresql-cve-2026-6460/analysis/">分析</a>）'
     sev: high
     due:
-      vi: Trước 20-11-2026 (ngay lập tức với cluster mở cho nhiều user hoặc chạy PostgreSQL 14)
-      ja: 2026年11月20日まで（複数ユーザー利用環境および PostgreSQL 14 稼働環境は即時対応）
+      vi: Trước 20-11-2026 (ngay lập tức với PG 14)
+      ja: 2026-11-20 まで（PG 14 は即時）
   - task:
-      vi: 'Nâng cấp <strong>Next.js</strong> lên <strong>16.4.5 / 15.5.29</strong> (vá lỗi RCE liên quan đến <code>use cache</code> và xử lý ảnh SVG) và <strong>Nuxt</strong> lên <strong>4.6.3</strong>'
-      ja: '<strong>Next.js</strong> を <strong>16.4.5 / 15.5.29</strong> にアップグレードし（<code>use cache</code> および SVG 処理関連の RCE 修正）、<strong>Nuxt</strong> を <strong>4.6.3</strong> へ更新する'
+      vi: 'Nâng cấp <strong>Next.js</strong> lên <strong>16.4.5 / 15.5.29</strong> (RCE <code>use cache</code> &amp; SVG) và <strong>Nuxt</strong> lên <strong>4.6.3</strong>'
+      ja: '<strong>Next.js</strong> を <strong>16.4.5 / 15.5.29</strong>（<code>use cache</code>・SVG RCE 修正）、<strong>Nuxt</strong> を <strong>4.6.3</strong> へ更新'
     sev: high
     due:
-      vi: Trước 15-11-2026 (ngay lập tức trước lần deploy tiếp theo nếu dùng App Router)
-      ja: 2026年11月15日まで（App Router 利用時は次回デプロイ前に即時対応）
+      vi: Trước 15-11-2026 (trước lần deploy tới)
+      ja: 2026-11-15 まで（次回デプロイ前）
   - task:
-      vi: 'Cập nhật <strong>.NET</strong> lên <strong>10.0.15 / 9.0.23 / 8.0.34</strong> (vá CVE-2026-118746 bypass xác thực và CVE-2026-114146/47); rebuild lại Docker container sử dụng base image tháng 11/2026'
-      ja: '<strong>.NET</strong> を <strong>10.0.15 / 9.0.23 / 8.0.34</strong> に更新し（認証バイパス CVE-2026-118746、CVE-2026-114146/47 を修正）、2026年11月ベースイメージで Docker コンテナを再ビルドする'
+      vi: 'Cập nhật <strong>.NET</strong> lên <strong>10.0.15 / 9.0.23 / 8.0.34</strong> (CVE-2026-118746, 114146/47) và rebuild Docker image'
+      ja: '<strong>.NET</strong> を <strong>10.0.15 / 9.0.23 / 8.0.34</strong> へ更新し Docker イメージを再ビルド'
     sev: high
     due:
-      vi: Trước 18-11-2026 (trước đợt release tiếp theo)
-      ja: 2026年11月18日まで（次回リリース前まで）
+      vi: Trước 18-11-2026 (trước đợt release tới)
+      ja: 2026-11-18 まで（次回リリース前）
   - task:
-      vi: 'Nâng cấp <strong>Apache Tomcat</strong> lên <strong>11.0.27 / 10.1.61 / 9.0.123</strong> (vá lỗ hổng bypass xác thực JNDI SASL CVSS 9.1) và <strong>Spring Boot</strong> lên <strong>4.0.6 / 3.5.14</strong>'
-      ja: '<strong>Apache Tomcat</strong> を <strong>11.0.27 / 10.1.61 / 9.0.123</strong> に更新し（JNDI SASL 認証バイパス CVSS 9.1 を修正）、<strong>Spring Boot</strong> を <strong>4.0.6 / 3.5.14</strong> へアップグレードする'
+      vi: 'Nâng cấp <strong>Apache Tomcat</strong> lên <strong>11.0.27 / 10.1.61 / 9.0.123</strong> (bypass SASL CVSS 9.1) và <strong>Spring Boot</strong> lên <strong>4.0.6 / 3.5.14</strong>'
+      ja: '<strong>Apache Tomcat</strong> を <strong>11.0.27 / 10.1.61 / 9.0.123</strong>、<strong>Spring Boot</strong> を <strong>4.0.6 / 3.5.14</strong> へ更新'
     sev: high
     due:
       vi: Trước 16-11-2026 (ngay lập tức nếu dùng JNDI Realm)
-      ja: 2026年11月16日まで（JNDI Realm 使用時は即時）
+      ja: 2026-11-16 まで（JNDI Realm 利用時は即時）
   - task:
-      vi: 'Rà soát hypervisor Linux KVM dùng CPU <strong>AMD</strong> có bật nested virtualization (<code>kvm_amd.nested=1</code>): cập nhật kernel đã vá <strong>CVE-2026-99312</strong> (<code>6.12.118</code> / <code>6.18.64</code> / <code>7.3.5+</code>) và reboot, hoặc tắt tạm <code>kvm_amd nested=0</code>'
-      ja: 'nested virtualization 有効（<code>kvm_amd.nested=1</code>）な <strong>AMD</strong> 製 Linux KVM ハイパーバイザーを点検：<strong>CVE-2026-99312</strong> 修正カーネル（<code>6.12.118</code> / <code>6.18.64</code> / <code>7.3.5+</code>）へ更新・再起動、または暫定で <code>kvm_amd nested=0</code> を適用'
+      vi: 'Vá hypervisor <strong>Linux KVM AMD</strong> bật nested (<code>kvm_amd.nested=1</code>) lên <code>6.12.118 / 6.18.64 / 7.3.5+</code> (<strong>CVE-2026-99312</strong>) hoặc tắt tạm <code>nested=0</code>'
+      ja: '<strong>Linux KVM AMD</strong>（<code>kvm_amd.nested=1</code>）を <code>6.12.118 / 6.18.64 / 7.3.5+</code> へ更新（<strong>CVE-2026-99312</strong>）、または暫定で <code>nested=0</code> を設定'
     sev: high
     due:
-      vi: Trước 28-11-2026 (áp dụng nested=0 ngay nếu vận hành host AMD KVM multi-tenant)
-      ja: 2026年11月28日まで（マルチテナント AMD KVM ホスト運用時は即時 nested=0）
+      vi: Trước 28-11-2026 (tắt nested ngay nếu multi-tenant)
+      ja: 2026-11-28 まで（マルチテナントは即時 nested=0）
   - task:
-      vi: 'Rà soát máy chủ Linux mở cổng TCP internet: cập nhật kernel đã vá <strong>CVE-2026-98432</strong> hoặc áp dụng cấu hình lọc gói IP options bằng nftables/iptables u32 và tắt MPTCP'
-      ja: 'インターネット公開されたLinuxサーバーの総点検: <strong>CVE-2026-98432</strong> 修正カーネルへの更新・再起動、またはnftables/iptables u32によるIPオプション遮断ルールの適用とMPTCP無効化'
+      vi: 'Vá kernel Linux mở TCP (<strong>CVE-2026-98432</strong>) hoặc lọc IP options bằng nftables/iptables u32 và tắt MPTCP'
+      ja: 'TCP 公開 Linux を <strong>CVE-2026-98432</strong> 修正版へ更新、または nftables/u32 遮断＋MPTCP 無効化'
     sev: high
     due:
-      vi: Trước 18-11-2026 (áp dụng nftables/tắt MPTCP ngay lập tức nếu mở TCP ra internet)
-      ja: 2026年11月18日まで（TCP インターネット公開時は nftables/MPTCP 無効化を即時適用）
+      vi: Trước 18-11-2026 (lọc ngay nếu mở TCP internet)
+      ja: 2026-11-18 まで（インターネット公開時は即時遮断）
   - task:
-      vi: 'Rà soát runner GitHub Actions tự host (<strong>CVE-2026-11204</strong>: chuyển sang mô hình ephemeral pod) và kiểm duyệt chặt các package npm/PyPI giả mạo công cụ MCP nhắm vào AI agent'
-      ja: 'セルフホスト型 GitHub Actions ランナーの点検（<strong>CVE-2026-11204</strong>: エフェメラル環境への移行）および AI エージェントを騙る不正 npm/PyPI パッケージの厳格な審査'
+      vi: 'Chuyển <strong>GitHub Actions self-hosted runner</strong> sang ephemeral pod (<strong>CVE-2026-11204</strong>) và kiểm duyệt package npm/PyPI mạo danh MCP'
+      ja: '<strong>GitHub Actions セルフホストランナー</strong>をエフェメラル化（<strong>CVE-2026-11204</strong>）、MCP 偽装 npm/PyPI を審査'
     sev: high
     due:
-      vi: Trước 18-11-2026 (kiểm duyệt MCP/package ngay lập tức trước khi cài đặt)
-      ja: 2026年11月18日まで（MCP/パッケージ審査はインストール前に即時実施）
+      vi: Trước 18-11-2026 (kiểm duyệt MCP trước khi cài)
+      ja: 2026-11-18 まで（MCP は導入前に即時審査）
   - task:
-      vi: 'Duy trì các phiên bản <strong>PHP</strong> đã vá (&ge; 8.2.35 / 8.3.36 / 8.4.27 / 8.5.12) và giữ thiết lập <code>session.upload_progress.enabled = 0</code> phòng ngừa sự cố PHP2Shell'
-      ja: 'パッチ適用済み <strong>PHP</strong>（8.2.35 / 8.3.36 / 8.4.27 / 8.5.12 以上）の維持、および PHP2Shell 対策としての <code>session.upload_progress.enabled = 0</code> 設定の継続'
+      vi: 'Duy trì <strong>PHP</strong> &ge; 8.2.35 / 8.3.36 / 8.4.27 / 8.5.12 và giữ <code>session.upload_progress.enabled = 0</code> (PHP2Shell)'
+      ja: '<strong>PHP</strong> 8.2.35 / 8.3.36 / 8.4.27 / 8.5.12 以上を維持し <code>session.upload_progress.enabled = 0</code> を継続'
     sev: med
     due:
       vi: Trước 20-11-2026
-      ja: 2026年11月20日まで
+      ja: 2026-11-20 まで
   - task:
-      vi: 'Kiểm kê và thu hẹp quyền toàn bộ <strong>AI agent, connector, ứng dụng nội bộ &amp; hệ thống ngoại vi</strong> theo khuyến nghị <strong>FBI FLASH-20261113-001 (ARTEX)</strong>: lập danh mục app/agent mở internet, áp dụng least privilege cho quyền &amp; OAuth consent grant, đưa giao diện quản trị/agent ra khỏi internet công cộng, gỡ/xoay vòng secret nhúng cứng trong config/env/script và lưu log hành động + đăng nhập của agent'
-      ja: '<strong>FBI FLASH-20261113-001（ARTEX）</strong>の勧告に基づき<strong>AI エージェント・コネクタ・周辺システム</strong>を点検：外部公開アプリ/エージェントの棚卸し、権限・OAuth 同意の最小権限化、管理画面/エージェント UI のインターネット非公開化、設定・環境変数・スクリプト内の固定シークレット削除・ローテーション、エージェント操作・サインインログの保全'
+      vi: 'Theo <strong>FBI FLASH (ARTEX)</strong>: kiểm kê AI agent/connector &amp; hệ thống ngoại vi, đưa trang quản trị khỏi internet, áp least privilege và xoay vòng secret nhúng cứng'
+      ja: '<strong>FBI FLASH（ARTEX）</strong>対応：AI エージェント・周辺システム棚卸し、管理画面の閉域化、最小権限化、固定シークレット更新'
     sev: high
     due:
-      vi: Trước 27-11-2026 (đóng giao diện quản trị lộ internet ngay lập tức)
-      ja: 2026年11月27日まで（公開管理画面の遮断は即時実施）
+      vi: Trước 27-11-2026 (đóng admin lộ internet ngay)
+      ja: 2026-11-27 まで（公開管理画面は即時遮断）
   - task:
-      vi: 'Rà soát <strong>status dashboard, cổng đối tác &amp; dịch vụ cũ</strong> (không để lộ SSH private key / access key như sự cố RIKEN Fugaku) và siết quy trình <strong>staging / cửa sổ đóng băng (freeze) / rollback</strong> cho các nâng cấp mạng &amp; hạ tầng'
-      ja: '<strong>ステータスダッシュボード・パートナーポータル・レガシーサービス</strong>の点検（RIKEN富岳の教訓として SSH 秘密鍵やアクセス鍵を露出したサーバーを遮断）、およびネットワーク・インフラ変更の <strong>ステージング・フリーズ期間・ロールバック手順</strong> の徹底'
+      vi: 'Tách biệt status dashboard/dịch vụ cũ khỏi khóa SSH/API (bài học RIKEN) và siết staging / freeze / rollback cho nâng cấp hạ tầng'
+      ja: '公開ダッシュボード等からの SSH/API 鍵分離（RIKEN 教訓）とインフラ変更のステージング・ロールバック徹底'
     sev: med
     due:
       vi: Trước 30-11-2026
-      ja: 2026年11月30日まで
+      ja: 2026-11-30 まで
 
 - title:
     vi: 2. Công cụ phát triển &amp; Môi trường IDE (Development Tools)
@@ -275,36 +245,36 @@ sections:
   - name: Microsoft Visual Studio Code
     sev: crit
     summary:
-      vi: 'Bản tin Patch Tuesday tháng 11/2026: <strong>CVE-2026-120779 (CVSS 9.6 - Critical)</strong> lỗi Code Injection (CWE-94) dẫn tới Remote Code Execution không cần xác thực khi mở workspace/repo chứa cấu hình độc hại; <strong>CVE-2026-120780 (CVSS 8.3 - High)</strong> lỗi bypass phân quyền dẫn đến RCE; <strong>CVE-2026-119982</strong> lỗi vượt rào kiểm soát Workspace Trust khi tải workspace từ xa.'
-      ja: '2026年11月 Patch Tuesday：<strong>CVE-2026-120779（CVSS 9.6 - Critical）</strong>悪意ある設定を含むワークスペース/リポジトリを開くことで認証不要でリモートコード実行（RCE）に至るコードインジェクション（CWE-94）、<strong>CVE-2026-120780（CVSS 8.3 - High）</strong>アクセス制御不備によるRCE、<strong>CVE-2026-119982</strong> リモートワークスペース取得時のWorkspace Trustバイパスを修正。'
+      vi: '<strong>CVE-2026-120779</strong> (CVSS 9.6, RCE khi mở workspace độc hại), <strong>CVE-2026-120780</strong> (CVSS 8.3, bypass phân quyền → RCE) và <strong>CVE-2026-119982</strong> (vượt Workspace Trust).'
+      ja: '<strong>CVE-2026-120779</strong>（CVSS 9.6、不正ワークスペースで RCE）、<strong>CVE-2026-120780</strong>（CVSS 8.3、権限バイパス RCE）、<strong>CVE-2026-119982</strong>（Workspace Trust 回避）。'
     impact:
-      vi: 'Mọi lập trình viên và kỹ sư sử dụng Visual Studio Code (Windows, macOS, Linux) phiên bản trước 1.145.3. Nguy cơ đặc biệt cao khi clone repo mã nguồn mở chưa kiểm chứng, tải zip project từ bên ngoài hoặc nhấp vào liên kết URI <code>vscode://</code> được kẻ tấn công gài bẫy.'
-      ja: 'バージョン 1.145.3 未満の Visual Studio Code を利用する全開発者・エンジニア（Windows、macOS、Linux）。第三者から提供されたリポジトリ、未検証のオープンソースコード、または <code>vscode://</code> 形式の悪意あるURIリンクを開いた際に重大な侵害リスク。'
+      vi: 'VS Code &lt; <strong>1.145.3</strong> (Win/macOS/Linux), nhất là khi mở repo/URI <code>vscode://</code> chưa kiểm chứng.'
+      ja: '<strong>1.145.3</strong> 未満の VS Code（Win/macOS/Linux）。未検証リポジトリや <code>vscode://</code> リンク利用時。'
     fix:
-      vi: 'Nâng cấp ngay lên Visual Studio Code <strong>1.145.3 trở lên</strong> qua menu <strong>Help &gt; Check for Updates</strong> hoặc tải bản mới nhất từ trang chủ Microsoft. Đảm bảo bật <strong>Workspace Trust</strong> (<code>security.workspace.trust.enabled: true</code>), không bấm "Trust" đối với thư mục hoặc repo chưa rõ nguồn gốc.'
-      ja: 'ヘルプメニュー（<strong>Help &gt; Check for Updates</strong>）または公式サイトから <strong>1.145.3 以上</strong>へ直ちに更新してください。<strong>Workspace Trust</strong>（<code>security.workspace.trust.enabled: true</code>）を必ず有効にし、出所不明のリポジトリで信頼（Trust）を許可しないでください。'
+      vi: 'Nâng cấp lên <strong>1.145.3+</strong> và bật <strong>Workspace Trust</strong> (<code>security.workspace.trust.enabled: true</code>).'
+      ja: '<strong>1.145.3 以上</strong>へ更新し、<strong>Workspace Trust</strong> を有効化。'
   - name: Microsoft Visual Studio
     sev: high
     summary:
-      vi: 'Đợt cập nhật Patch Tuesday tháng 11/2026 vá <strong>CVE-2026-114151</strong> và <strong>CVE-2026-118745</strong>: Lỗ hổng thực thi mã tùy ý (RCE / Arbitrary Code Execution) khi mở project file, custom MSBuild target hoặc tải dependency package chứa mã khai thác.'
-      ja: '2026年11月 Patch Tuesday にて <strong>CVE-2026-114151</strong> および <strong>CVE-2026-118745</strong> を修正。悪意あるプロジェクトファイル、カスタム MSBuild ターゲット、またはパッケージ依存関係の処理時に任意コード実行（RCE）に至る脆弱性。'
+      vi: '<strong>CVE-2026-114151</strong> &amp; <strong>CVE-2026-118745</strong>: RCE khi mở project file, custom MSBuild target hoặc dependency độc hại.'
+      ja: '<strong>CVE-2026-114151</strong>・<strong>CVE-2026-118745</strong>：不正なプロジェクト／MSBuild ターゲット処理で RCE。'
     impact:
-      vi: 'Kỹ sư phát triển phần mềm sử dụng Microsoft Visual Studio 2022 trên Windows khi mở các solution (.sln, .csproj) từ nguồn bên ngoài.'
-      ja: '外部から取得したソリューション（.sln、.csproj）を開く Windows 環境の Visual Studio 2022 利用エンジニア。'
+      vi: 'Visual Studio 2022 trên Windows khi mở solution (<code>.sln</code>, <code>.csproj</code>) từ bên ngoài.'
+      ja: '外部の <code>.sln</code> / <code>.csproj</code> を開く Windows 版 Visual Studio 2022。'
     fix:
-      vi: 'Mở Visual Studio Installer và cập nhật Visual Studio 2022 lên bản phát hành mới nhất tháng 11/2026.'
-      ja: 'Visual Studio Installer を起動し、Visual Studio 2022 を2026年11月の最新サービスリリースに更新してください。'
+      vi: 'Cập nhật Visual Studio 2022 lên bản mới nhất tháng 11/2026 qua Visual Studio Installer.'
+      ja: 'Visual Studio Installer から 2026年11月最新版へ更新。'
   - name: GitHub Actions (Self-Hosted Runners)
     sev: high
     summary:
-      vi: 'Advisory <strong>CVE-2026-11204</strong>: Lỗ hổng phạm vi và lưu vết token trên runner tự host (Self-Hosted Runner Controller). Quá trình dọn dẹp sau job trên các runner dùng chung có thể để rò rỉ OIDC token tạm thời hoặc biến môi trường sang các job tiếp theo từ các PR khác nhau.'
-      ja: 'セキュリティアドバイザリ <strong>CVE-2026-11204</strong>：セルフホスト型 GitHub Actions ランナーコントローラーにおけるトークン永続化・漏えいの脆弱性。共有ランナーでのジョブ完了後のクリーンアップ不備により、異なるPR送信者の後続ジョブに一時的な OIDC トークンや環境変数が漏えいするリスク。'
+      vi: '<strong>CVE-2026-11204</strong>: dọn dẹp sau job trên runner dùng chung có thể rò rỉ OIDC token tạm hoặc biến môi trường sang job sau.'
+      ja: '<strong>CVE-2026-11204</strong>：共有ランナーのジョブ後クリーンアップ不備により OIDC トークン・環境変数が漏えいする恐れ。'
     impact:
-      vi: 'Các hệ thống CI/CD sử dụng GitHub Actions self-hosted runner dùng chung giữa các repository hoặc cho phép workflow chạy từ pull request nhánh ngoài/fork.'
-      ja: '複数リポジトリで共有されているセルフホスト型ランナー、または外部フォークからの PR でワークフロー実行を許可している CI/CD パイプライン。'
+      vi: 'Self-hosted runner dùng chung nhiều repo hoặc chạy workflow từ PR fork ngoài.'
+      ja: '複数リポジトリ共有または外部 PR 実行を許可するセルフホストランナー。'
     fix:
-      vi: 'Chuyển toàn bộ hạ tầng runner tự host sang dạng container pod dùng một lần (ephemeral single-use pods). Áp dụng chặt chẽ khối <code>permissions:</code> tối thiểu trong file workflow (vd: <code>contents: read</code>) và pin SHA commit đối với third-party Actions.'
-      ja: 'セルフホストランナー基盤を使い捨てコンテナポッド（ephemeral single-use pods）へ移行してください。ワークフロー定義内で最小限の <code>permissions:</code>（例: <code>contents: read</code>）を明示し、外部アクションはコミットSHAで固定してください。'
+      vi: 'Chuyển sang ephemeral single-use pod; đặt <code>permissions:</code> tối thiểu và pin SHA cho third-party Actions.'
+      ja: '使い捨てポッドへ移行し、最小 <code>permissions:</code> とサードパーティ Action の SHA 固定を実施。'
 
 - title:
     vi: 3. Trình duyệt &amp; Chuỗi cung ứng Package (Browsers &amp; Package Registries)
@@ -314,36 +284,36 @@ sections:
   - name: Google Chrome &amp; Chromium
     sev: crit
     summary:
-      vi: 'Ngày 23-11, Google phát hành bản cập nhật bảo mật vá <strong>CVE-2026-134401</strong> (<strong>Critical</strong>, CVSS 3.1 <strong>9.6</strong> CISA-ADP, CWE-20 Improper Input Validation trong thành phần <em>Variations</em>): trang HTML độc hại có thể cho phép thực thi mã tùy ý ngoài sandbox trình duyệt. Trước đó ngày 17-11, Chrome 158 vá 204 lỗi (6 lỗi Critical: CVE-2026-130963, CVE-2026-131031, CVE-2026-131060, CVE-2026-131008, CVE-2026-131054, CVE-2026-130975) và zero-day CVE-2026-125350 (XML). Xem <a href="@home@featured/vulnerabilities/chrome-cve-2026-134401/analysis/">phân tích &amp; hướng dẫn</a>.'
-      ja: '11月23日、Google は <strong>CVE-2026-134401</strong>（<strong>Critical</strong>、CVSS 3.1 <strong>9.6</strong> CISA-ADP、<em>Variations</em> の CWE-20 不適切な入力検証）を修正する更新を公開。細工された HTML ページによりサンドボックス外で任意コード実行の恐れ。11月17日の Chrome 158（204件修正、うち Critical 6件）およびゼロデイ CVE-2026-125350 に続く更新。<a href="@home@featured/vulnerabilities/chrome-cve-2026-134401/analysis/">分析・対策ガイド</a>を参照。'
+      vi: '<strong>CVE-2026-134401</strong> (Critical, CVSS 9.6 CISA-ADP, CWE-20 ở <em>Variations</em>): thực thi mã ngoài sandbox qua HTML độc hại; nối tiếp Chrome 158 (204 lỗi) và zero-day <strong>CVE-2026-125350</strong> (XML).'
+      ja: '<strong>CVE-2026-134401</strong>（Critical、CVSS 9.6 CISA-ADP、<em>Variations</em> の CWE-20）：不正 HTML でサンドボックス外コード実行の恐れ。Chrome 158（204件）およびゼロデイ <strong>CVE-2026-125350</strong> に続く修正。'
     impact:
-      vi: 'Toàn bộ người dùng Google Chrome trước <code>158.0.8127.88</code> (Extended Stable trước <code>156.0.8078.114</code>) trên Windows, macOS, Linux, Android; trình duyệt nhân Chromium (Brave đã có <code>v1.100.59</code> trên Chromium 158.0.8127.92; Microsoft Edge Desktop đang chờ bản vá tương ứng) và các tiến trình headless Chromium / Puppeteer.'
-      ja: 'Windows、macOS、Linux、Android 上の Google Chrome <code>158.0.8127.88</code> 未満（Extended Stable は <code>156.0.8078.114</code> 未満）、Chromium 系ブラウザ（Brave は Chromium 158.0.8127.92 ベースの <code>v1.100.59</code> 公開済み、Microsoft Edge Desktop は対応版待ち）、およびヘッドレス Chromium / Puppeteer 環境。'
+      vi: 'Chrome &lt; <code>158.0.8127.88</code> (Ext &lt; <code>156.0.8078.114</code>), nhân Chromium (Brave đã vá <code>v1.100.59</code>; Edge chờ vá) và headless Chromium.'
+      ja: 'Chrome <code>158.0.8127.88</code> 未満（Ext <code>156.0.8078.114</code> 未満）、Chromium 系（Brave <code>v1.100.59</code> 修正済み、Edge 待ち）、ヘッドレス環境。'
     fix:
-      vi: 'Cập nhật Chrome Stable qua <strong>Settings &gt; About Google Chrome</strong> lên <strong>158.0.8127.88/.89</strong> (Windows/macOS), <strong>158.0.8127.88</strong> (Linux), Extended Stable lên <strong>156.0.8078.114</strong>, Android lên <strong>158.0.8127.92</strong> và <strong>Relaunch</strong> trình duyệt (bản tải ngầm chưa bảo vệ phiên đang mở). Với Brave nâng lên <strong>v1.100.59+</strong>; theo dõi bản vá từ Microsoft Edge.'
-      ja: '<strong>Settings &gt; About Google Chrome</strong> から Chrome Stable を <strong>158.0.8127.88/.89</strong>（Windows/macOS）、<strong>158.0.8127.88</strong>（Linux）、Extended Stable を <strong>156.0.8078.114</strong>、Android を <strong>158.0.8127.92</strong> へ更新し、必ず <strong>Relaunch</strong> してください（バックグラウンド取得のみでは再起動まで保護されません）。Brave は <strong>v1.100.59+</strong> へ更新、Microsoft Edge の修正公開を監視してください。'
+      vi: 'Cập nhật lên <strong>158.0.8127.88/.89</strong> (Ext <strong>156.0.8078.114</strong>, Android <strong>158.0.8127.92</strong>) và <strong>Relaunch</strong>. Xem <a href="@home@featured/vulnerabilities/chrome-cve-2026-134401/analysis/">phân tích</a>.'
+      ja: '<strong>158.0.8127.88/.89</strong>（Ext <strong>156.0.8078.114</strong>、Android <strong>158.0.8127.92</strong>）へ更新し <strong>Relaunch</strong>。<a href="@home@featured/vulnerabilities/chrome-cve-2026-134401/analysis/">分析</a>参照。'
   - name: npm &amp; PyPI (AI Coding Agent Supply Chain)
     sev: high
     summary:
-      vi: 'Phát hiện chiến dịch diện rộng với hơn 140 package mã độc trên npm và PyPI mạo danh các máy chủ giao thức Model Context Protocol (MCP), tool connector và tiện ích hỗ trợ AI coding agent. Khi được agent hoặc kỹ sư cài đặt thử nghiệm, mã độc âm thầm quét và exfiltrate các file <code>.env</code>, private key SSH, và thông tin xác thực AWS (<code>~/.aws/credentials</code>).'
-      ja: 'Model Context Protocol（MCP）サーバー、ツールコネクタ、AIコーディングアシスタントの支援ツールを装った140件以上の悪意ある npm/PyPI パッケージによる協調攻撃を検知。エージェントや開発者がインストール・実行した際、<code>.env</code>、SSH秘密鍵、AWS認証情報（<code>~/.aws/credentials</code>）を外部へ不正送信。'
+      vi: 'Hơn 140 package độc hại giả mạo MCP server và công cụ AI coding, âm thầm đánh cắp file <code>.env</code>, khóa SSH và credentials AWS.'
+      ja: 'MCP サーバーや AI 開発支援ツールを装う140件超の悪性パッケージを検知。<code>.env</code>、SSH 鍵、AWS 認証情報を窃取。'
     impact:
-      vi: 'Máy trạm của kỹ sư sử dụng các công cụ AI coding assistant (Claude Code, Cursor, Copilot Workspace...), môi trường dev/staging có cài đặt package mới chưa qua kiểm duyệt.'
-      ja: 'AIコーディング支援ツール（Claude Code、Cursor、Copilot 等）を利用する開発環境、未検証パッケージをインストールする開発・ステージング環境。'
+      vi: 'Máy trạm dùng AI coding assistant (Claude Code, Cursor, Copilot...) và môi trường dev/staging.'
+      ja: 'AI コーディング支援ツール利用端末および開発・ステージング環境。'
     fix:
-      vi: 'Tuân thủ nghiêm ngặt việc khóa phiên bản bằng lockfile (<code>npm ci</code>, <code>pnpm-lock.yaml</code>). Kiểm tra kỹ nguồn gốc package và tác giả trước khi cấu hình MCP server hoặc cho phép AI agent cài đặt thư viện mới. Sử dụng các công cụ quét chuỗi cung ứng (Socket.dev, GitHub Dependency Review).'
-      ja: 'ロックファイルによる依存関係固定（<code>npm ci</code>、<code>pnpm-lock.yaml</code>）を徹底してください。MCP サーバー登録や AI エージェントによるライブラリ自動追加の前にパッケージの出所を必ず監査してください。Socket.dev や GitHub Dependency Review による検証を推奨します。'
+      vi: 'Khóa dependency bằng lockfile (<code>npm ci</code>); rà soát nguồn MCP/package trước khi cài; dùng Socket.dev / Dependency Review.'
+      ja: 'ロックファイル固定（<code>npm ci</code>）を徹底し、MCP・パッケージ導入前に出所監査や Socket.dev 等で検証。'
   - name: PHP Composer
     sev: high
     summary:
-      vi: '<strong>CVE-2026-109620 (Critical)</strong>: Lỗ hổng Object Injection và Remote Code Execution trong các package tiện ích phổ biến thuộc hệ sinh thái Composer, phát sinh trong quá trình tự động phân giải phụ thuộc và ghi cache.'
-      ja: '<strong>CVE-2026-109620（Critical）</strong>：Composer エコシステム内の主要ユーティリティパッケージにおけるオブジェクト注入およびリモートコード実行（RCE）の脆弱性。依存関係の自動解決およびキャッシュ生成時にトリガーされる恐れ。'
+      vi: '<strong>CVE-2026-109620 (Critical)</strong>: Object Injection &amp; RCE trong một số package tiện ích phổ biến khi phân giải phụ thuộc và ghi cache.'
+      ja: '<strong>CVE-2026-109620（Critical）</strong>：主要ユーティリティパッケージの依存解決・キャッシュ生成時におけるオブジェクト注入および RCE。'
     impact:
-      vi: 'Ứng dụng PHP và hệ thống CI/CD tự động chạy <code>composer install</code> hoặc <code>composer update</code> chứa các package bị ảnh hưởng.'
-      ja: '影響を受けるパッケージを利用し、<code>composer install</code> や <code>composer update</code> を実行する PHP アプリケーションおよび CI/CD 環境。'
+      vi: 'Ứng dụng PHP và CI/CD chạy <code>composer install/update</code> với các package bị ảnh hưởng.'
+      ja: '影響パッケージを含み <code>composer install/update</code> を実行する PHP アプリ・CI/CD。'
     fix:
-      vi: 'Chạy lệnh <code>composer audit</code> để rà soát toàn bộ dependency tree; nâng cấp các package bị cảnh báo lên bản phát hành mới nhất.'
-      ja: '<code>composer audit</code> を実行して依存関係ツリー全体を監査し、警告対象パッケージを最新パッチ適用版へ更新してください。'
+      vi: 'Chạy <code>composer audit</code> để rà soát và nâng cấp các package bị cảnh báo lên bản mới nhất.'
+      ja: '<code>composer audit</code> で監査し、警告対象パッケージを最新版へ更新。'
 
 - title:
     vi: 4. Hệ điều hành &amp; Ngôn ngữ lập trình (OS &amp; Languages)
@@ -353,80 +323,80 @@ sections:
   - name: Linux kernel Net (Lockless Socket)
     sev: crit
     summary:
-      vi: '<strong>CVE-2026-99676</strong> (CVSS <strong>9.8</strong> theo Linux CNA / <strong>5.9</strong> theo Red Hat BZ #2577739): lỗi thứ tự ghi bộ nhớ refcount (weak memory ordering) trong lockless socket lookup (<code>__inet_lookup_skb</code> / <code>refcount_inc_not_zero</code>) trên kiến trúc ARM64/POWER, dẫn tới Use-After-Free (UAF) khi socket bị giải phóng song song → kernel panic/DoS hoặc nguy cơ thực thi mã. Đã vá ở upstream <code>6.12.118</code>, <code>6.18.64</code>, <code>7.3.5</code>, <code>7.4-rc2</code> và Debian (<code>DSA-6652-1</code>); Red Hat, Ubuntu và Amazon Linux đang theo dõi/chờ vá. Xem <a href="@home@featured/vulnerabilities/linux-cve-2026-99676/analysis/">bài phân tích chuyên sâu</a>.'
-      ja: '<strong>CVE-2026-99676</strong>（Linux CNA CVSS <strong>9.8</strong> / Red Hat BZ #2577739 CVSS <strong>5.9</strong>）：ARM64/POWER 環境のロックレスソケット検索（<code>__inet_lookup_skb</code> / <code>refcount_inc_not_zero</code>）における refcount メモリ順序（weak memory ordering）の不具合により、並行解放時に Use-After-Free（UAF）が発生しカーネルパニック/DoS やコード実行の恐れ。upstream <code>6.12.118</code> / <code>6.18.64</code> / <code>7.3.5</code> / <code>7.4-rc2</code> および Debian（<code>DSA-6652-1</code>）で修正済み。Red Hat・Ubuntu・Amazon Linux は対応確認中。<a href="@home@featured/vulnerabilities/linux-cve-2026-99676/analysis/">詳細分析ページ</a>を参照。'
+      vi: '<strong>CVE-2026-99676</strong> (CVSS 9.8 CNA / 5.9 RH): lỗi thứ tự bộ nhớ refcount trong lockless socket lookup trên ARM64/POWER → Use-After-Free, panic/DoS hoặc nguy cơ RCE.'
+      ja: '<strong>CVE-2026-99676</strong>（CVSS 9.8 CNA / 5.9 RH）：ARM64/POWER のロックレスソケット検索における refcount メモリ順序不備で UAF・パニック/DoS や RCE の恐れ。'
     impact:
-      vi: 'Máy chủ Linux chạy trên kiến trúc <strong>ARM64/Graviton</strong> hoặc <strong>POWER</strong> với kernel &ge; <code>5.5</code> (hoặc &ge; <code>5.4.208</code>) mở cổng TCP/UDP nhận lưu lượng mạng đồng thời. Kiến trúc x86-64 (TSO) không bị race memory ordering này.'
-      ja: '<strong>ARM64/Graviton</strong> または <strong>POWER</strong> アーキテクチャ上で稼働し、TCP/UDP 通信を受け付ける Linux カーネル <code>5.5</code> 以降（または <code>5.4.208</code>+）のサーバー。x86-64（TSO）は本メモリ順序競合の影響を受けません。'
+      vi: 'Linux <strong>ARM64/Graviton &amp; POWER</strong> (kernel &ge; <code>5.5</code> / <code>5.4.208+</code>) mở TCP/UDP. x86-64 không bị ảnh hưởng.'
+      ja: 'TCP/UDP を公開する <strong>ARM64/Graviton・POWER</strong>（<code>5.5+</code> / <code>5.4.208+</code>）。x86-64 は対象外。'
     fix:
-      vi: 'Cập nhật kernel lên <strong>6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2</strong> (hoặc bản distro như Debian <code>DSA-6652-1</code>) và reboot. Siết firewall/security group các cổng TCP/UDP mở công khai trong lúc chờ bản vá distro. Xem <a href="@home@featured/vulnerabilities/linux-cve-2026-99676/analysis/">hướng dẫn chi tiết</a>.'
-      ja: 'カーネルを <strong>6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2</strong>（または Debian <code>DSA-6652-1</code> 等のディストリ修正版）へ更新し再起動してください。修正適用まではファイアウォール／セキュリティグループで公開 TCP/UDP ポートを最小限に制限してください。<a href="@home@featured/vulnerabilities/linux-cve-2026-99676/analysis/">詳細ガイド</a>を参照。'
+      vi: 'Cập nhật kernel lên <strong>6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2</strong> (Debian <code>DSA-6652-1</code>) và reboot; tạm thời siết firewall cổng TCP/UDP. Xem <a href="@home@featured/vulnerabilities/linux-cve-2026-99676/analysis/">phân tích</a>.'
+      ja: '<strong>6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2</strong>（Debian <code>DSA-6652-1</code>）へ更新・再起動、暫定で公開ポートを制限。<a href="@home@featured/vulnerabilities/linux-cve-2026-99676/analysis/">分析</a>参照。'
   - name: Linux kernel NFSD (NFSv4.1+)
     sev: crit
     summary:
-      vi: '<strong>CVE-2026-99362</strong> (CVSS <strong>9.8</strong> - Critical): lỗi trong <code>nfsd4_sequence()</code> khi client thương lượng <code>ca_maxresponsesize_cached</code> ở mức tối thiểu (<code>NFSD_MIN_HDR_SEQ_SZ</code>, cấp phát slot <code>sl_data[]</code> độ dài 0) nhưng gửi yêu cầu <code>COMPOUND</code> đặc biệt khiến <code>nfsd4_store_cache_entry</code> ghi phản hồi vượt ranh giới slot (<code>KASAN: slab-out-of-bounds</code> trong <code>read_bytes_from_xdr_buf</code>) → hỏng bộ nhớ kernel, panic/DoS hoặc nguy cơ thực thi mã từ xa. Đã vá ở upstream <code>6.12.117</code>, <code>6.18.61</code>, <code>7.3.2</code>, <code>7.4-rc1</code> và Debian 12 LTS (<code>DLA-4927-1</code>); RHEL, Ubuntu và Amazon Linux đang chờ bản cập nhật. Xem <a href="@home@featured/vulnerabilities/linux-cve-2026-99362/analysis/">bài phân tích chuyên sâu</a>.'
-      ja: '<strong>CVE-2026-99362</strong>（CVSS <strong>9.8</strong> - Critical）：<code>nfsd4_sequence()</code> においてクライアントが <code>ca_maxresponsesize_cached</code> を最小値（<code>NFSD_MIN_HDR_SEQ_SZ</code>、長さ 0 の <code>sl_data[]</code> スロット割当）に設定した状態で細工された <code>COMPOUND</code> 要求を送信すると、<code>nfsd4_store_cache_entry</code> がスロット境界外へ書き込み（<code>read_bytes_from_xdr_buf</code> での <code>KASAN: slab-out-of-bounds</code>）、カーネルメモリ破壊・パニック/DoS やリモートコード実行に至る恐れ。upstream <code>6.12.117</code> / <code>6.18.61</code> / <code>7.3.2</code> / <code>7.4-rc1</code> および Debian 12 LTS（<code>DLA-4927-1</code>）で修正済み。RHEL・Ubuntu・Amazon Linux は修正待ち。<a href="@home@featured/vulnerabilities/linux-cve-2026-99362/analysis/">詳細分析ページ</a>を参照。'
+      vi: '<strong>CVE-2026-99362</strong> (CVSS 9.8): ghi tràn <code>slab-out-of-bounds</code> trong <code>nfsd4_sequence()</code> khi slot cache độ dài 0 → panic/DoS hoặc nguy cơ RCE.'
+      ja: '<strong>CVE-2026-99362</strong>（CVSS 9.8）：<code>nfsd4_sequence()</code> で長さ 0 スロットへの <code>slab-out-of-bounds</code> 書込。パニック/DoS や RCE の恐れ。'
     impact:
-      vi: 'Máy chủ Linux chạy kernel &ge; <code>3.16</code> có bật dịch vụ <code>nfsd</code> hỗ trợ NFSv4.1+ (cổng TCP/UDP 2049), bao gồm file server nội bộ, NAS Linux và node lưu trữ chia sẻ.'
-      ja: 'NFSv4.1+ を有効にして <code>nfsd</code> を稼働させている Linux カーネル <code>3.16</code> 以降のサーバー（TCP/UDP 2049番ポート）。社内ファイルサーバー、Linux ベース NAS、共有ストレージノードが対象。'
+      vi: 'Linux kernel &ge; <code>3.16</code> bật <code>nfsd</code> NFSv4.1+ (cổng TCP/UDP 2049).'
+      ja: 'NFSv4.1+ 有効で <code>nfsd</code> 稼働の Linux <code>3.16+</code>（TCP/UDP 2049番）。'
     fix:
-      vi: 'Cập nhật kernel lên <strong>6.12.117 / 6.18.61 / 7.3.2 / 7.4-rc1</strong> (hoặc bản distro như Debian <code>DLA-4927-1</code>: <code>linux-6.12</code> <code>6.12.117-1~deb12u1</code>) và reboot. Tạm thời: siết firewall/security group cổng 2049 chỉ cho IP client tin cậy, hoặc tắt NFSv4.1/4.2 trong <code>/etc/nfs.conf</code> (hoặc dừng <code>nfs-server</code> nếu không sử dụng). Xem <a href="@home@featured/vulnerabilities/linux-cve-2026-99362/analysis/">hướng dẫn chi tiết</a>.'
-      ja: 'カーネルを <strong>6.12.117 / 6.18.61 / 7.3.2 / 7.4-rc1</strong>（または Debian <code>DLA-4927-1</code>：<code>linux-6.12</code> <code>6.12.117-1~deb12u1</code> 等のディストリ修正版）へ更新し再起動してください。暫定対策として、ファイアウォールで2049番ポートを信頼済みクライアントのみに制限するか、<code>/etc/nfs.conf</code> で NFSv4.1/4.2 を無効化（不要なら <code>nfs-server</code> を停止）してください。<a href="@home@featured/vulnerabilities/linux-cve-2026-99362/analysis/">詳細ガイド</a>を参照。'
+      vi: 'Vá kernel <strong>6.12.117 / 6.18.61 / 7.3.2 / 7.4-rc1</strong> (Debian <code>DLA-4927-1</code>) và reboot; tạm thời siết cổng 2049 hoặc tắt NFSv4.1+. Xem <a href="@home@featured/vulnerabilities/linux-cve-2026-99362/analysis/">phân tích</a>.'
+      ja: '<strong>6.12.117 / 6.18.61 / 7.3.2 / 7.4-rc1</strong>（Debian <code>DLA-4927-1</code>）へ更新・再起動、暫定で2049番制限または NFSv4.1+ 無効化。<a href="@home@featured/vulnerabilities/linux-cve-2026-99362/analysis/">分析</a>参照。'
   - name: Linux kernel KVM (AMD)
     sev: high
     summary:
-      vi: '<strong>CVE-2026-99312</strong> (<code>CWE-825</code>, CVSS v3.1 <strong>8.8</strong> theo Linux CNA / 7.8 theo Red Hat &amp; SUSE): lỗi không reset ngữ cảnh MMU khi mô phỏng <code>INIT</code> ở trạng thái <code>CR0.PG=0</code> trên AMD SVM bật nested virtualization → Page-Table UAF cho phép guest thoát VM đọc/ghi RAM vật lý host (đã chứng minh đọc ~127 GB RAM trên DigitalOcean Droplet). Đã vá ở upstream <code>6.12.118</code>, <code>6.18.64</code>, <code>7.3.5</code>, <code>7.4-rc2</code>; SUSE (SP7/16.x/Micro 6.x), Debian sid và DigitalOcean đã vá; RHEL 9/10, Ubuntu 22.04/24.04 và Debian 12/13 đang chờ. Xem <a href="@home@featured/vulnerabilities/linux-cve-2026-99312/analysis/">bài phân tích chuyên sâu</a>.'
-      ja: '<strong>CVE-2026-99312</strong>（<code>CWE-825</code>、Linux CNA CVSS v3.1 <strong>8.8</strong> / Red Hat・SUSE 7.8）：nested virtualization 有効な AMD SVM 環境で <code>CR0.PG=0</code> のまま <code>INIT</code> エミュレーション時に MMU を初期化せず、ページテーブル UAF によりゲストからホスト物理 RAM を読み書き可能（DigitalOcean Droplet で約127GB読取実証）。upstream <code>6.12.118</code> / <code>6.18.64</code> / <code>7.3.5</code> / <code>7.4-rc2</code>、SUSE（SP7/16.x/Micro 6.x）、Debian sid、DigitalOcean で対応済み。RHEL 9/10・Ubuntu・Debian 12/13 は修正待ち。<a href="@home@featured/vulnerabilities/linux-cve-2026-99312/analysis/">詳細分析ページ</a>を参照。'
+      vi: '<strong>CVE-2026-99312</strong> (CVSS 8.8 CNA / 7.8 RH): Page-Table UAF khi mô phỏng <code>INIT</code> trên AMD SVM bật nested → guest thoát VM đọc/ghi RAM host.'
+      ja: '<strong>CVE-2026-99312</strong>（CVSS 8.8 CNA / 7.8 RH）：nested 有効 AMD SVM の <code>INIT</code> 処理でページテーブル UAF、ゲストからホスト RAM 読書きの恐れ。'
     impact:
-      vi: 'Chỉ ảnh hưởng máy chủ hypervisor Linux KVM dùng CPU <strong>AMD</strong>, bật <code>kvm_amd.nested=1</code> và chạy kernel từ <code>5.15.81</code> trở lên (trừ <code>5.10.y</code>, <code>5.4.y</code>, Intel VMX và cloud VM khách thông thường).'
-      ja: '<strong>AMD</strong> CPU を搭載し <code>kvm_amd.nested=1</code> を有効化したカーネル <code>5.15.81</code> 以降の Linux KVM ハイパーバイザーのみ対象（<code>5.10.y</code>・<code>5.4.y</code>・Intel VMX・通常のクラウド VM ゲストは対象外）。'
+      vi: 'Hypervisor KVM CPU <strong>AMD</strong> bật <code>kvm_amd.nested=1</code> (kernel &ge; <code>5.15.81</code>, trừ 5.10/5.4 và Intel).'
+      ja: '<code>kvm_amd.nested=1</code> の <strong>AMD</strong> KVM ホスト（<code>5.15.81+</code>、Intel・5.10/5.4 除外）。'
     fix:
-      vi: 'Cập nhật kernel host lên bản đã vá và reboot. Nếu chưa thể vá ngay và không cần chạy VM lồng nhau, tắt nested virtualization: <code>modprobe -r kvm_amd &amp;&amp; modprobe kvm_amd nested=0</code> và lưu vào <code>/etc/modprobe.d/</code>.'
-      ja: 'ホストカーネルを修正版へ更新して再起動してください。即時更新が困難で L2 仮想化が不要な場合は、<code>modprobe -r kvm_amd &amp;&amp; modprobe kvm_amd nested=0</code> で無効化し <code>/etc/modprobe.d/</code> に永続化してください。'
+      vi: 'Vá kernel host lên <strong>6.12.118 / 6.18.64 / 7.3.5+</strong> và reboot, hoặc tắt nested: <code>modprobe kvm_amd nested=0</code>. Xem <a href="@home@featured/vulnerabilities/linux-cve-2026-99312/analysis/">phân tích</a>.'
+      ja: '<strong>6.12.118 / 6.18.64 / 7.3.5+</strong> へ更新・再起動、または <code>modprobe kvm_amd nested=0</code> で無効化。<a href="@home@featured/vulnerabilities/linux-cve-2026-99312/analysis/">分析</a>参照。'
   - name: Linux kernel
     sev: high
     summary:
-      vi: 'Tiếp tục theo dõi <strong>CVE-2026-98432</strong> (use-after-free trong ngăn xếp IPv4 TCP khi xử lý IP options, nguy cơ thực thi mã qua MPTCP handshake, CVSS 9.8). Amazon Linux (AL2/AL2023) đã có kernel vá chính thức; Ubuntu các bản 22.04 / 24.04 tiếp tục phát hành USN. Xem chi tiết tại <a href="@home@featured/vulnerabilities/linux-cve-2026-98432/analysis/">bài phân tích chuyên sâu</a>.'
-      ja: '<strong>CVE-2026-98432</strong>（IPオプション処理時のIPv4 TCPスタックにおけるuse-after-free、MPTCPハンドシェイク経由のコード実行リスク、CVSS 9.8）の追跡。Amazon Linux（AL2/AL2023）は公式パッチ済み。Ubuntu 22.04 / 24.04 はUSNアップデートを継続配布中。<a href="@home@featured/vulnerabilities/linux-cve-2026-98432/analysis/">詳細分析ページ</a>を参照。'
+      vi: 'Theo dõi <strong>CVE-2026-98432</strong> (CVSS 9.8): UAF trong ngăn xếp IPv4 TCP khi xử lý IP options, nguy cơ RCE qua MPTCP handshake. AL2/AL2023 và Ubuntu đã có bản vá.'
+      ja: '<strong>CVE-2026-98432</strong>（CVSS 9.8）：IPv4 TCP の IP オプション処理で UAF（MPTCP 経由の RCE 恐れ）。AL2/AL2023・Ubuntu は修正配布中。'
     impact:
-      vi: 'Máy chủ Linux mở cổng TCP trực tiếp ra internet hoặc bật MPTCP (Go 1.24+ bật mặc định trên Linux), máy chủ đứng sau NLB TCP pass-through listener.'
-      ja: 'TCPポートを直接インターネット公開しているLinuxサーバー、MPTCPが有効な環境（Linux上のGo 1.24+でデフォルト有効）、NLB TCPパススルー配下のサーバー。'
+      vi: 'Máy chủ Linux mở TCP ra internet, bật MPTCP (Go 1.24+ bật mặc định) hoặc đứng sau NLB TCP pass-through.'
+      ja: 'TCP 公開 Linux、MPTCP 有効環境（Go 1.24+ 既定有効）、NLB TCP パススルー配下。'
     fix:
-      vi: 'Cập nhật kernel bản mới nhất và reboot máy chủ. Nếu chưa thể reboot, áp dụng cấu hình nftables/iptables u32 chặn gói IPv4 chứa IP options hoặc tắt MPTCP (<code>sysctl -w net.mptcp.enabled=0</code>).'
-      ja: '最新カーネルに更新して再起動してください。即時再起動が困難な場合は、nftables/iptables u32でIPオプション付きパケットを遮断するか、MPTCPを無効化（<code>sysctl -w net.mptcp.enabled=0</code>）してください。'
+      vi: 'Cập nhật kernel mới nhất và reboot; tạm thời chặn IP options qua nftables/u32 hoặc tắt MPTCP (<code>net.mptcp.enabled=0</code>). Xem <a href="@home@featured/vulnerabilities/linux-cve-2026-98432/analysis/">phân tích</a>.'
+      ja: '最新カーネルへ更新・再起動。暫定で nftables/u32 遮断または <code>net.mptcp.enabled=0</code>。<a href="@home@featured/vulnerabilities/linux-cve-2026-98432/analysis/">分析</a>参照。'
   - name: .NET (gồm ASP.NET Core)
     sev: high
     summary:
-      vi: 'Đợt cập nhật Patch Tuesday 10-11-2026: <strong>CVE-2026-118746 (CVSS 6.8)</strong> lỗi Security Feature Bypass trong cơ chế Unix Negotiate authentication khi thiếu thông tin channel-binding; <strong>CVE-2026-114146 / CVE-2026-114147</strong> lỗi leo thang đặc quyền (EoP) và từ chối dịch vụ (DoS) trong middleware xử lý request của ASP.NET Core.'
-      ja: '2026年11月10日 Patch Tuesday：<strong>CVE-2026-118746（CVSS 6.8）</strong>チャネルバインディング情報欠落時に不正リクエストを許容する Unix Negotiate 認証バイパス脆弱性、<strong>CVE-2026-114146 / CVE-2026-114147</strong> ASP.NET Core リクエスト処理・ミドルウェアにおける特権昇格（EoP）およびサービス拒否（DoS）。'
+      vi: '<strong>CVE-2026-118746</strong> (CVSS 6.8, bypass Unix Negotiate auth) và <strong>CVE-2026-114146 / 114147</strong> (EoP &amp; DoS trong middleware ASP.NET Core).'
+      ja: '<strong>CVE-2026-118746</strong>（CVSS 6.8、Unix Negotiate 認証バイパス）および <strong>CVE-2026-114146 / 114147</strong>（ASP.NET Core EoP・DoS）。'
     impact:
-      vi: 'Dịch vụ backend chạy .NET 8.0, 9.0, 10.0 trên Linux/Docker hoặc sử dụng middleware ASP.NET Core xử lý request công khai.'
-      ja: 'Linux/Docker 環境で .NET 8.0、9.0、10.0 を稼働させているバックエンドサービス、および外部リクエストを受け付ける ASP.NET Core ミドルウェア。'
+      vi: 'Dịch vụ chạy .NET 8.0, 9.0, 10.0 trên Linux/Docker hoặc ASP.NET Core mở công khai.'
+      ja: 'Linux/Docker 上の .NET 8.0/9.0/10.0 および公開 ASP.NET Core サービス。'
     fix:
-      vi: 'Cập nhật .NET SDK và runtime lên <strong>10.0.15</strong>, <strong>9.0.23</strong>, <strong>8.0.34</strong> (hoặc SDK 11.0.100+). Rebuild lại các Docker container sử dụng base image .NET cập nhật tháng 11/2026.'
-      ja: '.NET SDK およびランタイムを <strong>10.0.15</strong>、<strong>9.0.23</strong>、<strong>8.0.34</strong>（または SDK 11.0.100+）に更新してください。2026年11月更新の .NET ベースイメージを用いて Docker コンテナを再ビルド・再デプロイしてください。'
+      vi: 'Cập nhật .NET lên <strong>10.0.15 / 9.0.23 / 8.0.34</strong> (SDK 11.0.100+) và rebuild Docker container.'
+      ja: '<strong>10.0.15 / 9.0.23 / 8.0.34</strong>（SDK 11.0.100+）へ更新し Docker を再ビルド。'
   - name: Node.js
     sev: med
     summary:
-      vi: 'Duy trì các bản vá bảo mật 26.12.1 / 24.22.1 / 22.23.4 (khắc phục lỗi Brotli <a href="@home@featured/vulnerabilities/brotli-cve-2026-111497/analysis/">CVE-2026-111497</a> và bypass xác thực tên miền chứng chỉ TLS). Tháng 11 không có đợt cập nhật kernel khẩn cấp cho Node.js core; tiếp tục chú trọng an toàn supply chain npm.'
-      ja: 'セキュリティリリース（26.12.1 / 24.22.1 / 22.23.4）の適用を維持（Brotli メモリ範囲外書き込み <a href="@home@featured/vulnerabilities/brotli-cve-2026-111497/analysis/">CVE-2026-111497</a> および TLS ホスト名検証バイパスの修正）。11月に Node.js コアの緊急リリースはなく、npm サプライチェーン監査を重点的に実施。'
+      vi: 'Duy trì bản vá <strong>26.12.1 / 24.22.1 / 22.23.4</strong> (sửa lỗi Brotli <a href="@home@featured/vulnerabilities/brotli-cve-2026-111497/analysis/">CVE-2026-111497</a> &amp; bypass TLS); tháng 11 không có lỗ hổng core mới.'
+      ja: '<strong>26.12.1 / 24.22.1 / 22.23.4</strong>（Brotli <a href="@home@featured/vulnerabilities/brotli-cve-2026-111497/analysis/">CVE-2026-111497</a>・TLS 検証修正）を維持。11月のコア緊急修正なし。'
     impact:
-      vi: 'Các ứng dụng backend, API, SSR (Next.js, Nuxt) và môi trường phát triển / CI pipeline.'
-      ja: 'バックエンドアプリケーション、API、SSR（Next.js、Nuxt）、および開発環境・CIパイプライン。'
+      vi: 'Ứng dụng backend, API, SSR (Next.js, Nuxt) và CI/CD.'
+      ja: 'バックエンド、API、SSR（Next.js、Nuxt）、CI/CD。'
     fix:
-      vi: 'Đảm bảo ứng dụng chạy trên các phiên bản Node.js được hỗ trợ (Active/Maintenance LTS). Chạy định kỳ <code>npm audit</code> và khóa phiên bản bằng package-lock.json / pnpm-lock.yaml.'
-      ja: 'サポート対象のLTSバージョンで稼働していることを確認してください。<code>npm audit</code>の定期実施とpackage-lock.json / pnpm-lock.yamlによるバージョン固定を徹底してください。'
+      vi: 'Chạy bản LTS được hỗ trợ, chạy định kỳ <code>npm audit</code> và khóa phiên bản bằng lockfile.'
+      ja: 'サポート対象 LTS を維持し、定期的な <code>npm audit</code> とロックファイル固定を実施。'
   - name: PHP
     sev: high
     summary:
-      vi: 'Duy trì cảnh giác sau cuộc khủng hoảng PHP2Shell (CVE-2026-109618, CVE-2026-109619 - CVSS 9.2 Critical RCE qua upload progress). Các bản vá chính thức 8.5.12, 8.4.27, 8.3.36, 8.2.35 đã phát hành ổn định; lưu ý các nhánh 8.1 trở xuống đã EOL không có bản vá từ upstream.'
-      ja: 'PHP2Shell（CVE-2026-109618、CVE-2026-109619 - CVSS 9.2 Critical、upload progress 経由の RCE）を受けた警戒体制を維持。公式修正版 8.5.12、8.4.27、8.3.36、8.2.35 の稼働を確認。8.1 以前の EOL ブランチには upstream パッチがない点に留意。'
+      vi: 'Đợt vá 19-11 sửa 17 CVE (gồm 7 lỗi CVSS 9.2 và <strong>CVE-2026-115560</strong>), nối tiếp khủng hoảng PHP2Shell (<strong>CVE-2026-109618/19</strong>).'
+      ja: '11/19 リリースで17件（CVSS 9.2 が7件、<strong>CVE-2026-115560</strong> 等）を修正。PHP2Shell（<strong>CVE-2026-109618/19</strong>）に続く更新。'
     impact:
-      vi: 'Mọi ứng dụng PHP (PHP-FPM, FrankenPHP, Laravel, WordPress). Môi trường chưa nâng cấp PHP hoặc chưa tắt upload progress.'
-      ja: 'すべての PHP アプリケーション（PHP-FPM、FrankenPHP、Laravel、WordPress 等）。未更新環境または upload progress を無効化していない環境。'
+      vi: 'Mọi ứng dụng PHP (PHP-FPM, FrankenPHP, Laravel, WordPress); nhánh &le; 8.1 đã EOL không có bản vá.'
+      ja: '全 PHP アプリ（PHP-FPM、FrankenPHP、Laravel、WordPress）。8.1 以前は EOL で修正なし。'
     fix:
-      vi: 'Đảm bảo đã nâng PHP lên 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35. Đặt cấu hình <code>session.upload_progress.enabled = 0</code> trong <code>php.ini</code>. Xem <a href="@home@featured/vulnerabilities/php-cve-2026-109618-109619/php2shell/">hướng dẫn nội bộ</a>.'
-      ja: 'PHP を 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 へアップグレード済みであることを確認してください。<code>php.ini</code> で <code>session.upload_progress.enabled = 0</code> を設定してください。<a href="@home@featured/vulnerabilities/php-cve-2026-109618-109619/php2shell/">社内対応ガイド</a>を参照。'
+      vi: 'Nâng lên <strong>8.5.13 / 8.4.28 / 8.3.37 / 8.2.36</strong> (hoặc 8.6.0), restart và đặt <code>session.upload_progress.enabled = 0</code>. Xem <a href="@home@featured/vulnerabilities/php-security-release-2026-11-19/advisory/">phân tích</a>.'
+      ja: '<strong>8.5.13 / 8.4.28 / 8.3.37 / 8.2.36</strong>（または 8.6.0）へ更新・再起動し <code>session.upload_progress.enabled = 0</code> を設定。<a href="@home@featured/vulnerabilities/php-security-release-2026-11-19/advisory/">分析</a>参照。'
 
 - title:
     vi: 5. Frameworks Web &amp; Hệ sinh thái Java (Frameworks &amp; Java Ecosystem)
@@ -436,113 +406,113 @@ sections:
   - name: Next.js
     sev: high
     summary:
-      vi: 'Bản vá <strong>GHSA-673q-mjm6-r5xr / CVE-2026-96889 (Critical)</strong>: Lỗ hổng RCE liên quan đến hàm <code>use cache</code> trong App Router khi trả về dữ liệu kiểu TypedArray, kết hợp với lỗ hổng xử lý file SVG trong thư viện xử lý ảnh <code>sharp / librsvg</code>.'
-      ja: 'セキュリティアドバイザリ <strong>GHSA-673q-mjm6-r5xr / CVE-2026-96889（Critical）</strong>：App Router の <code>use cache</code> 関数が TypedArray を返却する際のリモートコード実行（RCE）の脆弱性、および画像処理コンポーネント（<code>sharp / librsvg</code>）における SVG 処理不備。'
+      vi: '<strong>GHSA-673q-mjm6-r5xr / CVE-2026-96889 (Critical)</strong>: RCE qua hàm <code>use cache</code> trả về TypedArray và lỗi xử lý SVG trong <code>sharp / librsvg</code>.'
+      ja: '<strong>GHSA-673q-mjm6-r5xr / CVE-2026-96889（Critical）</strong>：App Router <code>use cache</code>（TypedArray）の RCE および <code>sharp / librsvg</code> の SVG 処理不備。'
     impact:
-      vi: 'Các ứng dụng Next.js sử dụng App Router, Server Components và Image Optimization.'
-      ja: 'App Router、Server Components、および Image Optimization を活用している Next.js アプリケーション。'
+      vi: 'Ứng dụng Next.js dùng App Router, Server Components và Image Optimization.'
+      ja: 'App Router・Server Components・Image Optimization を利用する Next.js。'
     fix:
-      vi: 'Nâng cấp Next.js lên <strong>16.4.5</strong> hoặc <strong>15.5.29 trở lên</strong>.'
-      ja: 'Next.js を <strong>16.4.5</strong> または <strong>15.5.29 以上</strong>にアップグレードしてください。'
+      vi: 'Nâng cấp Next.js lên <strong>16.4.5</strong> hoặc <strong>15.5.29+</strong>.'
+      ja: 'Next.js を <strong>16.4.5</strong> または <strong>15.5.29+</strong> へ更新。'
   - name: Nuxt
     sev: high
     summary:
-      vi: '<strong>CVE-2026-119198 &amp; CVE-2026-119200</strong>: Lỗ hổng tiết lộ file tùy ý trên development server qua thao tác sự kiện HMR, và lỗi bypass chuẩn hóa đường dẫn URL trong engine Nitro (<code>/%2e/admin</code>).'
-      ja: '<strong>CVE-2026-119198 &amp; CVE-2026-119200</strong>：HMR イベント操作による開発サーバー上の任意ファイル漏えい、および Nitro ルーティング正規化バイパス（<code>/%2e/admin</code>）によるパストラバーサル。'
+      vi: '<strong>CVE-2026-119198 &amp; CVE-2026-119200</strong>: lộ file trên dev server qua HMR và bypass chuẩn hóa đường dẫn Nitro (<code>/%2e/admin</code>).'
+      ja: '<strong>CVE-2026-119198・119200</strong>：HMR 経由の任意ファイル漏えいと Nitro パス正規化バイパス。'
     impact:
-      vi: 'Ứng dụng chạy Nuxt 4 (môi trường dev, staging và production dùng Nitro engine).'
-      ja: 'Nuxt 4 を利用するアプリケーション（開発、ステージング、および Nitro エンジン稼働の本番環境）。'
+      vi: 'Ứng dụng chạy Nuxt 4 (dev, staging và production dùng Nitro).'
+      ja: 'Nuxt 4（開発・ステージング・Nitro 本番環境）。'
     fix:
-      vi: 'Nâng cấp Nuxt lên <strong>4.6.3 trở lên</strong>. Lưu ý Nuxt 3 đã hết vòng đời hỗ trợ (EOL), không có bản vá chính thức.'
-      ja: 'Nuxt を <strong>4.6.3 以上</strong>にアップグレードしてください。なお Nuxt 3 は EOL となっており公式修正はありません。'
+      vi: 'Nâng cấp lên <strong>4.6.3+</strong> (Nuxt 3 đã EOL, không có bản vá).'
+      ja: '<strong>4.6.3+</strong> へ更新（Nuxt 3 は EOL で修正なし）。'
   - name: Laravel
     sev: med
     summary:
-      vi: 'Tiếp tục theo dõi <strong>CVE-2026-114509</strong>: Lỗ hổng trong hệ thống TokenGuard cho phép giả danh người dùng mà không cần token hợp lệ khi cơ sở dữ liệu MySQL/MariaDB hoạt động ở chế độ so khớp không phân biệt chữ hoa chữ thường.'
-      ja: '<strong>CVE-2026-114509</strong> の継続対応：大文字小文字を区別しない MySQL/MariaDB 環境において、TokenGuard 認証サブシステムの不備により有効なトークンなしでユーザーになりすましが可能な脆弱性。'
+      vi: '<strong>CVE-2026-114509</strong>: lỗi TokenGuard cho phép giả danh người dùng không cần token hợp lệ khi MySQL/MariaDB so khớp không phân biệt hoa thường.'
+      ja: '<strong>CVE-2026-114509</strong>：大文字小文字を区別しない MySQL/MariaDB で TokenGuard によるなりすましの恐れ。'
     impact:
-      vi: 'Ứng dụng Laravel sử dụng API Token Authentication với cơ sở dữ liệu MySQL / MariaDB.'
-      ja: 'MySQL / MariaDB を使用し、API トークン認証を採用している Laravel アプリケーション。'
+      vi: 'Ứng dụng Laravel dùng API Token Authentication với MySQL / MariaDB.'
+      ja: 'MySQL / MariaDB で API トークン認証を使用する Laravel。'
     fix:
-      vi: 'Nâng cấp Laravel lên <strong>13.29.0+</strong> (hoặc <strong>12.68.0+</strong> đối với nhánh Laravel 12).'
-      ja: 'Laravel を <strong>13.29.0 以上</strong>（Laravel 12 系は <strong>12.68.0 以上</strong>）にアップグレードしてください。'
+      vi: 'Nâng cấp Laravel lên <strong>13.29.0+</strong> (hoặc <strong>12.68.0+</strong>).'
+      ja: 'Laravel を <strong>13.29.0+</strong>（または <strong>12.68.0+</strong>）へ更新。'
   - name: Spring Security (ELRequestMatcher)
     sev: crit
     summary:
-      vi: '<strong>CVE-2026-59273 (CVSS 9.8 - Critical)</strong>: <code>ELRequestMatcher</code> đánh giá SpEL trong ngữ cảnh không giới hạn (reflection, type reference, gọi method tùy ý) thay vì giới hạn như tài liệu. Khi ứng dụng bind input ngoài vào thuộc tính kiểu này, kẻ tấn công chưa xác thực có thể RCE. Chưa có trong CISA KEV (2026-11-20).'
-      ja: '<strong>CVE-2026-59273（CVSS 9.8 - Critical）</strong>：<code>ELRequestMatcher</code> がドキュメントと異なり制限のない文脈（リフレクション・型参照・任意メソッド呼び出し）で SpEL を評価。外部入力がこの型のプロパティにバインドされると未認証で RCE の恐れ。CISA KEV 未掲載（2026-11-20）。'
+      vi: '<strong>CVE-2026-59273 (CVSS 9.8)</strong>: <code>ELRequestMatcher</code> đánh giá SpEL không giới hạn; nếu bind input ngoài vào sẽ dẫn tới RCE chưa xác thực.'
+      ja: '<strong>CVE-2026-59273（CVSS 9.8）</strong>：<code>ELRequestMatcher</code> が SpEL を無制限評価し、外部入力バインド時に未認証 RCE の恐れ。'
     impact:
-      vi: 'Spring Security <strong>7.1.0–7.1.2</strong>, <strong>7.0.0–7.0.8</strong>, <strong>6.5.0–6.5.12</strong>, <strong>6.4.0–6.4.19</strong>, <strong>5.8.0–5.8.28</strong>, &le; <strong>5.7.26</strong> (khi có bind input ngoài vào <code>ELRequestMatcher</code>).'
-      ja: 'Spring Security <strong>7.1.0〜7.1.2</strong>、<strong>7.0.0〜7.0.8</strong>、<strong>6.5.0〜6.5.12</strong>、<strong>6.4.0〜6.4.19</strong>、<strong>5.8.0〜5.8.28</strong>、<strong>5.7.26</strong> 以前（外部入力を <code>ELRequestMatcher</code> にバインドする場合）。'
+      vi: 'Spring Security <strong>7.1.0–7.1.2</strong>, <strong>7.0.0–7.0.8</strong>, <strong>6.5.0–6.5.12</strong>, <strong>6.4.0–6.4.19</strong>, <strong>5.8.0–5.8.28</strong>, &le; <strong>5.7.26</strong>.'
+      ja: 'Spring Security <strong>7.1.0〜7.1.2</strong>、<strong>7.0.0〜7.0.8</strong>、<strong>6.5/6.4/5.8/5.7系</strong>。'
     fix:
-      vi: 'Nâng cấp Spring Security lên <strong>7.1.3 / 7.0.9 / 7.2.0</strong> (hoặc Spring Boot <strong>4.1.3 / 4.0.10 / 4.2.0</strong>); nhánh 6.5/6.4/5.8/5.7 chỉ có bản vá Enterprise Support. Xem <a href="@home@featured/vulnerabilities/spring-security-cve-2026-59273/analysis/">phân tích &amp; biện pháp tạm thời</a>.'
-      ja: 'Spring Security を <strong>7.1.3 / 7.0.9 / 7.2.0</strong>（または Spring Boot <strong>4.1.3 / 4.0.10 / 4.2.0</strong>）へ更新。6.5/6.4/5.8/5.7 は Enterprise Support のみ。<a href="@home@featured/vulnerabilities/spring-security-cve-2026-59273/analysis/">分析・暫定対策</a>を参照。'
+      vi: 'Nâng lên <strong>7.1.3 / 7.0.9 / 7.2.0</strong> (Spring Boot <strong>4.1.3 / 4.0.10 / 4.2.0</strong>). Xem <a href="@home@featured/vulnerabilities/spring-security-cve-2026-59273/analysis/">phân tích</a>.'
+      ja: '<strong>7.1.3 / 7.0.9 / 7.2.0</strong>（Spring Boot <strong>4.1.3 / 4.0.10 / 4.2.0</strong>）へ更新。<a href="@home@featured/vulnerabilities/spring-security-cve-2026-59273/analysis/">分析</a>参照。'
   - name: Spring Boot &amp; Spring Framework
     sev: high
     summary:
-      vi: '<strong>CVE-2026-40976 (CVSS 9.1 - Critical)</strong>: Bỏ qua kiểm soát bảo mật web khi cấu hình Actuator mặc định không khai báo security filter chain rõ ràng; <strong>CVE-2026-41843</strong> path traversal khi phân giải tài nguyên tĩnh; <strong>CVE-2026-59283</strong> bypass SpEL evaluation.'
-      ja: '<strong>CVE-2026-40976（CVSS 9.1 - Critical）</strong>：明示的なセキュリティフィルターチェーンが設定されていないデフォルト Actuator 構成における Web セキュリティバイパス、<strong>CVE-2026-41843</strong> 静的リソース処理のパストラバーサル、<strong>CVE-2026-59283</strong> SpEL 評価バイパス。'
+      vi: '<strong>CVE-2026-40976 (CVSS 9.1)</strong>: bypass bảo mật Actuator mặc định; <strong>CVE-2026-41843</strong> (path traversal) và <strong>CVE-2026-59283</strong> (bypass SpEL).'
+      ja: '<strong>CVE-2026-40976（CVSS 9.1）</strong>：Actuator 認証バイパス、<strong>CVE-2026-41843</strong>（パストラバーサル）、<strong>CVE-2026-59283</strong>（SpEL バイパス）。'
     impact:
       vi: 'Ứng dụng Spring Boot servlet và Spring MVC / WebFlux.'
-      ja: 'サーブレットベースの Spring Boot アプリケーションおよび Spring MVC / WebFlux 環境。'
+      ja: 'Spring Boot（Servlet）および Spring MVC / WebFlux。'
     fix:
-      vi: 'Nâng cấp Spring Boot lên <strong>4.0.6</strong>, <strong>3.5.14</strong>, <strong>3.4.16</strong>, hoặc <strong>3.3.19</strong>.'
-      ja: 'Spring Boot を <strong>4.0.6</strong>、<strong>3.5.14</strong>、<strong>3.4.16</strong>、または <strong>3.3.19</strong> にアップグレードしてください。'
+      vi: 'Nâng cấp Spring Boot lên <strong>4.0.6 / 3.5.14 / 3.4.16 / 3.3.19</strong>.'
+      ja: 'Spring Boot を <strong>4.0.6 / 3.5.14 / 3.4.16 / 3.3.19</strong> へ更新。'
   - name: Apache HTTP Server (mod_http2)
     sev: crit
     summary:
-      vi: '<strong>CVE-2026-119618 (Critical)</strong>: Lỗi Race Condition (CWE-362 - Concurrent Execution using Shared Resource with Improper Synchronization) trong hàm <code>assign_headers()</code> của module <code>mod_http2</code>. Khi xử lý nhiều HTTP/2 stream đồng thời trên cùng một kết nối TCP, lỗi đồng bộ có thể gây hỏng bộ nhớ heap (heap corruption) và thực thi mã từ xa (RCE) không cần xác thực.'
-      ja: '<strong>CVE-2026-119618（Critical）</strong>：<code>mod_http2</code> モジュールの <code>assign_headers()</code> における競合状態（Race Condition / CWE-362）の脆弱性。単一TCP接続上で複数のHTTP/2ストリームを多重処理する際の同期不備により、ヒープ破壊および認証不要のリモートコード実行（RCE）に至る恐れ。'
+      vi: '<strong>CVE-2026-119618 (Critical)</strong>: Race condition trong <code>mod_http2</code> (<code>assign_headers()</code>) gây hỏng heap và RCE không cần xác thực.'
+      ja: '<strong>CVE-2026-119618（Critical）</strong>：<code>mod_http2</code>（<code>assign_headers()</code>）の競合状態によりヒープ破壊・未認証 RCE の恐れ。'
     impact:
-      vi: 'Các máy chủ web, reverse proxy hoặc container chạy Apache HTTP Server từ <strong>2.4.55 đến 2.4.70</strong> (hoặc <code>mod_h2</code> bản độc lập 2.0.8–2.0.42) có bật HTTP/2 (<code>mod_http2</code>).'
-      ja: 'HTTP/2（<code>mod_http2</code>）を有効にしている <strong>Apache HTTP Server 2.4.55〜2.4.70</strong>（またはスタンドアロン版 <code>mod_h2</code> 2.0.8〜2.0.42）稼働中のWebサーバー、リバースプロキシ、コンテナ環境。'
+      vi: 'Apache HTTP Server <strong>2.4.55–2.4.70</strong> (hoặc <code>mod_h2</code> 2.0.8–2.0.42) bật HTTP/2.'
+      ja: 'HTTP/2 有効な Apache HTTP Server <strong>2.4.55〜2.4.70</strong>（<code>mod_h2</code> 2.0.8〜2.0.42）。'
     fix:
-      vi: 'Nâng cấp ngay Apache HTTP Server lên phiên bản <strong>2.4.71 trở lên</strong> (phát hành ngày 11-11-2026). Nếu chưa thể nâng cấp ngay, tạm thời vô hiệu hóa <code>mod_http2</code> (tắt <code>LoadModule http2_module</code> hoặc loại bỏ <code>h2</code>/<code>h2c</code> khỏi chỉ thị <code>Protocols</code>). Xem <a href="@home@featured/vulnerabilities/apache-cve-2026-119618/analysis/">trang phân tích &amp; hướng dẫn chi tiết</a>.'
-      ja: '直ちに Apache HTTP Server を <strong>2.4.71 以上</strong>（2026年11月11日リリース）へアップグレードしてください。即時適用が困難な場合の一時対策として、<code>mod_http2</code> を無効化（<code>LoadModule http2_module</code> の停止、または <code>Protocols</code> ディレクティブから <code>h2</code>/<code>h2c</code> を除外）してください。<a href="@home@featured/vulnerabilities/apache-cve-2026-119618/analysis/">詳細分析・対策ガイド</a>を参照。'
+      vi: 'Nâng cấp lên <strong>2.4.71+</strong> hoặc tạm tắt <code>mod_http2</code> / <code>h2</code>. Xem <a href="@home@featured/vulnerabilities/apache-cve-2026-119618/analysis/">phân tích</a>.'
+      ja: '<strong>2.4.71+</strong> へ更新、困難時は <code>mod_http2</code> / <code>h2</code> を無効化。<a href="@home@featured/vulnerabilities/apache-cve-2026-119618/analysis/">分析</a>参照。'
   - name: nginx (HTTP/2)
     sev: crit
     summary:
-      vi: '<strong>CVE-2026-123007 "nginx2root" (Critical)</strong>: hỏng bộ nhớ trong xử lý flow control của HTTP/2, tồn tại khoảng 10 năm, có thể dẫn đến RCE không cần xác thực. Cùng đợt vá có <strong>CVE-2026-123633</strong> (use-after-free HTTP/2). Trạng thái PoC/khai thác: các nguồn mâu thuẫn, chưa có trong CISA KEV.'
-      ja: '<strong>CVE-2026-123007「nginx2root」（Critical）</strong>：約10年存在した HTTP/2 フロー制御処理のメモリ破壊で、認証不要の RCE に至る恐れ。同時に <strong>CVE-2026-123633</strong>（HTTP/2 の use-after-free）も修正。PoC・悪用状況は情報源により食い違い、CISA KEV には未掲載。'
+      vi: '<strong>CVE-2026-123007 "nginx2root" (Critical)</strong>: hỏng bộ nhớ flow control HTTP/2 có thể RCE không xác thực; kèm <strong>CVE-2026-123633</strong> (UAF).'
+      ja: '<strong>CVE-2026-123007「nginx2root」（Critical）</strong>：HTTP/2 フロー制御のメモリ破壊で未認証 RCE の恐れ。<strong>CVE-2026-123633</strong>（UAF）も修正。'
     impact:
-      vi: 'nginx OSS <strong>1.9.5–1.31.8</strong> có bật HTTP/2; NGINX Plus R34–R36, 37.0.0–37.2.0.1. Ubuntu, OpenResty, ingress-nginx chưa có bản vá lúc đưa tin.'
-      ja: 'HTTP/2 を有効にした nginx OSS <strong>1.9.5〜1.31.8</strong>、NGINX Plus R34〜R36・37.0.0〜37.2.0.1。報道時点で Ubuntu、OpenResty、ingress-nginx は未修正。'
+      vi: 'nginx OSS <strong>1.9.5–1.31.8</strong> bật HTTP/2; NGINX Plus R34–R36, 37.0.0–37.2.0.1.'
+      ja: 'HTTP/2 有効な nginx OSS <strong>1.9.5〜1.31.8</strong>、NGINX Plus R34〜R36・37.0.0〜37.2.0.1。'
     fix:
-      vi: 'Nâng cấp lên <strong>1.30.7 / 1.31.9</strong> (Plus 37.3.0.1 / 37.0.8.1) và restart. Tạm thời: <code>http2 off;</code> (hoặc bỏ <code>http2</code> khỏi <code>listen</code> nếu &lt;1.25.1). Xem <a href="@home@featured/vulnerabilities/nginx-cve-2026-123007/analysis/">phân tích &amp; hướng dẫn</a>.'
-      ja: '<strong>1.30.7 / 1.31.9</strong>（Plus 37.3.0.1 / 37.0.8.1）へ更新して再起動。暫定：<code>http2 off;</code>（1.25.1 未満は <code>listen</code> から <code>http2</code> を削除）。<a href="@home@featured/vulnerabilities/nginx-cve-2026-123007/analysis/">分析・対策ガイド</a>を参照。'
+      vi: 'Nâng lên <strong>1.30.7 / 1.31.9</strong> (Plus 37.3.0.1 / 37.0.8.1) và restart; tạm thời đặt <code>http2 off;</code>. Xem <a href="@home@featured/vulnerabilities/nginx-cve-2026-123007/analysis/">phân tích</a>.'
+      ja: '<strong>1.30.7 / 1.31.9</strong>（Plus 37.3.0.1 / 37.0.8.1）へ更新・再起動、暫定で <code>http2 off;</code>。<a href="@home@featured/vulnerabilities/nginx-cve-2026-123007/analysis/">分析</a>参照。'
   - name: Apache Tomcat
     sev: high
     summary:
-      vi: '<strong>CVE-2026-101296 (CVSS 9.1 - Critical)</strong>: JNDI Realm cấu hình cơ chế SASL non-GSSAPI cho phép bỏ qua xác thực từ xa không cần thông tin đăng nhập; <strong>CVE-2026-103119 (High)</strong> buffer under-read trong AJP connector dẫn đến rò rỉ dữ liệu giữa các request; <strong>CVE-2026-101356 (High)</strong> trộn lẫn request/response trong HTTP/2 async servlet.'
-      ja: '<strong>CVE-2026-101296（CVSS 9.1 - Critical）</strong>：non-GSSAPI SASL 機構を用いた JNDI Realm における認証バイパス、<strong>CVE-2026-103119（High）</strong>AJP コネクタのバッファアンダーリードによるリクエスト間データ漏えい、<strong>CVE-2026-101356（High）</strong>HTTP/2 非同期サーブレットでのオブジェクト誤再利用によるレスポンス混同。'
+      vi: '<strong>CVE-2026-101296 (CVSS 9.1)</strong>: bypass xác thực JNDI Realm SASL; <strong>CVE-2026-103119</strong> (rò rỉ AJP) và <strong>CVE-2026-101356</strong> (trộn HTTP/2 async).'
+      ja: '<strong>CVE-2026-101296（CVSS 9.1）</strong>：JNDI Realm SASL 認証バイパス、<strong>CVE-2026-103119</strong>（AJP 漏えい）、<strong>CVE-2026-101356</strong>（HTTP/2 混同）。'
     impact:
-      vi: 'Máy chủ Apache Tomcat độc lập hoặc servlet container nhúng trong Spring Boot.'
-      ja: 'スタンドアロンの Apache Tomcat サーバーまたは Spring Boot 内蔵のサーブレットコンテナ。'
+      vi: 'Apache Tomcat độc lập hoặc nhúng trong Spring Boot.'
+      ja: 'スタンドアロン Tomcat および Spring Boot 内蔵コンテナ。'
     fix:
-      vi: 'Nâng cấp Apache Tomcat lên <strong>11.0.27</strong>, <strong>10.1.61</strong>, hoặc <strong>9.0.123</strong>.'
-      ja: 'Apache Tomcat を <strong>11.0.27</strong>、<strong>10.1.61</strong>、または <strong>9.0.123</strong> に更新してください。'
+      vi: 'Nâng cấp Tomcat lên <strong>11.0.27 / 10.1.61 / 9.0.123</strong>.'
+      ja: 'Tomcat を <strong>11.0.27 / 10.1.61 / 9.0.123</strong> へ更新。'
   - name: Netty &amp; Jackson
     sev: med
     summary:
-      vi: '<strong>CVE-2026-116541 / CVE-2026-116539</strong> (heap buffer overflow trong <code>netty-tcnative</code> khi ghi BIO record TLS 1.3); <strong>CVE-2026-89407</strong> (ReDoS trong <code>jackson-core</code> NumberInput); <strong>CVE-2026-68497</strong> cạn kiệt bộ nhớ khi stream JSON bất đồng bộ.'
-      ja: '<strong>CVE-2026-116541 / CVE-2026-116539</strong>（<code>netty-tcnative</code> の TLS 1.3 post-handshake BIO 処理におけるヒープオーバーフロー）、<strong>CVE-2026-89407</strong>（<code>jackson-core</code> NumberInput の ReDoS）、<strong>CVE-2026-68497</strong>（非同期 JSON ストリーミング時のメモリ枯渇）。'
+      vi: '<strong>CVE-2026-116541 / 116539</strong> (heap overflow trong <code>netty-tcnative</code> TLS 1.3); <strong>CVE-2026-89407</strong> (ReDoS <code>jackson-core</code>) và <strong>CVE-2026-68497</strong> (OOM stream JSON).'
+      ja: '<strong>CVE-2026-116541 / 116539</strong>（<code>netty-tcnative</code> TLS 1.3 オーバーフロー）、<strong>CVE-2026-89407</strong>（<code>jackson-core</code> ReDoS）、<strong>CVE-2026-68497</strong>（OOM）。'
     impact:
-      vi: 'Ứng dụng Java microservices sử dụng Netty (Spring WebFlux, gRPC) và thư viện Jackson parse JSON.'
-      ja: 'Netty を使用する Java マイクロサービス（Spring WebFlux、gRPC）および JSON 解析に Jackson を用いるアプリケーション。'
+      vi: 'Java microservices dùng Netty (Spring WebFlux, gRPC) và Jackson.'
+      ja: 'Netty（Spring WebFlux・gRPC）および Jackson を用いる Java サービス。'
     fix:
-      vi: 'Cập nhật <code>netty-tcnative</code> lên <strong>2.0.84.Final trở lên</strong> và cập nhật các gói <code>jackson-core</code> lên bản bảo trì mới nhất.'
-      ja: '<code>netty-tcnative</code> を <strong>2.0.84.Final 以上</strong>に更新し、<code>jackson-core</code> を最新の保守リリースへアップデートしてください。'
+      vi: 'Cập nhật <code>netty-tcnative</code> lên <strong>2.0.84.Final+</strong> và <code>jackson-core</code> lên bản mới nhất.'
+      ja: '<code>netty-tcnative</code> を <strong>2.0.84.Final+</strong>、<code>jackson-core</code> を最新版へ更新。'
   - name: Quasar Framework
     sev: med
     summary:
-      vi: '<strong>CVE-2026-106108 / GHSA-vhhq-m2gm-rwc9</strong>: Lỗ hổng directory traversal trong <code>@quasar/app-vite</code> (v3.1.0 đến v3.2.0) khi xử lý hàm <code>getSsgPages()</code> trong chế độ Static Site Generation (SSG).'
-      ja: '<strong>CVE-2026-106108 / GHSA-vhhq-m2gm-rwc9</strong>：静的サイト生成（SSG）モードの <code>getSsgPages()</code> 処理時における <code>@quasar/app-vite</code>（v3.1.0〜v3.2.0）のディレクトリトラバーサルの脆弱性。'
+      vi: '<strong>CVE-2026-106108 / GHSA-vhhq-m2gm-rwc9</strong>: directory traversal trong <code>@quasar/app-vite</code> (v3.1.0–v3.2.0) ở chế độ SSG.'
+      ja: '<strong>CVE-2026-106108 / GHSA-vhhq-m2gm-rwc9</strong>：SSG モード時の <code>@quasar/app-vite</code>（v3.1.0〜v3.2.0）ディレクトリトラバーサル。'
     impact:
-      vi: 'Ứng dụng web Quasar sử dụng Vite và chế độ build SSG.'
-      ja: 'Vite および SSG ビルドモードを採用している Quasar Web アプリケーション。'
+      vi: 'Ứng dụng web Quasar dùng Vite với chế độ SSG.'
+      ja: 'Vite および SSG ビルドを使用する Quasar Web アプリ。'
     fix:
-      vi: 'Nâng cấp <code>@quasar/app-vite</code> lên <strong>v3.3.0</strong> và Quasar core lên <strong>v2.32.2 trở lên</strong>.'
-      ja: '<code>@quasar/app-vite</code> を <strong>v3.3.0</strong>、Quasar コアパッケージを <strong>v2.32.2 以上</strong>にアップグレードしてください。'
+      vi: 'Nâng cấp <code>@quasar/app-vite</code> lên <strong>v3.3.0</strong> và Quasar core lên <strong>v2.32.2+</strong>.'
+      ja: '<code>@quasar/app-vite</code> を <strong>v3.3.0</strong>、Quasar コアを <strong>v2.32.2+</strong> へ更新。'
 
 - title:
     vi: '6. Cơ sở dữ liệu (Databases: PostgreSQL, MySQL, Oracle, ClickHouse)'
@@ -552,47 +522,47 @@ sections:
   - name: PostgreSQL (RDBMS)
     sev: high
     summary:
-      vi: '<strong>Đợt phát hành bảo mật quý 4/2026 ngày 12-11 vá 52 CVEs</strong>: Đáng chú ý có 32 lỗ hổng đạt mức <strong>CVSS 8.8 (High)</strong>, tiêu biểu là <strong>CVE-2026-6460</strong> (lỗi Type Confusion khi thực thi DDL như <code>ALTER TABLE ... ALTER COLUMN ... SET DATA TYPE</code> hoặc chuỗi lệnh DDL dẫn đến RCE với quyền tiến trình postgres). Ngoài ra vá các lỗi memory corruption / type confusion trong PL/Perl, PL/Tcl, tìm kiếm văn bản (<code>ts_rank_cd()</code>), logical replication, dblink, và các công cụ client: <code>pg_dump</code> (SQL injection qua tên not-null constraint và command injection trong file tar restore), <code>reindexdb</code> (lỗi trích dẫn tên index). Cùng bản phát hành này cũng vá <strong>CVE-2026-116331</strong> (type confusion ở tối ưu hóa aggregate min/max, CVSS 8.8, người tạo object có thể chạy mã với quyền OS user của database), được công bố trong nghiên cứu "Narrow Grants, Wide Engines" của Depthfirst; khác với CVE-2026-6460. Xem <a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">phân tích DB engine RCE</a>.'
-      ja: '<strong>2026年11月12日の定期セキュリティリリースにて52件のCVEを修正</strong>：うち32件が <strong>CVSS 8.8（High）</strong> に達し、代表的な <strong>CVE-2026-6460</strong> では <code>ALTER TABLE ... ALTER COLUMN ... SET DATA TYPE</code> 等のDDL実行やDDL連鎖時に型混乱（Type Confusion）が生じ、postgres プロセス権限での任意コード実行（RCE）に至るリスク。さらに PL/Perl、PL/Tcl、全文検索（<code>ts_rank_cd()</code>）、ロジカルレプリケーション、dblink のメモリ破壊・型混乱、およびクライアントツール（<code>pg_dump</code> の not-null 制約名 SQLi / tar リストア時のコマンド注入、<code>reindexdb</code> のインデックス名エスケープ不備）を修正。同じリリースで <strong>CVE-2026-116331</strong>（min/max 集約の最適化における型混乱、CVSS 8.8。オブジェクト作成者がデータベースの OS ユーザー権限で任意コード実行）も修正済み。Depthfirst の研究「Narrow Grants, Wide Engines」で公表されたもので、CVE-2026-6460 とは別物。<a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">DB エンジン RCE 分析</a>を参照。'
+      vi: 'Đợt vá 12-11 sửa <strong>52 CVEs</strong> (32 lỗi CVSS 8.8), nổi bật <strong>CVE-2026-6460</strong> (RCE qua DDL Type Confusion), <strong>CVE-2026-116331</strong> ("Narrow Grants", RCE với quyền tạo object), cùng lỗi <code>pg_dump</code>, <code>reindexdb</code>, PL/Perl, logical replication. Xem <a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">phân tích DB RCE</a>.'
+      ja: '11/12 に <strong>52件のCVE</strong>（32件が CVSS 8.8）を修正：<strong>CVE-2026-6460</strong>（DDL 型混乱 RCE）、<strong>CVE-2026-116331</strong>（Narrow Grants RCE）、<code>pg_dump</code>・<code>reindexdb</code>・PL/Perl 等。<a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">DB RCE 分析</a>参照。'
     impact:
-      vi: 'Mọi hệ thống sử dụng PostgreSQL tự host, container Docker/K8s (CloudNativePG) hoặc dịch vụ cơ sở dữ liệu đám mây (AWS RDS/Aurora PostgreSQL, GCP Cloud SQL). Đặc biệt nguy cơ cao với các cơ sở dữ liệu cho phép nhiều người dùng/role ứng dụng thực hiện thao tác DDL hoặc sử dụng công cụ client <code>pg_dump</code> với cơ sở dữ liệu có đối tượng do bên thứ ba đặt tên. <strong>Lưu ý đặc biệt:</strong> PostgreSQL 14 đã chính thức <strong>End-of-Life (EOL)</strong> từ ngày 12-11-2026 (bản 14.25 là bản phát hành cuối cùng, sẽ không nhận thêm bất kỳ bản vá nào).'
-      ja: 'セルフホスト環境、Docker/K8sコンテナ（CloudNativePG）、およびマネージドデータベース（AWS RDS/Aurora PostgreSQL、GCP Cloud SQL）を利用する全システム。複数ユーザー/アプリロールにDDL実行権限がある環境、または第三者が命名したDBオブジェクトに対して <code>pg_dump</code> を実行する環境で重大。<strong>特記事項:</strong> PostgreSQL 14 は 2026年11月12日をもって公式に <strong>サポート終了（EOL）</strong> となりました（14.25 が最終リリースであり以降の修正は提供されません）。'
+      vi: 'PostgreSQL tự host, K8s (CloudNativePG), RDS/Aurora, Cloud SQL. <strong>PostgreSQL 14 chính thức EOL</strong> từ 12-11-2026 (14.25 là bản cuối).'
+      ja: 'セルフホスト、K8s、RDS/Aurora、Cloud SQL。<strong>PostgreSQL 14 は 2026-11-12 で公式 EOL</strong>（14.25 が最終）。'
     fix:
-      vi: '<strong>(1) Nâng cấp server:</strong> Cập nhật cụm máy chủ PostgreSQL lên phiên bản tương ứng: <strong>18.7, 17.12, 16.16, 15.20, hoặc 14.25</strong>. <strong>(2) Cập nhật client tools:</strong> Nâng cấp đồng bộ các công cụ client (<code>pg_dump</code>, <code>reindexdb</code>, <code>psql</code>). <strong>(3) Bảo trì sau nâng cấp:</strong> Thực hiện <code>REINDEX</code> các GIN index nghi ngờ bị lỗi, GiST index của <code>pg_trgm</code> (<code>gist_trgm_ops</code>), B-tree index trên cột <code>bpchar</code> không độ dài, và chạy <code>REINDEX TABLE</code> nếu gặp lỗi "missing chunk number". <strong>(4) Chụp Full Backup ngay:</strong> Nếu đang dùng cơ chế incremental backup, bắt buộc chụp ngay bản full backup mới để tránh bản sao lưu bị hỏng ngầm. <strong>(5) Di chuyển khỏi PostgreSQL 14:</strong> Lập kế hoạch nâng cấp khẩn cấp các database đang chạy bản 14 lên phiên bản được hỗ trợ (PostgreSQL 15–18). Xem <a href="@home@featured/vulnerabilities/postgresql-cve-2026-6460/analysis/">hướng dẫn chi tiết</a>.'
-      ja: '<strong>(1) サーバー更新:</strong> PostgreSQL クラスタを該当バージョン（<strong>18.7、17.12、16.16、15.20、14.25</strong>）へアップグレード。<strong>(2) クライアントツール更新:</strong> <code>pg_dump</code>、<code>reindexdb</code>、<code>psql</code> 等のクライアントバイナリも同期して更新。<strong>(3) 更新後メンテナンス:</strong> 破損の疑いがある GIN インデックス、<code>pg_trgm</code> の GiST インデックス（<code>gist_trgm_ops</code>）、長さ指定のない <code>bpchar</code> 列の B-tree インデックスの <code>REINDEX</code>、および "missing chunk number" エラー発生テーブルでの <code>REINDEX TABLE</code> を実施。<strong>(4) 即時フルバックアップ:</strong> 増分バックアップ運用中の環境では破損連鎖を防ぐため直ちに新規フルバックアップを取得。<strong>(5) PostgreSQL 14 の移行:</strong> EOL となったバージョン 14 の環境はサポート対象（PostgreSQL 15〜18）への移行計画を至急策定・推進。<a href="@home@featured/vulnerabilities/postgresql-cve-2026-6460/analysis/">詳細ガイド</a>を参照。'
-  - name: MySQL Server / MySQL Cluster
+      vi: 'Nâng lên <strong>18.7 / 17.12 / 16.16 / 15.20 / 14.25</strong> + client tools; chạy <code>REINDEX</code>, chụp Full Backup mới và di chuyển khỏi PG 14. Xem <a href="@home@featured/vulnerabilities/postgresql-cve-2026-6460/analysis/">hướng dẫn</a>.'
+      ja: '<strong>18.7 / 17.12 / 16.16 / 15.20 / 14.25</strong> へ更新、<code>REINDEX</code>・フルバックアップ取得、PG 14 から移行。<a href="@home@featured/vulnerabilities/postgresql-cve-2026-6460/analysis/">ガイド</a>参照。'
+  - name: MySQL Server / Cluster
     sev: high
     summary:
-      vi: '<strong>CVE-2026-101786</strong> (Server: Optimizer, CVSS 7.2, Oracle đánh giá PR:High), công bố trong CPU 20-10-2026. Theo Depthfirst, tài khoản chỉ có <code>CREATE TEMPORARY TABLES ON *.*</code> và không đọc được bảng nào đã đạt RCE trên 26.7.0, tức quyền cần thiết thấp hơn đánh giá của Oracle.'
-      ja: '<strong>CVE-2026-101786</strong>（Server: Optimizer、CVSS 7.2、Oracle の評価は PR:High）。2026年10月20日の CPU で公開。Depthfirst によれば <code>CREATE TEMPORARY TABLES ON *.*</code> のみで既存テーブルを読めないアカウントでも 26.7.0 で RCE に到達しており、Oracle の評価より低い権限で成立。'
+      vi: '<strong>CVE-2026-101786</strong> (CVSS 7.2, CPU 20-10): Depthfirst chứng minh đạt RCE trên 26.7.0 chỉ với quyền <code>CREATE TEMPORARY TABLES ON *.*</code>.'
+      ja: '<strong>CVE-2026-101786</strong>（CVSS 7.2、10/20 CPU）：Depthfirst が <code>CREATE TEMPORARY TABLES ON *.*</code> のみで 26.7.0 の RCE を実証。'
     impact:
-      vi: 'Chỉ MySQL Server 26.7.0–26.7.1 và MySQL Cluster 26.7.0–26.7.1 (8.4 LTS / 9.7 không nằm trong danh sách cho CVE này). <strong>Lưu ý:</strong> từ 7/2026 MySQL đánh số theo lịch <code>YY.M.P</code>; <code>26.7.0</code> là bản Innovation tháng 7/2026 (sau 9.7 không có 9.8), không phải bản 8.x.'
-      ja: 'MySQL Server 26.7.0〜26.7.1 と MySQL Cluster 26.7.0〜26.7.1 のみ（8.4 LTS / 9.7 は本 CVE の対象一覧に含まれない）。<strong>注意：</strong>2026年7月から MySQL はカレンダー方式 <code>YY.M.P</code> を採用しており、<code>26.7.0</code> は 2026年7月の Innovation 版です（9.7 の次は 9.8 ではない）。8.x ではありません。'
+      vi: 'MySQL Server / Cluster <strong>26.7.0–26.7.1</strong> (Innovation theo lịch <code>YY.M.P</code>; 8.4 LTS &amp; 9.7 không bị).'
+      ja: 'MySQL Server / Cluster <strong>26.7.0〜26.7.1</strong>（<code>YY.M.P</code> 方式の Innovation 版。8.4 LTS・9.7 は対象外）。'
     fix:
-      vi: 'Nâng lên bản phát hành sau 26.7.1 theo CPU 10/2026 (advisory không ghi số phiên bản cụ thể, kiểm tra release notes). Thu hồi <code>CREATE TEMPORARY TABLES</code> khỏi tài khoản không cần. Xem <a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">phân tích</a>.'
-      ja: '2026年10月 CPU に基づき 26.7.1 より新しいリリースへ更新（アドバイザリに具体的な版番号はないためリリースノートを確認）。不要なアカウントから <code>CREATE TEMPORARY TABLES</code> を剥奪。<a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">分析</a>を参照。'
-  - name: Oracle Database (Oracle Text) + Oracle REST Data Services (ORDS)
+      vi: 'Nâng lên bản sau 26.7.1 (CPU 10/2026) và thu hồi <code>CREATE TEMPORARY TABLES</code> không cần. Xem <a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">phân tích</a>.'
+      ja: '26.7.1 超へ更新（10月 CPU）し不要な <code>CREATE TEMPORARY TABLES</code> を剥奪。<a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">分析</a>参照。'
+  - name: Oracle DB + ORDS
     sev: crit
     summary:
-      vi: '<strong>CVE-2026-114819</strong> (Oracle Text, CVSS 9.9, Oracle: cần quyền Create Session, không khai thác được khi chưa xác thực) vá trong CSPU 11/2026; <strong>CVE-2026-91609</strong> (ORDS GraphQL, CVSS 6.5, PR:L) vá trong CPU 20-10-2026. Depthfirst cho biết chuỗi hai lỗi qua endpoint ORDS lộ ra ngoài có thể chạy lệnh <strong>trước khi đăng nhập</strong>, trong khi Oracle không đánh giá lỗi nào là unauthenticated. Hai góc nhìn khác nhau; nên coi ORDS lộ internet là ưu tiên cao nhất.'
-      ja: '<strong>CVE-2026-114819</strong>（Oracle Text、CVSS 9.9。Oracle の評価は Create Session 権限が必要で認証なしでは悪用不可）は 2026年11月 CSPU で修正。<strong>CVE-2026-91609</strong>（ORDS GraphQL、CVSS 6.5、PR:L）は 2026年10月20日の CPU で修正。Depthfirst は外部公開された ORDS エンドポイント経由で両者を連鎖させると<strong>ログイン前</strong>にコマンド実行に至ると主張する一方、Oracle はいずれも認証不要とは評価していない。見解が異なるため、インターネット公開の ORDS を最優先で扱うこと。'
+      vi: '<strong>CVE-2026-114819</strong> (CVSS 9.9, Oracle Text) + <strong>CVE-2026-91609</strong> (CVSS 6.5, ORDS GraphQL): Depthfirst nêu chuỗi hai lỗi qua ORDS lộ ngoài chạy được trước đăng nhập (Oracle không xếp unauthenticated).'
+      ja: '<strong>CVE-2026-114819</strong>（CVSS 9.9、Oracle Text）＋ <strong>CVE-2026-91609</strong>（ORDS GraphQL）：Depthfirst は公開 ORDS 経由で認証前実行が可能と主張（Oracle 評価と相違）。'
     impact:
-      vi: 'Oracle Database 19.3–19.32, 21.3–21.24, 23.4.0–23.26.3; ORDS 24.2.0–26.2.1.'
-      ja: 'Oracle Database 19.3〜19.32、21.3〜21.24、23.4.0〜23.26.3、ORDS 24.2.0〜26.2.1。'
+      vi: 'Oracle DB 19.3–19.32, 21.3–21.24, 23.4.0–23.26.3; ORDS 24.2.0–26.2.1 (ưu tiên cao nhất nếu ORDS lộ internet).'
+      ja: 'Oracle DB 19.3〜19.32 / 21.3〜21.24 / 23.4.0〜23.26.3、ORDS 24.2.0〜26.2.1（外部公開 ORDS を最優先）。'
     fix:
-      vi: 'Áp CSPU 11/2026 cho Oracle Database; nâng ORDS lên bản mới nhất sau 26.2.1 (CPU 10/2026); không để ORDS lộ internet hoặc đặt sau lớp kiểm soát truy cập. <code>REVOKE TEMPORARY</code> không giúp gì cho đường tấn công này. Xem <a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">phân tích</a>.'
-      ja: 'Oracle Database に 2026年11月 CSPU を適用。ORDS を 26.2.1 より新しい最新版へ更新（2026年10月 CPU）。ORDS をインターネットに公開しない、またはアクセス制御の背後に置く。<code>REVOKE TEMPORARY</code> はこの経路には効果なし。<a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">分析</a>を参照。'
+      vi: 'Áp CSPU 11/2026 cho Oracle DB, nâng ORDS sau 26.2.1 và chặn ORDS lộ internet (<code>REVOKE TEMPORARY</code> không có tác dụng). Xem <a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">phân tích</a>.'
+      ja: 'Oracle DB に 11月 CSPU、ORDS を 26.2.1 超へ更新しインターネット非公開化（<code>REVOKE TEMPORARY</code> 無効）。<a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">分析</a>参照。'
   - name: ClickHouse
     sev: high
     summary:
-      vi: '<strong>Chưa có CVE</strong>: lỗi tràn số nguyên dẫn đến ghi ngoài vùng nhớ khi đọc độ dài chuỗi RowBinary, xảy ra khi user đặt <code>format_binary_max_string_size = 0</code> (0 = không giới hạn; mặc định 1 GiB) và có <code>CREATE TEMPORARY TABLE</code> trên <code>*.*</code>. Depthfirst tái hiện được shell trên 26.7.5.10 (stable).'
-      ja: '<strong>CVE 未割り当て</strong>：RowBinary の文字列長読み取りにおける整数オーバーフローによる範囲外書き込み。ユーザーが <code>format_binary_max_string_size = 0</code>（0 = 無制限、既定は 1 GiB）を設定し、<code>*.*</code> に対する <code>CREATE TEMPORARY TABLE</code> を持つ場合に到達。Depthfirst は 26.7.5.10（stable）でシェル取得を再現。'
+      vi: '<strong>Chưa có CVE</strong>: tràn số nguyên ghi ngoài bộ nhớ ở RowBinary khi đặt <code>format_binary_max_string_size = 0</code> và có <code>CREATE TEMPORARY TABLE</code> (tái hiện trên 26.7.5.10).'
+      ja: '<strong>CVE 未割当</strong>：<code>format_binary_max_string_size = 0</code> と <code>CREATE TEMPORARY TABLE</code> により RowBinary で範囲外書込（26.7.5.10 で再現）。'
     impact:
-      vi: 'ClickHouse cho phép user tạo bảng tạm và tự thay đổi <code>format_binary_max_string_size</code>. Chưa có phiên bản sửa được xác nhận và chưa thấy advisory công khai của ClickHouse.'
-      ja: '一時テーブル作成と <code>format_binary_max_string_size</code> の変更をユーザーに許可している ClickHouse。修正版は未確認で、ClickHouse の公開アドバイザリも見当たらない。'
+      vi: 'ClickHouse cho phép user tạo bảng tạm và tự đổi <code>format_binary_max_string_size</code> (chưa có bản sửa xác nhận).'
+      ja: '一時テーブル作成と <code>format_binary_max_string_size</code> 変更を許可する ClickHouse（修正版未確認）。'
     fix:
-      vi: 'Hạn chế quyền <code>CREATE TEMPORARY TABLE</code>; dùng settings profile với constraints (vd. <code>min</code> = 1, hoặc <code>readonly</code> / <code>const</code>) để user không đổi được <code>format_binary_max_string_size</code>; giới hạn user readonly; theo dõi changelog và GitHub security advisories của ClickHouse. Xem <a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">phân tích</a>.'
-      ja: '<code>CREATE TEMPORARY TABLE</code> 権限を制限。settings profile の constraints（例：<code>min</code> = 1、または <code>readonly</code> / <code>const</code>）で <code>format_binary_max_string_size</code> を変更不可にし、readonly ユーザーを制限。ClickHouse の changelog と GitHub セキュリティアドバイザリを監視。<a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">分析</a>を参照。'
+      vi: 'Thu hồi <code>CREATE TEMPORARY TABLE</code>, khóa <code>format_binary_max_string_size</code> qua settings constraints và theo dõi advisory. Xem <a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">phân tích</a>.'
+      ja: '<code>CREATE TEMPORARY TABLE</code> を制限し settings constraints で設定値を固定。<a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">分析</a>参照。'
 
 - title:
     vi: '7. Hạ tầng đám mây (Infrastructure: AWS &amp; GCP)'
@@ -602,75 +572,86 @@ sections:
   - name: AWS
     sev: high
     summary:
-      vi: '<strong>CVE-2026-98433</strong>: Lỗ hổng side-channel vi kiến trúc ảnh hưởng đến môi trường ảo hóa Nitro thế hệ cũ trên Amazon EC2 đa người thuê (multi-tenant), có nguy cơ suy đoán khóa mật mã khi xảy ra tranh chấp bộ nhớ cực cao; AWS đã hoàn tất triển khai vá hypervisor và firmware tự động trên toàn cầu. Đồng thời AWS đã hoàn tất vá tầng host cho RDS/Aurora đối với lỗi kernel TCP IPv4.'
-      ja: '<strong>CVE-2026-98433</strong>：マルチテナント Amazon EC2 の旧世代 Nitro 仮想化環境におけるマイクロアーキテクチャ・サイドチャネルの脆弱性。極度のメモリ競合条件下で暗号鍵が推測されるリスクに対し、AWS は全世界でハイパーバイザーおよびファームウェアの自動パッチ適用を完了。また RDS/Aurora の IPv4 TCP ホスト層パッチも完了。'
+      vi: '<strong>CVE-2026-98433</strong>: side-channel trên Nitro thế hệ cũ (EC2 multi-tenant); AWS đã vá tự động hypervisor/firmware và hoàn tất vá host RDS/Aurora cho lỗi TCP.'
+      ja: '<strong>CVE-2026-98433</strong>：旧世代 Nitro 環境のサイドチャネル脆弱性。AWS はハイパーバイザー・RDS/Aurora ホスト層の自動パッチを完了。'
     impact:
-      vi: 'Các EC2 instance chạy lâu ngày chưa reboot thuộc danh sách bảo trì của AWS; hạ tầng NLB TCP pass-through listener.'
-      ja: 'メンテナンス対象としてフラグが立っている未再起動 EC2 インスタンス、NLB TCP パススルー環境。'
+      vi: 'EC2 instance chạy lâu chưa reboot có thông báo bảo trì; NLB TCP pass-through.'
+      ja: 'メンテナンス通知対象の未再起動 EC2、NLB TCP パススルー環境。'
     fix:
-      vi: 'Kiểm tra AWS Health Dashboard / Trusted Advisor để reboot các instance có thông báo bảo trì phần cứng. Đặt CloudFront / ALB ở tầng biên để kết thúc kết nối TCP trước khi chuyển tiếp backend.'
-      ja: 'AWS Health Dashboard / Trusted Advisor を確認し、メンテナンス通知のあるインスタンスを再起動してください。エッジ層に CloudFront / ALB を配置して TCP 接続を終端させてください。'
+      vi: 'Kiểm tra AWS Health Dashboard để reboot instance có thông báo; dùng CloudFront / ALB kết thúc TCP ở tầng biên.'
+      ja: 'AWS Health Dashboard を確認し対象インスタンスを再起動。エッジ層に CloudFront / ALB を配置。'
   - name: GCP
     sev: high
     summary:
-      vi: '<strong>CVE-2026-98512</strong>: Lỗ hổng kiểm tra dữ liệu đầu vào trong container runtime loader của Google Cloud Run và Vertex AI Custom Training Jobs, cho phép payload độc hại leo thang đặc quyền cục bộ và vượt rào sandbox thực thi tới nhân host worker. Google đã cập nhật các managed runtime.'
-      ja: '<strong>CVE-2026-98512</strong>：Google Cloud Run および Vertex AI カスタムトレーニングジョブのコンテナランタイムローダーにおける入力検証不備。細工されたコンテナペイロードによりローカル特権昇格およびサンドボックス脱出が発生するリスク。Google はマネージドランタイムを更新済み。'
+      vi: '<strong>CVE-2026-98512</strong>: lỗi kiểm tra đầu vào trong container runtime loader của Cloud Run và Vertex AI gây thoát sandbox; Google đã vá managed runtime.'
+      ja: '<strong>CVE-2026-98512</strong>：Cloud Run・Vertex AI のコンテナランタイムにおける入力検証不備（サンドボックス脱出）。Google は基盤を更新済み。'
     impact:
-      vi: 'Các workload chạy trên Cloud Run và Vertex AI sử dụng custom container image cũ chưa cập nhật base image.'
-      ja: '旧世代のベースイメージを使用している Cloud Run および Vertex AI のカスタムコンテナワークロード。'
+      vi: 'Workload Cloud Run và Vertex AI dùng custom container image cũ.'
+      ja: '旧ベースイメージを利用する Cloud Run・Vertex AI カスタムコンテナ。'
     fix:
-      vi: 'Rebuild lại toàn bộ custom container image triển khai trên Cloud Run / Vertex AI bằng base image mới nhất; kích hoạt Confidential Computing / Confidential VMs cho các workload nhạy cảm.'
-      ja: 'Cloud Run / Vertex AI にデプロイするカスタムコンテナを最新のベースイメージで再ビルドしてください。機密性の高いワークロードでは Confidential Computing / Confidential VMs の有効化を検討してください。'
+      vi: 'Rebuild toàn bộ custom image bằng base image mới nhất; cân nhắc bật Confidential Computing.'
+      ja: '最新ベースイメージでカスタムコンテナを再ビルドし、Confidential Computing の利用を検討。'
 
 - title:
-    vi: 8. Sự cố hạ tầng, xâm nhập &amp; cảnh báo mối đe dọa (Incidents, Outages &amp; Threat Advisories)
-    ja: 8. インフラ障害・侵入事案・脅威アドバイザリ（Incidents, Outages &amp; Threat Advisories）
+    vi: 8. Sự cố hạ tầng, xâm nhập, cảnh báo &amp; công cụ phòng thủ (Incidents, Advisories &amp; Defense Tools)
+    ja: 8. インフラ障害・侵入事案・脅威アドバイザリ・防御ツール（Incidents, Advisories &amp; Defense Tools）
   type: provider
   rows:
+  - name: OpenAI &amp; Cisco (Shirudo)
+    sev: low
+    summary:
+      vi: 'Công bố nền tảng mã nguồn mở <strong>Shirudo</strong> (24-11, <em>pre-release</em>): dùng <strong>eBPF</strong> và micropatch có chữ ký (<code>upatches</code>) để chặn khai thác runtime trên Linux/JVM trong thời gian chờ vá (<em>patch gap</em>) không cần reboot; demo Codex chặn Java4Shell trên Elasticsearch với <code>shirudo init</code> và <strong>TPM 2.0</strong> (<code>shirudo attest</code>).'
+      ja: 'オープンソース基盤 <strong>Shirudo</strong>（11/24、<em>pre-release</em>）を公開。署名付き <strong>eBPF</strong>／Java <code>upatches</code> で修正待ち期間（パッチギャップ）の Linux/JVM 悪用を無停止遮断。<code>shirudo init</code> と <strong>TPM 2.0</strong>（<code>shirudo attest</code>）を備え、Codex による Java4Shell 遮断を実証。'
+    impact:
+      vi: 'Công cụ phòng thủ tham khảo cho Linux/K8s/JVM/AI agent. Production hiện đòi hỏi kernel có signed-loader ABI + patch Shirudo và <strong>TPM 2.0</strong>.'
+      ja: 'Linux/K8s/JVM/AI エージェント向け防御ツール。本番要件は signed-loader ABI＋Shirudo パッチ済みカーネルと <strong>TPM 2.0</strong>。'
+    fix:
+      vi: '<strong>Không thay thế việc vá định kỳ:</strong> tiếp tục vá kernel/JVM; có thể thử nghiệm trước trong VM qua <a href="https://docs.shirudo.dev/start/quickstart.html" target="_blank" rel="noopener noreferrer">Shirudo Quickstart</a>.'
+      ja: '<strong>定期パッチの代替ではありません：</strong>通常の更新を継続しつつ、<a href="https://docs.shirudo.dev/start/quickstart.html" target="_blank" rel="noopener noreferrer">Shirudo Quickstart</a> の VM で評価可能。'
   - name: FBI FLASH-20261113-001 (ARTEX)
     sev: high
     summary:
-      vi: 'Cảnh báo ngày 13-11-2026 về <strong>ARTEX</strong> — nền tảng agentic AI mã nguồn mở dùng LLM bị tin tặc lợi dụng từ ít nhất 08/2026 để tự động hóa xâm nhập (một số vụ leo thang tới quyền đặc quyền trong <strong>dưới 3 giờ</strong>). Ghi nhận &gt;1.600 console ARTEX mở công khai đầu tháng 11; dù repo GitHub gốc đã gỡ ngày 08-10, các bản fork, lưu trữ và bản thương mại ARTEX PRO vẫn lưu hành.'
-      ja: '2026年11月13日付の警告。オープンソースの LLM 駆動エージェント基盤 <strong>ARTEX</strong> が少なくとも2026年8月以降、侵入の自動化に悪用され、一部事案では<strong>3時間未満</strong>で特権アクセスへ到達。11月初旬時点で 1,600 台超の公開コンソールが確認され、元 GitHub リポジトリ削除（10/8）後もフォーク・アーカイブ・商用版 ARTEX PRO が流通しています。'
+      vi: 'Cảnh báo <strong>ARTEX</strong> (agentic AI mã nguồn mở) bị lợi dụng tự động hóa xâm nhập, chiếm đặc quyền trong &lt;3 giờ; ghi nhận &gt;1.600 console mở công khai.'
+      ja: 'OSS のエージェント AI 基盤 <strong>ARTEX</strong> が侵入自動化に悪用（3時間未満で特権奪取）、1,600台超の公開コンソールを確認。'
     impact:
-      vi: 'Các ngành tài chính, chính phủ, công nghệ, quốc phòng, bán dẫn, năng lượng, y tế, sản xuất, viễn thông, pháp lý; đặc biệt nhắm vào <strong>hệ thống ngoại vi</strong> ít được bảo vệ hơn ứng dụng chủ lực (cổng đối tác, ứng dụng nhân viên, dịch vụ cũ, tích hợp bên thứ ba, AI agent và connector).'
-      ja: '金融・政府・IT・防衛・半導体・エネルギー・医療・製造・通信・法務など。特に主力アプリより防御が手薄な<strong>周辺システム</strong>（パートナーポータル、社内アプリ、レガシーサービス、外部連携、AI エージェントおよびコネクタ）が標的となります。'
+      vi: 'Đa ngành; nhắm vào <strong>hệ thống ngoại vi</strong> kém bảo vệ (cổng đối tác, dịch vụ cũ, AI agent &amp; connector).'
+      ja: '全業種。防御が手薄な<strong>周辺システム</strong>（パートナーポータル、レガシー、AI エージェント）が標的。'
     fix:
-      vi: 'Kiểm kê mọi ứng dụng/AI agent mở internet; giới hạn scope và quyền (least privilege, OAuth consent grant); đưa giao diện quản trị/agent vào mạng riêng; gỡ và xoay vòng secret nhúng cứng trong cấu hình/biến môi trường/script; lưu giữ log đăng nhập và hành động của agent.'
-      ja: '公開アプリ・AI エージェントの総点検、最小権限化（権限・OAuth 同意見直し）、管理画面・エージェント UI の閉域化、設定・環境変数・スクリプト内の固定シークレット削除とローテーション、エージェント操作およびサインインログの保全を実施してください。'
-  - name: RIKEN (Siêu máy tính Fugaku &amp; Rikyu)
+      vi: 'Kiểm kê app/agent mở internet, đưa trang quản trị vào mạng riêng, áp least privilege, xoay vòng secret và lưu log agent.'
+      ja: '公開アプリ・エージェントの棚卸し、管理画面の閉域化、最小権限化、シークレット更新、操作ログ保全を実施。'
+  - name: RIKEN (Fugaku &amp; Rikyu)
     sev: high
     summary:
-      vi: 'Xâm nhập thật: kẻ tấn công truy cập trái phép máy chủ nội bộ trong giai đoạn 10–13/11 và RIKEN phải ngắt kết nối siêu máy tính Fugaku ngày 14-11. Lộ họ tên, email, user ID của 4.222 người dùng Fugaku và họ tên, email của 375 người dùng Rikyu; SSH private key và access key nằm trong số tệp bị tiếp cận (một số key đã bị thử dùng sang hệ thống khác). Truyền thông nêu nghi vấn khai thác status dashboard công khai của Fugaku (RIKEN đang tiếp tục xác minh phương thức).'
-      ja: '実侵害事案：11/10〜13 に内部サーバーへ不正アクセスがあり、RIKEN は 11/14 にスーパーコンピュータ「富岳」を停止。富岳ユーザー 4,222 名の氏名・メール・ユーザー ID、Rikyu ユーザー 375 名の氏名・メールが流出し、SSH 秘密鍵やアクセス鍵も閲覧され一部が他システムへの試行に悪用されました。報道では公開ステータスダッシュボードの悪用が指摘されています（侵入経路は RIKEN が確認中）。'
+      vi: 'Xâm nhập thật (10–14/11): lộ thông tin 4.222 user Fugaku, 375 user Rikyu cùng SSH private key / access key; nghi vấn qua status dashboard công khai.'
+      ja: '実侵害（11/10〜14）：富岳 4,222名・Rikyu 375名の情報と SSH/アクセス鍵が流出。公開ステータスダッシュボード悪用の疑い。'
     impact:
-      vi: 'Tổ chức vận hành HPC, cụm tính toán, máy chủ nghiên cứu hoặc hệ thống có status dashboard / cổng giám sát công khai dùng chung mạng hoặc lưu khóa SSH/API.'
-      ja: 'HPC・計算クラスタ・研究サーバー、または公開ステータスダッシュボードや監視ポータルとネットワーク・SSH 鍵/API 鍵を共有する環境。'
+      vi: 'Tổ chức vận hành HPC, cụm tính toán hoặc hệ thống có dashboard giám sát công khai dùng chung khóa/mạng nội bộ.'
+      ja: 'HPC・計算クラスタ、または内部ネットワーク・鍵を共有する公開監視ダッシュボード環境。'
     fix:
-      vi: 'Tách biệt hoàn toàn status dashboard công khai khỏi máy chủ nội bộ; không lưu SSH private key / access key tĩnh trên nút tiếp xúc công khai; thu hồi và cấp lại toàn bộ khóa bị nghi lộ.'
-      ja: '公開ステータスダッシュボードを内部サーバーから完全に分離し、公開系ノードに静的な SSH 秘密鍵やアクセス鍵を置かないでください。侵害が疑われる鍵は即時失効・再発行してください。'
+      vi: 'Tách biệt status dashboard khỏi mạng nội bộ, không lưu SSH/API key tĩnh trên nút công khai và thu hồi khóa nghi lộ.'
+      ja: '公開ダッシュボードを内部網から分離し、公開ノードの静的鍵を廃止・失効再発行。'
   - name: Equinor
     sev: med
     summary:
-      vi: 'Xâm nhập thật: ngày 17-11-2026 Equinor phát hiện tấn công mạng đang diễn ra nhằm vào "một số hệ thống CNTT"; đến ngày 20-11 xác nhận đã chặn đứng cuộc tấn công, hoạt động khai thác/sản xuất không bị ảnh hưởng và chưa có dấu hiệu dữ liệu bị đánh cắp hay chỉnh sửa.'
-      ja: '実侵害事案：2026年11月17日に「一部の IT システム」に対する進行中のサイバー攻撃を検知し、11月20日までに攻撃を阻止したと発表。操業・生産への影響はなく、データの窃取や改ざんの兆候も確認されていません。'
+      vi: 'Xâm nhập thật (17–20/11): tấn công một số hệ thống CNTT; đã chặn đứng, sản xuất/OT không bị ảnh hưởng và chưa ghi nhận mất dữ liệu.'
+      ja: '実侵害（11/17〜20）：一部 IT システムへの攻撃を阻止。生産・OT への影響やデータ窃取は未確認。'
     impact:
-      vi: 'Hệ thống CNTT doanh nghiệp (corporate IT) tách biệt với mạng vận hành/OT.'
-      ja: 'OT/生産系から分離された企業 IT システム。'
+      vi: 'Hệ thống CNTT doanh nghiệp (corporate IT) tách biệt mạng OT.'
+      ja: 'OT 系から分離された企業 IT システム。'
     fix:
-      vi: 'Duy trì phân tách mạng IT/OT nghiêm ngặt, giám sát phát hiện bất thường và diễn tập cô lập nhanh hệ thống CNTT bị xâm nhập.'
-      ja: 'IT/OT ネットワーク分離を維持し、異常検知の監視と侵害 IT システムの迅速な隔離手順を確認してください。'
-  - name: Microsoft 365, Apple, Chase, FAA, NSANet (Sự cố vận hành)
+      vi: 'Duy trì phân tách mạng IT/OT, giám sát bất thường và diễn tập cô lập nhanh.'
+      ja: 'IT/OT 分離を維持し、異常監視と迅速な隔離手順を確認。'
+  - name: Microsoft 365, Apple, Chase, FAA, NSANet
     sev: low
     summary:
-      vi: 'Các sự cố gián đoạn diện rộng từ 12–17/11/2026 đều có nguyên nhân <strong>nội bộ / vận hành</strong> theo xác nhận của đơn vị vận hành và cơ quan chức năng, <strong>không phải tấn công mạng hay chuỗi tấn công liên hoàn</strong>: Microsoft 365 (12–13/11, lỗi từ đợt nâng cấp dung lượng mạng trước đó); FAA (13/11, quá tải switch/router viễn thông gây hủy &gt;4.700 chuyến bay, DHS xác nhận không nghi tấn công mạng); Chase (16/11, lỗi phần mềm trên phần cứng on-premise); NSANet (17/11, suy giảm trong bảo trì định kỳ, CNN không ghi nhận bằng chứng tấn công); Apple iCloud (17/11, sau một bản cập nhật nội bộ).'
-      ja: '2026年11月12〜17日に相次いだ大規模障害はいずれも<strong>内部要因・運用起因</strong>であり、<strong>サイバー攻撃や連動攻撃ではない</strong>と各事業者・当局が説明：Microsoft 365（11/12〜13、先行のネットワーク容量増強時の不具合）、FAA（11/13、通信ルーター/スイッチ過負荷により4,700便超が欠航、DHS はサイバー攻撃の疑いなしと表明）、Chase（11/16、オンプレミスハードウェアのソフトウェアバグ）、NSANet（11/17、定期メンテナンス中の性能低下、CNN も攻撃の証拠なしと報道）、Apple iCloud（11/17、内部アップデート起因）。'
+      vi: 'Các sự cố gián đoạn diện rộng 12–17/11 đều do <strong>lỗi nội bộ / nâng cấp vận hành</strong> (Microsoft 365, FAA, Chase, NSANet, Apple), <strong>không phải tấn công mạng</strong>.'
+      ja: '11/12〜17 の一連の大規模障害（M365、FAA、Chase、NSANet、Apple）はいずれも<strong>内部変更・運用起因</strong>であり<strong>サイバー攻撃ではない</strong>。'
     impact:
-      vi: 'Mọi đội ngũ vận hành cloud, on-premise và dịch vụ AI phụ thuộc lịch nâng cấp/bảo trì của nhà cung cấp hoặc hạ tầng nội bộ.'
-      ja: 'クラウド、オンプレミス、および AI サービスを運用するすべてのチーム（ベンダーまたは自社の変更・保守スケジュールに依存する環境）。'
+      vi: 'Đội ngũ vận hành cloud, on-premise và dịch vụ phụ thuộc lịch bảo trì/nâng cấp.'
+      ja: 'クラウド・オンプレミスおよび保守スケジュールに依存する全運用チーム。'
     fix:
-      vi: 'Không đánh đồng sự cố vận hành với tấn công mạng; áp dụng staging, cửa sổ đóng băng (freeze), cơ chế rollback rõ ràng cho mọi thay đổi mạng/cấu hình, kể cả trên hạ tầng tự host (on-premise).'
-      ja: '運用障害とサイバー攻撃を混同せず切り分けること。オンプレミス・セルフホスト環境を含め、ネットワーク・設定変更にはステージング検証、フリーズ期間、明確なロールバック手順を適用してください。'
+      vi: 'Không đánh đồng với tấn công mạng; áp dụng staging, freeze window và cơ chế rollback rõ ràng.'
+      ja: '攻撃と混同せず、ステージング検証・フリーズ期間・ロールバック手順を徹底。'
 
 - title:
     vi: 9. Ghi chú về độ tin cậy &amp; Nguồn tham khảo
@@ -699,5 +680,7 @@ sections:
     ja: '<strong>Linux カーネル CNA・NVD・Debian LTS 公式情報との照合済み（CVE-2026-99362）:</strong> 2026年11月19日公開。upstream は 6.12.117 / 6.18.61 / 7.3.2 / 7.4-rc1 で修正済み、Debian 12 LTS は DLA-4927-1（<code>linux-6.12</code>）で修正公開済み、RHEL・Ubuntu・Amazon Linux は修正待ち。公開 PoC・実環境悪用は未確認、CISA KEV 未掲載（2026年11月23日確認）。'
   - vi: '<strong>Đối chiếu nguồn chính thức Linux kernel CNA, git.kernel.org, Debian, Red Hat &amp; NVD (CVE-2026-99676):</strong> Công bố ngày 20-11-2026; upstream đã vá ở 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2 (git.kernel.org), Debian đã phát hành DSA-6652-1. Đánh giá mức độ khác nhau giữa nguồn: Linux kernel CNA &amp; NVD ghi nhận CVSS 9.8 (Critical), trong khi Red Hat BZ #2577739 chấm CVSS 5.9 (Medium, AC:H) do yêu cầu race timing chặt trên phần cứng weak-memory-ordering (ARM64/POWER). Chưa có PoC công khai, chưa ghi nhận khai thác thực tế và chưa có trong CISA KEV (kiểm tra 23-11-2026).'
     ja: '<strong>Linux カーネル CNA・git.kernel.org・Debian・Red Hat・NVD 公式情報との照合済み（CVE-2026-99676）:</strong> 2026年11月20日公開。upstream は 6.12.118 / 6.18.64 / 7.3.5 / 7.4-rc2（git.kernel.org）で修正済み、Debian は DSA-6652-1 を公開済み。情報源により評価に差異あり：Linux カーネル CNA と NVD は CVSS 9.8（Critical）と評価する一方、Red Hat BZ #2577739 は weak-memory-ordering 環境（ARM64/POWER）での厳密な競合タイミングを要するため CVSS 5.9（Medium、AC:H）と評価。公開 PoC・実環境悪用は未確認、CISA KEV 未掲載（2026年11月23日確認）。'
-  - vi: '<strong>Liên kết tham khảo:</strong> <a href="https://www.postgresql.org/about/news/" target="_blank" rel="noopener noreferrer">PostgreSQL Release Announcement</a> · <a href="https://www.helpnetsecurity.com/2026/11/13/postgresql-security-update-november-2026/" target="_blank" rel="noopener noreferrer">Help Net Security PostgreSQL Advisory</a> · <a href="@home@featured/vulnerabilities/postgresql-cve-2026-6460/analysis/">PiraGo Analysis: PostgreSQL Security Update Nov 2026</a> · <a href="https://httpd.apache.org/security/vulnerabilities_24.html" target="_blank" rel="noopener noreferrer">Apache HTTP Server 2.4 Security</a> · <a href="https://www.cve.org/CVERecord?id=CVE-2026-119618" target="_blank" rel="noopener noreferrer">CVE-2026-119618</a> · <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://chromereleases.googleblog.com/" target="_blank" rel="noopener noreferrer">Chrome Releases Blog</a> · <a href="https://spring.io/security/cve" target="_blank" rel="noopener noreferrer">Spring Security Advisories</a> · <a href="https://tomcat.apache.org/security.html" target="_blank" rel="noopener noreferrer">Apache Tomcat Security</a> · <a href="@home@featured/vulnerabilities/apache-cve-2026-119618/analysis/">PiraGo Analysis: Apache CVE-2026-119618</a> · <a href="@home@featured/vulnerabilities/java-cve-2026-114938/analysis/">PiraGo Analysis: Java CVE-2026-114938</a> · <a href="@home@featured/vulnerabilities/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a> · <a href="@home@featured/vulnerabilities/php-cve-2026-109618-109619/php2shell/">PiraGo Guide: PHP2Shell</a> · <a href="https://thehackernews.com/2026/11/researcher-demonstrates-database-rce.html" target="_blank" rel="noopener noreferrer">The Hacker News: Database RCE (PostgreSQL, MySQL, Oracle)</a> · <a href="https://depthfirst.com/research/narrow-grants-wide-engines" target="_blank" rel="noopener noreferrer">Depthfirst: Narrow Grants, Wide Engines</a> · <a href="https://www.postgresql.org/support/security/CVE-2026-116331/" target="_blank" rel="noopener noreferrer">PostgreSQL CVE-2026-116331</a> · <a href="https://dev.mysql.com/community/security/advisories/2026-10-20/" target="_blank" rel="noopener noreferrer">MySQL Security Advisory 2026-10-20</a> · <a href="https://www.oracle.com/security-alerts/cspunov2026.html" target="_blank" rel="noopener noreferrer">Oracle CSPU November 2026</a> · <a href="https://www.oracle.com/security-alerts/cpuoct2026.html" target="_blank" rel="noopener noreferrer">Oracle CPU October 2026</a> · <a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">PiraGo Analysis: Database engine RCE (Narrow Grants)</a> · <a href="https://ibl.ai/blog/november-2026-outages-artex-government-ai-resilience" target="_blank" rel="noopener noreferrer">ibl.ai: November 2026 Outages &amp; ARTEX (FBI FLASH-20261113-001)</a> · <a href="@home@featured/vulnerabilities/linux-cve-2026-99362/analysis/">PiraGo Analysis: Linux NFSD CVE-2026-99362</a>.'
-    ja: '<strong>参考リンク:</strong> <a href="https://www.postgresql.org/about/news/" target="_blank" rel="noopener noreferrer">PostgreSQL Release Announcement</a> · <a href="https://www.helpnetsecurity.com/2026/11/13/postgresql-security-update-november-2026/" target="_blank" rel="noopener noreferrer">Help Net Security PostgreSQL Advisory</a> · <a href="@home@featured/vulnerabilities/postgresql-cve-2026-6460/analysis/">PiraGo Analysis: PostgreSQL Security Update Nov 2026</a> · <a href="https://httpd.apache.org/security/vulnerabilities_24.html" target="_blank" rel="noopener noreferrer">Apache HTTP Server 2.4 Security</a> · <a href="https://www.cve.org/CVERecord?id=CVE-2026-119618" target="_blank" rel="noopener noreferrer">CVE-2026-119618</a> · <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://chromereleases.googleblog.com/" target="_blank" rel="noopener noreferrer">Chrome Releases Blog</a> · <a href="https://spring.io/security/cve" target="_blank" rel="noopener noreferrer">Spring Security Advisories</a> · <a href="https://tomcat.apache.org/security.html" target="_blank" rel="noopener noreferrer">Apache Tomcat Security</a> · <a href="@home@featured/vulnerabilities/apache-cve-2026-119618/analysis/">PiraGo Analysis: Apache CVE-2026-119618</a> · <a href="@home@featured/vulnerabilities/java-cve-2026-114938/analysis/">PiraGo Analysis: Java CVE-2026-114938</a> · <a href="@home@featured/vulnerabilities/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a> · <a href="@home@featured/vulnerabilities/php-cve-2026-109618-109619/php2shell/">PiraGo Guide: PHP2Shell</a> · <a href="https://thehackernews.com/2026/11/researcher-demonstrates-database-rce.html" target="_blank" rel="noopener noreferrer">The Hacker News: Database RCE (PostgreSQL, MySQL, Oracle)</a> · <a href="https://depthfirst.com/research/narrow-grants-wide-engines" target="_blank" rel="noopener noreferrer">Depthfirst: Narrow Grants, Wide Engines</a> · <a href="https://www.postgresql.org/support/security/CVE-2026-116331/" target="_blank" rel="noopener noreferrer">PostgreSQL CVE-2026-116331</a> · <a href="https://dev.mysql.com/community/security/advisories/2026-10-20/" target="_blank" rel="noopener noreferrer">MySQL Security Advisory 2026-10-20</a> · <a href="https://www.oracle.com/security-alerts/cspunov2026.html" target="_blank" rel="noopener noreferrer">Oracle CSPU November 2026</a> · <a href="https://www.oracle.com/security-alerts/cpuoct2026.html" target="_blank" rel="noopener noreferrer">Oracle CPU October 2026</a> · <a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">PiraGo Analysis: Database engine RCE (Narrow Grants)</a> · <a href="https://ibl.ai/blog/november-2026-outages-artex-government-ai-resilience" target="_blank" rel="noopener noreferrer">ibl.ai: November 2026 Outages &amp; ARTEX (FBI FLASH-20261113-001)</a> · <a href="@home@featured/vulnerabilities/linux-cve-2026-99362/analysis/">PiraGo Analysis: Linux NFSD CVE-2026-99362</a> · <a href="@home@featured/vulnerabilities/linux-cve-2026-99676/analysis/">PiraGo Analysis: Linux Net CVE-2026-99676</a> · <a href="@home@featured/vulnerabilities/chrome-cve-2026-134401/analysis/">PiraGo Analysis: Chrome CVE-2026-134401</a> · <a href="https://chromereleases.googleblog.com/2026/11/stable-channel-update-for-desktop_01734282054.html" target="_blank" rel="noopener noreferrer">Chrome Releases: Stable 158.0.8127.88/.89</a> · <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-134401" target="_blank" rel="noopener noreferrer">NVD CVE-2026-134401</a>.'
+  - vi: '<strong>Đối chiếu repo chính thức shirudo-dev/shirudo &amp; thông báo OpenAI / Cisco (24-11-2026):</strong> Thông tin kỹ thuật về Shirudo (trạng thái pre-release, yêu cầu kernel có signed-loader ABI + patch Shirudo và TPM 2.0, cơ chế <code>upatches</code> cho eBPF/Java agent) được xác minh trực tiếp từ mã nguồn và tài liệu chính thức trên GitHub (<code>shirudo-dev/shirudo</code>, <code>docs.shirudo.dev</code>) cùng tóm tắt từ thông báo của OpenAI, Cisco/Isovalent và The Hacker News.'
+    ja: '<strong>公式リポジトリ shirudo-dev/shirudo および OpenAI / Cisco 発表との照合済み（2026年11月24日）:</strong> Shirudo の技術仕様（pre-release 状態、signed-loader ABI＋Shirudo パッチ適用済みカーネルおよび TPM 2.0 要件、eBPF/Java エージェント向け <code>upatches</code> 機構）は GitHub 公式リポジトリ（<code>shirudo-dev/shirudo</code>）および公式ドキュメント（<code>docs.shirudo.dev</code>）から直接確認し、OpenAI・Cisco/Isovalent・The Hacker News の発表内容と照合しています。'
+  - vi: '<strong>Liên kết tham khảo:</strong> <a href="https://www.postgresql.org/about/news/" target="_blank" rel="noopener noreferrer">PostgreSQL Release Announcement</a> · <a href="https://www.helpnetsecurity.com/2026/11/13/postgresql-security-update-november-2026/" target="_blank" rel="noopener noreferrer">Help Net Security PostgreSQL Advisory</a> · <a href="@home@featured/vulnerabilities/postgresql-cve-2026-6460/analysis/">PiraGo Analysis: PostgreSQL Security Update Nov 2026</a> · <a href="https://httpd.apache.org/security/vulnerabilities_24.html" target="_blank" rel="noopener noreferrer">Apache HTTP Server 2.4 Security</a> · <a href="https://www.cve.org/CVERecord?id=CVE-2026-119618" target="_blank" rel="noopener noreferrer">CVE-2026-119618</a> · <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://chromereleases.googleblog.com/" target="_blank" rel="noopener noreferrer">Chrome Releases Blog</a> · <a href="https://spring.io/security/cve" target="_blank" rel="noopener noreferrer">Spring Security Advisories</a> · <a href="https://tomcat.apache.org/security.html" target="_blank" rel="noopener noreferrer">Apache Tomcat Security</a> · <a href="@home@featured/vulnerabilities/apache-cve-2026-119618/analysis/">PiraGo Analysis: Apache CVE-2026-119618</a> · <a href="@home@featured/vulnerabilities/java-cve-2026-114938/analysis/">PiraGo Analysis: Java CVE-2026-114938</a> · <a href="@home@featured/vulnerabilities/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a> · <a href="@home@featured/vulnerabilities/php-cve-2026-109618-109619/php2shell/">PiraGo Guide: PHP2Shell</a> · <a href="https://thehackernews.com/2026/11/researcher-demonstrates-database-rce.html" target="_blank" rel="noopener noreferrer">The Hacker News: Database RCE (PostgreSQL, MySQL, Oracle)</a> · <a href="https://depthfirst.com/research/narrow-grants-wide-engines" target="_blank" rel="noopener noreferrer">Depthfirst: Narrow Grants, Wide Engines</a> · <a href="https://www.postgresql.org/support/security/CVE-2026-116331/" target="_blank" rel="noopener noreferrer">PostgreSQL CVE-2026-116331</a> · <a href="https://dev.mysql.com/community/security/advisories/2026-10-20/" target="_blank" rel="noopener noreferrer">MySQL Security Advisory 2026-10-20</a> · <a href="https://www.oracle.com/security-alerts/cspunov2026.html" target="_blank" rel="noopener noreferrer">Oracle CSPU November 2026</a> · <a href="https://www.oracle.com/security-alerts/cpuoct2026.html" target="_blank" rel="noopener noreferrer">Oracle CPU October 2026</a> · <a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">PiraGo Analysis: Database engine RCE (Narrow Grants)</a> · <a href="https://ibl.ai/blog/november-2026-outages-artex-government-ai-resilience" target="_blank" rel="noopener noreferrer">ibl.ai: November 2026 Outages &amp; ARTEX (FBI FLASH-20261113-001)</a> · <a href="@home@featured/vulnerabilities/linux-cve-2026-99362/analysis/">PiraGo Analysis: Linux NFSD CVE-2026-99362</a> · <a href="https://thehackernews.com/2026/11/openai-and-cisco-unveil-ai-assisted.html" target="_blank" rel="noopener noreferrer">The Hacker News: OpenAI &amp; Cisco Shirudo</a> · <a href="https://openai.com/index/introducing-shirudo/" target="_blank" rel="noopener noreferrer">OpenAI: Introducing Shirudo</a> · <a href="https://isovalent.com/blog/post/cisco-openai-shirudo/" target="_blank" rel="noopener noreferrer">Cisco / Isovalent: Shirudo</a> · <a href="https://github.com/shirudo-dev/shirudo" target="_blank" rel="noopener noreferrer">GitHub: shirudo-dev/shirudo</a>.'
+    ja: '<strong>参考リンク:</strong> <a href="https://www.postgresql.org/about/news/" target="_blank" rel="noopener noreferrer">PostgreSQL Release Announcement</a> · <a href="https://www.helpnetsecurity.com/2026/11/13/postgresql-security-update-november-2026/" target="_blank" rel="noopener noreferrer">Help Net Security PostgreSQL Advisory</a> · <a href="@home@featured/vulnerabilities/postgresql-cve-2026-6460/analysis/">PiraGo Analysis: PostgreSQL Security Update Nov 2026</a> · <a href="https://httpd.apache.org/security/vulnerabilities_24.html" target="_blank" rel="noopener noreferrer">Apache HTTP Server 2.4 Security</a> · <a href="https://www.cve.org/CVERecord?id=CVE-2026-119618" target="_blank" rel="noopener noreferrer">CVE-2026-119618</a> · <a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener noreferrer">Microsoft MSRC Update Guide</a> · <a href="https://chromereleases.googleblog.com/" target="_blank" rel="noopener noreferrer">Chrome Releases Blog</a> · <a href="https://spring.io/security/cve" target="_blank" rel="noopener noreferrer">Spring Security Advisories</a> · <a href="https://tomcat.apache.org/security.html" target="_blank" rel="noopener noreferrer">Apache Tomcat Security</a> · <a href="@home@featured/vulnerabilities/apache-cve-2026-119618/analysis/">PiraGo Analysis: Apache CVE-2026-119618</a> · <a href="@home@featured/vulnerabilities/java-cve-2026-114938/analysis/">PiraGo Analysis: Java CVE-2026-114938</a> · <a href="@home@featured/vulnerabilities/linux-cve-2026-98432/analysis/">PiraGo Analysis: Linux CVE-2026-98432</a> · <a href="@home@featured/vulnerabilities/php-cve-2026-109618-109619/php2shell/">PiraGo Guide: PHP2Shell</a> · <a href="https://thehackernews.com/2026/11/researcher-demonstrates-database-rce.html" target="_blank" rel="noopener noreferrer">The Hacker News: Database RCE (PostgreSQL, MySQL, Oracle)</a> · <a href="https://depthfirst.com/research/narrow-grants-wide-engines" target="_blank" rel="noopener noreferrer">Depthfirst: Narrow Grants, Wide Engines</a> · <a href="https://www.postgresql.org/support/security/CVE-2026-116331/" target="_blank" rel="noopener noreferrer">PostgreSQL CVE-2026-116331</a> · <a href="https://dev.mysql.com/community/security/advisories/2026-10-20/" target="_blank" rel="noopener noreferrer">MySQL Security Advisory 2026-10-20</a> · <a href="https://www.oracle.com/security-alerts/cspunov2026.html" target="_blank" rel="noopener noreferrer">Oracle CSPU November 2026</a> · <a href="https://www.oracle.com/security-alerts/cpuoct2026.html" target="_blank" rel="noopener noreferrer">Oracle CPU October 2026</a> · <a href="@home@featured/vulnerabilities/database-rce-narrow-grants/analysis/">PiraGo Analysis: Database engine RCE (Narrow Grants)</a> · <a href="https://ibl.ai/blog/november-2026-outages-artex-government-ai-resilience" target="_blank" rel="noopener noreferrer">ibl.ai: November 2026 Outages &amp; ARTEX (FBI FLASH-20261113-001)</a> · <a href="@home@featured/vulnerabilities/linux-cve-2026-99362/analysis/">PiraGo Analysis: Linux NFSD CVE-2026-99362</a> · <a href="@home@featured/vulnerabilities/linux-cve-2026-99676/analysis/">PiraGo Analysis: Linux Net CVE-2026-99676</a> · <a href="@home@featured/vulnerabilities/chrome-cve-2026-134401/analysis/">PiraGo Analysis: Chrome CVE-2026-134401</a> · <a href="https://chromereleases.googleblog.com/2026/11/stable-channel-update-for-desktop_01734282054.html" target="_blank" rel="noopener noreferrer">Chrome Releases: Stable 158.0.8127.88/.89</a> · <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-134401" target="_blank" rel="noopener noreferrer">NVD CVE-2026-134401</a> · <a href="https://thehackernews.com/2026/11/openai-and-cisco-unveil-ai-assisted.html" target="_blank" rel="noopener noreferrer">The Hacker News: OpenAI &amp; Cisco Shirudo</a> · <a href="https://openai.com/index/introducing-shirudo/" target="_blank" rel="noopener noreferrer">OpenAI: Introducing Shirudo</a> · <a href="https://isovalent.com/blog/post/cisco-openai-shirudo/" target="_blank" rel="noopener noreferrer">Cisco / Isovalent: Shirudo</a> · <a href="https://github.com/shirudo-dev/shirudo" target="_blank" rel="noopener noreferrer">GitHub: shirudo-dev/shirudo</a>.'

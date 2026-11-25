@@ -34,7 +34,7 @@
 {%- endfor %}
 </ul></div>
 {%- else %}
-<div class="wrap"><table>
+<div class="wrap"><table class="monthly-table monthly-table--{{ s.type }}">
 <thead><tr>
 {%- for c in t.cols[s.type] -%}
 <th{% if forloop.index == 3 %} class="col-lv"{% endif %}>{{ c }}</th>

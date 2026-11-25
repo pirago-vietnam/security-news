@@ -658,6 +658,68 @@ td:first-child {
   width: 120px;
 }
 
+/* Balanced column layout for monthly report tables */
+.monthly-table {
+  table-layout: fixed;
+  width: 100%;
+  min-width: 900px;
+}
+
+.monthly-table th,
+.monthly-table td {
+  overflow-wrap: break-word;
+}
+
+.monthly-table code {
+  overflow-wrap: anywhere;
+}
+
+.monthly-table th.col-lv,
+.monthly-table td:nth-child(3) {
+  width: 128px;
+  white-space: nowrap;
+}
+
+/* Actions table: # | Task | Severity | Due */
+.monthly-table--actions th:nth-child(1),
+.monthly-table--actions td:nth-child(1) {
+  width: 48px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.monthly-table--actions th:nth-child(4),
+.monthly-table--actions td:nth-child(4) {
+  width: 22%;
+}
+
+/* Component & Provider tables: Name | Summary | Severity | Impact | Fix */
+.monthly-table--component td:first-child,
+.monthly-table--provider td:first-child {
+  white-space: normal;
+}
+
+.monthly-table--component th:nth-child(1),
+.monthly-table--component td:nth-child(1),
+.monthly-table--provider th:nth-child(1),
+.monthly-table--provider td:nth-child(1) {
+  width: 16%;
+}
+
+.monthly-table--component th:nth-child(2),
+.monthly-table--component td:nth-child(2),
+.monthly-table--provider th:nth-child(2),
+.monthly-table--provider td:nth-child(2) {
+  width: 29%;
+}
+
+.monthly-table--component th:nth-child(4),
+.monthly-table--component td:nth-child(4),
+.monthly-table--provider th:nth-child(4),
+.monthly-table--provider td:nth-child(4) {
+  width: 21%;
+}
+
 /* Callouts / Notes */
 .note, .callout {
   background: var(--card);
