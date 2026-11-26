@@ -1,0 +1,223 @@
+---
+layout: default
+lang: ja
+image: "/featured/incidents/1password-nov-2026/1password-nov-2026-og.png"
+title: "1Password セキュリティインシデント（2026年11月）— 従業員 GitHub 侵害とバックエンドへの悪性コード投入"
+description: "2026年11月25日公表（11月19日検知）の 1Password インシデント分析：従業員の企業 GitHub 侵害から CI/CD・バックエンドに悪性コードが投入され一部顧客の管理レコードが流出。Vault・マスターパスワード・Secret Key は安全。"
+category: "セキュリティインシデント"
+permalink: /ja/featured/incidents/1password-nov-2026/incident_report/
+---
+<style>
+  .an-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
+  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--line); color: var(--text-muted); }
+  .an-nav a:hover { color: var(--pirago-blue); border-color: var(--pirago-blue); text-decoration: none; }
+  .an-sec { margin: 0 0 40px; }
+  .an-sec h2 { font-size: 21px; margin: 28px 0 14px; scroll-margin-top: 90px; }
+  .an-sec h3 { font-size: 17px; margin: 20px 0 8px; }
+  .an-sec ul, .an-sec ol { padding-left: 22px; }
+  .an-sec li { margin: 6px 0; }
+  .an-sec .table-wrap { overflow-x: auto; margin: 14px 0 20px; }
+  .an-sec code { word-break: break-all; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 20px 0 24px; }
+  .kpi-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); }
+  .kpi-num { font-size: 20px; font-weight: 800; font-family: var(--font-mono); color: var(--pirago-navy); line-height: 1.2; margin-bottom: 4px; }
+  html[data-theme="dark"] .kpi-num { color: #5ab0e8; }
+  .kpi-num.crit { color: var(--crit); }
+  .kpi-num.high { color: var(--high); }
+  .kpi-num.low { color: var(--low); }
+  .kpi-label { font-size: 12.5px; color: var(--text-muted); line-height: 1.4; }
+
+  .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
+  .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
+  .fig .mut { fill: var(--text-muted); }
+  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
+</style>
+
+<div class="report-header">
+  <h1>1Password セキュリティインシデント（2026年11月）— 従業員 GitHub 侵害とバックエンドへの悪性コード投入</h1>
+  <p class="sub">発生・公開日：<strong>2026-11-25</strong>（検知・調査開始 <strong>2026-11-19</strong>） · <strong>2026-11-26</strong> 時点 · 出典：1Password 公式ブログ、TechCrunch、The Hacker News、BleepingComputer · 状況：<strong>封じ込め・クリーン版復旧済み、顧客 Vault への影響なし</strong>。月次レポート：<a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月レポート</a>。</p>
+</div>
+
+<blockquote class="callout">
+  <p><strong>TL;DR（エンジニア・PM向け要約）：</strong></p>
+  <ul>
+    <li><strong>何が起きたか：</strong>2026年11月19日、1Password は攻撃者が<strong>従業員の企業 GitHub アカウント</strong>に侵入し、非公開リポジトリ・CI/CD にアクセスして<strong>バックエンドへ悪性コードを投入</strong>し、一部顧客の管理レコードを取得した事案を検知しました（11月25日公表）。</li>
+    <li><strong>流出した情報（一部顧客のみ）：</strong>氏名、ログイン用メールアドレス、アカウント/ユーザー ID、作成日時・最終ログイン日時、公開鍵、SRP パラメータ、招待・プロビジョニング（SCIM）・アカウント復旧メール内のトークン、非機密の内部メタデータ。また非公開ソースコードおよび CI/CD インフラ関連の内部シークレットもアクセスを受けました。</li>
+    <li><strong>安全だった情報：</strong>顧客の <strong>Vault・保存されたパスワード/アイテム・Vault 暗号鍵・マスターパスワード・Secret Key・復旧鍵</strong> は<strong>一切アクセスされていません</strong>（クライアント側暗号化・ゼロ知識設計）。露出したトークンによるアカウント乗っ取りも確認されていません。</li>
+    <li><strong>利用者がすべきこと：</strong><strong>マスターパスワードや Secret Key の変更は不要</strong>です。1Password からの公式通知の有無を確認し、<strong>標的型フィッシング</strong>（偽の招待・復旧メールや SMS・電話）に警戒してください。</li>
+  </ul>
+</blockquote>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-num high">11/19 → 11/25</div>
+    <div class="kpi-label">2026-11-19 検知・調査開始 · 2026-11-25 公式公表</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num crit">GitHub 1件</div>
+    <div class="kpi-label">侵入口：従業員1名の企業 GitHub アカウント → CI/CD・バックエンド</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num low">Vault 被害 0</div>
+    <div class="kpi-label">Vault・マスターパスワード・Secret Key・復旧鍵は完全保護</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num">6桁 → 10文字</div>
+    <div class="kpi-label">招待・復旧メールの確認コードを 6桁数字から 10文字英数字へ強化</div>
+  </div>
+</div>
+
+<nav class="an-nav" aria-label="目次">
+  <a href="#attack-chain">1. 攻撃チェーン</a>
+  <a href="#data-scope">2. 流出情報と安全だった情報</a>
+  <a href="#timeline">3. 経緯と 1Password の対処</a>
+  <a href="#recommendations">4. PiraGo 向け推奨事項</a>
+  <a href="#sources">5. 参考情報</a>
+</nav>
+
+<section class="an-sec">
+<h2 id="attack-chain">1. 攻撃チェーン（Attack Chain）</h2>
+<p>2026年11月25日の公式発表によると、攻撃者は Vault の暗号機構を破ったのではなく、開発基盤（従業員 GitHub アカウント → CI/CD → バックエンド）を経由して管理レコードへ到達しました。</p>
+
+<figure class="fig">
+<svg viewBox="0 0 740 165" role="img" aria-label="1Password 2026年11月インシデントの攻撃チェーン">
+  <defs>
+    <marker id="arr-1p-chain-ja" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--text-muted)"/>
+    </marker>
+  </defs>
+  <rect x="10" y="25" width="155" height="90" rx="8" class="box" stroke="var(--crit)" stroke-width="1.5"/>
+  <text x="87" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--crit)">1. GitHub 侵害</text>
+  <text x="87" y="72" text-anchor="middle" font-size="11.5" fill="currentColor">従業員1名の企業</text>
+  <text x="87" y="88" text-anchor="middle" font-size="11.5" fill="currentColor">GitHub アカウントを奪取</text>
+
+  <line x1="165" y1="70" x2="195" y2="70" stroke="var(--text-muted)" stroke-width="1.5" marker-end="url(#arr-1p-chain-ja)"/>
+
+  <rect x="198" y="25" width="160" height="90" rx="8" class="box"/>
+  <text x="278" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">2. Repo &amp; CI/CD</text>
+  <text x="278" y="72" text-anchor="middle" font-size="11.5" fill="currentColor">非公開リポジトリ閲覧・</text>
+  <text x="278" y="88" text-anchor="middle" font-size="11.5" fill="currentColor">CI/CD シークレット取得</text>
+
+  <line x1="358" y1="70" x2="388" y2="70" stroke="var(--text-muted)" stroke-width="1.5" marker-end="url(#arr-1p-chain-ja)"/>
+
+  <rect x="391" y="25" width="160" height="90" rx="8" class="box" stroke="var(--high)" stroke-width="1.5"/>
+  <text x="471" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--high)">3. 悪性コード投入</text>
+  <text x="471" y="72" text-anchor="middle" font-size="11.5" fill="currentColor">バックエンドサービスへ</text>
+  <text x="471" y="88" text-anchor="middle" font-size="11.5" fill="currentColor">悪性コードを投入</text>
+
+  <line x1="551" y1="70" x2="581" y2="70" stroke="var(--text-muted)" stroke-width="1.5" marker-end="url(#arr-1p-chain-ja)"/>
+
+  <rect x="584" y="25" width="146" height="90" rx="8" class="box"/>
+  <text x="657" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">4. 管理データ窃取</text>
+  <text x="657" y="72" text-anchor="middle" font-size="11.5" fill="currentColor">一部顧客の管理記録のみ</text>
+  <text x="657" y="88" text-anchor="middle" font-size="11.5" fill="currentColor">（Vault は暗号化保護）</text>
+
+  <text x="10" y="145" font-size="11.5" class="mut">11月19日以前の初期侵入経路の詳細および影響を受けた正確な顧客数は非公開。</text>
+</svg>
+<figcaption>従業員 GitHub アカウント侵害からバックエンドへの悪性コード投入までの流れ。</figcaption>
+</figure>
+</section>
+
+<section class="an-sec">
+<h2 id="data-scope">2. 流出情報と安全だった情報</h2>
+
+<figure class="fig">
+<svg viewBox="0 0 740 210" role="img" aria-label="1Password インシデントにおける流出情報と安全だった情報の比較">
+  <rect x="10" y="12" width="350" height="182" rx="8" class="box" stroke="var(--high)" stroke-width="1.5"/>
+  <text x="26" y="38" font-size="13.5" font-weight="700" fill="var(--high)">アクセス・取得された情報</text>
+  <text x="26" y="62" font-size="11.5" fill="currentColor">• 顧客氏名・ログイン用メール（一部顧客のみ）</text>
+  <text x="26" y="82" font-size="11.5" fill="currentColor">• アカウント/ユーザー ID・作成日時・最終ログイン日時</text>
+  <text x="26" y="102" font-size="11.5" fill="currentColor">• 公開鍵・SRP パラメータ（単体でログイン不可）</text>
+  <text x="26" y="122" font-size="11.5" fill="currentColor">• 招待/プロビジョニング/復旧トークン（要SSO等）</text>
+  <text x="26" y="142" font-size="11.5" fill="currentColor">• 非機密の内部構造メタデータ（バージョン/ファイル ID）</text>
+  <text x="26" y="162" font-size="11.5" fill="currentColor">• 社内：非公開ソースコード・CI/CD シークレット</text>
+  <text x="26" y="180" font-size="11" class="mut">（顧客秘密情報なし・全シークレットをローテーション済み）</text>
+
+  <rect x="380" y="12" width="350" height="182" rx="8" class="box" stroke="var(--low)" stroke-width="1.5"/>
+  <text x="396" y="38" font-size="13.5" font-weight="700" fill="var(--low)">安全だった情報（アクセスなし）</text>
+  <text x="396" y="62" font-size="11.5" fill="currentColor">• すべての顧客 Vault および保存アイテム・パスワード</text>
+  <text x="396" y="82" font-size="11.5" fill="currentColor">• Vault 暗号鍵（Vault encryption keys）</text>
+  <text x="396" y="102" font-size="11.5" fill="currentColor">• マスターパスワード・Secret Key（端末側のみ保持）</text>
+  <text x="396" y="122" font-size="11.5" fill="currentColor">• アカウント復旧鍵（Account Recovery Keys）</text>
+  <text x="396" y="142" font-size="11.5" fill="currentColor">• 1Password アプリ本体およびブラウザ拡張機能</text>
+  <text x="396" y="162" font-size="11.5" fill="currentColor">• 露出トークンによる乗っ取り被害の証拠はゼロ</text>
+</svg>
+<figcaption>サーバー側の管理レコードとクライアント側エンドツーエンド暗号化 Vault の境界。</figcaption>
+</figure>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>対象データ</th><th>状態</th><th>技術的補足</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>氏名・メール・ID・ログイン時刻</strong></td>
+      <td><span class="badge high">流出（一部顧客）</span></td>
+      <td>アカウント管理用メタデータ。メールアドレス露出により 1Password を騙る<strong>標的型フィッシング</strong>のリスクが高まります。</td>
+    </tr>
+    <tr>
+      <td><strong>SRP パラメータ・公開鍵</strong></td>
+      <td><span class="badge med">流出（単体悪用不可）</span></td>
+      <td>公開鍵は設計上公開情報であり、SRP もパスワードを送信しない認証方式のため、これら単体では復号やログインはできません。</td>
+    </tr>
+    <tr>
+      <td><strong>招待・プロビジョニング・復旧トークン</strong></td>
+      <td><span class="badge high">流出（二要素が必要）</span></td>
+      <td>SSO ログインまたはメール確認コードが必要なため単体では悪用不可。有効なトークン状態にあった少数のユーザーには個別通知済み。</td>
+    </tr>
+    <tr>
+      <td><strong>Vault・マスターパスワード・Secret Key</strong></td>
+      <td><span class="badge low">完全に安全</span></td>
+      <td>クライアント側暗号化によりサーバーは復号鍵を持たないため、バックエンド侵害でも Vault 内容は閲覧・復号できません。</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section class="an-sec">
+<h2 id="timeline">3. 経緯と 1Password の対処</h2>
+<ul>
+  <li><strong>2026-11-19 以前：</strong>従業員の企業 GitHub アカウントが侵害された正確な日時・手法は非公開。</li>
+  <li><strong>2026-11-19：</strong>1Password が異常を検知し、従業員 GitHub アカウントへの不正アクセス調査を開始。</li>
+  <li><strong>2026-11-25：</strong>公式ブログで事案を公表し、以下の封じ込め・再発防止策を完了したことを報告：
+    <ul>
+      <li>侵害された GitHub アカウントの無効化、盗難トークンの失効、攻撃者作成アクセスの削除。</li>
+      <li>影響を受けたバックエンドサービスのクリーンなバージョンへの復旧。</li>
+      <li>露出の可能性のある全内部認証情報（CI/CD インフラシークレット含む）のローテーション・失効。</li>
+      <li>招待・アカウント復旧メールの確認コードを <strong>6桁数字</strong>から <strong>10文字の英数字</strong>へ延長。</li>
+      <li>GitHub・CI/CD・エンドポイントの制御強化と検知ルール追加、外部セキュリティ専門家による検証実施。</li>
+    </ul>
+  </li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="recommendations">4. PiraGo 向け推奨事項</h2>
+<ol>
+  <li><strong>1Password を利用中のチーム・担当者向け：</strong>
+    <ul>
+      <li><strong>マスターパスワードや Secret Key の変更は不要</strong>です（通常運用を継続）。</li>
+      <li>1Password からの個別通知メールの有無を確認し、<strong>不審な招待・復旧メールや SMS・電話によるフィッシング</strong>を厳重に警戒してください。</li>
+    </ul>
+  </li>
+  <li><strong>自社開発基盤（GitHub・CI/CD）への教訓：</strong>
+    <ul>
+      <li>組織全体の GitHub アカウントに<strong>フィッシング耐性のある 2FA（パスキー / FIDO2 ハードウェアキー）</strong>を必須化。</li>
+      <li>本番バックエンドへのデプロイ経路で、単一アカウントによる無審査 push を防ぐブランチ保護・必須レビューを徹底。</li>
+      <li>CI/CD の長期固定シークレットを削減し、OIDC による短命トークンおよび環境分離を適用。</li>
+    </ul>
+  </li>
+</ol>
+</section>
+
+<section class="an-sec">
+<h2 id="sources">5. 参考情報</h2>
+<ul>
+  <li>1Password 公式ブログ（2026-11-25）：<a href="https://1password.com/blog/update-on-nov-2026-security-incident" target="_blank" rel="noopener noreferrer">Update on Nov 2026 Security Incident</a></li>
+  <li>TechCrunch（2026-11-25）：<a href="https://techcrunch.com/2026/11/25/1password-said-hackers-broke-into-its-internal-systems-but-customer-passwords-are-safe/" target="_blank" rel="noopener noreferrer">1Password said hackers broke into its internal systems, but customer passwords are safe</a></li>
+  <li>The Hacker News：<a href="https://thehackernews.com/2026/11/1password-hacked-customer-data-and.html" target="_blank" rel="noopener noreferrer">1Password Hacked: Customer Data and Internal Code Accessed via Compromised Employee GitHub</a></li>
+  <li>BleepingComputer：<a href="https://www.bleepingcomputer.com/news/security/1password-customer-data-stolen-after-employee-github-account-breach/" target="_blank" rel="noopener noreferrer">1Password customer data stolen after employee GitHub account breach</a></li>
+</ul>
+</section>

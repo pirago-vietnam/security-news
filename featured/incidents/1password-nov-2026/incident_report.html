@@ -1,0 +1,222 @@
+---
+layout: default
+image: "/featured/incidents/1password-nov-2026/1password-nov-2026-og.png"
+title: "Sự cố 1Password (11/2026) — Xâm nhập tài khoản GitHub nhân viên & đẩy mã độc vào backend"
+description: "Phân tích sự cố bảo mật 1Password công bố ngày 25-11-2026 (phát hiện 19-11): chiếm tài khoản GitHub nhân viên, đẩy mã độc vào backend/CI/CD để tải hồ sơ hành chính một nhóm khách hàng; vault, Master Password và Secret Key vẫn an toàn."
+category: "Sự cố an ninh"
+---
+<style>
+  .an-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
+  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--line); color: var(--text-muted); }
+  .an-nav a:hover { color: var(--pirago-blue); border-color: var(--pirago-blue); text-decoration: none; }
+  .an-sec { margin: 0 0 40px; }
+  .an-sec h2 { font-size: 21px; margin: 28px 0 14px; scroll-margin-top: 90px; }
+  .an-sec h3 { font-size: 17px; margin: 20px 0 8px; }
+  .an-sec ul, .an-sec ol { padding-left: 22px; }
+  .an-sec li { margin: 6px 0; }
+  .an-sec .table-wrap { overflow-x: auto; margin: 14px 0 20px; }
+  .an-sec code { word-break: break-all; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 20px 0 24px; }
+  .kpi-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); }
+  .kpi-num { font-size: 20px; font-weight: 800; font-family: var(--font-mono); color: var(--pirago-navy); line-height: 1.2; margin-bottom: 4px; }
+  html[data-theme="dark"] .kpi-num { color: #5ab0e8; }
+  .kpi-num.crit { color: var(--crit); }
+  .kpi-num.high { color: var(--high); }
+  .kpi-num.low { color: var(--low); }
+  .kpi-label { font-size: 12.5px; color: var(--text-muted); line-height: 1.4; }
+
+  .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
+  .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
+  .fig .mut { fill: var(--text-muted); }
+  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
+</style>
+
+<div class="report-header">
+  <h1>Sự cố 1Password (11/2026) — Xâm nhập tài khoản GitHub nhân viên &amp; đẩy mã độc vào backend</h1>
+  <p class="sub">Xảy ra / Công bố: <strong>2026-11-25</strong> (phát hiện &amp; điều tra từ <strong>2026-11-19</strong>) · Cập nhật đến <strong>2026-11-26</strong> · Nguồn: 1Password Blog, TechCrunch, The Hacker News, BleepingComputer · Trạng thái: <strong>Đã cô lập &amp; khôi phục sạch; không ảnh hưởng vault khách hàng</strong>. Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a>.</p>
+</div>
+
+<blockquote class="callout">
+  <p><strong>TL;DR (tóm tắt nhanh cho kỹ sư &amp; PM):</strong></p>
+  <ul>
+    <li><strong>Điều gì đã xảy ra:</strong> Ngày 19-11-2026, 1Password phát hiện kẻ tấn công chiếm quyền <strong>tài khoản GitHub công ty của một nhân viên</strong>, truy cập repo mã nguồn riêng tư &amp; hệ thống CI/CD, rồi <strong>đẩy mã độc vào backend</strong> để tải dữ liệu hành chính của một nhóm khách hàng.</li>
+    <li><strong>Dữ liệu bị lộ (chỉ một nhóm khách hàng):</strong> Tên, email đăng nhập, account/user ID, thời điểm tạo &amp; đăng nhập gần nhất, public key, tham số SRP, token trong một số email mời / provisioning (SCIM) / khôi phục tài khoản, và metadata kiến trúc nội bộ không bí mật; ngoài ra có mã nguồn riêng tư &amp; secret hạ tầng CI/CD nội bộ.</li>
+    <li><strong>Dữ liệu hoàn toàn an toàn:</strong> Toàn bộ <strong>vault, item/mật khẩu lưu trong vault, khóa mã hóa vault, Master Password, Secret Key và recovery key</strong> đều <strong>không bị truy cập</strong> (do kiến trúc zero-knowledge / mã hóa phía client). Chưa ghi nhận vụ chiếm đoạt tài khoản nào.</li>
+    <li><strong>Người dùng cần làm gì:</strong> <strong>Không cần đổi Master Password hay Secret Key</strong>. Kiểm tra xem có nhận email thông báo trực tiếp từ 1Password hay không và <strong>cảnh giác cao với phishing</strong> (email/SMS/cuộc gọi giả mạo mời hoặc khôi phục 1Password).</li>
+  </ul>
+</blockquote>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-num high">19 → 25/11</div>
+    <div class="kpi-label">Phát hiện 19-11-2026 · Công bố chính thức 25-11-2026</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num crit">1 GitHub Acc</div>
+    <div class="kpi-label">Điểm xâm nhập: tài khoản GitHub công ty của 1 nhân viên → CI/CD &amp; backend</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num low">0 Vault bị lộ</div>
+    <div class="kpi-label">Vault, Master Password, Secret Key &amp; recovery key an toàn (mã hóa client-side)</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num">6 → 10 ký tự</div>
+    <div class="kpi-label">Nâng độ dài mã xác minh email mời/khôi phục từ 6 chữ số lên 10 ký tự chữ-số</div>
+  </div>
+</div>
+
+<nav class="an-nav" aria-label="Mục lục">
+  <a href="#attack-chain">1. Chuỗi tấn công</a>
+  <a href="#data-scope">2. Dữ liệu bị lộ vs. An toàn</a>
+  <a href="#timeline">3. Diễn biến &amp; Khắc phục</a>
+  <a href="#recommendations">4. Khuyến cáo cho PiraGo</a>
+  <a href="#sources">5. Nguồn tham khảo</a>
+</nav>
+
+<section class="an-sec">
+<h2 id="attack-chain">1. Chuỗi tấn công (Attack Chain)</h2>
+<p>Theo thông cáo của 1Password ngày 25-11-2026, kẻ tấn công không khai thác lỗ hổng mật mã của vault mà đi qua chuỗi cung ứng phát triển phần mềm nội bộ (tài khoản GitHub nhân viên → CI/CD → backend).</p>
+
+<figure class="fig">
+<svg viewBox="0 0 740 165" role="img" aria-label="Chuỗi tấn công sự cố 1Password tháng 11/2026">
+  <defs>
+    <marker id="arr-1p-chain-vi" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--text-muted)"/>
+    </marker>
+  </defs>
+  <rect x="10" y="25" width="155" height="90" rx="8" class="box" stroke="var(--crit)" stroke-width="1.5"/>
+  <text x="87" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--crit)">1. Tài khoản GitHub</text>
+  <text x="87" y="72" text-anchor="middle" font-size="11.5" fill="currentColor">Chiếm quyền GitHub</text>
+  <text x="87" y="88" text-anchor="middle" font-size="11.5" fill="currentColor">công ty của 1 nhân viên</text>
+
+  <line x1="165" y1="70" x2="195" y2="70" stroke="var(--text-muted)" stroke-width="1.5" marker-end="url(#arr-1p-chain-vi)"/>
+
+  <rect x="198" y="25" width="160" height="90" rx="8" class="box"/>
+  <text x="278" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">2. Repo &amp; CI/CD</text>
+  <text x="278" y="72" text-anchor="middle" font-size="11.5" fill="currentColor">Đọc repo riêng tư,</text>
+  <text x="278" y="88" text-anchor="middle" font-size="11.5" fill="currentColor">lấy secret hạ tầng CI/CD</text>
+
+  <line x1="358" y1="70" x2="388" y2="70" stroke="var(--text-muted)" stroke-width="1.5" marker-end="url(#arr-1p-chain-vi)"/>
+
+  <rect x="391" y="25" width="160" height="90" rx="8" class="box" stroke="var(--high)" stroke-width="1.5"/>
+  <text x="471" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--high)">3. Đẩy mã độc</text>
+  <text x="471" y="72" text-anchor="middle" font-size="11.5" fill="currentColor">Chèn mã độc vào</text>
+  <text x="471" y="88" text-anchor="middle" font-size="11.5" fill="currentColor">dịch vụ backend</text>
+
+  <line x1="551" y1="70" x2="581" y2="70" stroke="var(--text-muted)" stroke-width="1.5" marker-end="url(#arr-1p-chain-vi)"/>
+
+  <rect x="584" y="25" width="146" height="90" rx="8" class="box"/>
+  <text x="657" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">4. Trích xuất giới hạn</text>
+  <text x="657" y="72" text-anchor="middle" font-size="11.5" fill="currentColor">Tải hồ sơ hành chính</text>
+  <text x="657" y="88" text-anchor="middle" font-size="11.5" fill="currentColor">(Vault vẫn mã hóa)</text>
+
+  <text x="10" y="145" font-size="11.5" class="mut">Chưa có công bố về cách tài khoản GitHub nhân viên bị chiếm trước ngày 19-11-2026 hay tổng số khách hàng bị ảnh hưởng.</text>
+</svg>
+<figcaption>Chuỗi xâm nhập từ tài khoản GitHub nhân viên đến dịch vụ backend của 1Password.</figcaption>
+</figure>
+</section>
+
+<section class="an-sec">
+<h2 id="data-scope">2. Phân loại dữ liệu: Bị lộ vs. An toàn</h2>
+
+<figure class="fig">
+<svg viewBox="0 0 740 210" role="img" aria-label="So sánh dữ liệu bị lộ và dữ liệu an toàn trong sự cố 1Password">
+  <rect x="10" y="12" width="350" height="182" rx="8" class="box" stroke="var(--high)" stroke-width="1.5"/>
+  <text x="26" y="38" font-size="13.5" font-weight="700" fill="var(--high)">Dữ liệu bị truy cập / tải</text>
+  <text x="26" y="62" font-size="11.5" fill="currentColor">• Tên khách hàng &amp; email đăng nhập (một nhóm KH)</text>
+  <text x="26" y="82" font-size="11.5" fill="currentColor">• Account/User ID, ngày tạo &amp; lần đăng nhập cuối</text>
+  <text x="26" y="102" font-size="11.5" fill="currentColor">• Public key &amp; tham số SRP (không dùng để đăng nhập)</text>
+  <text x="26" y="122" font-size="11.5" fill="currentColor">• Token mời / provisioning / khôi phục (cần SSO/mã email)</text>
+  <text x="26" y="142" font-size="11.5" fill="currentColor">• Metadata nội bộ (version/file ID) không chứa bí mật</text>
+  <text x="26" y="162" font-size="11.5" fill="currentColor">• Nội bộ: mã nguồn riêng tư &amp; secret hạ tầng CI/CD</text>
+  <text x="26" y="180" font-size="11" class="mut">(Không chứa bí mật người dùng; đã xoay vòng toàn bộ)</text>
+
+  <rect x="380" y="12" width="350" height="182" rx="8" class="box" stroke="var(--low)" stroke-width="1.5"/>
+  <text x="396" y="38" font-size="13.5" font-weight="700" fill="var(--low)">Hoàn toàn an toàn (không bị truy cập)</text>
+  <text x="396" y="62" font-size="11.5" fill="currentColor">• Toàn bộ Vault &amp; mọi item/mật khẩu của khách hàng</text>
+  <text x="396" y="82" font-size="11.5" fill="currentColor">• Khóa mã hóa Vault (Vault encryption keys)</text>
+  <text x="396" y="102" font-size="11.5" fill="currentColor">• Master Password &amp; Secret Key (chỉ có trên client)</text>
+  <text x="396" y="122" font-size="11.5" fill="currentColor">• Account Recovery Keys</text>
+  <text x="396" y="142" font-size="11.5" fill="currentColor">• Ứng dụng 1Password &amp; tiện ích trình duyệt</text>
+  <text x="396" y="162" font-size="11.5" fill="currentColor">• Chưa ghi nhận vụ chiếm tài khoản nào từ token bị lộ</text>
+</svg>
+<figcaption>Ranh giới tách biệt giữa dữ liệu hành chính trên backend và dữ liệu vault được mã hóa đầu-cuối phía client.</figcaption>
+</figure>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Hạng mục</th><th>Tình trạng</th><th>Giải thích kỹ thuật</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Tên, email, ID, timestamp</strong></td>
+      <td><span class="badge high">Bị tải (nhóm nhỏ)</span></td>
+      <td>Thông tin hành chính phục vụ quản lý tài khoản; làm tăng rủi ro <strong>phishing nhắm mục tiêu</strong> vào email đăng nhập 1Password.</td>
+    </tr>
+    <tr>
+      <td><strong>Tham số SRP &amp; Public key</strong></td>
+      <td><span class="badge med">Bị tải (không dùng trực tiếp)</span></td>
+      <td>Public key công khai theo thiết kế; SRP dùng để xác thực zero-knowledge mà không gửi mật khẩu, không thể dùng đơn lẻ để giải mã hay đăng nhập.</td>
+    </tr>
+    <tr>
+      <td><strong>Token link mời / provisioning / khôi phục</strong></td>
+      <td><span class="badge high">Bị tải (cần lớp 2)</span></td>
+      <td>Theo 1Password, các token này không đủ một mình để vào tài khoản vì còn yêu cầu đăng nhập SSO hoặc mã xác minh gửi qua email. Nhóm người dùng đang có token chờ xử lý đã được thông báo riêng.</td>
+    </tr>
+    <tr>
+      <td><strong>Vault, Master Password, Secret Key</strong></td>
+      <td><span class="badge low">An toàn tuyệt đối</span></td>
+      <td>1Password mã hóa phía client; server không lưu Master Password hay Secret Key nên kẻ tấn công chiếm backend cũng không giải mã được vault.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section class="an-sec">
+<h2 id="timeline">3. Diễn biến &amp; Biện pháp khắc phục của 1Password</h2>
+<ul>
+  <li><strong>Trước 19-11-2026:</strong> Thời điểm và cách thức tài khoản GitHub công ty của nhân viên bị xâm nhập chưa được 1Password công bố chi tiết.</li>
+  <li><strong>19-11-2026:</strong> 1Password phát hiện dấu hiệu bất thường và khởi động điều tra về việc kẻ tấn công truy cập tài khoản GitHub nhân viên.</li>
+  <li><strong>25-11-2026:</strong> 1Password công bố sự cố công khai trên blog chính thức và xác nhận đã hoàn tất các bước ngăn chặn:
+    <ul>
+      <li>Vô hiệu hóa tài khoản GitHub bị chiếm, thu hồi token bị đánh cắp và gỡ bỏ quyền truy cập do kẻ tấn công tạo ra.</li>
+      <li>Khôi phục phiên bản sạch của các dịch vụ backend bị ảnh hưởng.</li>
+      <li>Xoay vòng / thu hồi toàn bộ credential nội bộ có khả năng bị lộ (bao gồm secret hạ tầng CI/CD).</li>
+      <li>Tăng độ dài mã xác minh qua email cho luồng mời thành viên và khôi phục tài khoản từ <strong>6 chữ số</strong> lên <strong>10 ký tự chữ-số</strong>.</li>
+      <li>Siết chặt kiểm soát GitHub, CI/CD, thiết bị đầu cuối và mời chuyên gia an ninh mạng độc lập xác minh.</li>
+    </ul>
+  </li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="recommendations">4. Khuyến cáo cho PiraGo</h2>
+<ol>
+  <li><strong>Đối với việc sử dụng 1Password trong dự án / công ty:</strong>
+    <ul>
+      <li><strong>Không cần đổi Master Password hay Secret Key</strong> nếu không có dấu hiệu bất thường.</li>
+      <li>Kiểm tra hòm thư quản trị / cá nhân xem có nhận thông báo trực tiếp từ 1Password về token mời hoặc khôi phục đang chờ hay không.</li>
+      <li>Cảnh giác cao với <strong>email, SMS hoặc cuộc gọi giả danh 1Password</strong> yêu cầu xác minh, khôi phục tài khoản hoặc nhập Secret Key / Master Password.</li>
+    </ul>
+  </li>
+  <li><strong>Bài học bảo mật GitHub &amp; CI/CD cho đội ngũ kỹ thuật:</strong>
+    <ul>
+      <li>Bắt buộc <strong>2FA chống phishing (passkey / FIDO2 hardware key)</strong> cho toàn bộ tài khoản GitHub tổ chức.</li>
+      <li>Áp dụng <strong>branch protection / required code review</strong> nghiêm ngặt cho repo production, không cho phép 1 tài khoản cá nhân tự push thẳng vào luồng deploy backend.</li>
+      <li>Tách biệt quyền giữa repo mã nguồn và secret deploy production; dùng OIDC short-lived token thay cho secret tĩnh dài hạn trong CI/CD.</li>
+    </ul>
+  </li>
+</ol>
+</section>
+
+<section class="an-sec">
+<h2 id="sources">5. Nguồn tham khảo</h2>
+<ul>
+  <li>1Password Official Blog (25-11-2026): <a href="https://1password.com/blog/update-on-nov-2026-security-incident" target="_blank" rel="noopener noreferrer">Update on Nov 2026 Security Incident</a></li>
+  <li>TechCrunch (25-11-2026): <a href="https://techcrunch.com/2026/11/25/1password-said-hackers-broke-into-its-internal-systems-but-customer-passwords-are-safe/" target="_blank" rel="noopener noreferrer">1Password said hackers broke into its internal systems, but customer passwords are safe</a></li>
+  <li>The Hacker News: <a href="https://thehackernews.com/2026/11/1password-hacked-customer-data-and.html" target="_blank" rel="noopener noreferrer">1Password Hacked: Customer Data and Internal Code Accessed via Compromised Employee GitHub</a></li>
+  <li>BleepingComputer: <a href="https://www.bleepingcomputer.com/news/security/1password-customer-data-stolen-after-employee-github-account-breach/" target="_blank" rel="noopener noreferrer">1Password customer data stolen after employee GitHub account breach</a></li>
+</ul>
+</section>

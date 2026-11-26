@@ -4,6 +4,29 @@
 # `path` tính từ gốc ngôn ngữ (vi: "/", ja: "/ja/").
 
 # disclosed: 2026-11-25
+- id: 1password-nov-2026
+  category: incident
+  month: "2026-11"
+  path: "featured/incidents/1password-nov-2026/incident_report/"
+  icon: "🔐"
+  accent: true
+  badge: {sev: high, text: "INCIDENT"}
+  nav: {vi: "1Password (11/2026)", ja: "1Password (11/2026)"}
+  title: {vi: "Sự cố 1Password (11/2026) — Xâm nhập tài khoản GitHub nhân viên & đẩy mã độc vào backend", ja: "1Password セキュリティインシデント（2026年11月）— 従業員 GitHub 侵害とバックエンドへの悪性コード投入"}
+  date: {vi: "Công bố 2026-11-25 · Phát hiện 2026-11-19 · 1Password Blog / TechCrunch / THN / BleepingComputer", ja: "2026年11月25日公表 · 11月19日検知 · 1Password 公式 / TechCrunch / THN / BleepingComputer"}
+  link: {vi: "Xem báo cáo sự cố →", ja: "インシデント報告を見る →"}
+  items:
+    - sev: high
+      label: {vi: "Nguyên nhân", ja: "原因"}
+      text: {vi: "Kẻ tấn công chiếm quyền tài khoản GitHub công ty của một nhân viên, truy cập repo riêng tư &amp; CI/CD rồi đẩy mã độc vào backend để tải hồ sơ hành chính một nhóm khách hàng.", ja: "攻撃者が従業員1名の企業 GitHub アカウントを侵害し、非公開リポジトリ・CI/CD 経由でバックエンドに悪性コードを投入して一部顧客の管理レコードを取得。"}
+    - sev: low
+      label: {vi: "Vault an toàn", ja: "Vault は安全"}
+      text: {vi: "Toàn bộ <strong>vault, mật khẩu, Master Password, Secret Key và recovery key không bị truy cập</strong> (mã hóa phía client). Chưa ghi nhận vụ chiếm tài khoản nào.", ja: "顧客の <strong>Vault・保存パスワード・マスターパスワード・Secret Key・復旧鍵は一切アクセスされず</strong>（クライアント側暗号化）。乗っ取り被害の証拠もゼロ。"}
+    - sev: med
+      label: {vi: "Khuyến cáo", ja: "推奨事項"}
+      text: {vi: "<strong>Không cần đổi Master Password</strong>; kiểm tra thông báo từ 1Password, cảnh giác phishing qua email/link mời/khôi phục và bật 2FA cứng (passkey/FIDO2) cho GitHub tổ chức.", ja: "<strong>マスターパスワード変更は不要</strong>。公式通知を確認しフィッシングに警戒するとともに、組織 GitHub のハードウェア 2FA/パスキーを徹底。"}
+
+# disclosed: 2026-11-25
 - id: java-maven-supply-chain-2026-11
   category: vulnerability
   month: "2026-11"
