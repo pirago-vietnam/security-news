@@ -1,0 +1,190 @@
+---
+layout: default
+lang: ja
+title: "Java Malware Today — Maven / Gradle サプライチェーンの脅威分析とビルド点検"
+description: "2026年11月25日時点の Java/Maven マルウェア状況：OSV/GitHub の公開悪性パッケージ2件（scribejava-core タイポスクワット、org.mvnpm:posthog-node）、ビルド時の攻撃面（プラグイン・アノテーションプロセッサ・依存関係混乱）、点検コマンドまとめ。"
+image: "/featured/vulnerabilities/java-maven-supply-chain-2026-11/java-maven-supply-chain-og.png"
+category: "脆弱性分析"
+permalink: /ja/featured/vulnerabilities/java-maven-supply-chain-2026-11/analysis/
+---
+<style>
+  .an-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
+  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--line); color: var(--text-muted); }
+  .an-nav a:hover { color: var(--pirago-blue); border-color: var(--pirago-blue); text-decoration: none; }
+  .an-sec { margin: 0 0 40px; }
+  .an-sec h2 { font-size: 21px; margin: 24px 0 12px; scroll-margin-top: 90px; }
+  .an-sec h3 { font-size: 17px; margin: 20px 0 8px; scroll-margin-top: 90px; }
+  .an-sec h4 { font-size: 15px; margin: 18px 0 6px; }
+  .an-sec pre { background: #0f172a; color: #e2e8f0; padding: 14px 16px; border-radius: var(--radius-md); overflow-x: auto; font-size: 13px; }
+  .an-sec pre code { background: none; border: 0; padding: 0; color: inherit; }
+  .an-sec ul, .an-sec ol { padding-left: 22px; }
+  .an-sec li { margin: 4px 0; }
+  .an-sec .table-wrap { overflow-x: auto; margin: 14px 0 20px; }
+  .an-sec td code { white-space: nowrap; }
+  .an-sec td, .an-sec th { overflow-wrap: normal; word-break: keep-all; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 16px 0 24px; }
+  .kpi-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 12px 14px; }
+  .kpi-num { font-size: 20px; font-weight: 800; color: var(--text); font-family: 'JetBrains Mono', monospace; }
+  .kpi-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
+  .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
+  .fig .mut { fill: var(--text-muted); }
+  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
+</style>
+
+<div class="report-header">
+  <h1>Java Malware Today — Maven &amp; Gradle サプライチェーンの脅威分析とビルド点検</h1>
+  <p class="sub">公開日：<strong>2026-11-25</strong> · 更新：<strong>2026-11-26</strong> · 月次レポート：<a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月レポート</a> · 重大度：<span class="badge med">中（Supply Chain）</span>（出典：Safeguard.sh、GitHub Advisories、OSV、OpenSSF）。</p>
+</div>
+
+<blockquote class="callout">
+  <p><strong>先にお読みください：</strong> <strong>2026年11月25日（18:10 UTC）</strong>時点で、公開フィード（GitHub Advisory Database、OSV、OpenSSF）に登録されている悪性 Maven パッケージは<strong>2件のみ</strong>（いずれも2025年発生）です。しかし、<strong>件数が少ない＝安全ではありません</strong>。実際の脅威は Gradle/Maven プラグイン、アノテーションプロセッサ、依存関係混乱（Dependency Confusion）に潜みます。<code>osv-scanner scan source -r .</code> の実行、依存木・キャッシュ点検、チェックサム／署名検証を有効化してください。本ページには攻撃コードは含まれません。</p>
+</blockquote>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-num" style="color: var(--med);">2</div>
+    <div class="kpi-label">公開悪性 Maven パッケージ（2026-11-25 時点）</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num">2025</div>
+    <div class="kpi-label">2件の MAL- 記録の初出年（2026年新規なし）</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num" style="color: var(--high);">Build-time</div>
+    <div class="kpi-label">プラグイン・ビルドスクリプトは起動前に実行</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num" style="color: var(--low);">OSV + PGP</div>
+    <div class="kpi-label">osv-scanner + mirrorOf * + 依存検証</div>
+  </div>
+</div>
+
+<nav class="an-nav" aria-label="nav">
+  <a href="#tldr">TL;DR</a>
+  <a href="#summary">技術概要</a>
+  <a href="#scope">悪性パッケージとリスク</a>
+  <a href="#check">迅速点検</a>
+  <a href="#remediation">対策・恒久予防</a>
+  <a href="#confidence">信頼性</a>
+  <a href="#sources">参考情報</a>
+</nav>
+
+<section class="an-sec">
+<h2 id="tldr">TL;DR（かんたん解説）</h2>
+<ul>
+  <li><strong>何か？</strong> Safeguard.sh（2026年11月25日）による、Java（Maven Central / Gradle）エコシステム向けの公開マルウェアフィード調査と実践的なビルド点検ガイドです。</li>
+  <li><strong>何が危険か？</strong> 公開リスト上の悪性 Maven パッケージは2件ですが、従来の CVE スキャナは <code>MAL-</code> ID を持つ<strong>悪性パッケージを見逃します</strong>。また Gradle プラグインは <code>./gradlew help</code> を実行しただけで設定フェーズにコードが動きます。</li>
+  <li><strong>影響を受けるか？</strong> Maven / Gradle を使う Java / Spring Boot プロジェクトは、タイポスクワット（<code>io.github.leetcrunch:scribejava-core</code>）や <code>mvnpm</code> 経由の Sha1-Hulud ワーム感染版（<code>org.mvnpm:posthog-node</code> 4.18.1）が紛れ込んでいないか、また内部リポジトリ設定を確認する必要があります。</li>
+  <li><strong>PM・リーダーがすべきこと：</strong> Java 開発チームにセクション3の点検コマンドを全リポジトリと CI ランナーで実行させ、依存ロック（<code>gradle.lockfile</code>）と単一リポジトリマネージャ経由への統一を指示してください。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="summary">1. 技術概要</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 170" role="img" aria-label="Java サプライチェーンの攻撃面"><defs><marker id="jm1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="16" width="167" height="74" rx="8" style="stroke:var(--med);stroke-width:1.6"/><text x="83.5" y="44" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">侵入経路</text><text x="83.5" y="62" text-anchor="middle" font-size="10.5" class="mut">タイポスクワット・mvnpm</text><text x="83.5" y="77" text-anchor="middle" font-size="10.5" class="mut">外部リポジトリ・プラグイン</text><line x1="167" y1="53" x2="189" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm1)"/><rect class="box" x="191" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="274.5" y="44" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">ビルド時（CI/端末）</text><text x="274.5" y="62" text-anchor="middle" font-size="10.5" class="mut">Maven/Gradle プラグイン</text><text x="274.5" y="77" text-anchor="middle" font-size="10.5" class="mut">APT（JDK 23未満）・Test</text><line x1="358" y1="53" x2="380" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm1)"/><rect class="box" x="382" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="465.5" y="44" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">実行時（Runtime）</text><text x="465.5" y="62" text-anchor="middle" font-size="10.5" class="mut">Static init・ServiceLoader</text><text x="465.5" y="77" text-anchor="middle" font-size="10.5" class="mut">自動構成（Auto-config）</text><line x1="549" y1="53" x2="571" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm1)"/><rect class="box" x="573" y="16" width="167" height="74" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="656.5" y="44" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">影響</text><text x="656.5" y="62" text-anchor="middle" font-size="10.5" class="mut">OAuth/GitHub/Cloud 鍵</text><text x="656.5" y="77" text-anchor="middle" font-size="10.5" class="mut">窃取・GH Action 永続化</text><rect x="0" y="114" width="740" height="40" rx="8" fill="var(--low)" opacity=".14"/><text x="370" y="139" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">npm/PyPI の install スクリプトと異なり、Java はプラグイン・ビルドスクリプト・依存関係混乱でコード実行</text></svg>
+<figcaption>Java エコシステムのコード実行面：ビルド端末／CI から本番サーバーまで。</figcaption>
+</figure>
+
+<figure class="fig">
+<svg viewBox="0 0 740 198" role="img" aria-label="Maven Central 名前空間検証の限界"><defs><marker id="jm2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><text x="0" y="14" font-size="11.5" font-weight="700" class="mut">Maven Central の名前空間検証で防げること・防げないこと</text><rect class="box" x="0" y="26" width="230" height="84" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="115" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Maven Central 検証</text><text x="115" y="72" text-anchor="middle" font-size="10.5" class="mut">DNS TXT（com.example）</text><text x="115" y="88" text-anchor="middle" font-size="10.5" class="mut">または GitHub（io.github.user）</text><line x1="230" y1="68" x2="262" y2="68" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm2)"/><rect class="box" x="264" y="26" width="224" height="84" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="376" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">主な盲点</text><text x="376" y="72" text-anchor="middle" font-size="10.5" class="mut">類似 groupId・攻撃者の</text><text x="376" y="88" text-anchor="middle" font-size="10.5" class="mut">鍵による正当な PGP 署名</text><line x1="488" y1="68" x2="520" y2="68" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm2)"/><rect class="box" x="522" y="26" width="218" height="84" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="631" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">依存関係混乱</text><text x="631" y="72" text-anchor="middle" font-size="10.5" class="mut">未登録の内部 groupId と</text><text x="631" y="88" text-anchor="middle" font-size="10.5" class="mut">公開リポジトリ優先の解決順</text><rect x="0" y="128" width="740" height="54" rx="8" fill="var(--bg-subtle)" stroke="var(--line)"/><text x="370" y="150" text-anchor="middle" font-size="11.5" font-weight="700" fill="currentColor">JDK 23 と Gradle Plugin Portal の仕様：</text><text x="370" y="169" text-anchor="middle" font-size="11" class="mut">JDK 23 はクラスパスからのアノテーション自動検索を停止（-proc:full 除く）。Gradle Portal は通常初回版のみ手動審査。</text></svg>
+<figcaption><code>io.github.&lt;username&gt;</code> の検証は該当 GitHub アカウントの所有確認であり、正規プロジェクトであることの保証ではありません。</figcaption>
+</figure>
+
+<ul>
+  <li><strong>公開件数が少ない背景：</strong> OpenSSF <code>malicious-packages</code> は報告・審査済みの記録のみを収録します。Gradle プラグインや社内リポジトリ、ビルドスクリプト内の不正コードは <code>MAL-</code> 化されない場合が多くあります。</li>
+  <li><strong>ビルド時のコード実行：</strong> Maven プラグイン、<code>build.gradle(.kts)</code> / <code>settings.gradle(.kts)</code>（<code>./gradlew help</code> でも設定フェーズでプラグインを実行）、JDK 23 未満（または <code>-proc:full</code> 指定時）のアノテーションプロセッサ、テスト実行はいずれもビルドユーザー権限で動作します。</li>
+  <li><strong>リポジトリ解決順序：</strong> Maven は <code>settings.xml</code> &rarr; ローカル POM &rarr; 親 POM &rarr; スーパー POM &rarr; 依存先 POM の順に参照するため、外部依存の POM が新たなリポジトリを追加し得ます。Gradle でも <code>exclusiveContent</code> なしでは宣言順に左右されます。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="scope">2. 公開悪性 Maven パッケージ2件とリスク一覧</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 202" role="img" aria-label="2件の悪性 Maven パッケージと関連リスク"><text x="0" y="14" font-size="11" font-weight="700" class="mut">対象 / 攻撃面</text><text x="275" y="14" font-size="11" font-weight="700" class="mut">識別子 / 版</text><text x="500" y="14" font-size="11" font-weight="700" class="mut">主な挙動・リスク</text><rect class="box" x="0" y="24" width="740" height="36" rx="6"/><rect x="0" y="24" width="6" height="36" rx="3" fill="var(--crit)"/><text x="16" y="47" font-size="12" font-weight="700" fill="currentColor">io.github.leetcrunch:scribejava-core</text><text x="275" y="47" font-size="11.5" class="mut">MAL-2025-2552 (v8.3.5)</text><text x="500" y="47" font-size="11.5" font-weight="700" fill="var(--crit)">毎月15日に OAuth 認証情報を窃取</text><rect class="box" x="0" y="68" width="740" height="36" rx="6"/><rect x="0" y="68" width="6" height="36" rx="3" fill="var(--crit)"/><text x="16" y="91" font-size="12" font-weight="700" fill="currentColor">org.mvnpm:posthog-node</text><text x="275" y="91" font-size="11.5" class="mut">MAL-2025-191470 (4.18.1)</text><text x="500" y="91" font-size="11.5" font-weight="700" fill="var(--crit)">Sha1-Hulud：鍵窃取＋GH Action 永続化</text><rect class="box" x="0" y="112" width="740" height="36" rx="6"/><rect x="0" y="112" width="6" height="36" rx="3" fill="var(--high)"/><text x="16" y="135" font-size="12" font-weight="700" fill="currentColor">Gradle / Maven プラグイン</text><text x="275" y="135" font-size="11.5" class="mut">build.gradle / pom.xml</text><text x="500" y="135" font-size="11.5" font-weight="700" fill="var(--high)">設定フェーズで実行・更新版は審査薄</text><rect class="box" x="0" y="156" width="740" height="36" rx="6"/><rect x="0" y="156" width="6" height="36" rx="3" fill="var(--med)"/><text x="16" y="179" font-size="12" font-weight="700" fill="currentColor">内部 groupId と解決順序</text><text x="275" y="179" font-size="11.5" class="mut">internal.* / 未登録領域</text><text x="500" y="179" font-size="11.5" font-weight="700" fill="var(--med)">公開側からの依存関係混乱リスク</text></svg>
+<figcaption>2026年11月25日 18:10 UTC 時点の GitHub Advisories・OSV 集計（2件の MAL- はいずれも 2025年3月・11月登録）。</figcaption>
+</figure>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>座標（Coordinate）</th><th>バージョン</th><th>OSV / GitHub Advisory</th><th>詳細・対応上の注意</th></tr></thead>
+  <tbody>
+    <tr><td><code>io.github.leetcrunch:scribejava-core</code></td><td><code>8.3.5</code> (all)</td><td><code>MAL-2025-2552</code> · <code>GHSA-9c6j-xrpw-g32x</code></td><td>正規 <code>com.github.scribejava:scribejava-core</code>（最新 <code>8.3.3</code>）のタイポスクワット。<strong>毎月15日</strong>に OAuth 認証情報を収集・外部送信するため、平日の短時間ログでは検知困難。</td></tr>
+    <tr><td><code>org.mvnpm:posthog-node</code></td><td><code>4.18.1</code></td><td><code>MAL-2025-191470</code> · <code>GHSA-5f38-2pgv-jhg6</code></td><td><code>mvnpm</code> 経由の npm 再公開品がワーム <em>Sha1-Hulud: The Second Coming</em>（2025年11月）に侵害。トークンを GitHub に公開し、GitHub Actions 永続化やホームディレクトリ破壊の恐れ。</td></tr>
+    <tr><td>Gradle プラグイン &amp; Wrapper</td><td>全バージョン</td><td>Gradle 公式セキュリティ指針</td><td>Portal は初回版のみ手動審査。メンテナ乗っ取りで悪性更新が配信され得るため <code>distributionSha256Sum</code> 設定と設定ファイル監査が必須。</td></tr>
+    <tr><td>未保護の内部 groupId</td><td>全バージョン</td><td>Maven / Gradle 解決順序</td><td><code>mirrorOf *</code> や <code>exclusiveContent</code> がないと公開リポジトリから同名偽装パッケージを取得する恐れ。</td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section class="an-sec">
+<h2 id="check">3. 迅速点検（リポジトリ &amp; CI ランナー）</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 220" role="img" aria-label="Java ビルド点検の判定フロー"><defs><marker id="jm3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="20" width="174" height="76" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="87" y="50" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">依存木・キャッシュ走査</text><text x="87" y="68" text-anchor="middle" font-size="10.5" class="mut">dependency:tree, ~/.m2,</text><text x="87" y="83" text-anchor="middle" font-size="10.5" class="mut">osv-scanner scan</text><line x1="174" y1="58" x2="210" y2="58" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm3)"/><text x="192" y="49" text-anchor="middle" font-size="11" font-weight="700" class="mut">検知</text><line x1="87" y1="96" x2="87" y2="148" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm3)"/><text x="116" y="126" text-anchor="middle" font-size="11" font-weight="700" class="mut">なし</text><rect class="box" x="0" y="150" width="174" height="52" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="87" y="173" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">既知2件の混入なし</text><text x="87" y="190" text-anchor="middle" font-size="10.5" class="mut">ビルド設定の強化へ進む</text><rect class="box" x="212" y="20" width="236" height="182" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="330" y="56" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--crit)">悪性パッケージを検知！</text><text x="330" y="82" text-anchor="middle" font-size="11" fill="currentColor">1. 開発端末・CI ランナーを隔離</text><text x="330" y="102" text-anchor="middle" font-size="11" fill="currentColor">2. OAuth・GitHub・Cloud 鍵を更新</text><text x="330" y="122" text-anchor="middle" font-size="11" fill="currentColor">3. 不審な GH Actions・SSH 鍵確認</text><text x="330" y="142" text-anchor="middle" font-size="11" fill="currentColor">4. ~/.m2・~/.gradle・プロキシ削除</text><text x="330" y="162" text-anchor="middle" font-size="11" fill="currentColor">5. クリーン環境で再ビルド・再配布</text><line x1="174" y1="176" x2="466" y2="176" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm3)"/><rect class="box" x="468" y="20" width="272" height="182" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="604" y="56" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--low)">恒久的な予防策</text><text x="604" y="84" text-anchor="middle" font-size="11" fill="currentColor">• mirrorOf * で単一プロキシ経由</text><text x="604" y="106" text-anchor="middle" font-size="11" fill="currentColor">• Gradle exclusiveContent で内部固定</text><text x="604" y="128" text-anchor="middle" font-size="11" fill="currentColor">• mvn -C verify と PGP 検証を有効化</text><text x="604" y="150" text-anchor="middle" font-size="11" fill="currentColor">• verification-metadata.xml 生成</text><text x="604" y="172" text-anchor="middle" font-size="11" fill="currentColor">• バージョンロック（gradle.lockfile）</text></svg>
+<figcaption>Maven / Gradle を利用する Java プロジェクトの点検・対応フロー。</figcaption>
+</figure>
+
+<h3>1. 依存ツリー内の既知悪性座標を検索</h3>
+<pre><code class="language-bash"># Maven
+mvn -q dependency:tree -Dincludes=io.github.leetcrunch
+mvn -q dependency:tree -Dincludes=org.mvnpm:posthog-node
+
+# Gradle（プラグインを含む buildEnvironment も確認）
+./gradlew dependencies --configuration runtimeClasspath
+./gradlew dependencyInsight --dependency scribejava-core --configuration runtimeClasspath
+./gradlew buildEnvironment</code></pre>
+
+<h3>2. ローカルキャッシュ・CI ランナーキャッシュを確認</h3>
+<pre><code class="language-bash">ls ~/.m2/repository/io/github/leetcrunch 2>/dev/null
+ls ~/.m2/repository/org/mvnpm/posthog-node/4.18.1 2>/dev/null
+ls ~/.gradle/caches/modules-2/files-2.1 | grep -E '^(io\.github\.leetcrunch|org\.mvnpm)$'</code></pre>
+
+<h3>3. OSV-Scanner 走査と信頼設定の確認</h3>
+<pre><code class="language-bash"># OSV の MAL- 記録を含めて一括スキャン
+osv-scanner scan source -r .
+
+# Maven の実効リポジトリ順序と厳格チェックサム・PGP 検証
+mvn help:effective-settings
+mvn -C verify
+mvn org.simplify4u.plugins:pgpverify-maven-plugin:check
+
+# Gradle：クリーンな状態から PGP + SHA256 検証ファイルを生成（コミット前に要レビュー）
+./gradlew --write-verification-metadata pgp,sha256 --export-keys help</code></pre>
+</section>
+
+<section class="an-sec">
+<h2 id="remediation">4. 対策と恒久的なビルド強化</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 160" role="img" aria-label="Java サプライチェーン強化の4ステップ"><defs><marker id="jm4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="20" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="83.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">棚卸し・走査</text><text x="83.5" y="68" text-anchor="middle" font-size="10.5" class="mut">osv-scanner + CI キャッシュ</text><circle cx="16" cy="20" r="12" fill="var(--high)"/><text x="16" y="24.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><line x1="167" y1="57" x2="189" y2="57" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm4)"/><rect class="box" x="191" y="20" width="167" height="74" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="274.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">隔離・鍵ローテ</text><text x="274.5" y="68" text-anchor="middle" font-size="10.5" class="mut">悪性パッケージ検知時</text><circle cx="207" cy="20" r="12" fill="var(--crit)"/><text x="207" y="24.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><line x1="358" y1="57" x2="380" y2="57" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm4)"/><rect class="box" x="382" y="20" width="167" height="74" rx="8" style="stroke:var(--med);stroke-width:1.6"/><text x="465.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">リポジトリ・版固定</text><text x="465.5" y="68" text-anchor="middle" font-size="10.5" class="mut">mirrorOf * · exclusiveContent</text><circle cx="398" cy="20" r="12" fill="var(--med)"/><text x="398" y="24.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><line x1="549" y1="57" x2="571" y2="57" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm4)"/><rect class="box" x="573" y="20" width="167" height="74" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="656.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">検証・レビュー</text><text x="656.5" y="68" text-anchor="middle" font-size="10.5" class="mut">PGP · sha256 · CI 権限分離</text><circle cx="589" cy="20" r="12" fill="var(--low)"/><text x="589" y="24.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><rect x="0" y="112" width="740" height="36" rx="8" fill="var(--bg-subtle)" stroke="var(--line)"/><text x="370" y="135" text-anchor="middle" font-size="11.5" class="mut">注意：マルウェアに「修正版」はありません。削除・キャッシュ破棄のうえ正規座標（例：com.github.scribejava:scribejava-core）を固定してください。</text></svg>
+<figcaption>Java ビルドのサプライチェーン強化と悪性パッケージ検知時の初動 4 ステップ。</figcaption>
+</figure>
+
+<ul>
+  <li><strong>単一ゲートウェイ化：</strong> すべての取得を社内リポジトリマネージャ経由（<code>mirrorOf *</code>）に統一し、<code>pom.xml</code> 内の野良 <code>&lt;repositories&gt;</code> 定義を排除します。</li>
+  <li><strong>内部 groupId の保護：</strong> Gradle の <code>exclusiveContent</code> で内部グループを社内リポジトリに固定し、Maven Central 上の対応名前空間も事前登録して乗っ取りを防ぎます。</li>
+  <li><strong>バージョン固定と PR レビュー強化：</strong> <code>./gradlew dependencies --write-locks</code>（<code>gradle.lockfile</code>）で版を固定し、PR 用 CI ジョブから公開・デプロイ鍵を分離、<code>gradle-wrapper.properties</code> の <code>distributionSha256Sum</code> を設定します。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="confidence">5. 情報の信頼性と注意点</h2>
+<ul>
+  <li><strong>一次情報との照合：</strong> Safeguard.sh（2026年11月25日 18:10 UTC の API 集計）の記述を、OSV（<code>MAL-2025-2552</code>：2025-03-19 初出、<code>MAL-2025-191470</code>：2025-11-26 初出）および GitHub Advisory Database（2026-07-13 取込）と照合しました。</li>
+  <li><strong>範囲の制約：</strong> 調査時点で2026年新規の公開 Maven マルウェア記録はありませんが、非公開リポジトリや未報告のプラグイン侵害はフィードに現れないため、上記の予防策と組み合わせた運用が必要です。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="sources">6. 参考情報</h2>
+<ul>
+  <li><a href="https://safeguard.sh/resources/blog/java-malware-today" target="_blank" rel="noopener noreferrer">Safeguard.sh — Java Malware Today: Malicious Maven Packages (25 Nov 2026)</a></li>
+  <li><a href="https://osv.dev/vulnerability/MAL-2025-2552" target="_blank" rel="noopener noreferrer">OSV — MAL-2025-2552 (io.github.leetcrunch:scribejava-core)</a> · <a href="https://github.com/advisories/GHSA-9c6j-xrpw-g32x" target="_blank" rel="noopener noreferrer">GHSA-9c6j-xrpw-g32x</a></li>
+  <li><a href="https://osv.dev/vulnerability/MAL-2025-191470" target="_blank" rel="noopener noreferrer">OSV — MAL-2025-191470 (org.mvnpm:posthog-node)</a> · <a href="https://github.com/advisories/GHSA-5f38-2pgv-jhg6" target="_blank" rel="noopener noreferrer">GHSA-5f38-2pgv-jhg6</a></li>
+  <li><a href="https://github.com/advisories?query=type%3Amalware+ecosystem%3Amaven" target="_blank" rel="noopener noreferrer">GitHub Advisory Database — Maven Malware Filter</a> · <a href="https://osv.dev/list?ecosystem=Maven" target="_blank" rel="noopener noreferrer">OSV Maven List</a></li>
+  <li><a href="https://docs.gradle.org/current/userguide/dependency_verification.html" target="_blank" rel="noopener noreferrer">Gradle Docs — Dependency Verification</a> · <a href="https://docs.gradle.org/current/userguide/filtering_repository_content.html" target="_blank" rel="noopener noreferrer">Filtering Repository Content</a></li>
+  <li><a href="https://maven.apache.org/guides/mini/guide-mirror-settings.html" target="_blank" rel="noopener noreferrer">Apache Maven — Mirror Settings</a> · <a href="https://google.github.io/osv-scanner/usage/scan-source" target="_blank" rel="noopener noreferrer">OSV-Scanner — Scan Source</a></li>
+</ul>
+</section>

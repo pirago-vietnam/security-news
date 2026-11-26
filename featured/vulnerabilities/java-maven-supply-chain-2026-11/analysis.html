@@ -1,0 +1,188 @@
+---
+layout: default
+title: "Java Malware Today — Chuỗi cung ứng Maven & Gradle: Phân tích & Kiểm tra build"
+description: "Tổng hợp bức tranh mã độc Java/Maven tính đến 25-11-2026: 2 gói độc hại trên OSV/GitHub (scribejava-core typosquat, org.mvnpm:posthog-node), bề mặt tấn công lúc build (Maven/Gradle plugin, annotation processor, dependency confusion) và lệnh kiểm tra thực tế."
+image: "/featured/vulnerabilities/java-maven-supply-chain-2026-11/java-maven-supply-chain-og.png"
+category: "Phân tích lỗ hổng"
+---
+<style>
+  .an-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
+  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--line); color: var(--text-muted); }
+  .an-nav a:hover { color: var(--pirago-blue); border-color: var(--pirago-blue); text-decoration: none; }
+  .an-sec { margin: 0 0 40px; }
+  .an-sec h2 { font-size: 21px; margin: 24px 0 12px; scroll-margin-top: 90px; }
+  .an-sec h3 { font-size: 17px; margin: 20px 0 8px; scroll-margin-top: 90px; }
+  .an-sec h4 { font-size: 15px; margin: 18px 0 6px; }
+  .an-sec pre { background: #0f172a; color: #e2e8f0; padding: 14px 16px; border-radius: var(--radius-md); overflow-x: auto; font-size: 13px; }
+  .an-sec pre code { background: none; border: 0; padding: 0; color: inherit; }
+  .an-sec ul, .an-sec ol { padding-left: 22px; }
+  .an-sec li { margin: 4px 0; }
+  .an-sec .table-wrap { overflow-x: auto; margin: 14px 0 20px; }
+  .an-sec td code { white-space: nowrap; }
+  .an-sec td, .an-sec th { overflow-wrap: normal; word-break: keep-all; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 16px 0 24px; }
+  .kpi-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 12px 14px; }
+  .kpi-num { font-size: 20px; font-weight: 800; color: var(--text); font-family: 'JetBrains Mono', monospace; }
+  .kpi-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
+  .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
+  .fig .mut { fill: var(--text-muted); }
+  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
+</style>
+
+<div class="report-header">
+  <h1>Java Malware Today — Chuỗi cung ứng Maven &amp; Gradle &amp; Cách kiểm tra build</h1>
+  <p class="sub">Công bố: <strong>2026-11-25</strong> · Cập nhật: <strong>2026-11-26</strong> · Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a> · Mức độ: <span class="badge med">Trung bình (Supply Chain)</span> (Nguồn: Safeguard.sh, GitHub Advisories, OSV, OpenSSF).</p>
+</div>
+
+<blockquote class="callout">
+  <p><strong>Đọc trước:</strong> Tính đến <strong>25-11-2026 (18:10 UTC)</strong>, các feed công khai (GitHub Advisory Database, OSV, OpenSSF) chỉ ghi nhận <strong>2 gói Maven độc hại</strong> (đều từ 2025). Tuy nhiên, <strong>số lượng ít không đồng nghĩa build Java an toàn</strong>: mã độc thường ẩn trong Gradle/Maven plugin, annotation processor và dependency confusion. Hãy chạy <code>osv-scanner scan source -r .</code>, kiểm tra cây phụ thuộc/cache và bật xác minh chữ ký/checksum. Trang này không chứa mã khai thác.</p>
+</blockquote>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-num" style="color: var(--med);">2</div>
+    <div class="kpi-label">Gói Maven độc hại trên OSV / GitHub (25/11/2026)</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num">2025</div>
+    <div class="kpi-label">Năm phát sinh cả 2 bản ghi MAL- (chưa có mới ở 2026)</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num" style="color: var(--high);">Build-time</div>
+    <div class="kpi-label">Plugin, Gradle script &amp; APT chạy trước app</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num" style="color: var(--low);">OSV + PGP</div>
+    <div class="kpi-label">osv-scanner + mirrorOf * + verification-metadata</div>
+  </div>
+</div>
+
+<nav class="an-nav" aria-label="nav">
+  <a href="#tldr">TL;DR</a>
+  <a href="#summary">Tóm tắt kỹ thuật</a>
+  <a href="#scope">2 gói độc hại &amp; Rủi ro</a>
+  <a href="#check">Kiểm tra nhanh</a>
+  <a href="#remediation">Khắc phục &amp; Phòng ngừa</a>
+  <a href="#confidence">Độ tin cậy</a>
+  <a href="#sources">Nguồn</a>
+</nav>
+
+<section class="an-sec">
+<h2 id="tldr">TL;DR (dễ hiểu)</h2>
+<ul>
+  <li><strong>Là gì?</strong> Báo cáo tổng hợp từ Safeguard.sh (25-11-2026) đối chiếu các cơ sở dữ liệu mã độc công khai cho hệ sinh thái Java (Maven Central / Gradle).</li>
+  <li><strong>Nguy hiểm thế nào?</strong> Dù chỉ có 2 gói Maven bị gắn cờ công khai, máy quét CVE thông thường <strong>bỏ sót gói độc hại</strong> (vì chúng dùng mã <code>MAL-</code> chứ không có CVE). Ngoài ra, plugin Gradle/Maven có thể chạy mã độc ngay lúc biên dịch (<code>./gradlew help</code> cũng đã kích hoạt plugin).</li>
+  <li><strong>Dự án có bị ảnh hưởng không?</strong> Các dự án Java / Spring Boot dùng Maven hoặc Gradle cần kiểm tra xem có vô tình kéo gói typosquat (<code>io.github.leetcrunch:scribejava-core</code>) hoặc gói npm nhiễm sâu Sha1-Hulud qua <code>mvnpm</code> (<code>org.mvnpm:posthog-node</code>) hay không, đồng thời rà soát cấu hình repository nội bộ.</li>
+  <li><strong>PM &amp; Tech Lead cần làm gì?</strong> Yêu cầu đội Java chạy bộ lệnh kiểm tra trong mục 3 trên repo và CI runner, bật khóa phiên bản (<code>gradle.lockfile</code>) và gom tải gói qua một repository manager nội bộ duy nhất.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="summary">1. Tóm tắt kỹ thuật</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 170" role="img" aria-label="Bề mặt tấn công chuỗi cung ứng Java"><defs><marker id="jm1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="16" width="167" height="74" rx="8" style="stroke:var(--med);stroke-width:1.6"/><text x="83.5" y="44" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Nguồn xâm nhập</text><text x="83.5" y="62" text-anchor="middle" font-size="10.5" class="mut">Typosquat, mvnpm,</text><text x="83.5" y="77" text-anchor="middle" font-size="10.5" class="mut">Repo ngoài, Plugin</text><line x1="167" y1="53" x2="189" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm1)"/><rect class="box" x="191" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="274.5" y="44" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Pha Build (CI/Dev)</text><text x="274.5" y="62" text-anchor="middle" font-size="10.5" class="mut">Maven/Gradle plugin,</text><text x="274.5" y="77" text-anchor="middle" font-size="10.5" class="mut">APT (pre-JDK 23), Test</text><line x1="358" y1="53" x2="380" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm1)"/><rect class="box" x="382" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="465.5" y="44" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Pha Runtime</text><text x="465.5" y="62" text-anchor="middle" font-size="10.5" class="mut">Static init, ServiceLoader,</text><text x="465.5" y="77" text-anchor="middle" font-size="10.5" class="mut">Auto-configuration</text><line x1="549" y1="53" x2="571" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm1)"/><rect class="box" x="573" y="16" width="167" height="74" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="656.5" y="44" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Tác động</text><text x="656.5" y="62" text-anchor="middle" font-size="10.5" class="mut">Lộ OAuth/GitHub/Cloud</text><text x="656.5" y="77" text-anchor="middle" font-size="10.5" class="mut">token, cài GH Action</text><rect x="0" y="114" width="740" height="40" rx="8" fill="var(--low)" opacity=".14"/><text x="370" y="139" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">Khác với npm/PyPI (chạy install script), mã độc Java thực thi qua plugin, script build &amp; dependency confusion</text></svg>
+<figcaption>Bề mặt thực thi mã trong hệ sinh thái Java: từ máy trạm/CI ở pha build đến máy chủ production ở pha runtime.</figcaption>
+</figure>
+
+<figure class="fig">
+<svg viewBox="0 0 740 198" role="img" aria-label="Giới hạn của xác minh namespace trên Maven Central"><defs><marker id="jm2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><text x="0" y="14" font-size="11.5" font-weight="700" class="mut">Xác minh namespace của Maven Central bảo vệ được gì và bỏ sót gì?</text><rect class="box" x="0" y="26" width="230" height="84" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="115" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Maven Central Verify</text><text x="115" y="72" text-anchor="middle" font-size="10.5" class="mut">DNS TXT (com.example)</text><text x="115" y="88" text-anchor="middle" font-size="10.5" class="mut">hoặc GitHub (io.github.user)</text><line x1="230" y1="68" x2="262" y2="68" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm2)"/><rect class="box" x="264" y="26" width="224" height="84" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="376" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Điểm mù phổ biến</text><text x="376" y="72" text-anchor="middle" font-size="10.5" class="mut">Lookalike groupId, chữ ký PGP</text><text x="376" y="88" text-anchor="middle" font-size="10.5" class="mut">hợp lệ nhưng từ khóa kẻ xấu</text><line x1="488" y1="68" x2="520" y2="68" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm2)"/><rect class="box" x="522" y="26" width="218" height="84" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="631" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Dependency Confusion</text><text x="631" y="72" text-anchor="middle" font-size="10.5" class="mut">groupId nội bộ chưa đăng ký</text><text x="631" y="88" text-anchor="middle" font-size="10.5" class="mut">+ thứ tự repo tải từ public</text><rect x="0" y="128" width="740" height="54" rx="8" fill="var(--bg-subtle)" stroke="var(--line)"/><text x="370" y="150" text-anchor="middle" font-size="11.5" font-weight="700" fill="currentColor">Lưu ý JDK 23 &amp; Gradle Plugin Portal:</text><text x="370" y="169" text-anchor="middle" font-size="11" class="mut">JDK 23 tắt tự động chạy annotation processor từ classpath (trừ khi truyền -proc:full); Gradle Portal chỉ duyệt thủ công bản đầu tiên.</text></svg>
+<figcaption>Xác minh <code>io.github.&lt;username&gt;</code> chỉ chứng minh quyền sở hữu tài khoản GitHub đó, không chứng minh gói là bản chính thức của dự án gốc.</figcaption>
+</figure>
+
+<ul>
+  <li><strong>Vì sao số lượng advisory thấp?</strong> OpenSSF <code>malicious-packages</code> chỉ ghi nhận các gói được báo cáo và duyệt. Mã độc trong Gradle plugin, repo nội bộ hoặc script build ít khi có mã <code>MAL-</code> công khai.</li>
+  <li><strong>Thực thi mã ở pha build:</strong> Maven plugin, script <code>build.gradle(.kts)</code> / <code>settings.gradle(.kts)</code> (chạy ngay từ pha cấu hình, kể cả khi gọi <code>./gradlew help</code>), annotation processor trên JDK &lt; 23 (hoặc có <code>-proc:full</code>), và <code>mvn test</code> / <code>./gradlew test</code> đều chạy mã với quyền của user build.</li>
+  <li><strong>Thứ tự repository &amp; POM bên thứ ba:</strong> Maven truy vấn repo theo thứ tự <code>settings.xml</code> &rarr; local POM &rarr; parent POM &rarr; super POM &rarr; POM của dependency. Một dependency có thể tự khai báo thêm repo ngoài; trong Gradle, thứ tự khai báo <code>repositories</code> quyết định nơi tải gói nếu không dùng <code>exclusiveContent</code>.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="scope">2. Hai gói Maven độc hại công khai &amp; Bề mặt rủi ro</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 202" role="img" aria-label="Tổng hợp 2 gói Maven độc hại và rủi ro liên quan"><text x="0" y="14" font-size="11" font-weight="700" class="mut">Đối tượng / Bề mặt</text><text x="275" y="14" font-size="11" font-weight="700" class="mut">Mã / Phiên bản</text><text x="500" y="14" font-size="11" font-weight="700" class="mut">Hành vi / Rủi ro chính</text><rect class="box" x="0" y="24" width="740" height="36" rx="6"/><rect x="0" y="24" width="6" height="36" rx="3" fill="var(--crit)"/><text x="16" y="47" font-size="12" font-weight="700" fill="currentColor">io.github.leetcrunch:scribejava-core</text><text x="275" y="47" font-size="11.5" class="mut">MAL-2025-2552 (v8.3.5)</text><text x="500" y="47" font-size="11.5" font-weight="700" fill="var(--crit)">Gửi trộm OAuth ngày 15 hằng tháng</text><rect class="box" x="0" y="68" width="740" height="36" rx="6"/><rect x="0" y="68" width="6" height="36" rx="3" fill="var(--crit)"/><text x="16" y="91" font-size="12" font-weight="700" fill="currentColor">org.mvnpm:posthog-node</text><text x="275" y="91" font-size="11.5" class="mut">MAL-2025-191470 (4.18.1)</text><text x="500" y="91" font-size="11.5" font-weight="700" fill="var(--crit)">Sâu Sha1-Hulud: trộm token + GH Action</text><rect class="box" x="0" y="112" width="740" height="36" rx="6"/><rect x="0" y="112" width="6" height="36" rx="3" fill="var(--high)"/><text x="16" y="135" font-size="12" font-weight="700" fill="currentColor">Gradle / Maven Plugins</text><text x="275" y="135" font-size="11.5" class="mut">build.gradle / pom.xml</text><text x="500" y="135" font-size="11.5" font-weight="700" fill="var(--high)">Chạy lúc cấu hình, Portal ít duyệt bản sau</text><rect class="box" x="0" y="156" width="740" height="36" rx="6"/><rect x="0" y="156" width="6" height="36" rx="3" fill="var(--med)"/><text x="16" y="179" font-size="12" font-weight="700" fill="currentColor">GroupId nội bộ &amp; Repo order</text><text x="275" y="179" font-size="11.5" class="mut">internal.* / chưa claim</text><text x="500" y="179" font-size="11.5" font-weight="700" fill="var(--med)">Nguy cơ Dependency Confusion từ public</text></svg>
+<figcaption>Tổng hợp dữ liệu GitHub Advisories &amp; OSV tại thời điểm 25-11-2026 18:10 UTC (hai bản ghi MAL- đều đăng lần đầu vào 03/2025 và 11/2025).</figcaption>
+</figure>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Tọa độ (Coordinate)</th><th>Phiên bản</th><th>OSV / GitHub Advisory</th><th>Chi tiết &amp; Lưu ý ứng phó</th></tr></thead>
+  <tbody>
+    <tr><td><code>io.github.leetcrunch:scribejava-core</code></td><td><code>8.3.5</code> (all)</td><td><code>MAL-2025-2552</code> · <code>GHSA-9c6j-xrpw-g32x</code></td><td>Typosquat của <code>com.github.scribejava:scribejava-core</code> (bản thật mới nhất <code>8.3.3</code>). Đánh cắp OAuth credentials vào <strong>ngày 15 hằng tháng</strong> — log ngày thường sẽ không thấy bất thường.</td></tr>
+    <tr><td><code>org.mvnpm:posthog-node</code></td><td><code>4.18.1</code></td><td><code>MAL-2025-191470</code> · <code>GHSA-5f38-2pgv-jhg6</code></td><td>Gói npm tái phát hành qua <code>mvnpm</code> bị nhiễm sâu <em>Sha1-Hulud: The Second Coming</em> (11-2025): đánh cắp token lên GitHub, tạo persistence qua GitHub Actions, có thể xóa thư mục home.</td></tr>
+    <tr><td>Gradle Plugin &amp; Wrapper</td><td>Tất cả</td><td>Khuyến cáo chính thức Gradle</td><td>Portal chỉ duyệt thủ công phiên bản đầu; tài khoản maintainer bị chiếm có thể đẩy bản cập nhật độc hại. Cần kiểm tra <code>distributionSha256Sum</code>.</td></tr>
+    <tr><td>GroupId nội bộ chưa đăng ký</td><td>Tất cả</td><td>Maven / Gradle Repo Order</td><td>Nếu không khóa <code>mirrorOf *</code> hoặc <code>exclusiveContent</code>, build có thể kéo nhầm gói trùng tên từ repo công khai.</td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section class="an-sec">
+<h2 id="check">3. Kiểm tra nhanh trên repo &amp; CI runner</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 220" role="img" aria-label="Cây quyết định kiểm tra build Java"><defs><marker id="jm3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="20" width="174" height="76" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="87" y="50" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">Quét cây &amp; cache</text><text x="87" y="68" text-anchor="middle" font-size="10.5" class="mut">dependency:tree, ~/.m2,</text><text x="87" y="83" text-anchor="middle" font-size="10.5" class="mut">osv-scanner scan</text><line x1="174" y1="58" x2="210" y2="58" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm3)"/><text x="192" y="49" text-anchor="middle" font-size="11" font-weight="700" class="mut">Có</text><line x1="87" y1="96" x2="87" y2="148" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm3)"/><text x="116" y="126" text-anchor="middle" font-size="11" font-weight="700" class="mut">Không</text><rect class="box" x="0" y="150" width="174" height="52" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="87" y="173" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">Không dính 2 gói trên</text><text x="87" y="190" text-anchor="middle" font-size="10.5" class="mut">tiếp tục siết cấu hình build</text><rect class="box" x="212" y="20" width="236" height="182" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="330" y="56" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--crit)">Phát hiện gói độc hại!</text><text x="330" y="82" text-anchor="middle" font-size="11" fill="currentColor">1. Cách ly máy dev / CI runner</text><text x="330" y="102" text-anchor="middle" font-size="11" fill="currentColor">2. Xoay OAuth, GitHub, Cloud token</text><text x="330" y="122" text-anchor="middle" font-size="11" fill="currentColor">3. Kiểm tra GH Actions / SSH key lạ</text><text x="330" y="142" text-anchor="middle" font-size="11" fill="currentColor">4. Xóa sạch ~/.m2, ~/.gradle, proxy</text><text x="330" y="162" text-anchor="middle" font-size="11" fill="currentColor">5. Rebuild image từ bản sạch</text><line x1="174" y1="176" x2="466" y2="176" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm3)"/><rect class="box" x="468" y="20" width="272" height="182" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="604" y="56" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--low)">Phòng ngừa chủ động</text><text x="604" y="84" text-anchor="middle" font-size="11" fill="currentColor">• Gom repo qua mirrorOf *</text><text x="604" y="106" text-anchor="middle" font-size="11" fill="currentColor">• Gradle exclusiveContent cho internal</text><text x="604" y="128" text-anchor="middle" font-size="11" fill="currentColor">• Bật mvn -C verify &amp; PGP check</text><text x="604" y="150" text-anchor="middle" font-size="11" fill="currentColor">• Tạo verification-metadata.xml</text><text x="604" y="172" text-anchor="middle" font-size="11" fill="currentColor">• Lock version (gradle.lockfile)</text></svg>
+<figcaption>Quy trình kiểm tra &amp; xử lý khi rà soát các dự án Java dùng Maven hoặc Gradle.</figcaption>
+</figure>
+
+<h3>1. Tìm kiếm 2 tọa độ độc hại trong cây phụ thuộc</h3>
+<pre><code class="language-bash"># Maven
+mvn -q dependency:tree -Dincludes=io.github.leetcrunch
+mvn -q dependency:tree -Dincludes=org.mvnpm:posthog-node
+
+# Gradle (kiểm tra cả runtimeClasspath và buildEnvironment nơi chứa plugin)
+./gradlew dependencies --configuration runtimeClasspath
+./gradlew dependencyInsight --dependency scribejava-core --configuration runtimeClasspath
+./gradlew buildEnvironment</code></pre>
+
+<h3>2. Kiểm tra cache cục bộ &amp; CI runner</h3>
+<pre><code class="language-bash">ls ~/.m2/repository/io/github/leetcrunch 2>/dev/null
+ls ~/.m2/repository/org/mvnpm/posthog-node/4.18.1 2>/dev/null
+ls ~/.gradle/caches/modules-2/files-2.1 | grep -E '^(io\.github\.leetcrunch|org\.mvnpm)$'</code></pre>
+
+<h3>3. Quét toàn bộ dự án bằng OSV-Scanner &amp; kiểm tra cấu hình tin cậy</h3>
+<pre><code class="language-bash"># Quét lockfile, manifest, SBOM đối chiếu cả bản ghi MAL- trên OSV
+osv-scanner scan source -r .
+
+# Xem thứ tự repository thực tế của Maven &amp; bật strict checksum / PGP
+mvn help:effective-settings
+mvn -C verify
+mvn org.simplify4u.plugins:pgpverify-maven-plugin:check
+
+# Gradle: tạo tệp xác minh chữ ký PGP + SHA256 (chạy từ trạng thái sạch, review trước khi commit)
+./gradlew --write-verification-metadata pgp,sha256 --export-keys help</code></pre>
+</section>
+
+<section class="an-sec">
+<h2 id="remediation">4. Khắc phục &amp; Phòng ngừa dài hạn</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 160" role="img" aria-label="Quy trình 4 bước củng cố chuỗi cung ứng Java"><defs><marker id="jm4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="20" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="83.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Kiểm kê &amp; Quét</text><text x="83.5" y="68" text-anchor="middle" font-size="10.5" class="mut">osv-scanner + cache CI</text><circle cx="16" cy="20" r="12" fill="var(--high)"/><text x="16" y="24.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><line x1="167" y1="57" x2="189" y2="57" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm4)"/><rect class="box" x="191" y="20" width="167" height="74" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="274.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Cách ly &amp; Xoay khóa</text><text x="274.5" y="68" text-anchor="middle" font-size="10.5" class="mut">nếu phát hiện gói độc</text><circle cx="207" cy="20" r="12" fill="var(--crit)"/><text x="207" y="24.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><line x1="358" y1="57" x2="380" y2="57" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm4)"/><rect class="box" x="382" y="20" width="167" height="74" rx="8" style="stroke:var(--med);stroke-width:1.6"/><text x="465.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Gom Repo &amp; Lock</text><text x="465.5" y="68" text-anchor="middle" font-size="10.5" class="mut">mirrorOf * · exclusiveContent</text><circle cx="398" cy="20" r="12" fill="var(--med)"/><text x="398" y="24.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><line x1="549" y1="57" x2="571" y2="57" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm4)"/><rect class="box" x="573" y="20" width="167" height="74" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="656.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Xác minh &amp; Review</text><text x="656.5" y="68" text-anchor="middle" font-size="10.5" class="mut">PGP · sha256 · tách token CI</text><circle cx="589" cy="20" r="12" fill="var(--low)"/><text x="589" y="24.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><rect x="0" y="112" width="740" height="36" rx="8" fill="var(--bg-subtle)" stroke="var(--line)"/><text x="370" y="135" text-anchor="middle" font-size="11.5" class="mut">Lưu ý: Gói độc hại không có "bản vá nâng cấp" — phải gỡ bỏ, xóa cache và ghim đúng tọa độ chính thức (vd: com.github.scribejava:scribejava-core).</text></svg>
+<figcaption>Bốn bước củng cố quy trình build Java và ứng phó khi phát hiện gói độc hại.</figcaption>
+</figure>
+
+<ul>
+  <li><strong>Một cửa vào duy nhất:</strong> Định tuyến toàn bộ tải gói qua một repository manager nội bộ với <code>mirrorOf *</code>; xóa bỏ các thẻ <code>&lt;repositories&gt;</code> tự phát trong <code>pom.xml</code>.</li>
+  <li><strong>Ghim groupId nội bộ &amp; đăng ký namespace:</strong> Dùng <code>exclusiveContent</code> trong Gradle cho các groupId nội bộ và đăng ký xác minh namespace tương ứng trên Maven Central để tránh bị chiếm dụng.</li>
+  <li><strong>Khóa phiên bản &amp; rà soát file build như code production:</strong> Tránh version động/dải mở; bật <code>./gradlew dependencies --write-locks</code> (<code>gradle.lockfile</code>); tách biệt token publish/deploy khỏi các CI job build PR; kiểm tra <code>distributionSha256Sum</code> trong <code>gradle-wrapper.properties</code>.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="confidence">5. Độ tin cậy &amp; lưu ý</h2>
+<ul>
+  <li><strong>Đối chiếu dữ liệu trực tiếp:</strong> Số liệu được tổng hợp từ bài viết của Safeguard.sh (25-11-2026, truy vấn API lúc 18:10 UTC) và khớp với 2 bản ghi công khai trên OSV (<code>MAL-2025-2552</code> công bố 19-03-2025; <code>MAL-2025-191470</code> công bố 26-11-2025) cùng GitHub Advisory Database (import 13-07-2026).</li>
+  <li><strong>Phạm vi giới hạn:</strong> Chưa ghi nhận mã độc Maven mới phát sinh trong năm 2026 trên 3 feed công khai nói trên; tuy nhiên feed chỉ phản ánh những gì đã được báo cáo, không bao gồm gói độc hại trong repo riêng hoặc plugin chưa bị phát hiện.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="sources">6. Nguồn tham khảo</h2>
+<ul>
+  <li><a href="https://safeguard.sh/resources/blog/java-malware-today" target="_blank" rel="noopener noreferrer">Safeguard.sh — Java Malware Today: Malicious Maven Packages (25 Nov 2026)</a></li>
+  <li><a href="https://osv.dev/vulnerability/MAL-2025-2552" target="_blank" rel="noopener noreferrer">OSV — MAL-2025-2552 (io.github.leetcrunch:scribejava-core)</a> · <a href="https://github.com/advisories/GHSA-9c6j-xrpw-g32x" target="_blank" rel="noopener noreferrer">GHSA-9c6j-xrpw-g32x</a></li>
+  <li><a href="https://osv.dev/vulnerability/MAL-2025-191470" target="_blank" rel="noopener noreferrer">OSV — MAL-2025-191470 (org.mvnpm:posthog-node)</a> · <a href="https://github.com/advisories/GHSA-5f38-2pgv-jhg6" target="_blank" rel="noopener noreferrer">GHSA-5f38-2pgv-jhg6</a></li>
+  <li><a href="https://github.com/advisories?query=type%3Amalware+ecosystem%3Amaven" target="_blank" rel="noopener noreferrer">GitHub Advisory Database — Maven Malware Filter</a> · <a href="https://osv.dev/list?ecosystem=Maven" target="_blank" rel="noopener noreferrer">OSV Maven List</a></li>
+  <li><a href="https://docs.gradle.org/current/userguide/dependency_verification.html" target="_blank" rel="noopener noreferrer">Gradle Docs — Dependency Verification</a> · <a href="https://docs.gradle.org/current/userguide/filtering_repository_content.html" target="_blank" rel="noopener noreferrer">Filtering Repository Content</a></li>
+  <li><a href="https://maven.apache.org/guides/mini/guide-mirror-settings.html" target="_blank" rel="noopener noreferrer">Apache Maven — Mirror Settings</a> · <a href="https://google.github.io/osv-scanner/usage/scan-source" target="_blank" rel="noopener noreferrer">OSV-Scanner — Scan Source</a></li>
+</ul>
+</section>

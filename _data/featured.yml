@@ -3,6 +3,29 @@
 # Ghi chú `# disclosed: YYYY-MM-DD` ngay trên mỗi entry để đối chiếu cho các lần cập nhật sau.
 # `path` tính từ gốc ngôn ngữ (vi: "/", ja: "/ja/").
 
+# disclosed: 2026-11-25
+- id: java-maven-supply-chain-2026-11
+  category: vulnerability
+  month: "2026-11"
+  path: "featured/vulnerabilities/java-maven-supply-chain-2026-11/analysis/"
+  icon: "☕"
+  accent: true
+  badge: {sev: med, text: "SUPPLY CHAIN"}
+  nav: {vi: "Java/Maven Supply Chain", ja: "Java/Maven サプライチェーン"}
+  title: {vi: "Java Malware Today — Chuỗi cung ứng Maven & Gradle: 2 gói độc hại công khai & Bề mặt rủi ro lúc build", ja: "Java Malware Today — Maven / Gradle サプライチェーン：公開悪性2件とビルド時の攻撃面"}
+  date: {vi: "Công bố 2026-11-25 · Cập nhật 2026-11-26 · Safeguard.sh / OSV / GitHub Advisories · MAL-2025-2552 & MAL-2025-191470", ja: "2026年11月25日公表 · 2026年11月26日更新 · Safeguard.sh / OSV / GitHub Advisories · MAL-2025-2552 & MAL-2025-191470"}
+  link: {vi: "Xem phân tích & lệnh kiểm tra →", ja: "分析・点検ガイドを見る →"}
+  items:
+    - sev: med
+      label: {vi: "Hiện trạng", ja: "現状"}
+      text: {vi: "Tính đến 25-11-2026 (18:10 UTC), OSV/GitHub có 2 gói Maven độc hại (đều từ 2025): <code>io.github.leetcrunch:scribejava-core</code> (<code>MAL-2025-2552</code>, lấy OAuth ngày 15 hằng tháng) và <code>org.mvnpm:posthog-node</code> <code>4.18.1</code> (<code>MAL-2025-191470</code>, sâu Sha1-Hulud).", ja: "2026-11-25（18:10 UTC）時点で OSV/GitHub の悪性 Maven パッケージは2件（2025年発生）：<code>io.github.leetcrunch:scribejava-core</code>（<code>MAL-2025-2552</code>、毎月15日に OAuth 窃取）と <code>org.mvnpm:posthog-node</code> <code>4.18.1</code>（<code>MAL-2025-191470</code>、Sha1-Hulud）。"}
+    - sev: high
+      label: {vi: "Rủi ro thực tế", ja: "実リスク"}
+      text: {vi: "Máy quét CVE bỏ sót gói <code>MAL-</code>; mã độc Java thường chạy lúc build qua Maven/Gradle plugin (<code>./gradlew help</code> đã chạy plugin), annotation processor (trước JDK 23), lookalike <code>io.github.&lt;user&gt;</code> và dependency confusion.", ja: "CVE スキャナは <code>MAL-</code> を見逃しやすく、Java では Maven/Gradle プラグイン（<code>./gradlew help</code> でも実行）・APT（JDK 23未満）・類似 <code>io.github.&lt;user&gt;</code>・依存関係混乱が主な攻撃面。"}
+    - sev: low
+      label: {vi: "Kiểm tra & Phòng ngừa", ja: "点検・予防"}
+      text: {vi: "Chạy <code>osv-scanner scan source -r .</code>, <code>mvn dependency:tree</code>, <code>./gradlew buildEnvironment</code>, quét <code>~/.m2</code>/<code>~/.gradle</code>; bật <code>mvn -C verify</code>, PGP, <code>--write-verification-metadata</code>, <code>mirrorOf *</code> và <code>exclusiveContent</code>.", ja: "<code>osv-scanner scan source -r .</code>・<code>mvn dependency:tree</code>・<code>./gradlew buildEnvironment</code>・キャッシュ点検を実施し、<code>mvn -C verify</code>・PGP・<code>--write-verification-metadata</code>・<code>mirrorOf *</code>・<code>exclusiveContent</code> を適用。"}
+
 # disclosed: 2026-11-23
 - id: chrome-cve-2026-134401
   category: vulnerability
