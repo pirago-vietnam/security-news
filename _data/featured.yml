@@ -12,7 +12,7 @@
   accent: true
   badge: {sev: med, text: "SUPPLY CHAIN"}
   nav: {vi: "Java/Maven Supply Chain", ja: "Java/Maven サプライチェーン"}
-  title: {vi: "Java Malware Today — Chuỗi cung ứng Maven & Gradle: 2 gói độc hại công khai & Bề mặt rủi ro lúc build", ja: "Java Malware Today — Maven / Gradle サプライチェーン：公開悪性2件とビルド時の攻撃面"}
+  title: {vi: "Chuỗi cung ứng Java (Maven / Gradle) — Mã độc đánh cắp OAuth/GitHub token (MAL-2025-2552, MAL-2025-191470) & Rủi ro thực thi mã lúc build", ja: "Java（Maven / Gradle）サプライチェーン — OAuth/GitHub トークン窃取マルウェア（MAL-2025-2552・MAL-2025-191470）とビルド時コード実行リスク"}
   date: {vi: "Công bố 2026-11-25 · Cập nhật 2026-11-26 · Safeguard.sh / OSV / GitHub Advisories · MAL-2025-2552 & MAL-2025-191470", ja: "2026年11月25日公表 · 2026年11月26日更新 · Safeguard.sh / OSV / GitHub Advisories · MAL-2025-2552 & MAL-2025-191470"}
   link: {vi: "Xem phân tích & lệnh kiểm tra →", ja: "分析・点検ガイドを見る →"}
   items:

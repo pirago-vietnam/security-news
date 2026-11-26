@@ -1,8 +1,8 @@
 ---
 layout: default
 lang: ja
-title: "Java Malware Today — Maven / Gradle サプライチェーンの脅威分析とビルド点検"
-description: "2026年11月25日時点の Java/Maven マルウェア状況：OSV/GitHub の公開悪性パッケージ2件（scribejava-core タイポスクワット、org.mvnpm:posthog-node）、ビルド時の攻撃面（プラグイン・アノテーションプロセッサ・依存関係混乱）、点検コマンドまとめ。"
+title: "Java（Maven / Gradle）サプライチェーン — OAuth/GitHub トークン窃取マルウェア（MAL-2025-2552・MAL-2025-191470）とビルド時コード実行リスク"
+description: "2026年11月25日時点の Java/Maven/Gradle サプライチェーン脅威分析：OSV/GitHub の悪性パッケージ2件（OAuth 窃取の scribejava-core 偽装、Sha1-Hulud 感染の org.mvnpm:posthog-node）、ビルド時コード実行面（プラグイン・APT・依存関係混乱）と点検手順。"
 image: "/featured/vulnerabilities/java-maven-supply-chain-2026-11/java-maven-supply-chain-og.png"
 category: "脆弱性分析"
 permalink: /ja/featured/vulnerabilities/java-maven-supply-chain-2026-11/analysis/
@@ -34,7 +34,7 @@ permalink: /ja/featured/vulnerabilities/java-maven-supply-chain-2026-11/analysis
 </style>
 
 <div class="report-header">
-  <h1>Java Malware Today — Maven &amp; Gradle サプライチェーンの脅威分析とビルド点検</h1>
+  <h1>Java（Maven / Gradle）サプライチェーン — OAuth/GitHub トークン窃取マルウェア（MAL-2025-2552・MAL-2025-191470）とビルド時コード実行リスク</h1>
   <p class="sub">公開日：<strong>2026-11-25</strong> · 更新：<strong>2026-11-26</strong> · 月次レポート：<a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月レポート</a> · 重大度：<span class="badge med">中（Supply Chain）</span>（出典：Safeguard.sh、GitHub Advisories、OSV、OpenSSF）。</p>
 </div>
 

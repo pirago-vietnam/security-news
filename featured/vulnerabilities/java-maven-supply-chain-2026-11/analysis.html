@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "Java Malware Today — Chuỗi cung ứng Maven & Gradle: Phân tích & Kiểm tra build"
-description: "Tổng hợp bức tranh mã độc Java/Maven tính đến 25-11-2026: 2 gói độc hại trên OSV/GitHub (scribejava-core typosquat, org.mvnpm:posthog-node), bề mặt tấn công lúc build (Maven/Gradle plugin, annotation processor, dependency confusion) và lệnh kiểm tra thực tế."
+title: "Chuỗi cung ứng Java (Maven / Gradle) — Mã độc đánh cắp OAuth/GitHub token (MAL-2025-2552, MAL-2025-191470) & Rủi ro thực thi mã lúc build"
+description: "Phân tích rủi ro chuỗi cung ứng Java/Maven/Gradle tính đến 25-11-2026: 2 gói độc hại trên OSV/GitHub (scribejava-core typosquat lấy OAuth token, org.mvnpm:posthog-node nhiễm sâu Sha1-Hulud), bề mặt thực thi mã lúc build (plugin, annotation processor, dependency confusion) và lệnh kiểm tra."
 image: "/featured/vulnerabilities/java-maven-supply-chain-2026-11/java-maven-supply-chain-og.png"
 category: "Phân tích lỗ hổng"
 ---
@@ -32,7 +32,7 @@ category: "Phân tích lỗ hổng"
 </style>
 
 <div class="report-header">
-  <h1>Java Malware Today — Chuỗi cung ứng Maven &amp; Gradle &amp; Cách kiểm tra build</h1>
+  <h1>Chuỗi cung ứng Java (Maven / Gradle) — Mã độc đánh cắp OAuth/GitHub token (MAL-2025-2552, MAL-2025-191470) &amp; Rủi ro thực thi mã lúc build</h1>
   <p class="sub">Công bố: <strong>2026-11-25</strong> · Cập nhật: <strong>2026-11-26</strong> · Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a> · Mức độ: <span class="badge med">Trung bình (Supply Chain)</span> (Nguồn: Safeguard.sh, GitHub Advisories, OSV, OpenSSF).</p>
 </div>
 

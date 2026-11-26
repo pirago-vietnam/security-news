@@ -20,6 +20,8 @@ Mỗi case đặt trong `featured/<type>/<case-slug>/` (`<type>` là `vulnerabil
 
 ## 2. Front Matter chuẩn
 
+> **Quy tắc đặt tiêu đề (`title`, `<h1>`, `_data/featured.yml`):** Tiêu đề phải nêu rõ **đối tượng/thành phần bị ảnh hưởng**, **mã định danh** (CVE/GHSA/MAL nếu có) và **bản chất lỗ hổng / tác động thực tế** (ví dụ: RCE, thoát sandbox, đánh cắp token, thực thi mã lúc build...). Tránh dùng nguyên tiêu đề chung chung từ bài blog/tin nguồn (như *"… Today"*, *"Weekly Roundup"*); cả bản `vi` và `ja` phải thể hiện rõ rủi ro kỹ thuật ngay khi đọc tiêu đề.
+
 ### Bản tiếng Việt (`vi`)
 ```yaml
 ---
