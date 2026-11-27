@@ -456,16 +456,16 @@ sections:
       vi: 'Nâng cấp lên <strong>4.6.3+</strong> (Nuxt 3 đã EOL, không có bản vá).'
       ja: '<strong>4.6.3+</strong> へ更新（Nuxt 3 は EOL で修正なし）。'
   - name: Laravel
-    sev: med
+    sev: crit
     summary:
-      vi: '<strong>CVE-2026-114509</strong>: lỗi TokenGuard cho phép giả danh người dùng không cần token hợp lệ khi MySQL/MariaDB so khớp không phân biệt hoa thường.'
-      ja: '<strong>CVE-2026-114509</strong>：大文字小文字を区別しない MySQL/MariaDB で TokenGuard によるなりすましの恐れ。'
+      vi: '<strong>CVE-2026-114509</strong> (CVSS 9.2): lỗi <code>TokenGuard</code> cho phép giả danh người dùng không cần token hợp lệ khi nhận input không phải chuỗi trên MySQL/MariaDB. <strong>GHSA-8h64-cpq2-9h2g</strong> (CVSS 7.5): <code>TransformsRequest</code> gây cạn CPU/RAM (DoS) qua JSON key dài chứa mảng lớn.'
+      ja: '<strong>CVE-2026-114509</strong>（CVSS 9.2）：MySQL/MariaDB 環境で非文字列入力により <code>TokenGuard</code> でなりすましの恐れ。<strong>GHSA-8h64-cpq2-9h2g</strong>（CVSS 7.5）：<code>TransformsRequest</code> の JSON 処理による CPU/メモリ枯渇 DoS。'
     impact:
-      vi: 'Ứng dụng Laravel dùng API Token Authentication với MySQL / MariaDB.'
-      ja: 'MySQL / MariaDB で API トークン認証を使用する Laravel。'
+      vi: 'Ứng dụng Laravel dùng <code>TokenGuard</code> với MySQL/MariaDB (CVE-2026-114509) và mọi ứng dụng dùng middleware mặc định <code>TrimStrings</code> (GHSA-8h64-cpq2-9h2g).'
+      ja: 'MySQL/MariaDB で <code>TokenGuard</code> を使用する Laravel（CVE-2026-114509）、および標準の <code>TrimStrings</code> を用いる全 Laravel アプリ（GHSA-8h64-cpq2-9h2g）。'
     fix:
-      vi: 'Nâng cấp Laravel lên <strong>13.29.0+</strong> (hoặc <strong>12.68.0+</strong>).'
-      ja: 'Laravel を <strong>13.29.0+</strong>（または <strong>12.68.0+</strong>）へ更新。'
+      vi: 'Nâng cấp Laravel lên <strong>13.39.0+</strong> (tối thiểu <strong>13.38.0</strong>) hoặc <strong>12.74.0+</strong> (11.x đã EOL, chưa vá GHSA-8h64). Phân tích: <a href="/featured/vulnerabilities/laravel-cve-2026-114509/analysis/">CVE-2026-114509</a> · <a href="/featured/vulnerabilities/laravel-ghsa-8h64-cpq2-9h2g/analysis/">GHSA-8h64-cpq2-9h2g</a>'
+      ja: 'Laravel を <strong>13.39.0+</strong>（最低 <strong>13.38.0</strong>）または <strong>12.74.0+</strong> へ更新（11.x は EOL のため GHSA-8h64 未修正）。詳細：<a href="/ja/featured/vulnerabilities/laravel-cve-2026-114509/analysis/">CVE-2026-114509</a>・<a href="/ja/featured/vulnerabilities/laravel-ghsa-8h64-cpq2-9h2g/analysis/">GHSA-8h64-cpq2-9h2g</a>'
   - name: Spring Security (ELRequestMatcher)
     sev: crit
     summary:

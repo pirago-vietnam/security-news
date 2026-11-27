@@ -1,0 +1,211 @@
+---
+layout: default
+title: "Laravel Framework (GHSA-8h64-cpq2-9h2g) — DoS cạn kiệt CPU/RAM trong TransformsRequest qua JSON (CVSS 7.5)"
+description: "Phân tích lỗ hổng GHSA-8h64-cpq2-9h2g (CVSS 3.1 7.5) trong middleware TransformsRequest (TrimStrings / ConvertEmptyStringsToNull) của Laravel Framework, cơ chế phình RAM/CPU qua JSON key dài, phạm vi ảnh hưởng và nâng cấp lên 12.74.0 / 13.38.0+."
+image: "/featured/vulnerabilities/laravel-ghsa-8h64-cpq2-9h2g/laravel-json-dos-og.png"
+category: "Phân tích lỗ hổng"
+---
+<style>
+  .an-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
+  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--border); }
+  .an-sec { margin: 0 0 40px; }
+  .an-sec h2 { font-size: 21px; margin: 24px 0 12px; scroll-margin-top: 90px; }
+  .an-sec h3 { font-size: 17px; margin: 24px 0 8px; scroll-margin-top: 90px; }
+  .an-sec h4 { font-size: 15px; margin: 18px 0 6px; }
+  .an-sec pre { background: #0f172a; color: #e2e8f0; padding: 14px 16px; border-radius: var(--radius-md); overflow-x: auto; font-size: 13px; }
+  .an-sec pre code { background: none; border: 0; padding: 0; color: inherit; }
+  .an-sec ul, .an-sec ol { padding-left: 22px; }
+  .an-sec li { margin: 4px 0; }
+  .an-sec .table-wrap { overflow-x: auto; }
+  .an-sec td code { white-space: nowrap; }
+  .an-sec td, .an-sec th { overflow-wrap: normal; word-break: keep-all; }
+  .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
+  .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
+  .fig .mut { fill: var(--text-muted); }
+  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
+</style>
+
+<div class="report-header">
+  <h1>Laravel Framework GHSA-8h64-cpq2-9h2g — DoS cạn kiệt CPU/RAM trong TransformsRequest qua JSON</h1>
+  <p class="sub">Công bố: <strong>2026-11-23</strong> (chưa có CVE) · Trạng thái tại <strong>2026-11-27</strong>. Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a>. Mức độ: <span class="badge high">Cao (High)</span> (CVSS v3.1 <strong>7.5</strong> · <code>AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H</code>).</p>
+</div>
+
+<blockquote class="callout">
+  <p><strong>Đọc trước:</strong> Nâng cấp <code>laravel/framework</code> lên <strong><code>12.74.0+</code></strong> hoặc <strong><code>13.38.0+</code></strong> (khuyến nghị <strong><code>13.39.0+</code></strong> để có đủ tối ưu bộ nhớ). Nhánh <strong>Laravel 11.x đã hết hạn hỗ trợ bảo mật (EOL 2026-03-12)</strong> và <strong>không có bản vá</strong> cho lỗ hổng này. Trang này không chứa mã khai thác.</p>
+</blockquote>
+
+<nav class="an-nav" aria-label="nav">
+  <a href="#tldr">TL;DR</a>
+  <a href="#summary">1. Cơ chế kỹ thuật</a>
+  <a href="#scope">2. Phạm vi ảnh hưởng</a>
+  <a href="#check">3. Kiểm tra nhanh</a>
+  <a href="#remediation">4. Khắc phục &amp; Tạm thời</a>
+  <a href="#sources">5. Nguồn tham khảo</a>
+</nav>
+
+<section class="an-sec">
+<h2 id="tldr">TL;DR (dễ hiểu)</h2>
+<ul>
+  <li><strong>Lỗ hổng là gì?</strong> Lỗi trong middleware mặc định <code>TransformsRequest</code> (lớp cha của <code>TrimStrings</code> và <code>ConvertEmptyStringsToNull</code>), chạy trên <strong>mọi request trước khi định tuyến và xác thực</strong>.</li>
+  <li><strong>Mức độ nguy hiểm:</strong> Kẻ tấn công chưa xác thực chỉ cần gửi một vài payload JSON kích thước bình thường (~590 KB) với 1 key rất dài chứa mảng lớn để ép PHP cấp phát hàng chục GB bộ nhớ và ngốn ~30s CPU mỗi request, làm <strong>cạn toàn bộ PHP worker và sập ứng dụng (DoS)</strong>.</li>
+  <li><strong>Phạm vi:</strong> Ảnh hưởng mọi ứng dụng Laravel <code>12.x &lt; 12.74.0</code>, <code>13.x &lt; 13.38.0</code>, và toàn bộ <code>11.x</code> / <code>≤ 10.x</code> (đã EOL, không có bản vá).</li>
+  <li><strong>PM / Tech Lead cần làm gì?</strong> Kiểm tra phiên bản <code>laravel/framework</code> trong <code>composer.lock</code> và nâng cấp lên <strong><code>12.74.0+</code></strong> hoặc <strong><code>13.39.0+</code></strong> (tối thiểu <code>13.38.0</code>). Nếu đang ở 11.x, cần lên kế hoạch nâng cấp lên 12.x/13.x.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="summary">1. Tóm tắt &amp; Cơ chế kỹ thuật</h2>
+
+<figure class="fig">
+<svg viewBox="0 0 740 164" role="img" aria-label="Chuỗi tấn công GHSA-8h64-cpq2-9h2g">
+  <defs>
+    <marker id="jd1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker>
+  </defs>
+  <rect class="box" x="0" y="16" width="168" height="70" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="84" y="47" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">JSON ~590 KB</text>
+  <text x="84" y="65" text-anchor="middle" font-size="11" class="mut">1 key dài + mảng lớn</text>
+  <line x1="168" y1="51" x2="188" y2="51" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd1)"/>
+  <rect class="box" x="190" y="16" width="168" height="70" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="274" y="47" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Middleware toàn cục</text>
+  <text x="274" y="65" text-anchor="middle" font-size="11" class="mut">TrimStrings (trước auth)</text>
+  <line x1="358" y1="51" x2="378" y2="51" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd1)"/>
+  <rect class="box" x="380" y="16" width="168" height="70" rx="8" style="stroke:var(--crit);stroke-width:1.6"/>
+  <text x="464" y="47" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">cleanArray() nối chuỗi</text>
+  <text x="464" y="65" text-anchor="middle" font-size="11" class="mut">~43 GB RAM / ~30s CPU</text>
+  <line x1="548" y1="51" x2="568" y2="51" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd1)"/>
+  <rect class="box" x="570" y="16" width="170" height="70" rx="8" style="stroke:var(--crit);stroke-width:1.6"/>
+  <text x="655" y="47" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Treo PHP workers</text>
+  <text x="655" y="65" text-anchor="middle" font-size="11" class="mut">vài request song song → DoS</text>
+  <rect x="0" y="108" width="740" height="40" rx="8" fill="var(--low)" opacity=".14"/>
+  <text x="370" y="133" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Chặn từ gốc: giới hạn $maxKeyBytes = 20 MB trong TransformsRequest → PostTooLargeException (HTTP 413)</text>
+</svg>
+<figcaption>Chuỗi tấn công DoS qua JSON trong GHSA-8h64-cpq2-9h2g (báo cáo bởi KIKOmanasijev).</figcaption>
+</figure>
+
+<figure class="fig">
+<svg viewBox="0 0 740 164" role="img" aria-label="Cơ chế khuếch đại bộ nhớ trong TransformsRequest::cleanArray()">
+  <defs>
+    <marker id="jd2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker>
+  </defs>
+  <rect class="box" x="0" y="14" width="356" height="106" rx="8" style="stroke:var(--crit);stroke-width:1.5"/>
+  <text x="14" y="36" font-size="12" font-weight="700" fill="var(--crit)">Trước bản vá: lặp cấp phát $keyPrefix . $key</text>
+  <text x="14" y="56" font-size="11" class="mut">• 1 key ~295 KB × ~147.000 phần tử mảng (~590 KB JSON)</text>
+  <text x="14" y="74" font-size="11" class="mut">• Mỗi phần tử tạo bản sao chuỗi prefix → ~43 GB RAM</text>
+  <text x="14" y="92" font-size="11" class="mut">• Luôn gán $data[$key] (copy-on-write) + Str::is trước check string</text>
+  <text x="14" y="110" font-size="11" font-weight="700" fill="currentColor">→ ~30 giây CPU / request → cạn PHP-FPM workers</text>
+
+  <line x1="358" y1="67" x2="382" y2="67" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd2)"/>
+
+  <rect class="box" x="384" y="14" width="356" height="106" rx="8" style="stroke:var(--low);stroke-width:1.5"/>
+  <text x="398" y="36" font-size="12" font-weight="700" fill="var(--low)">Sau bản vá (12.74.0 / 13.38.0–13.39.0)</text>
+  <text x="398" y="56" font-size="11" class="mut">• Cộng dồn $keyBytes trong handle() (cả query &amp; json)</text>
+  <text x="398" y="74" font-size="11" class="mut">• Vượt $maxKeyBytes (20 MB) → ném PostTooLargeException</text>
+  <text x="398" y="92" font-size="11" class="mut">• Chỉ gán $data[$key] khi đổi; TrimStrings kiểm tra is_string()</text>
+  <text x="398" y="110" font-size="11" font-weight="700" fill="currentColor">→ Ngắt sớm với HTTP 413, tránh phình RAM/CPU</text>
+
+  <text x="0" y="146" font-size="11" class="mut">Lưu ý: 13.38.0 đã có giới hạn $maxKeyBytes; 13.39.0 và 12.74.0 bổ sung thêm tối ưu copy-on-write &amp; TrimStrings.</text>
+</svg>
+<figcaption>Cơ chế khuếch đại tài nguyên trong <code>Illuminate\Foundation\Http\Middleware\TransformsRequest</code>.</figcaption>
+</figure>
+
+<ul>
+  <li><strong>Nguyên nhân gốc:</strong> Phương thức đệ quy <code>cleanArray(array $data, $keyPrefix = '')</code> tính <code>$keyPrefix.$key</code> cho mỗi phần tử con. Theo số liệu trong PR #62582, một payload JSON ~590 KB chứa 1 key dài ~295 KB và ~147.000 phần tử khiến PHP cấp phát ~43 GB chuỗi trung gian và mất ~30 giây CPU. Ngoài ra, việc gán lại <code>$data[$key]</code> không điều kiện gây copy-on-write mảng lớn và <code>TrimStrings::transform()</code> chạy <code>Str::is($except, $key)</code> trước khi kiểm tra <code>! is_string($value)</code>.</li>
+  <li><strong>Cách bản vá xử lý:</strong> <code>TransformsRequest</code> thêm <code>protected $maxKeyBytes = 20 * 1024 * 1024;</code> (20 MB) và <code>$keyBytes = 0</code> (reset đầu <code>handle()</code> để an toàn với Laravel Octane). Khi tổng byte key cộng dồn vượt ngưỡng, middleware ném <code>PostTooLargeException</code> (HTTP 413).</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="scope">2. Phạm vi ảnh hưởng &amp; Phiên bản đã vá</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 200" role="img" aria-label="Phạm vi phiên bản GHSA-8h64-cpq2-9h2g">
+  <text x="0" y="14" font-size="11" font-weight="700" class="mut">Nhánh Laravel</text>
+  <text x="170" y="14" font-size="11" font-weight="700" class="mut">Phiên bản bị ảnh hưởng</text>
+  <text x="430" y="14" font-size="11" font-weight="700" class="mut">Phiên bản đã vá / Trạng thái</text>
+
+  <rect class="box" x="0" y="24" width="740" height="36" rx="6"/>
+  <rect x="0" y="24" width="6" height="36" rx="3" fill="var(--low)"/>
+  <text x="16" y="47" font-size="12.5" font-weight="700" fill="currentColor">Laravel 13.x</text>
+  <text x="170" y="47" font-size="12" fill="var(--crit)" font-weight="700">13.0.0 – 13.37.0</text>
+  <text x="430" y="47" font-size="12" fill="var(--low)" font-weight="700">13.38.0+ (đủ tối ưu từ 13.39.0+)</text>
+
+  <rect class="box" x="0" y="66" width="740" height="36" rx="6"/>
+  <rect x="0" y="66" width="6" height="36" rx="3" fill="var(--low)"/>
+  <text x="16" y="89" font-size="12.5" font-weight="700" fill="currentColor">Laravel 12.x</text>
+  <text x="170" y="89" font-size="12" fill="var(--crit)" font-weight="700">12.0.0 – 12.73.x</text>
+  <text x="430" y="89" font-size="12" fill="var(--low)" font-weight="700">12.74.0+ (phát hành 2026-11-24)</text>
+
+  <rect class="box" x="0" y="108" width="740" height="36" rx="6"/>
+  <rect x="0" y="108" width="6" height="36" rx="3" fill="var(--crit)"/>
+  <text x="16" y="131" font-size="12.5" font-weight="700" fill="currentColor">Laravel 11.x</text>
+  <text x="170" y="131" font-size="12" fill="var(--crit)" font-weight="700">Tất cả phiên bản (đã kiểm tra 11.57.2)</text>
+  <text x="430" y="131" font-size="12" fill="var(--crit)" font-weight="700">EOL (2026-03-12) — Không có bản vá</text>
+
+  <rect class="box" x="0" y="150" width="740" height="36" rx="6"/>
+  <rect x="0" y="150" width="6" height="36" rx="3" fill="var(--crit)"/>
+  <text x="16" y="173" font-size="12.5" font-weight="700" fill="currentColor">Laravel ≤ 10.x</text>
+  <text x="170" y="173" font-size="12" fill="var(--crit)" font-weight="700">Tất cả phiên bản</text>
+  <text x="430" y="173" font-size="12" fill="var(--crit)" font-weight="700">EOL — Không có bản vá</text>
+</svg>
+<figcaption>Đối chiếu trực tiếp từ tag/commit trên repository <code>laravel/framework</code> (tính đến 2026-11-27).</figcaption>
+</figure>
+</section>
+
+<section class="an-sec">
+<h2 id="check">3. Kiểm tra nhanh</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 212" role="img" aria-label="Cây quyết định GHSA-8h64-cpq2-9h2g">
+  <defs>
+    <marker id="jd3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker>
+  </defs>
+  <rect class="box" x="0" y="16" width="176" height="72" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="88" y="48" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">laravel/framework</text>
+  <text x="88" y="66" text-anchor="middle" font-size="10.5" class="mut">≥ 12.74.0 hoặc ≥ 13.38.0 ?</text>
+  <line x1="88" y1="88" x2="88" y2="140" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd3)"/>
+  <text x="109" y="118" text-anchor="middle" font-size="11" font-weight="700" class="mut">Có</text>
+  <line x1="176" y1="52" x2="216" y2="52" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd3)"/>
+  <text x="196" y="44" text-anchor="middle" font-size="11" font-weight="700" class="mut">Chưa</text>
+
+  <rect class="box" x="218" y="16" width="186" height="72" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="311" y="48" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">Nhánh đang chạy?</text>
+  <text x="311" y="66" text-anchor="middle" font-size="10.5" class="mut">12.x / 13.x hay 11.x (EOL)?</text>
+  <line x1="311" y1="88" x2="311" y2="140" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd3)"/>
+  <text x="342" y="118" text-anchor="middle" font-size="11" font-weight="700" class="mut">12.x / 13.x</text>
+  <line x1="404" y1="52" x2="444" y2="52" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd3)"/>
+  <text x="424" y="44" text-anchor="middle" font-size="11" font-weight="700" class="mut">≤ 11.x</text>
+
+  <rect class="box" x="446" y="16" width="294" height="176" rx="8" style="stroke:var(--crit);stroke-width:1.6"/>
+  <text x="593" y="88" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Nhánh EOL — Chưa có bản vá</text>
+  <text x="593" y="108" text-anchor="middle" font-size="11" class="mut">Nâng cấp lên 12.74.0+ hoặc 13.39.0+</text>
+  <text x="593" y="126" text-anchor="middle" font-size="11" class="mut">+ giới hạn body ở WAF / reverse proxy</text>
+
+  <rect class="box" x="0" y="142" width="176" height="50" rx="8" style="stroke:var(--low);stroke-width:1.6"/>
+  <text x="88" y="172" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">Đã vá GHSA-8h64</text>
+
+  <rect class="box" x="218" y="142" width="206" height="50" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="321" y="164" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">Nâng cấp Composer</text>
+  <text x="321" y="182" text-anchor="middle" font-size="10.5" class="mut">lên 12.74.0+ / 13.39.0+</text>
+</svg>
+<figcaption>Cây quyết định nhanh cho GHSA-8h64-cpq2-9h2g.</figcaption>
+</figure>
+
+<pre><code class="language-bash">composer show laravel/framework | grep -E 'name|versions'
+composer audit</code></pre>
+</section>
+
+<section class="an-sec">
+<h2 id="remediation">4. Khắc phục &amp; Biện pháp tạm thời</h2>
+<ul>
+  <li><strong>Nâng cấp triệt để (Khuyến nghị):</strong> cập nhật <code>laravel/framework</code> lên <strong><code>12.74.0+</code></strong> hoặc <strong><code>13.39.0+</code></strong> (tối thiểu <code>13.38.0</code>). Với <strong>Laravel Octane</strong>, bắt buộc restart/reload workers sau khi deploy.</li>
+  <li><strong>Biện pháp tạm thời:</strong> Advisory không công bố workaround chính thức. Không nên tùy tiện bỏ <code>TrimStrings</code> / <code>ConvertEmptyStringsToNull</code> vì làm thay đổi chuẩn hóa input toàn hệ thống; tạm thời siết kích thước body ở reverse proxy / WAF (<code>client_max_body_size</code>) và đẩy nhanh lịch nâng cấp (đặc biệt với các dự án còn chạy 11.x EOL).</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="sources">5. Nguồn tham khảo</h2>
+<ul>
+  <li><a href="https://github.com/laravel/framework/security/advisories/GHSA-8h64-cpq2-9h2g" target="_blank" rel="noopener noreferrer">GitHub Advisory GHSA-8h64-cpq2-9h2g</a></li>
+  <li><a href="https://github.com/laravel/framework/releases/tag/v12.74.0" target="_blank" rel="noopener noreferrer">Laravel v12.74.0 Release</a> · <a href="https://github.com/laravel/framework/pull/62582" target="_blank" rel="noopener noreferrer">PR #62582 (Backport TransformsRequest key byte limit)</a></li>
+  <li><a href="https://github.com/laravel/framework/releases/tag/v13.38.0" target="_blank" rel="noopener noreferrer">Laravel v13.38.0 Release</a> · <a href="https://github.com/laravel/framework/releases/tag/v13.39.0" target="_blank" rel="noopener noreferrer">Laravel v13.39.0 Release</a></li>
+</ul>
+</section>

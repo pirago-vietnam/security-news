@@ -1,0 +1,213 @@
+---
+layout: default
+lang: ja
+title: "Laravel Framework（GHSA-8h64-cpq2-9h2g）— TransformsRequest の JSON 処理による CPU/メモリ枯渇 DoS（CVSS 7.5）"
+description: "Laravel Framework の標準ミドルウェア TransformsRequest（TrimStrings / ConvertEmptyStringsToNull）における DoS 脆弱性 GHSA-8h64-cpq2-9h2g（CVSS 3.1 7.5）の技術詳細、影響範囲、12.74.0 / 13.38.0+ への更新手順。"
+image: "/featured/vulnerabilities/laravel-ghsa-8h64-cpq2-9h2g/laravel-json-dos-og.png"
+category: "脆弱性分析"
+permalink: /ja/featured/vulnerabilities/laravel-ghsa-8h64-cpq2-9h2g/analysis/
+---
+<style>
+  .an-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
+  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--border); }
+  .an-sec { margin: 0 0 40px; }
+  .an-sec h2 { font-size: 21px; margin: 24px 0 12px; scroll-margin-top: 90px; }
+  .an-sec h3 { font-size: 17px; margin: 24px 0 8px; scroll-margin-top: 90px; }
+  .an-sec h4 { font-size: 15px; margin: 18px 0 6px; }
+  .an-sec pre { background: #0f172a; color: #e2e8f0; padding: 14px 16px; border-radius: var(--radius-md); overflow-x: auto; font-size: 13px; }
+  .an-sec pre code { background: none; border: 0; padding: 0; color: inherit; }
+  .an-sec ul, .an-sec ol { padding-left: 22px; }
+  .an-sec li { margin: 4px 0; }
+  .an-sec .table-wrap { overflow-x: auto; }
+  .an-sec td code { white-space: nowrap; }
+  .an-sec td, .an-sec th { overflow-wrap: normal; word-break: keep-all; }
+  .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
+  .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
+  .fig .mut { fill: var(--text-muted); }
+  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
+</style>
+
+<div class="report-header">
+  <h1>Laravel Framework GHSA-8h64-cpq2-9h2g — TransformsRequest の JSON 処理による DoS</h1>
+  <p class="sub">公開日：<strong>2026-11-23</strong>（CVE 未採番）· <strong>2026年11月27日</strong> 時点。月次レポート：<a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月レポート</a>。重大度：<span class="badge high">高（High）</span>（CVSS v3.1 <strong>7.5</strong> · <code>AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H</code>）。</p>
+</div>
+
+<blockquote class="callout">
+  <p><strong>最初にお読みください：</strong><code>laravel/framework</code> を <strong><code>12.74.0+</code></strong> または <strong><code>13.38.0+</code></strong>（メモリ最適化まで含む <strong><code>13.39.0+</code></strong> を推奨）へ更新してください。<strong>Laravel 11.x はセキュリティサポート終了（EOL：2026-03-12）</strong>のため修正版は提供されません。本ページに攻撃コードは含みません。</p>
+</blockquote>
+
+<nav class="an-nav" aria-label="nav">
+  <a href="#tldr">TL;DR</a>
+  <a href="#summary">1. 技術メカニズム</a>
+  <a href="#scope">2. 影響範囲</a>
+  <a href="#check">3. 確認コマンド</a>
+  <a href="#remediation">4. 恒久対策・暫定対策</a>
+  <a href="#sources">5. 参考情報</a>
+</nav>
+
+<section class="an-sec">
+<h2 id="tldr">TL;DR（かんたん解説）</h2>
+<ul>
+  <li><strong>脆弱性の内容：</strong>Laravel の標準ミドルウェア <code>TransformsRequest</code>（<code>TrimStrings</code>・<code>ConvertEmptyStringsToNull</code> の親クラス）の不具合で、<strong>ルーティングや認証より前に全リクエストで実行</strong>されます。</li>
+  <li><strong>危険度：</strong>未認証の攻撃者が通常サイズ（約 590 KB）の JSON に長い 1 キーと大きな配列を含めて数件並列送信するだけで、数十 GB のメモリ確保と約 30 秒/件の CPU 消費を引き起こし、<strong>PHP ワーカーを枯渇させてサービス停止（DoS）</strong>に至ります。</li>
+  <li><strong>対象システム：</strong><code>12.x &lt; 12.74.0</code>、<code>13.x &lt; 13.38.0</code>、および <code>11.x</code>・<code>10.x 以前</code>（EOL で未修正）のすべての Laravel アプリ。</li>
+  <li><strong>PM／テックリードの対応：</strong><code>composer.lock</code> を確認し、<strong><code>12.74.0+</code></strong> または <strong><code>13.39.0+</code></strong>（最低 <code>13.38.0</code>）へ更新してください。11.x はメジャーアップグレード計画が必要です。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="summary">1. 概要と技術メカニズム</h2>
+
+<figure class="fig">
+<svg viewBox="0 0 740 164" role="img" aria-label="GHSA-8h64-cpq2-9h2g 攻撃チェーン">
+  <defs>
+    <marker id="jd1j" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker>
+  </defs>
+  <rect class="box" x="0" y="16" width="168" height="70" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="84" y="47" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">JSON 約 590 KB</text>
+  <text x="84" y="65" text-anchor="middle" font-size="11" class="mut">長い1キー＋巨大配列</text>
+  <line x1="168" y1="51" x2="188" y2="51" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd1j)"/>
+  <rect class="box" x="190" y="16" width="168" height="70" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="274" y="47" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">グローバルミドルウェア</text>
+  <text x="274" y="65" text-anchor="middle" font-size="11" class="mut">TrimStrings（認証前）</text>
+  <line x1="358" y1="51" x2="378" y2="51" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd1j)"/>
+  <rect class="box" x="380" y="16" width="168" height="70" rx="8" style="stroke:var(--crit);stroke-width:1.6"/>
+  <text x="464" y="47" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">cleanArray() 文字列結合</text>
+  <text x="464" y="65" text-anchor="middle" font-size="11" class="mut">約43 GB RAM / 約30秒 CPU</text>
+  <line x1="548" y1="51" x2="568" y2="51" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd1j)"/>
+  <rect class="box" x="570" y="16" width="170" height="70" rx="8" style="stroke:var(--crit);stroke-width:1.6"/>
+  <text x="655" y="47" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">PHP ワーカー枯渇</text>
+  <text x="655" y="65" text-anchor="middle" font-size="11" class="mut">少数の並列送信で停止</text>
+  <rect x="0" y="108" width="740" height="40" rx="8" fill="var(--low)" opacity=".14"/>
+  <text x="370" y="133" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">根本対策：TransformsRequest で $maxKeyBytes = 20 MB を上限化し PostTooLargeException（HTTP 413）</text>
+</svg>
+<figcaption>GHSA-8h64-cpq2-9h2g の攻撃チェーン概要（KIKOmanasijev 氏により報告）。</figcaption>
+</figure>
+
+<figure class="fig">
+<svg viewBox="0 0 740 164" role="img" aria-label="TransformsRequest::cleanArray() メモリ増幅メカニズム">
+  <defs>
+    <marker id="jd2j" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker>
+  </defs>
+  <rect class="box" x="0" y="14" width="356" height="106" rx="8" style="stroke:var(--crit);stroke-width:1.5"/>
+  <text x="14" y="36" font-size="12" font-weight="700" fill="var(--crit)">修正前：$keyPrefix . $key の反復確保</text>
+  <text x="14" y="56" font-size="11" class="mut">• 約 295 KB のキー 1 つ × 約 14.7 万要素（約 590 KB JSON）</text>
+  <text x="14" y="74" font-size="11" class="mut">• 要素ごとにプレフィックス文字列を複製 → 約 43 GB 確保</text>
+  <text x="14" y="92" font-size="11" class="mut">• 未変更配列の再代入＋is_string() 前のパターン照合</text>
+  <text x="14" y="110" font-size="11" font-weight="700" fill="currentColor">→ 1 リクエスト約 30 秒 CPU → PHP-FPM ワーカー枯渇</text>
+
+  <line x1="358" y1="67" x2="382" y2="67" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd2j)"/>
+
+  <rect class="box" x="384" y="14" width="356" height="106" rx="8" style="stroke:var(--low);stroke-width:1.5"/>
+  <text x="398" y="36" font-size="12" font-weight="700" fill="var(--low)">修正後（12.74.0 / 13.38.0〜13.39.0）</text>
+  <text x="398" y="56" font-size="11" class="mut">• handle() で $keyBytes を合算（query・json 共通）</text>
+  <text x="398" y="74" font-size="11" class="mut">• $maxKeyBytes（20 MB）超過で PostTooLargeException</text>
+  <text x="398" y="92" font-size="11" class="mut">• 変更時のみ代入＋TrimStrings で is_string() を先行判定</text>
+  <text x="398" y="110" font-size="11" font-weight="700" fill="currentColor">→ HTTP 413 で即座に遮断し、CPU/メモリ枯渇を防止</text>
+
+  <text x="0" y="146" font-size="11" class="mut">注記：13.38.0 で $maxKeyBytes 制限を導入、13.39.0 および 12.74.0 で配列コピー抑制・TrimStrings 最適化を追加。</text>
+</svg>
+<figcaption><code>Illuminate\Foundation\Http\Middleware\TransformsRequest</code> の増幅メカニズムと修正。</figcaption>
+</figure>
+
+<ul>
+  <li><strong>根本原因：</strong>再帰メソッド <code>cleanArray(array $data, $keyPrefix = '')</code> が各要素で <code>$keyPrefix.$key</code> を構築します。PR #62582 の試算では、約 590 KB の JSON（約 295 KB のキー 1 つ＋約 14.7 万要素）で約 43 GB の文字列確保と約 30 秒の CPU 消費が発生します。また未変更配列の毎回代入による copy-on-write 複製や、<code>TrimStrings::transform()</code> が <code>is_string()</code> 前に <code>Str::is()</code> を呼ぶ点も負荷を増大させていました。</li>
+  <li><strong>修正内容：</strong><code>$maxKeyBytes = 20 * 1024 * 1024</code>（20 MB、Octane 対応のため <code>handle()</code> 開始時に <code>$keyBytes = 0</code> にリセット）を超過した時点で <code>PostTooLargeException</code>（HTTP 413）を送出します。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="scope">2. 影響範囲と修正済みバージョン</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 200" role="img" aria-label="GHSA-8h64-cpq2-9h2g バージョン別修正状況">
+  <text x="0" y="14" font-size="11" font-weight="700" class="mut">Laravel 系統</text>
+  <text x="170" y="14" font-size="11" font-weight="700" class="mut">影響バージョン</text>
+  <text x="430" y="14" font-size="11" font-weight="700" class="mut">修正版・ステータス</text>
+
+  <rect class="box" x="0" y="24" width="740" height="36" rx="6"/>
+  <rect x="0" y="24" width="6" height="36" rx="3" fill="var(--low)"/>
+  <text x="16" y="47" font-size="12.5" font-weight="700" fill="currentColor">Laravel 13.x</text>
+  <text x="170" y="47" font-size="12" fill="var(--crit)" font-weight="700">13.0.0〜13.37.0</text>
+  <text x="430" y="47" font-size="12" fill="var(--low)" font-weight="700">13.38.0+（13.39.0+ で最適化済み）</text>
+
+  <rect class="box" x="0" y="66" width="740" height="36" rx="6"/>
+  <rect x="0" y="66" width="6" height="36" rx="3" fill="var(--low)"/>
+  <text x="16" y="89" font-size="12.5" font-weight="700" fill="currentColor">Laravel 12.x</text>
+  <text x="170" y="89" font-size="12" fill="var(--crit)" font-weight="700">12.0.0〜12.73.x</text>
+  <text x="430" y="89" font-size="12" fill="var(--low)" font-weight="700">12.74.0+（2026-11-24 公開）</text>
+
+  <rect class="box" x="0" y="108" width="740" height="36" rx="6"/>
+  <rect x="0" y="108" width="6" height="36" rx="3" fill="var(--crit)"/>
+  <text x="16" y="131" font-size="12.5" font-weight="700" fill="currentColor">Laravel 11.x</text>
+  <text x="170" y="131" font-size="12" fill="var(--crit)" font-weight="700">全バージョン（11.57.2 でも未修正確認）</text>
+  <text x="430" y="131" font-size="12" fill="var(--crit)" font-weight="700">EOL（2026-03-12）— 修正版なし</text>
+
+  <rect class="box" x="0" y="150" width="740" height="36" rx="6"/>
+  <rect x="0" y="150" width="6" height="36" rx="3" fill="var(--crit)"/>
+  <text x="16" y="173" font-size="12.5" font-weight="700" fill="currentColor">Laravel 10.x 以前</text>
+  <text x="170" y="173" font-size="12" fill="var(--crit)" font-weight="700">全バージョン</text>
+  <text x="430" y="173" font-size="12" fill="var(--crit)" font-weight="700">EOL — 修正版なし</text>
+</svg>
+<figcaption><code>laravel/framework</code> リポジトリのタグ・コミット直接照合結果（2026-11-27 時点）。</figcaption>
+</figure>
+</section>
+
+<section class="an-sec">
+<h2 id="check">3. クイックチェック</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 212" role="img" aria-label="GHSA-8h64-cpq2-9h2g 判定フロー">
+  <defs>
+    <marker id="jd3j" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker>
+  </defs>
+  <rect class="box" x="0" y="16" width="176" height="72" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="88" y="48" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">laravel/framework</text>
+  <text x="88" y="66" text-anchor="middle" font-size="10.5" class="mut">12.74.0+ または 13.38.0+ ?</text>
+  <line x1="88" y1="88" x2="88" y2="140" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd3j)"/>
+  <text x="109" y="118" text-anchor="middle" font-size="11" font-weight="700" class="mut">はい</text>
+  <line x1="176" y1="52" x2="216" y2="52" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd3j)"/>
+  <text x="196" y="44" text-anchor="middle" font-size="11" font-weight="700" class="mut">いいえ</text>
+
+  <rect class="box" x="218" y="16" width="186" height="72" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="311" y="48" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">稼働中の系統は？</text>
+  <text x="311" y="66" text-anchor="middle" font-size="10.5" class="mut">12.x/13.x か 11.x 以前(EOL)?</text>
+  <line x1="311" y1="88" x2="311" y2="140" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd3j)"/>
+  <text x="342" y="118" text-anchor="middle" font-size="11" font-weight="700" class="mut">12.x / 13.x</text>
+  <line x1="404" y1="52" x2="444" y2="52" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd3j)"/>
+  <text x="424" y="44" text-anchor="middle" font-size="11" font-weight="700" class="mut">11.x 以前</text>
+
+  <rect class="box" x="446" y="16" width="294" height="176" rx="8" style="stroke:var(--crit);stroke-width:1.6"/>
+  <text x="593" y="88" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">EOL 系統 — 修正版なし</text>
+  <text x="593" y="108" text-anchor="middle" font-size="11" class="mut">12.74.0+ または 13.39.0+ へ移行</text>
+  <text x="593" y="126" text-anchor="middle" font-size="11" class="mut">＋ WAF/プロキシでボディ上限を設定</text>
+
+  <rect class="box" x="0" y="142" width="176" height="50" rx="8" style="stroke:var(--low);stroke-width:1.6"/>
+  <text x="88" y="172" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">GHSA-8h64 対策済み</text>
+
+  <rect class="box" x="218" y="142" width="206" height="50" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="321" y="164" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">Composer 更新</text>
+  <text x="321" y="182" text-anchor="middle" font-size="10.5" class="mut">12.74.0+ / 13.39.0+ へ</text>
+</svg>
+<figcaption>GHSA-8h64-cpq2-9h2g のクイック判定フロー。</figcaption>
+</figure>
+
+<pre><code class="language-bash">composer show laravel/framework | grep -E 'name|versions'
+composer audit</code></pre>
+</section>
+
+<section class="an-sec">
+<h2 id="remediation">4. 恒久対策・暫定対策</h2>
+<ul>
+  <li><strong>恒久対策（推奨）：</strong><code>laravel/framework</code> を <strong><code>12.74.0+</code></strong> または <strong><code>13.39.0+</code></strong>（最低 <code>13.38.0</code>）へ更新します。<strong>Laravel Octane</strong> 環境ではデプロイ後にワーカーを再起動してください。</li>
+  <li><strong>暫定対策：</strong>公式の回避策はありません。<code>TrimStrings</code> / <code>ConvertEmptyStringsToNull</code> を無効化すると入力正規化が変わるため推奨されません。リバースプロキシ／WAF でリクエストボディサイズを制限しつつ、早急にフレームワークを更新してください。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="sources">5. 参考情報</h2>
+<ul>
+  <li><a href="https://github.com/laravel/framework/security/advisories/GHSA-8h64-cpq2-9h2g" target="_blank" rel="noopener noreferrer">GitHub Advisory GHSA-8h64-cpq2-9h2g</a></li>
+  <li><a href="https://github.com/laravel/framework/releases/tag/v12.74.0" target="_blank" rel="noopener noreferrer">Laravel v12.74.0 Release</a> · <a href="https://github.com/laravel/framework/pull/62582" target="_blank" rel="noopener noreferrer">PR #62582（TransformsRequest キーバイト制限バックポート）</a></li>
+  <li><a href="https://github.com/laravel/framework/releases/tag/v13.38.0" target="_blank" rel="noopener noreferrer">Laravel v13.38.0 Release</a> · <a href="https://github.com/laravel/framework/releases/tag/v13.39.0" target="_blank" rel="noopener noreferrer">Laravel v13.39.0 Release</a></li>
+</ul>
+</section>

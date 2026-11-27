@@ -50,6 +50,29 @@
       text: {vi: "Chạy <code>osv-scanner scan source -r .</code>, <code>mvn dependency:tree</code>, <code>./gradlew buildEnvironment</code>, quét <code>~/.m2</code>/<code>~/.gradle</code>; bật <code>mvn -C verify</code>, PGP, <code>--write-verification-metadata</code>, <code>mirrorOf *</code> và <code>exclusiveContent</code>.", ja: "<code>osv-scanner scan source -r .</code>・<code>mvn dependency:tree</code>・<code>./gradlew buildEnvironment</code>・キャッシュ点検を実施し、<code>mvn -C verify</code>・PGP・<code>--write-verification-metadata</code>・<code>mirrorOf *</code>・<code>exclusiveContent</code> を適用。"}
 
 # disclosed: 2026-11-23
+- id: laravel-ghsa-8h64-cpq2-9h2g
+  category: vulnerability
+  month: "2026-11"
+  path: "featured/vulnerabilities/laravel-ghsa-8h64-cpq2-9h2g/analysis/"
+  icon: "🔺"
+  accent: true
+  badge: {sev: high, text: "HIGH · DoS"}
+  nav: {vi: "Laravel GHSA-8h64-cpq2-9h2g", ja: "Laravel GHSA-8h64-cpq2-9h2g"}
+  title: {vi: "Laravel Framework (GHSA-8h64-cpq2-9h2g) — DoS cạn kiệt CPU/RAM trong TransformsRequest qua JSON (CVSS 7.5)", ja: "Laravel Framework（GHSA-8h64-cpq2-9h2g）— TransformsRequest の JSON 処理による CPU/メモリ枯渇 DoS（CVSS 7.5）"}
+  date: {vi: "Công bố 2026-11-23 · CVSS 3.1 7.5 · Vá ở 12.74.0+ / 13.38.0+ (khuyến nghị 13.39.0+) · 11.x EOL", ja: "2026年11月23日公表 · CVSS 3.1 7.5 · 12.74.0+ / 13.38.0+（推奨 13.39.0+）で修正済み · 11.x EOL"}
+  link: {vi: "Xem phân tích & hướng dẫn →", ja: "分析・対策ガイドを見る →"}
+  items:
+    - sev: high
+      label: {vi: "Nguy cơ", ja: "リスク"}
+      text: {vi: "Middleware mặc định <code>TransformsRequest</code> (<code>TrimStrings</code>) lặp nối chuỗi <code>$keyPrefix.$key</code> trong <code>cleanArray()</code>: payload JSON ~590 KB có 1 key dài + mảng lớn ép PHP cấp phát ~43 GB RAM / ~30s CPU trước khi xác thực.", ja: "標準ミドルウェア <code>TransformsRequest::cleanArray()</code> の文字列結合により、約 590 KB の JSON で約 43 GB のメモリ確保・約 30 秒の CPU 消費を引き起こし認証前にワーカーを枯渇。"}
+    - sev: crit
+      label: {vi: "Phạm vi", ja: "影響範囲"}
+      text: {vi: "Laravel <code>12.x &lt; 12.74.0</code>, <code>13.x &lt; 13.38.0</code>, và toàn bộ <code>11.x</code> / <code>≤ 10.x</code> (đã EOL 2026-03-12, không có bản vá).", ja: "Laravel <code>12.x &lt; 12.74.0</code>、<code>13.x &lt; 13.38.0</code>、および <code>11.x</code>・<code>10.x 以前</code>（EOL 済み、修正版なし）。"}
+    - sev: low
+      label: {vi: "Khắc phục", ja: "対策"}
+      text: {vi: "Nâng cấp <code>laravel/framework</code> lên <strong><code>12.74.0+</code></strong> hoặc <strong><code>13.39.0+</code></strong> (tối thiểu <code>13.38.0</code>) và restart Octane workers nếu dùng.", ja: "<code>laravel/framework</code> を <strong><code>12.74.0+</code></strong> または <strong><code>13.39.0+</code></strong>（最低 <code>13.38.0</code>）へ更新し、Octane 利用時はワーカーを再起動。"}
+
+# disclosed: 2026-11-23
 - id: chrome-cve-2026-134401
   category: vulnerability
   month: "2026-11"
@@ -599,6 +622,29 @@
     - sev: low
       label: {vi: "Bồi thường", ja: "補償"}
       text: {vi: "Đến 12/11, 2.943 tài khoản yêu cầu bồi thường khoảng 2,998 tỷ JPY; chi phí trực tiếp dự kiến 3,05 tỷ JPY, chưa phải số tiền chi trả đã xác nhận.", ja: "11月12日時点の損失補償申請は2,943口座・約29.98億円。直接費用は約30.5億円を見込むが、確定した支払額ではない。"}
+
+# disclosed: 2026-10-19
+- id: laravel-cve-2026-114509
+  category: vulnerability
+  month: "2026-10"
+  path: "featured/vulnerabilities/laravel-cve-2026-114509/analysis/"
+  icon: "🔺"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL"}
+  nav: {vi: "Laravel CVE-2026-114509", ja: "Laravel CVE-2026-114509"}
+  title: {vi: "Laravel Framework CVE-2026-114509 — Vượt xác thực TokenGuard trên MySQL/MariaDB (CVSS 9.2)", ja: "Laravel Framework CVE-2026-114509 — MySQL/MariaDB 環境における TokenGuard 認証バイパス（CVSS 9.2）"}
+  date: {vi: "Công bố 2026-10-19 · GHSA-f9x3-7vq9-cph6 · CVSS 4.0 9.2 · Vá ở 10.50.4 / 11.56.1 / 12.68.0 / 13.29.0+", ja: "2026年10月19日公表 · GHSA-f9x3-7vq9-cph6 · CVSS 4.0 9.2 · 10.50.4 / 11.56.1 / 12.68.0 / 13.29.0+ で修正済み"}
+  link: {vi: "Xem phân tích & hướng dẫn →", ja: "分析・対策ガイドを見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Nguy cơ", ja: "リスク"}
+      text: {vi: "<code>TokenGuard</code> không kiểm tra <code>is_string($token)</code>; input dạng mảng kết hợp ép kiểu ngầm của MySQL/MariaDB (<code>WHERE api_token IN (0)</code>) cho phép giả danh người dùng đầu tiên không cần token.", ja: "<code>TokenGuard</code> が <code>is_string($token)</code> を検証せず、配列入力と MySQL/MariaDB の暗黙的型変換（<code>WHERE api_token IN (0)</code>）によりトークンなしで先頭ユーザーになりすまし可能。"}
+    - sev: high
+      label: {vi: "Phạm vi", ja: "影響範囲"}
+      text: {vi: "Ứng dụng Laravel dùng <code>'driver' =&gt; 'token'</code> (không hash) với MySQL/MariaDB; Sanctum, Passport và session guard không bị ảnh hưởng.", ja: "MySQL/MariaDB 環境で非ハッシュの <code>'driver' =&gt; 'token'</code> を利用するアプリのみ対象（Sanctum・Passport・セッションガードは対象外）。"}
+    - sev: low
+      label: {vi: "Khắc phục", ja: "対策"}
+      text: {vi: "Nâng cấp lên <strong><code>10.50.4+</code></strong> / <strong><code>11.56.1+</code></strong> / <strong><code>12.68.0+</code></strong> / <strong><code>13.29.0+</code></strong> (khuyến nghị <code>12.74.0+</code> / <code>13.39.0+</code>) hoặc chuyển sang Sanctum.", ja: "<strong><code>10.50.4+</code></strong> / <strong><code>11.56.1+</code></strong> / <strong><code>12.68.0+</code></strong> / <strong><code>13.29.0+</code></strong>（推奨 <code>12.74.0+</code> / <code>13.39.0+</code>）へ更新、または Sanctum へ移行。"}
 
 # disclosed: 2026-09-26
 - id: keio-group-2026
