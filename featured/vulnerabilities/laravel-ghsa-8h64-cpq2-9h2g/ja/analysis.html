@@ -197,10 +197,69 @@ composer audit</code></pre>
 
 <section class="an-sec">
 <h2 id="remediation">4. 恒久対策・暫定対策</h2>
-<ul>
-  <li><strong>恒久対策（推奨）：</strong><code>laravel/framework</code> を <strong><code>12.74.0+</code></strong> または <strong><code>13.39.0+</code></strong>（最低 <code>13.38.0</code>）へ更新します。<strong>Laravel Octane</strong> 環境ではデプロイ後にワーカーを再起動してください。</li>
-  <li><strong>暫定対策：</strong>公式の回避策はありません。<code>TrimStrings</code> / <code>ConvertEmptyStringsToNull</code> を無効化すると入力正規化が変わるため推奨されません。リバースプロキシ／WAF でリクエストボディサイズを制限しつつ、早急にフレームワークを更新してください。</li>
-</ul>
+<figure class="fig">
+<svg viewBox="0 0 740 200" role="img" aria-label="GHSA-8h64-cpq2-9h2g 対応ワークフロー">
+  <defs>
+    <marker id="jd4j" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker>
+  </defs>
+  <rect class="box" x="0" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="83.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">棚卸し</text>
+  <text x="83.5" y="68" text-anchor="middle" font-size="11" class="mut">composer.lock (11.x/12.x/13.x)</text>
+  <circle cx="16" cy="16" r="12" fill="var(--high)"/><text x="16" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text>
+  <line x1="167" y1="53" x2="189" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd4j)"/>
+  <rect class="box" x="191" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="274.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">アップグレード</text>
+  <text x="274.5" y="68" text-anchor="middle" font-size="11" class="mut">12.74.0+ / 13.39.0+ (11.x→12.x)</text>
+  <circle cx="207" cy="16" r="12" fill="var(--high)"/><text x="207" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text>
+  <line x1="358" y1="53" x2="380" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd4j)"/>
+  <rect class="box" x="382" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="465.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">デプロイ・再起動</text>
+  <text x="465.5" y="68" text-anchor="middle" font-size="11" class="mut">イメージ再構築 / Octane 再起動</text>
+  <circle cx="398" cy="16" r="12" fill="var(--high)"/><text x="398" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text>
+  <line x1="549" y1="53" x2="571" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd4j)"/>
+  <rect class="box" x="573" y="16" width="167" height="74" rx="8" style="stroke:var(--low);stroke-width:1.6"/>
+  <text x="656.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">検証・監視</text>
+  <text x="656.5" y="68" text-anchor="middle" font-size="11" class="mut">composer audit・413 / 504</text>
+  <circle cx="589" cy="16" r="12" fill="var(--low)"/><text x="589" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text>
+  <rect x="0" y="116" width="740" height="70" rx="8" fill="none" stroke="var(--high)" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="16" y="141" font-size="12.5" font-weight="700" fill="currentColor">即時更新が困難な場合（特に EOL の 11.x）：</text>
+  <text x="16" y="164" font-size="11.5" class="mut">nginx/WAF でボディ上限設定、PHP-FPM の request_terminate_timeout / memory_limit 制限、JSON エンドポイントのレート制限を実施。</text>
+</svg>
+<figcaption>GHSA-8h64-cpq2-9h2g 向けの推奨対応フロー。</figcaption>
+</figure>
+
+<h3>方法 1：修正版へのアップグレード（推奨）</h3>
+<ol>
+  <li><strong><code>laravel/framework</code> の更新：</strong><strong><code>12.74.0+</code></strong>（12.x）または <strong><code>13.39.0+</code></strong>（13.x。<code>13.38.0</code> で <code>$maxKeyBytes = 20 MB</code> 制限を導入、<code>13.39.0</code> で配列 copy-on-write 抑止と <code>TrimStrings</code> 最適化を追加）へ更新します：
+    <pre><code class="language-bash">composer update laravel/framework --with-all-dependencies
+composer show laravel/framework | grep versions
+composer audit</code></pre>
+  </li>
+  <li><strong>Laravel 11.x 以前を稼働中の場合：</strong>11.x はセキュリティサポート終了済み（<code>2026-03-12</code>）で公式パッチは提供されません。<code>12.74.0+</code> または <code>13.39.0+</code> への移行計画を立てつつ、移行完了までは方法 2 の防御策を適用してください。</li>
+  <li><strong><code>$maxKeyBytes</code> の調整（必要な場合）：</strong>更新後、<code>TransformsRequest</code> のサブクラスで <code>protected $maxKeyBytes</code> をオーバーライドし、小規模 API では上限をさらに引き下げる（例：2 MB）ことも可能です。</li>
+  <li><strong>デプロイ・キャッシュ削除・ワーカー再起動：</strong>
+    <pre><code class="language-bash">php artisan optimize:clear
+# Laravel Octane 利用時（メモリ上のミドルウェアインスタンス更新のため必須）：
+php artisan octane:reload
+# または PHP-FPM / コンテナを再起動</code></pre>
+  </li>
+</ol>
+
+<h3>方法 2：暫定対策・境界防御（即時更新が困難な場合）</h3>
+<blockquote class="callout"><p>公式アドバイザリに<strong>アップグレード以外の回避策は記載されていません</strong>。<code>TrimStrings</code> / <code>ConvertEmptyStringsToNull</code> を <code>skipWhen()</code> 等で無効化するとアプリ全体の入力正規化（空文字の null 変換や前後空白除去）が変わるため推奨されません。更新までの間は以下の多層防御で DoS リスクを低減してください。</p></blockquote>
+<ol>
+  <li><strong>リバースプロキシ／WAF でのボディサイズ制限：</strong>nginx / ALB / Cloudflare 側で <code>Content-Length</code> 上限を引き下げます（約 590 KB 程度でも発症し得る点に留意）：
+    <pre><code class="language-nginx"># nginx：大容量アップロード不要な API 向けの上限設定例
+client_max_body_size 256k;</code></pre>
+  </li>
+  <li><strong>PHP-FPM のリソース・タイムアウト制限：</strong>悪意ある 1 リクエストがワーカープール全体を長時間占有しないよう上限を設定します：
+    <pre><code class="language-ini">; php-fpm pool (www.conf) および php.ini
+request_terminate_timeout = 15s
+memory_limit = 256M</code></pre>
+  </li>
+  <li><strong>EOL 系統（11.x 等）向けの先行ガードミドルウェア：</strong>11.x の移行に時間を要する場合、HTTP スタックの最前段（<code>TrimStrings</code> より前）にミドルウェアを配置し、<code>Content-Type: application/json</code> で単一キー長や要素数が過大なリクエストを早期拒否する対策が有効です。</li>
+  <li><strong>監視指標：</strong><code>502 Bad Gateway</code> / <code>504 Gateway Timeout</code> の急増、PHP-FPM の <code>max_children reached</code>、およびワーカーの OOM kill が連続発生していないか監視してください。</li>
+</ol>
 </section>
 
 <section class="an-sec">

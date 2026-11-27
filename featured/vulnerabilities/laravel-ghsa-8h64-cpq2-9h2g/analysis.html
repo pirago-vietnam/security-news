@@ -195,10 +195,69 @@ composer audit</code></pre>
 
 <section class="an-sec">
 <h2 id="remediation">4. Khắc phục &amp; Biện pháp tạm thời</h2>
-<ul>
-  <li><strong>Nâng cấp triệt để (Khuyến nghị):</strong> cập nhật <code>laravel/framework</code> lên <strong><code>12.74.0+</code></strong> hoặc <strong><code>13.39.0+</code></strong> (tối thiểu <code>13.38.0</code>). Với <strong>Laravel Octane</strong>, bắt buộc restart/reload workers sau khi deploy.</li>
-  <li><strong>Biện pháp tạm thời:</strong> Advisory không công bố workaround chính thức. Không nên tùy tiện bỏ <code>TrimStrings</code> / <code>ConvertEmptyStringsToNull</code> vì làm thay đổi chuẩn hóa input toàn hệ thống; tạm thời siết kích thước body ở reverse proxy / WAF (<code>client_max_body_size</code>) và đẩy nhanh lịch nâng cấp (đặc biệt với các dự án còn chạy 11.x EOL).</li>
-</ul>
+<figure class="fig">
+<svg viewBox="0 0 740 200" role="img" aria-label="Quy trình xử lý GHSA-8h64-cpq2-9h2g">
+  <defs>
+    <marker id="jd4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker>
+  </defs>
+  <rect class="box" x="0" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="83.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Kiểm kê</text>
+  <text x="83.5" y="68" text-anchor="middle" font-size="11" class="mut">composer.lock (11.x/12.x/13.x)</text>
+  <circle cx="16" cy="16" r="12" fill="var(--high)"/><text x="16" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text>
+  <line x1="167" y1="53" x2="189" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd4)"/>
+  <rect class="box" x="191" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="274.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Nâng cấp</text>
+  <text x="274.5" y="68" text-anchor="middle" font-size="11" class="mut">12.74.0+ / 13.39.0+ (11.x→12.x)</text>
+  <circle cx="207" cy="16" r="12" fill="var(--high)"/><text x="207" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text>
+  <line x1="358" y1="53" x2="380" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd4)"/>
+  <rect class="box" x="382" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="465.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Deploy &amp; Restart</text>
+  <text x="465.5" y="68" text-anchor="middle" font-size="11" class="mut">rebuild image / Octane reload</text>
+  <circle cx="398" cy="16" r="12" fill="var(--high)"/><text x="398" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text>
+  <line x1="549" y1="53" x2="571" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jd4)"/>
+  <rect class="box" x="573" y="16" width="167" height="74" rx="8" style="stroke:var(--low);stroke-width:1.6"/>
+  <text x="656.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Xác minh &amp; Giám sát</text>
+  <text x="656.5" y="68" text-anchor="middle" font-size="11" class="mut">composer audit · 413 / 504</text>
+  <circle cx="589" cy="16" r="12" fill="var(--low)"/><text x="589" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text>
+  <rect x="0" y="116" width="740" height="70" rx="8" fill="none" stroke="var(--high)" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="16" y="141" font-size="12.5" font-weight="700" fill="currentColor">Chưa nâng cấp được ngay (đặc biệt nhánh 11.x EOL):</text>
+  <text x="16" y="164" font-size="11.5" class="mut">Giới hạn body ở nginx/WAF, giới hạn request_terminate_timeout / memory_limit PHP-FPM và rate-limit endpoint JSON.</text>
+</svg>
+<figcaption>Quy trình xử lý đề xuất cho GHSA-8h64-cpq2-9h2g.</figcaption>
+</figure>
+
+<h3>Cách 1: Nâng cấp lên phiên bản đã vá (Khuyến nghị)</h3>
+<ol>
+  <li><strong>Cập nhật <code>laravel/framework</code>:</strong> nâng lên <strong><code>12.74.0+</code></strong> (nhánh 12.x) hoặc <strong><code>13.39.0+</code></strong> (nhánh 13.x; bản <code>13.38.0</code> đã có giới hạn <code>$maxKeyBytes = 20 MB</code>, bản <code>13.39.0</code> bổ sung tối ưu tránh copy-on-write mảng và kiểm tra <code>is_string()</code> sớm trong <code>TrimStrings</code>):
+    <pre><code class="language-bash">composer update laravel/framework --with-all-dependencies
+composer show laravel/framework | grep versions
+composer audit</code></pre>
+  </li>
+  <li><strong>Nếu đang chạy Laravel 11.x trở xuống:</strong> nhánh 11.x đã hết hạn hỗ trợ bảo mật (<code>2026-03-12</code>) và không có bản vá chính thức. Cần lên kế hoạch nâng cấp framework lên Laravel <code>12.74.0+</code> hoặc <code>13.39.0+</code> (hoặc trong thời gian chuyển đổi bắt buộc áp dụng các lớp bảo vệ biên ở Cách 2).</li>
+  <li><strong>Tùy chỉnh ngưỡng <code>$maxKeyBytes</code> (nếu app hợp lệ cần key lớn/nhỏ hơn 20 MB):</strong> sau khi nâng cấp, các lớp con kế thừa <code>TransformsRequest</code> có thể ghi đè thuộc tính <code>protected $maxKeyBytes</code> để siết chặt hơn (ví dụ <code>2 * 1024 * 1024</code> = 2 MB cho API nhỏ).</li>
+  <li><strong>Deploy, xóa cache &amp; restart workers:</strong>
+    <pre><code class="language-bash">php artisan optimize:clear
+# Nếu dùng Laravel Octane (bắt buộc để reset instance middleware trong bộ nhớ):
+php artisan octane:reload
+# Hoặc restart PHP-FPM / container</code></pre>
+  </li>
+</ol>
+
+<h3>Cách 2: Biện pháp tạm thời &amp; phòng thủ biên (khi chưa thể nâng cấp ngay)</h3>
+<blockquote class="callout"><p>Advisory chính thức <strong>không nêu workaround ngoài nâng cấp</strong>. Không nên tùy tiện vô hiệu hóa <code>TrimStrings</code> / <code>ConvertEmptyStringsToNull</code> qua <code>skipWhen()</code> vì sẽ làm thay đổi hành vi chuẩn hóa dữ liệu đầu vào (chuỗi rỗng không thành <code>null</code>, khoảng trắng không bị cắt) trên toàn ứng dụng. Các bước dưới đây giúp giảm thiểu rủi ro DoS trong lúc chờ nâng cấp.</p></blockquote>
+<ol>
+  <li><strong>Giới hạn kích thước body ở Reverse Proxy / WAF:</strong> đặt ngưỡng hợp lý cho <code>Content-Length</code> trên nginx / ALB / Cloudflare để giảm kích thước JSON kẻ tấn công có thể gửi (lưu ý payload ~590 KB vẫn có thể gây lỗi nếu không kiểm tra thêm):
+    <pre><code class="language-nginx"># nginx: siết body cho API nếu không upload file lớn
+client_max_body_size 256k;</code></pre>
+  </li>
+  <li><strong>Giới hạn tài nguyên PHP-FPM để tránh treo toàn bộ worker pool:</strong> cấu hình timeout và bộ nhớ mỗi worker để một request độc hại không giữ worker quá lâu:
+    <pre><code class="language-ini">; php-fpm pool (www.conf) &amp; php.ini
+request_terminate_timeout = 15s
+memory_limit = 256M</code></pre>
+  </li>
+  <li><strong>Middleware kiểm tra nhanh JSON trước <code>TrimStrings</code> (cho nhánh EOL như 11.x chưa nâng cấp kịp):</strong> nếu bắt buộc phải bảo vệ hệ thống 11.x trong thời gian chờ nâng cấp, có thể chèn một middleware ở đầu stack HTTP (trước <code>TrimStrings</code>) để từ chối request có <code>Content-Type: application/json</code> khi phát hiện key đơn lẻ quá dài (ví dụ &gt; 64 KB) hoặc tổng số phần tử vượt ngưỡng an toàn.</li>
+  <li><strong>Giám sát vận hành:</strong> theo dõi đột biến lỗi <code>502 Bad Gateway</code> / <code>504 Gateway Timeout</code>, cảnh báo PHP-FPM <code>max_children reached</code>, hoặc worker bị OOM kill khi nhận nhiều request JSON kích thước trung bình từ cùng dải IP.</li>
+</ol>
 </section>
 
 <section class="an-sec">
