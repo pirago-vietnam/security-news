@@ -156,17 +156,96 @@ mvn org.simplify4u.plugins:pgpverify-maven-plugin:check
 </section>
 
 <section class="an-sec">
-<h2 id="remediation">4. 対策と恒久的なビルド強化</h2>
+<h2 id="remediation">4. 恒久対策・暫定対策</h2>
 <figure class="fig">
-<svg viewBox="0 0 740 176" role="img" aria-label="Java サプライチェーン強化の4ステップ"><defs><marker id="jm4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="20" width="167" height="78" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="83.5" y="48" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">棚卸し・走査</text><text x="83.5" y="66" text-anchor="middle" font-size="10.5" class="mut">osv-scanner +</text><text x="83.5" y="81" text-anchor="middle" font-size="10.5" class="mut">CI キャッシュ</text><circle cx="16" cy="20" r="12" fill="var(--high)"/><text x="16" y="24.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><line x1="167" y1="59" x2="189" y2="59" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm4)"/><rect class="box" x="191" y="20" width="167" height="78" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="274.5" y="48" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">隔離・鍵ローテ</text><text x="274.5" y="66" text-anchor="middle" font-size="10.5" class="mut">悪性パッケージ</text><text x="274.5" y="81" text-anchor="middle" font-size="10.5" class="mut">検知時</text><circle cx="207" cy="20" r="12" fill="var(--crit)"/><text x="207" y="24.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><line x1="358" y1="59" x2="380" y2="59" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm4)"/><rect class="box" x="382" y="20" width="167" height="78" rx="8" style="stroke:var(--med);stroke-width:1.6"/><text x="465.5" y="48" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">リポジトリ・版固定</text><text x="465.5" y="66" text-anchor="middle" font-size="10.5" class="mut">mirrorOf * ·</text><text x="465.5" y="81" text-anchor="middle" font-size="10.5" class="mut">exclusiveContent</text><circle cx="398" cy="20" r="12" fill="var(--med)"/><text x="398" y="24.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><line x1="549" y1="59" x2="571" y2="59" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm4)"/><rect class="box" x="573" y="20" width="167" height="78" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="656.5" y="48" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">検証・レビュー</text><text x="656.5" y="66" text-anchor="middle" font-size="10.5" class="mut">PGP · sha256 ·</text><text x="656.5" y="81" text-anchor="middle" font-size="10.5" class="mut">CI 権限分離</text><circle cx="589" cy="20" r="12" fill="var(--low)"/><text x="589" y="24.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><rect x="0" y="114" width="740" height="52" rx="8" fill="var(--bg-subtle)" stroke="var(--line)"/><text x="370" y="135" text-anchor="middle" font-size="11" fill="currentColor">注意：マルウェアに「修正版」はありません。削除とキャッシュ破棄が必須です。</text><text x="370" y="153" text-anchor="middle" font-size="11" class="mut">正規座標（例：com.github.scribejava:scribejava-core）を固定バージョンで指定してください。</text></svg>
-<figcaption>Java ビルドのサプライチェーン強化と悪性パッケージ検知時の初動 4 ステップ。</figcaption>
+<svg viewBox="0 0 740 200" role="img" aria-label="Java サプライチェーン強化の4ステップ">
+  <defs>
+    <marker id="jm4j" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker>
+  </defs>
+  <rect class="box" x="0" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="83.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">走査・棚卸し</text>
+  <text x="83.5" y="68" text-anchor="middle" font-size="10.5" class="mut">osv-scanner・キャッシュ</text>
+  <circle cx="16" cy="16" r="12" fill="var(--high)"/><text x="16" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text>
+  <line x1="167" y1="53" x2="189" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm4j)"/>
+  <rect class="box" x="191" y="16" width="167" height="74" rx="8" style="stroke:var(--crit);stroke-width:1.6"/>
+  <text x="274.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">削除・鍵ローテ</text>
+  <text x="274.5" y="68" text-anchor="middle" font-size="11" class="mut">MAL-2025-* 検知時</text>
+  <circle cx="207" cy="16" r="12" fill="var(--crit)"/><text x="207" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text>
+  <line x1="358" y1="53" x2="380" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm4j)"/>
+  <rect class="box" x="382" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="465.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">リポジトリ・版固定</text>
+  <text x="465.5" y="68" text-anchor="middle" font-size="10.5" class="mut">mirrorOf * · exclusiveContent</text>
+  <circle cx="398" cy="16" r="12" fill="var(--high)"/><text x="398" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text>
+  <line x1="549" y1="53" x2="571" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm4j)"/>
+  <rect class="box" x="573" y="16" width="167" height="74" rx="8" style="stroke:var(--low);stroke-width:1.6"/>
+  <text x="656.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">検証・CI 権限分離</text>
+  <text x="656.5" y="68" text-anchor="middle" font-size="11" class="mut">PGP・sha256・lockfile</text>
+  <circle cx="589" cy="16" r="12" fill="var(--low)"/><text x="589" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text>
+  <rect x="0" y="116" width="740" height="70" rx="8" fill="none" stroke="var(--high)" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="16" y="141" font-size="12.5" font-weight="700" fill="currentColor">リポジトリ基盤の即時統一が困難な場合（暫定対策）：</text>
+  <text x="16" y="164" font-size="11.5" class="mut">mvn -C verify の強制、mirrorOf * / exclusiveContent の適用、PR ビルドからの本番/GitHub 鍵隔離を実施。</text>
+</svg>
+<figcaption>悪性パッケージ検知時の初動対応と Java ビルド（Maven / Gradle）サプライチェーン強化の 4 ステップ。</figcaption>
 </figure>
 
-<ul>
-  <li><strong>単一ゲートウェイ化：</strong> すべての取得を社内リポジトリマネージャ経由（<code>mirrorOf *</code>）に統一し、<code>pom.xml</code> 内の野良 <code>&lt;repositories&gt;</code> 定義を排除します。</li>
-  <li><strong>内部 groupId の保護：</strong> Gradle の <code>exclusiveContent</code> で内部グループを社内リポジトリに固定し、Maven Central 上の対応名前空間も事前登録して乗っ取りを防ぎます。</li>
-  <li><strong>バージョン固定と PR レビュー強化：</strong> <code>./gradlew dependencies --write-locks</code>（<code>gradle.lockfile</code>）で版を固定し、PR 用 CI ジョブから公開・デプロイ鍵を分離、<code>gradle-wrapper.properties</code> の <code>distributionSha256Sum</code> を設定します。</li>
-</ul>
+<h3>方法 1：恒久対策とビルドパイプラインの標準化（推奨）</h3>
+<ol>
+  <li><strong>悪性パッケージの削除・正規座標への置換とキャッシュ完全破棄（検知時）：</strong>マルウェアに修正版はありません。<code>io.github.leetcrunch:scribejava-core</code>（<code>MAL-2025-2552</code>）は正規の <code>com.github.scribejava:scribejava-core</code>（最新 <code>8.3.3</code>）へ切り替え、<code>org.mvnpm:posthog-node</code> <code>4.18.1</code>（<code>MAL-2025-191470</code>）は <code>pom.xml</code> / <code>build.gradle(.kts)</code> から完全削除してください。あわせて端末・CI ランナー・社内プロキシのキャッシュを破棄し、OAuth・GitHub・Cloud 鍵を<strong>直ちにローテーション</strong>します：
+    <pre><code class="language-bash"># 悪性座標を含む Maven / Gradle キャッシュを削除して再走査
+rm -rf ~/.m2/repository/io/github/leetcrunch ~/.m2/repository/org/mvnpm/posthog-node/4.18.1
+rm -rf ~/.gradle/caches/modules-2/files-2.1/io.github.leetcrunch ~/.gradle/caches/modules-2/files-2.1/org.mvnpm
+osv-scanner scan source -r .</code></pre>
+  </li>
+  <li><strong>単一リポジトリゲートウェイ化・バージョン固定・署名検証の有効化：</strong>すべての Maven 取得を社内リポジトリマネージャ経由（<code>mirrorOf *</code>）へ統一し、<code>pom.xml</code> の野良 <code>&lt;repositories&gt;</code> を排除します。Gradle では内部 groupId に <code>exclusiveContent</code> を設定し、Maven Central 上の名前空間も事前登録したうえで、ロックファイルと PGP/SHA-256 検証を有効化します：
+    <pre><code class="language-bash"># Gradle：依存バージョンを gradle.lockfile に固定
+./gradlew dependencies --write-locks
+
+# Gradle：PGP + SHA256 検証ファイルを生成（クリーン環境で実行し、コミット前に要レビュー）
+./gradlew --write-verification-metadata pgp,sha256 --export-keys help
+
+# Maven：厳格チェックサム検証と PGP 署名検証を実行
+mvn -C verify
+mvn org.simplify4u.plugins:pgpverify-maven-plugin:check</code></pre>
+  </li>
+  <li><strong>クリーンビルドとデプロイ後検証：</strong><code>gradle-wrapper.properties</code> の <code>distributionSha256Sum</code> を確認し、旧キャッシュを持たないクリーンなランナー／コンテナで再ビルド・再配布したのち、実効リポジトリ設定と <code>osv-scanner</code> の結果を検証します：
+    <pre><code class="language-bash">mvn help:effective-settings
+./gradlew buildEnvironment
+osv-scanner scan source -r .</code></pre>
+  </li>
+</ol>
+
+<h3>方法 2：暫定対策・多層防御（リポジトリ統一・検証導入までの間）</h3>
+<blockquote class="callout"><p>Gradle・Maven の公式指針はリポジトリ管理、ロックファイル、チェックサム／署名検証の適用を推奨しています。以下の設定はパイプライン標準化を完了するまでの間、ビルド時コード実行や依存関係混乱のリスクを抑えるための PiraGo による多層防御ガイドです。</p></blockquote>
+<ol>
+  <li><strong><code>mirrorOf *</code>（Maven）と <code>exclusiveContent</code>（Gradle）の即時適用：</strong>サードパーティ POM による外部リポジトリ参照や、未登録の内部 groupId が公開リポジトリから解決されるのを防ぎます：
+    <pre><code class="language-xml">&lt;!-- ~/.m2/settings.xml：すべての解決を社内リポジトリマネージャ経由に強制 --&gt;
+&lt;mirrors&gt;
+  &lt;mirror&gt;
+    &lt;id&gt;internal-repo&lt;/id&gt;
+    &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;
+    &lt;url&gt;https://repo.internal.example/repository/maven-public/&lt;/url&gt;
+  &lt;/mirror&gt;
+&lt;/mirrors&gt;</code></pre>
+    <pre><code class="language-kotlin">// settings.gradle.kts：内部 groupId の解決先を社内リポジトリに限定
+dependencyResolutionManagement {
+    repositories {
+        exclusiveContent {
+            forRepository { maven { url = uri("https://repo.internal.example/repository/internal/") } }
+            filter { includeGroupByRegex("com\\.internal\\..*") }
+        }
+        mavenCentral()
+    }
+}</code></pre>
+  </li>
+  <li><strong>CI 権限分離とビルド時実行面の制限：</strong><code>./gradlew help</code> 実行時点で設定フェーズのコードが動くため、Pull Request ビルド用 CI ジョブから公開・デプロイ鍵、OAuth、GitHub トークンを完全に分離します。JDK 23 以上（<code>-proc:full</code> 無効）を用いてクラスパスからのアノテーション自動実行を抑止し、<code>pom.xml</code>、<code>build.gradle(.kts)</code>、<code>settings.gradle(.kts)</code>、<code>gradle-wrapper.properties</code> の変更を本番コードと同等にレビューしてください。</li>
+  <li><strong>監視・ログ点検（Threat Hunting）：</strong><code>MAL-2025-2552</code> は<strong>毎月15日</strong>のみ OAuth 認証情報を外部送信し、<code>MAL-2025-191470</code>（<em>Sha1-Hulud</em>）は GitHub Actions 永続化やホームディレクトリ破壊を行うため、以下を継続的に確認します：
+    <ul>
+      <li>開発端末・CI ランナーにおける<strong>毎月15日前後</strong>の不審な DNS／外部 HTTP 通信ログ。</li>
+      <li>GitHub リポジトリ／アカウント上の不審な <code>.github/workflows/*.yml</code>、SSH 鍵、トークン、新規リポジトリの有無。</li>
+      <li>通常の CVE スキャナが見逃す <code>MAL-</code> 記録を検知するため、CI で <code>osv-scanner scan source -r .</code> を定期実行。</li>
+    </ul>
+  </li>
+</ol>
 </section>
 
 <section class="an-sec">

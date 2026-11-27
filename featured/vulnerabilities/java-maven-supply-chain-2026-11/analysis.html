@@ -156,15 +156,94 @@ mvn org.simplify4u.plugins:pgpverify-maven-plugin:check
 <section class="an-sec">
 <h2 id="remediation">4. Khắc phục &amp; Phòng ngừa dài hạn</h2>
 <figure class="fig">
-<svg viewBox="0 0 740 176" role="img" aria-label="Quy trình 4 bước củng cố chuỗi cung ứng Java"><defs><marker id="jm4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="20" width="167" height="78" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="83.5" y="48" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Kiểm kê &amp; Quét</text><text x="83.5" y="66" text-anchor="middle" font-size="10.5" class="mut">osv-scanner +</text><text x="83.5" y="81" text-anchor="middle" font-size="10.5" class="mut">cache CI/dev</text><circle cx="16" cy="20" r="12" fill="var(--high)"/><text x="16" y="24.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><line x1="167" y1="59" x2="189" y2="59" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm4)"/><rect class="box" x="191" y="20" width="167" height="78" rx="8" style="stroke:var(--crit);stroke-width:1.6"/><text x="274.5" y="48" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Cách ly &amp; Xoay khóa</text><text x="274.5" y="66" text-anchor="middle" font-size="10.5" class="mut">nếu phát hiện</text><text x="274.5" y="81" text-anchor="middle" font-size="10.5" class="mut">gói độc hại</text><circle cx="207" cy="20" r="12" fill="var(--crit)"/><text x="207" y="24.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><line x1="358" y1="59" x2="380" y2="59" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm4)"/><rect class="box" x="382" y="20" width="167" height="78" rx="8" style="stroke:var(--med);stroke-width:1.6"/><text x="465.5" y="48" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Gom Repo &amp; Lock</text><text x="465.5" y="66" text-anchor="middle" font-size="10.5" class="mut">mirrorOf * ·</text><text x="465.5" y="81" text-anchor="middle" font-size="10.5" class="mut">exclusiveContent</text><circle cx="398" cy="20" r="12" fill="var(--med)"/><text x="398" y="24.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><line x1="549" y1="59" x2="571" y2="59" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm4)"/><rect class="box" x="573" y="20" width="167" height="78" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="656.5" y="48" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Xác minh &amp; Review</text><text x="656.5" y="66" text-anchor="middle" font-size="10.5" class="mut">PGP · sha256 ·</text><text x="656.5" y="81" text-anchor="middle" font-size="10.5" class="mut">tách token CI</text><circle cx="589" cy="20" r="12" fill="var(--low)"/><text x="589" y="24.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><rect x="0" y="114" width="740" height="52" rx="8" fill="var(--bg-subtle)" stroke="var(--line)"/><text x="370" y="135" text-anchor="middle" font-size="11" fill="currentColor">Lưu ý: Gói độc hại không có "bản vá nâng cấp" — phải gỡ bỏ và xóa sạch cache.</text><text x="370" y="153" text-anchor="middle" font-size="11" class="mut">Ghim đúng tọa độ chính thức ở phiên bản cố định (vd: com.github.scribejava:scribejava-core).</text></svg>
-<figcaption>Bốn bước củng cố quy trình build Java và ứng phó khi phát hiện gói độc hại.</figcaption>
+<svg viewBox="0 0 740 200" role="img" aria-label="Quy trình 4 bước củng cố chuỗi cung ứng Java">
+  <defs>
+    <marker id="jm4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker>
+  </defs>
+  <rect class="box" x="0" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="83.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Quét &amp; Kiểm kê</text>
+  <text x="83.5" y="68" text-anchor="middle" font-size="11" class="mut">osv-scanner · cây · cache</text>
+  <circle cx="16" cy="16" r="12" fill="var(--high)"/><text x="16" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text>
+  <line x1="167" y1="53" x2="189" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm4)"/>
+  <rect class="box" x="191" y="16" width="167" height="74" rx="8" style="stroke:var(--crit);stroke-width:1.6"/>
+  <text x="274.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Gỡ bỏ &amp; Xoay khóa</text>
+  <text x="274.5" y="68" text-anchor="middle" font-size="11" class="mut">nếu dính MAL-2025-*</text>
+  <circle cx="207" cy="16" r="12" fill="var(--crit)"/><text x="207" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text>
+  <line x1="358" y1="53" x2="380" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm4)"/>
+  <rect class="box" x="382" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="465.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Gom Repo &amp; Lock</text>
+  <text x="465.5" y="68" text-anchor="middle" font-size="10.5" class="mut">mirrorOf * · exclusiveContent</text>
+  <circle cx="398" cy="16" r="12" fill="var(--high)"/><text x="398" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text>
+  <line x1="549" y1="53" x2="571" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#jm4)"/>
+  <rect class="box" x="573" y="16" width="167" height="74" rx="8" style="stroke:var(--low);stroke-width:1.6"/>
+  <text x="656.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Xác minh &amp; Tách CI</text>
+  <text x="656.5" y="68" text-anchor="middle" font-size="11" class="mut">PGP · sha256 · lockfile</text>
+  <circle cx="589" cy="16" r="12" fill="var(--low)"/><text x="589" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text>
+  <rect x="0" y="116" width="740" height="70" rx="8" fill="none" stroke="var(--high)" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="16" y="141" font-size="12.5" font-weight="700" fill="currentColor">Chưa chuẩn hóa toàn bộ repo manager ngay (tạm thời):</text>
+  <text x="16" y="164" font-size="11.5" class="mut">Bật mvn -C verify, ghim mirrorOf * / exclusiveContent và cô lập token deploy/GitHub khỏi job build PR.</text>
+</svg>
+<figcaption>Quy trình xử lý khi phát hiện gói độc hại và 4 bước củng cố chuỗi cung ứng Java (Maven / Gradle).</figcaption>
 </figure>
 
-<ul>
-  <li><strong>Một cửa vào duy nhất:</strong> Định tuyến toàn bộ tải gói qua một repository manager nội bộ với <code>mirrorOf *</code>; xóa bỏ các thẻ <code>&lt;repositories&gt;</code> tự phát trong <code>pom.xml</code>.</li>
-  <li><strong>Ghim groupId nội bộ &amp; đăng ký namespace:</strong> Dùng <code>exclusiveContent</code> trong Gradle cho các groupId nội bộ và đăng ký xác minh namespace tương ứng trên Maven Central để tránh bị chiếm dụng.</li>
-  <li><strong>Khóa phiên bản &amp; rà soát file build như code production:</strong> Tránh version động/dải mở; bật <code>./gradlew dependencies --write-locks</code> (<code>gradle.lockfile</code>); tách biệt token publish/deploy khỏi các CI job build PR; kiểm tra <code>distributionSha256Sum</code> trong <code>gradle-wrapper.properties</code>.</li>
-</ul>
+<h3>Cách 1: Khắc phục triệt để &amp; chuẩn hóa pipeline build (Khuyến nghị)</h3>
+<ol>
+  <li><strong>Gỡ bỏ gói độc hại, thay tọa độ chính thức &amp; xóa sạch cache (nếu phát hiện):</strong> gói độc hại không có bản vá nâng cấp. Nếu dự án dính <code>io.github.leetcrunch:scribejava-core</code> (<code>MAL-2025-2552</code>), chuyển ngay về tọa độ chính thức <code>com.github.scribejava:scribejava-core</code> (bản mới nhất <code>8.3.3</code>); nếu dính <code>org.mvnpm:posthog-node</code> <code>4.18.1</code> (<code>MAL-2025-191470</code>), gỡ bỏ khỏi <code>pom.xml</code> / <code>build.gradle(.kts)</code>, xóa sạch cache cục bộ, cache CI runner, proxy repo nội bộ và <strong>xoay vòng ngay</strong> toàn bộ OAuth, GitHub, Cloud token:
+    <pre><code class="language-bash"># Xóa sạch cache Maven / Gradle chứa tọa độ độc hại và quét lại
+rm -rf ~/.m2/repository/io/github/leetcrunch ~/.m2/repository/org/mvnpm/posthog-node/4.18.1
+rm -rf ~/.gradle/caches/modules-2/files-2.1/io.github.leetcrunch ~/.gradle/caches/modules-2/files-2.1/org.mvnpm
+osv-scanner scan source -r .</code></pre>
+  </li>
+  <li><strong>Gom repo về một cửa vào duy nhất, khóa phiên bản &amp; bật xác minh chữ ký:</strong> định tuyến toàn bộ Maven qua repository manager nội bộ (<code>mirrorOf *</code>), xóa các thẻ <code>&lt;repositories&gt;</code> tự phát trong <code>pom.xml</code>, cấu hình <code>exclusiveContent</code> trong Gradle cho groupId nội bộ và đăng ký xác minh namespace tương ứng trên Maven Central; đồng thời khóa phiên bản và bật kiểm tra PGP/SHA-256:
+    <pre><code class="language-bash"># Gradle: khóa cứng cây phụ thuộc vào gradle.lockfile
+./gradlew dependencies --write-locks
+
+# Gradle: tạo tệp xác minh chữ ký PGP + SHA256 (chạy từ môi trường sạch, review trước khi commit)
+./gradlew --write-verification-metadata pgp,sha256 --export-keys help
+
+# Maven: ép kiểm tra checksum nghiêm ngặt và chữ ký PGP của artifact
+mvn -C verify
+mvn org.simplify4u.plugins:pgpverify-maven-plugin:check</code></pre>
+  </li>
+  <li><strong>Rebuild sạch &amp; xác minh lại sau triển khai:</strong> kiểm tra <code>distributionSha256Sum</code> trong <code>gradle-wrapper.properties</code>, rebuild ứng dụng/container image từ runner sạch không dùng cache cũ, rồi xác minh lại thứ tự repo hiệu lực và quét <code>osv-scanner</code>:
+    <pre><code class="language-bash">mvn help:effective-settings
+./gradlew buildEnvironment
+osv-scanner scan source -r .</code></pre>
+  </li>
+</ol>
+
+<h3>Cách 2: Biện pháp tạm thời &amp; phòng thủ chiều sâu (khi chưa hoàn tất chuẩn hóa repo/verification)</h3>
+<blockquote class="callout"><p>Tài liệu chính thức của Gradle và Maven khuyến nghị kiểm soát repository, khóa phiên bản và xác minh chữ ký/checksum. Các cấu hình bên dưới là hướng dẫn phòng thủ chiều sâu của PiraGo nhằm giảm rủi ro thực thi mã lúc build và dependency confusion trong thời gian chuẩn hóa pipeline.</p></blockquote>
+<ol>
+  <li><strong>Áp đặt cấu hình <code>mirrorOf *</code> (Maven) và <code>exclusiveContent</code> (Gradle):</strong> ngăn build tự động gọi ra repo ngoài từ POM của bên thứ ba hoặc tải nhầm groupId nội bộ từ repo công khai:
+    <pre><code class="language-xml">&lt;!-- ~/.m2/settings.xml: ép mọi yêu cầu tải gói đi qua repository manager nội bộ --&gt;
+&lt;mirrors&gt;
+  &lt;mirror&gt;
+    &lt;id&gt;internal-repo&lt;/id&gt;
+    &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;
+    &lt;url&gt;https://repo.internal.example/repository/maven-public/&lt;/url&gt;
+  &lt;/mirror&gt;
+&lt;/mirrors&gt;</code></pre>
+    <pre><code class="language-kotlin">// settings.gradle.kts: khóa groupId nội bộ chỉ phân giải từ repo nội bộ
+dependencyResolutionManagement {
+    repositories {
+        exclusiveContent {
+            forRepository { maven { url = uri("https://repo.internal.example/repository/internal/") } }
+            filter { includeGroupByRegex("com\\.internal\\..*") }
+        }
+        mavenCentral()
+    }
+}</code></pre>
+  </li>
+  <li><strong>Cô lập quyền CI &amp; siết bề mặt pha build:</strong> tách biệt hoàn toàn token publish/deploy, OAuth và GitHub token khỏi các job build Pull Request (vì plugin trong <code>build.gradle(.kts)</code> chạy ngay khi gọi <code>./gradlew help</code>); dùng JDK 23+ (hoặc không truyền <code>-proc:full</code>) để tắt tự động chạy annotation processor từ classpath; review các thay đổi ở <code>pom.xml</code>, <code>build.gradle(.kts)</code>, <code>settings.gradle(.kts)</code> và <code>gradle-wrapper.properties</code> chặt như code production.</li>
+  <li><strong>Giám sát &amp; rà soát dấu hiệu bất thường (Threat Hunting):</strong> vì <code>MAL-2025-2552</code> chỉ gửi trộm OAuth credentials vào <strong>ngày 15 hằng tháng</strong> (log ngày thường sẽ không thấy) và <code>MAL-2025-191470</code> (<em>Sha1-Hulud</em>) cài persistence qua GitHub Actions hoặc xóa thư mục home, cần rà soát định kỳ:
+    <ul>
+      <li>Log egress / DNS / HTTP outbound từ máy dev và CI runner quanh <strong>ngày 15 hằng tháng</strong>.</li>
+      <li>Các workflow <code>.github/workflows/*.yml</code>, SSH key, token hoặc repository lạ phát sinh trên GitHub.</li>
+      <li>Chạy <code>osv-scanner scan source -r .</code> trong CI để phát hiện các bản ghi <code>MAL-</code> mà máy quét CVE thông thường bỏ sót.</li>
+    </ul>
+  </li>
+</ol>
 </section>
 
 <section class="an-sec">

@@ -136,22 +136,82 @@ kubectl get pods -A -o custom-columns=NS:.metadata.namespace,POD:.metadata.name,
 </section>
 
 <section class="an-sec">
-<h2 id="remediation">4. Khắc phục (4 bước ngắn)</h2>
+<h2 id="remediation">4. Khắc phục &amp; Biện pháp tạm thời</h2>
 <figure class="fig">
-<svg viewBox="0 0 740 104" role="img" aria-label="Quy trình xử lý 4 bước"><defs><marker id="r5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="14" width="167" height="76" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="83.5" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">1. Kiểm kê</text><text x="83.5" y="57" text-anchor="middle" font-size="10.5" class="mut">Tìm bản Ruby đang</text><text x="83.5" y="73" text-anchor="middle" font-size="10.5" class="mut">chạy (app, container)</text><line x1="167" y1="52" x2="189" y2="52" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r5)"/><rect class="box" x="191" y="14" width="167" height="76" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="274.5" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">2. Nâng cấp</text><text x="274.5" y="57" text-anchor="middle" font-size="10.5" class="mut">Lên 3.3.14 / 3.4.13</text><text x="274.5" y="73" text-anchor="middle" font-size="10.5" class="mut">4.0.10 hoặc gói vendor</text><line x1="358" y1="52" x2="380" y2="52" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r5)"/><rect class="box" x="382" y="14" width="167" height="76" rx="8" style="stroke:var(--pirago-blue);stroke-width:1.6"/><text x="465.5" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">3. Rebuild &amp; Restart</text><text x="465.5" y="57" text-anchor="middle" font-size="10.5" class="mut">Build lại image mới,</text><text x="465.5" y="73" text-anchor="middle" font-size="10.5" class="mut">restart toàn bộ worker</text><line x1="549" y1="52" x2="571" y2="52" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r5)"/><rect class="box" x="573" y="14" width="167" height="76" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="656.5" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">4. Xác nhận</text><text x="656.5" y="57" text-anchor="middle" font-size="10.5" class="mut">Chạy ruby -v ngay</text><text x="656.5" y="73" text-anchor="middle" font-size="10.5" class="mut">trong container / pod</text></svg>
+<svg viewBox="0 0 740 200" role="img" aria-label="Quy trình xử lý ruby2ßhell (CVE-2026-132825)">
+  <defs>
+    <marker id="r5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker>
+  </defs>
+  <rect class="box" x="0" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="83.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Kiểm kê</text>
+  <text x="83.5" y="68" text-anchor="middle" font-size="11" class="mut">Ruby, Rails, GitLab, Docker</text>
+  <circle cx="16" cy="16" r="12" fill="var(--high)"/><text x="16" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text>
+  <line x1="167" y1="53" x2="189" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r5)"/>
+  <rect class="box" x="191" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="274.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Nâng cấp</text>
+  <text x="274.5" y="68" text-anchor="middle" font-size="11" class="mut">3.3.14 / 3.4.13 / 4.0.10</text>
+  <circle cx="207" cy="16" r="12" fill="var(--high)"/><text x="207" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text>
+  <line x1="358" y1="53" x2="380" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r5)"/>
+  <rect class="box" x="382" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="465.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Rebuild &amp; Restart</text>
+  <text x="465.5" y="68" text-anchor="middle" font-size="11" class="mut">image mới · ./launcher rebuild</text>
+  <circle cx="398" cy="16" r="12" fill="var(--high)"/><text x="398" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text>
+  <line x1="549" y1="53" x2="571" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r5)"/>
+  <rect class="box" x="573" y="16" width="167" height="74" rx="8" style="stroke:var(--low);stroke-width:1.6"/>
+  <text x="656.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Xác nhận &amp; Rà log</text>
+  <text x="656.5" y="68" text-anchor="middle" font-size="11" class="mut">ruby -v · log crash / WAF</text>
+  <circle cx="589" cy="16" r="12" fill="var(--low)"/><text x="589" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text>
+  <rect x="0" y="116" width="740" height="70" rx="8" fill="none" stroke="var(--high)" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="16" y="141" font-size="12.5" font-weight="700" fill="currentColor">Chưa nâng cấp được ngay (tạm thời):</text>
+  <text x="16" y="164" font-size="11.5" class="mut">Đưa dịch vụ ra sau VPN/allowlist, bật rule Cloudflare/CrowdSec và chặn charset 1-byte cũ.</text>
+</svg>
 <figcaption>Quy trình 4 bước xử lý triệt để cho cả ứng dụng tự build lẫn sản phẩm đóng gói.</figcaption>
 </figure>
+
+<h3>Cách 1: Nâng cấp Ruby &amp; sản phẩm đóng gói (Khuyến nghị)</h3>
 <ol>
-  <li><strong>Ưu tiên dịch vụ lộ internet</strong> (Rails/Sinatra, GitLab, GHES, Discourse, Mastodon, OpenProject, Chatwoot) trước khi PoC RCE lan rộng.</li>
-  <li><strong>Cập nhật phiên bản Ruby</strong> trong <code>.ruby-version</code> / <code>Gemfile</code> / <code>Dockerfile</code> lên <code>3.3.14</code>, <code>3.4.13</code> hoặc <code>4.0.10</code> (hoặc cài bản vá vendor).</li>
-  <li><strong>Rebuild image &amp; restart tiến trình:</strong> tiến trình đang chạy vẫn dùng Ruby cũ nếu không restart; Discourse cần chạy <code>./launcher rebuild app</code>.</li>
-  <li><strong>Kiểm tra lại</strong> bằng <code>ruby -v</code> bên trong môi trường chạy thực tế để chắc chắn đã nhận bản vá.</li>
+  <li><strong>Ưu tiên dịch vụ lộ internet &amp; nâng cấp phiên bản Ruby:</strong> cập nhật <code>.ruby-version</code>, <code>Gemfile</code>, <code>Dockerfile</code> hoặc toolchain (<code>ruby-build v20261119</code>, <code>ruby/setup-ruby</code>) lên <strong><code>3.3.14</code></strong>, <strong><code>3.4.13</code></strong> hoặc <strong><code>4.0.10</code></strong>. Các nhánh <code>&le; 3.2</code> đã EOL cần nâng lên <code>3.3 / 3.4 / 4.0</code> (hoặc dùng bản backport của distro Linux như Debian <code>DSA-6644-1</code> / <code>DLA-4926-1</code>, Ubuntu <code>USN-9176-1</code>, RHEL 8/9/10 <code>RHSA</code>, AL2023 <code>ALAS2023-2026-3509..3511</code>):
+    <pre><code class="language-bash"># Dockerfile: chuyển sang official image đã vá
+# FROM ruby:3.4.13-slim   (hoặc 3.3.14 / 4.0.10)
+
+# rbenv / ruby-build (cần ruby-build &gt;= v20261119)
+rbenv install 3.4.13 &amp;&amp; rbenv local 3.4.13
+
+# Distro Linux (Debian / Ubuntu / AL2023)
+sudo apt update &amp;&amp; sudo apt upgrade -y ruby*
+# hoặc: sudo dnf update -y ruby*</code></pre>
+  </li>
+  <li><strong>Cập nhật sản phẩm tự host &amp; nền tảng Cloud/PaaS:</strong> nâng cấp GitLab (<code>19.6.1 / 19.5.8 / 19.4.10</code>), GHES (<code>3.22.6 / 3.21.11 / 3.20.13 / 3.19.17</code>), Mastodon (<code>4.7.6 / 4.6.12 / 4.5.22 / 4.4.29</code>), OpenProject (<code>17.9.8 / 17.8.3</code>), Chatwoot (<code>4.20.1</code>). Với <strong>Discourse</strong>, bắt buộc rebuild bằng CLI để nhận base image <code>2.0.20261119-0203</code>:
+    <pre><code class="language-bash"># Discourse: bắt buộc rebuild qua CLI
+cd /var/discourse
+git pull
+./launcher rebuild app</code></pre>
+  </li>
+  <li><strong>Rebuild image, redeploy &amp; khởi động lại toàn bộ worker:</strong> tiến trình đang chạy (Puma, Unicorn, Sidekiq) vẫn dùng binary Ruby cũ cho tới khi restart. Với AWS Lambda dùng container image cần rebuild &amp; redeploy; Heroku/Render cần trigger deploy lại để nhận runtime mặc định <code>3.4.13</code> (AWS EB nâng lên <code>4.15.4</code>):
+    <pre><code class="language-bash">docker build --pull --no-cache -t &lt;ruby-app&gt;:&lt;tag&gt; .
+kubectl rollout restart deployment/&lt;deployment-name&gt; -n &lt;namespace&gt;
+# Hoặc trên VM:
+sudo systemctl restart puma sidekiq</code></pre>
+  </li>
+  <li><strong>Xác minh phiên bản thực chạy sau triển khai:</strong> chạy <code>ruby -v</code> trực tiếp trong container/pod hoặc môi trường Discourse để chắc chắn bản vá đã có hiệu lực:
+    <pre><code class="language-bash">bundle exec ruby -v
+docker ps -q | xargs -I{} sh -c 'docker exec {} ruby -v 2&gt;/dev/null'
+./launcher enter app -c 'cat /VERSION &amp;&amp; ruby -v'   # Discourse: &gt;= 2.0.20261119</code></pre>
+  </li>
 </ol>
-<h3>Tạm thời khi chưa vá kịp</h3>
-<ul>
-  <li><strong>Thu hẹp truy cập:</strong> đưa dịch vụ nội bộ ra sau VPN / allowlist IP / SSO nếu chưa cần mở công khai.</li>
-  <li><strong>Bật WAF (chỉ giảm rủi ro tạm thời):</strong> <strong>Cloudflare</strong> (gói Free &amp; Managed) và <strong>CrowdSec</strong> đã có luật chặn cho <code>CVE-2026-132825</code>, nhưng không thay thế được việc nâng cấp Ruby.</li>
-  <li><strong>Theo dõi log:</strong> chú ý crash bất thường (segfault, <code>[BUG]</code>, worker khởi động lại liên tục).</li>
+
+<h3>Cách 2: Biện pháp tạm thời &amp; phòng thủ chiều sâu (khi chưa thể nâng cấp ngay)</h3>
+<blockquote class="callout"><p><code>ruby-lang.org</code> và các nhà phát triển sản phẩm khuyến nghị nâng cấp lên bản Ruby/vendor đã vá làm biện pháp triệt để; <strong>Cloudflare</strong> và <strong>CrowdSec</strong> đã phát hành luật WAF cho <code>CVE-2026-132825</code>. Các biện pháp thu hẹp truy cập, lọc bảng mã 1-byte và rà soát log dưới đây là khuyến nghị phòng thủ chiều sâu tạm thời của PiraGo — <strong>không thay thế việc nâng cấp Ruby</strong>.</p></blockquote>
+<ol>
+  <li><strong>Thu hẹp bề mặt tiếp cận:</strong> đưa các dịch vụ nội bộ (Rails/Sinatra, GitLab, GHES, OpenProject) ra sau VPN, IP allow-list hoặc SSO nếu chưa cần mở công khai trên internet.</li>
+  <li><strong>Bật WAF chặn tạm thời:</strong> kích hoạt rule bảo vệ <code>CVE-2026-132825</code> trên <strong>Cloudflare</strong> (gói Free &amp; Managed) hoặc <strong>CrowdSec</strong>.</li>
+  <li><strong>Chặn bảng mã 1-byte cũ tại reverse proxy (PiraGo defense-in-depth):</strong> lỗ hổng chỉ kích hoạt trên 14 bảng mã 1-byte cũ (<code>ISO-8859-1/2/3/4/9/10/13/14/15/16</code>, <code>Windows-1250/1252/1254/1257</code>; UTF-8 không bị ảnh hưởng). Trong khi chờ nâng Ruby, có thể từ chối các request mang header <code>Content-Type</code> khai báo charset 1-byte cũ ở proxy:
+    <pre><code class="language-nginx"># NGINX (PiraGo defense-in-depth): từ chối request khai báo charset 1-byte cũ
+if ($http_content_type ~* "charset\s*=\s*(iso-8859-|windows-125)") {
+    return 400;
+}</code></pre>
+  </li>
+  <li><strong>Theo dõi log &amp; dấu hiệu bất thường (Threat Hunting):</strong> kiểm tra log ứng dụng/hệ thống tìm crash bất thường (<code>segfault</code>, <code>SIGSEGV</code>, <code>[BUG]</code>), worker Puma/Unicorn/Sidekiq khởi động lại liên tục, và các request có tham số <code>_method</code> hoặc header <code>X-HTTP-Method-Override</code> kèm bảng mã <code>ISO-8859-*</code> / <code>Windows-125*</code>.</li>
 </ol>
 </section>
 

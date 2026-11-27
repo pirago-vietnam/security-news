@@ -138,23 +138,83 @@ kubectl get pods -A -o custom-columns=NS:.metadata.namespace,POD:.metadata.name,
 </section>
 
 <section class="an-sec">
-<h2 id="remediation">4. 対策（4ステップ）</h2>
+<h2 id="remediation">4. 恒久対策・暫定対策</h2>
 <figure class="fig">
-<svg viewBox="0 0 740 104" role="img" aria-label="4ステップ対策フロー"><defs><marker id="r5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker></defs><rect class="box" x="0" y="14" width="167" height="76" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="83.5" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">1. 棚卸し</text><text x="83.5" y="57" text-anchor="middle" font-size="10.5" class="mut">稼働中の Ruby 版を</text><text x="83.5" y="73" text-anchor="middle" font-size="10.5" class="mut">ホスト・コンテナで確認</text><line x1="167" y1="52" x2="189" y2="52" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r5)"/><rect class="box" x="191" y="14" width="167" height="76" rx="8" style="stroke:var(--high);stroke-width:1.6"/><text x="274.5" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">2. 更新</text><text x="274.5" y="57" text-anchor="middle" font-size="10.5" class="mut">3.3.14 / 3.4.13 / 4.0.10</text><text x="274.5" y="73" text-anchor="middle" font-size="10.5" class="mut">またはベンダー修正版へ</text><line x1="358" y1="52" x2="380" y2="52" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r5)"/><rect class="box" x="382" y="14" width="167" height="76" rx="8" style="stroke:var(--pirago-blue);stroke-width:1.6"/><text x="465.5" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">3. 再ビルド・再起動</text><text x="465.5" y="57" text-anchor="middle" font-size="10.5" class="mut">イメージを再作成し</text><text x="465.5" y="73" text-anchor="middle" font-size="10.5" class="mut">全プロセスを再起動</text><line x1="549" y1="52" x2="571" y2="52" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r5)"/><rect class="box" x="573" y="14" width="167" height="76" rx="8" style="stroke:var(--low);stroke-width:1.6"/><text x="656.5" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">4. 稼働確認</text><text x="656.5" y="57" text-anchor="middle" font-size="10.5" class="mut">コンテナ／Pod 内で</text><text x="656.5" y="73" text-anchor="middle" font-size="10.5" class="mut">ruby -v を実行確認</text></svg>
+<svg viewBox="0 0 740 200" role="img" aria-label="ruby2ßhell (CVE-2026-132825) 対応ワークフロー">
+  <defs>
+    <marker id="r5j" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--text-muted)"/></marker>
+  </defs>
+  <rect class="box" x="0" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="83.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">棚卸し</text>
+  <text x="83.5" y="68" text-anchor="middle" font-size="11" class="mut">Ruby・Rails・GitLab・Docker</text>
+  <circle cx="16" cy="16" r="12" fill="var(--high)"/><text x="16" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text>
+  <line x1="167" y1="53" x2="189" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r5j)"/>
+  <rect class="box" x="191" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="274.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">更新</text>
+  <text x="274.5" y="68" text-anchor="middle" font-size="11" class="mut">3.3.14 / 3.4.13 / 4.0.10</text>
+  <circle cx="207" cy="16" r="12" fill="var(--high)"/><text x="207" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text>
+  <line x1="358" y1="53" x2="380" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r5j)"/>
+  <rect class="box" x="382" y="16" width="167" height="74" rx="8" style="stroke:var(--high);stroke-width:1.6"/>
+  <text x="465.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">再ビルド・再起動</text>
+  <text x="465.5" y="68" text-anchor="middle" font-size="11" class="mut">新イメージ・CLI 再ビルド</text>
+  <circle cx="398" cy="16" r="12" fill="var(--high)"/><text x="398" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text>
+  <line x1="549" y1="53" x2="571" y2="53" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#r5j)"/>
+  <rect class="box" x="573" y="16" width="167" height="74" rx="8" style="stroke:var(--low);stroke-width:1.6"/>
+  <text x="656.5" y="50" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">稼働確認・監視</text>
+  <text x="656.5" y="68" text-anchor="middle" font-size="11" class="mut">ruby -v・クラッシュ/WAF</text>
+  <circle cx="589" cy="16" r="12" fill="var(--low)"/><text x="589" y="20.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text>
+  <rect x="0" y="116" width="740" height="70" rx="8" fill="none" stroke="var(--high)" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="16" y="141" font-size="12.5" font-weight="700" fill="currentColor">即時更新が困難な場合（暫定対策）：</text>
+  <text x="16" y="164" font-size="11.5" class="mut">VPN/IP 制限の背後に退避し、Cloudflare/CrowdSec ルール適用と旧 1 バイト文字コード遮断を実施。</text>
+</svg>
 <figcaption>自作アプリ・同梱製品のどちらにも使える基本の 4 ステップ。</figcaption>
 </figure>
+
+<h3>方法 1：Ruby 本体・同梱製品のアップグレード（推奨）</h3>
 <ol>
-  <li><strong>インターネット公開面を最優先：</strong> Rails/Sinatra や GitLab・GHES・Discourse 等から先に対処します。</li>
-  <li><strong>Ruby 版の引き上げ：</strong> <code>.ruby-version</code> / <code>Gemfile</code> / <code>Dockerfile</code> を <code>3.3.14</code>・<code>3.4.13</code>・<code>4.0.10</code> へ更新（またはベンダー修正版を適用）。</li>
-  <li><strong>イメージ再ビルド＆再起動：</strong> 稼働中プロセスは再起動まで旧版のままです（Discourse は <code>./launcher rebuild app</code>）。</li>
-  <li><strong>実環境で確認：</strong> コンテナや Pod の中で <code>ruby -v</code> を叩き、適用完了を確認します。</li>
+  <li><strong>インターネット公開面を最優先し Ruby を更新：</strong><code>.ruby-version</code>・<code>Gemfile</code>・<code>Dockerfile</code> やビルドツール（<code>ruby-build v20261119</code>、<code>ruby/setup-ruby</code>）を <strong><code>3.3.14</code></strong>・<strong><code>3.4.13</code></strong>・<strong><code>4.0.10</code></strong> へ更新します。<code>3.2</code> 以下（EOL）は <code>3.3 / 3.4 / 4.0</code> へ移行するか、Linux ディストリ修正版（Debian <code>DSA-6644-1</code> / <code>DLA-4926-1</code>、Ubuntu <code>USN-9176-1</code>、RHEL 8/9/10 <code>RHSA</code>、AL2023 <code>ALAS2023-2026-3509..3511</code>）を適用します：
+    <pre><code class="language-bash"># Dockerfile：修正済み公式イメージを指定
+# FROM ruby:3.4.13-slim   （または 3.3.14 / 4.0.10）
+
+# rbenv / ruby-build（ruby-build v20261119 以降が必要）
+rbenv install 3.4.13 &amp;&amp; rbenv local 3.4.13
+
+# Linux ディストリ（Debian / Ubuntu / AL2023）
+sudo apt update &amp;&amp; sudo apt upgrade -y ruby*
+# または：sudo dnf update -y ruby*</code></pre>
+  </li>
+  <li><strong>セルフホスト製品・Cloud/PaaS の更新：</strong>GitLab（<code>19.6.1 / 19.5.8 / 19.4.10</code>）、GHES（<code>3.22.6 / 3.21.11 / 3.20.13 / 3.19.17</code>）、Mastodon（<code>4.7.6 / 4.6.12 / 4.5.22 / 4.4.29</code>）、OpenProject（<code>17.9.8 / 17.8.3</code>）、Chatwoot（<code>4.20.1</code>）を修正版へ更新します。<strong>Discourse</strong> はベースイメージ <code>2.0.20261119-0203</code> を取り込むため CLI での再ビルドが必須です：
+    <pre><code class="language-bash"># Discourse：CLI 再ビルドが必須
+cd /var/discourse
+git pull
+./launcher rebuild app</code></pre>
+  </li>
+  <li><strong>イメージ再ビルド・再デプロイ・ワーカー再起動：</strong>稼働中の Puma / Unicorn / Sidekiq プロセスは再起動まで旧 Ruby バイナリを保持します。AWS Lambda（コンテナー版）は再ビルド＆再デプロイ、Heroku/Render は再デプロイで既定 <code>3.4.13</code> を反映します（AWS EB は <code>4.15.4</code>）：
+    <pre><code class="language-bash">docker build --pull --no-cache -t &lt;ruby-app&gt;:&lt;tag&gt; .
+kubectl rollout restart deployment/&lt;deployment-name&gt; -n &lt;namespace&gt;
+# VM 上の場合：
+sudo systemctl restart puma sidekiq</code></pre>
+  </li>
+  <li><strong>デプロイ後の実バージョン確認：</strong>コンテナー／Pod 内や Discourse 内で <code>ruby -v</code> を実行し、更新が反映されていることを確認します：
+    <pre><code class="language-bash">bundle exec ruby -v
+docker ps -q | xargs -I{} sh -c 'docker exec {} ruby -v 2&gt;/dev/null'
+./launcher enter app -c 'cat /VERSION &amp;&amp; ruby -v'   # Discourse：2.0.20261119 以降</code></pre>
+  </li>
 </ol>
-<h3>すぐ更新できない場合</h3>
-<ul>
-  <li><strong>公開範囲の制限：</strong> 必須でないサービスは VPN・IP 許可リスト・SSO の背後に退避します。</li>
-  <li><strong>WAF による暫定防御：</strong> <strong>Cloudflare</strong>（Free/Managed）と <strong>CrowdSec</strong> が <code>CVE-2026-132825</code> 向けルールを提供中ですが、Ruby 更新の代替にはなりません。</li>
-  <li><strong>監視：</strong> segfault や <code>[BUG]</code>、ワーカーの連続再起動ログを監視します。</li>
-</ul>
+
+<h3>方法 2：暫定対策・多層防御（即時更新が困難な場合）</h3>
+<blockquote class="callout"><p><code>ruby-lang.org</code> および各製品ベンダーの公式対策は、修正版 Ruby／ベンダー版への更新です。<strong>Cloudflare</strong> と <strong>CrowdSec</strong> は <code>CVE-2026-132825</code> 向け WAF ルールを提供しています。以下のアクセス制限・旧 1 バイト文字コード遮断・ログ監視は PiraGo による暫定の多層防御推奨であり、<strong>Ruby 本体の更新に代わるものではありません</strong>。</p></blockquote>
+<ol>
+  <li><strong>公開範囲の制限：</strong>必須でない社内サービス（Rails/Sinatra、GitLab、GHES、OpenProject 等）は VPN・IP 許可リスト・SSO の背後に退避します。</li>
+  <li><strong>WAF による暫定防御：</strong><strong>Cloudflare</strong>（Free/Managed 双方で利用可）と <strong>CrowdSec</strong> が提供する <code>CVE-2026-132825</code> 向け遮断ルールを有効化します。</li>
+  <li><strong>リバースプロキシでの旧 1 バイト文字コード遮断（PiraGo 多層防御）：</strong>本脆弱性は 14 種の旧 1 バイト文字コード（<code>ISO-8859-1/2/3/4/9/10/13/14/15/16</code>、<code>Windows-1250/1252/1254/1257</code>）でのみ発生し、UTF-8 は影響を受けません。更新までの間、プロキシ側で旧 1 バイト charset を指定するリクエストを遮断します：
+    <pre><code class="language-nginx"># NGINX（PiraGo 多層防御）：Content-Type の旧 1 バイト charset を拒否
+if ($http_content_type ~* "charset\s*=\s*(iso-8859-|windows-125)") {
+    return 400;
+}</code></pre>
+  </li>
+  <li><strong>ログ点検（Threat Hunting）：</strong>アプリ／OS ログで異常終了（<code>segfault</code>、<code>SIGSEGV</code>、<code>[BUG]</code>）や Puma/Unicorn/Sidekiq ワーカーの連続再起動がないか確認し、<code>_method</code> や <code>X-HTTP-Method-Override</code> と <code>ISO-8859-*</code> / <code>Windows-125*</code> を組み合わせた不審リクエストを監視します。</li>
+</ol>
 </section>
 
 <section class="an-sec">
