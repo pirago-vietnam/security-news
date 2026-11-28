@@ -53,9 +53,9 @@ description: "月次のセキュリティインシデントおよび脆弱性レ
   {%- if archived_incidents.size > 0 %}
   <div id="incidents-archive" style="margin: 4px 0 32px;">
     <h3 style="font-size: 15px; margin: 0 0 8px; color: var(--text-muted);">{{ t.incidents_archive }}</h3>
-    <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px;">
+    <ul class="archive-list" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px;">
       {%- for c in archived_incidents limit:3 %}
-      <li style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+      <li class="archive-list-item">
         <span class="badge {{ c.badge.sev }}">{{ c.badge.text }}</span>
         <a href="{{ home_url | append: c.path | relative_url }}">{{ c.icon }} {{ c.title[lang] }}</a>
       </li>
@@ -96,9 +96,9 @@ description: "月次のセキュリティインシデントおよび脆弱性レ
   {%- if archived_vulns.size > 0 %}
   <div id="vulnerabilities-archive" style="margin: 4px 0 32px;">
     <h3 style="font-size: 15px; margin: 0 0 8px; color: var(--text-muted);">{{ t.vulnerabilities_archive }}</h3>
-    <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px;">
+    <ul class="archive-list" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px;">
       {%- for c in archived_vulns limit:3 %}
-      <li style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+      <li class="archive-list-item">
         <span class="badge {{ c.badge.sev }}">{{ c.badge.text }}</span>
         <a href="{{ home_url | append: c.path | relative_url }}">{{ c.icon }} {{ c.title[lang] }}</a>
       </li>
@@ -114,7 +114,7 @@ description: "月次のセキュリティインシデントおよび脆弱性レ
   {%- assign d = m[1] %}
   <section class="card">
     {%- if forloop.first %}
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: gap; gap: 8px;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
       <h2>📅 {{ d.card.title[lang] }}</h2>
       <span class="badge-new">{{ t.latest }}</span>
     </div>

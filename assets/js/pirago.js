@@ -50,6 +50,26 @@
       mobileMenuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
 
+    // Accordion toggle for dropdown items on mobile
+    piragoNav.querySelectorAll('.mobile-dropdown-toggle').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const item = btn.closest('.pirago-nav-item');
+        if (!item) return;
+        const isOpen = item.classList.toggle('dropdown-open');
+        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+    });
+
+    // Close mobile menu when clicking a link inside it
+    piragoNav.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        piragoNav.classList.remove('open');
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+
     // Đóng khi click ngoài menu
     document.addEventListener('click', function(e) {
       if (!piragoNav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {

@@ -41,15 +41,16 @@
 {%- endfor -%}
 </tr></thead>
 <tbody>
+{%- assign cols = t.cols[s.type] -%}
 {%- for row in s.rows %}
 {%- if s.type == 'actions' %}
-<tr><td>{{ forloop.index }}</td><td>{{ row.task[lang] | replace: '@home@', home }}</td><td><span class="badge {{ row.sev }}">{{ t.sev[row.sev] }}</span></td><td>{{ row.due[lang] }}</td></tr>
+<tr><td data-label="{{ cols[0] }}">{{ forloop.index }}</td><td data-label="{{ cols[1] }}">{{ row.task[lang] | replace: '@home@', home }}</td><td data-label="{{ cols[2] }}"><span class="badge {{ row.sev }}">{{ t.sev[row.sev] }}</span></td><td data-label="{{ cols[3] }}">{{ row.due[lang] }}</td></tr>
 {%- else %}
-<tr><td>{{ row.name[lang] | default: row.name }}</td>
-<td>{{ row.summary[lang] | replace: '@home@', home }}</td>
-<td><span class="badge {{ row.sev }}">{{ t.sev[row.sev] }}</span></td>
-<td>{{ row.impact[lang] | replace: '@home@', home }}</td>
-<td>{{ row.fix[lang] | replace: '@home@', home }}</td></tr>
+<tr><td data-label="{{ cols[0] }}">{{ row.name[lang] | default: row.name }}</td>
+<td data-label="{{ cols[1] }}">{{ row.summary[lang] | replace: '@home@', home }}</td>
+<td data-label="{{ cols[2] }}"><span class="badge {{ row.sev }}">{{ t.sev[row.sev] }}</span></td>
+<td data-label="{{ cols[3] }}">{{ row.impact[lang] | replace: '@home@', home }}</td>
+<td data-label="{{ cols[4] }}">{{ row.fix[lang] | replace: '@home@', home }}</td></tr>
 {%- endif %}
 {%- endfor %}
 </tbody></table></div>

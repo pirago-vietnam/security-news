@@ -591,8 +591,25 @@ redirect_from:
     /* Technical Grid */
     .grid-2 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
       gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .header-bar {
+        position: static;
+        padding: 12px 14px;
+        gap: 10px;
+      }
+      .hero {
+        padding: 20px 16px;
+      }
+      .hero h1 {
+        font-size: 21px;
+      }
+      .tech-box {
+        padding: 14px;
+      }
     }
 
     .tech-box {
