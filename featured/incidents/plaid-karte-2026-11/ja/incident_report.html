@@ -1,0 +1,169 @@
+---
+layout: default
+lang: ja
+image: "/featured/incidents/plaid-karte-2026-11/plaid-karte-2026-11-og.png"
+title: "プレイド「KARTE」サプライチェーン流出（2026年11月）— ピーチ約944万件・日経540万件・RIZAP431万件など相次ぎ確定"
+description: "2026年11月26〜27日に相次いだプレイド「KARTE」経由の情報流出公表：ピーチ（契約終了後も残存した約944万件）、日本経済新聞社（539万9,986件）、RIZAP（430万8,174件）、集英社（約70万件）、三菱UFJ eスマート証券（約20.9万件）。"
+category: "セキュリティインシデント"
+permalink: /ja/featured/incidents/plaid-karte-2026-11/incident_report/
+---
+<style>
+  .an-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
+  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--line); color: var(--text-muted); }
+  .an-nav a:hover { color: var(--pirago-blue); border-color: var(--pirago-blue); text-decoration: none; }
+  .an-sec { margin: 0 0 40px; }
+  .an-sec h2 { font-size: 21px; margin: 28px 0 14px; scroll-margin-top: 90px; }
+  .an-sec h3 { font-size: 17px; margin: 20px 0 8px; }
+  .an-sec ul, .an-sec ol { padding-left: 22px; }
+  .an-sec li { margin: 6px 0; }
+  .an-sec .table-wrap { overflow-x: auto; margin: 14px 0 20px; }
+  .an-sec code { word-break: break-all; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 20px 0 24px; }
+  .kpi-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); }
+  .kpi-num { font-size: 20px; font-weight: 800; font-family: var(--font-mono); color: var(--pirago-navy); line-height: 1.2; margin-bottom: 4px; }
+  html[data-theme="dark"] .kpi-num { color: #5ab0e8; }
+  .kpi-num.crit { color: var(--crit); }
+  .kpi-num.high { color: var(--high); }
+  .kpi-num.low { color: var(--low); }
+  .kpi-label { font-size: 12.5px; color: var(--text-muted); line-height: 1.4; }
+
+  .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
+  .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
+  .fig .mut { fill: var(--text-muted); }
+  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
+</style>
+
+<div class="report-header">
+  <h1>プレイド「KARTE」サプライチェーン流出（2026年11月）— ピーチ約944万件・日経540万件・RIZAP431万件など相次ぎ確定</h1>
+  <p class="sub">発生・公開日：<strong>2026-11-26</strong>（利用企業による大規模公表 11/26〜27 · プレイド検知 <strong>2026-11-13</strong>）· <strong>2026-11-28</strong> 時点 · 出典：ピーチ、日本経済新聞社、RIZAP 等の公式発表 · 状況：<strong>各社が影響件数確定とフィッシング警戒を公表</strong>。月次レポート：<a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月 月次レポート</a>。</p>
+</div>
+
+<blockquote class="callout">
+  <p><strong>TL;DR（かんたん解説）：</strong> プレイド（PLAID）の CX プラットフォーム「<strong>KARTE</strong>」がサーバー脆弱性と認証情報窃取による不正アクセスを受け、<strong>2026年11月26〜27日</strong>にかけて大手利用企業から大規模な流出件数確定が相次ぎました。</p>
+  <ul>
+    <li><strong>11/26〜27の確定・公表規模：</strong> <strong>ピーチ・アビエーション</strong>（延べ約944万件）、<strong>日本経済新聞社</strong>（5,399,986件の 日経ID）、<strong>RIZAP グループ</strong>（4,308,174件の ZAP ID）、<strong>集英社</strong>（約70万件）、<strong>三菱UFJ eスマート証券</strong>（約20.9万件）、三井住友信託銀行など。</li>
+    <li><strong>契約終了後のデータ残存問題：</strong> ピーチは <strong>2025年8月31日に KARTE 契約を終了</strong>していたにもかかわらず、プレイド側の運用管理不備により 2019〜2023年の顧客データが残存し流出しました。</li>
+    <li><strong>含まれない情報：</strong> ピーチ・日経等の主要公表では、パスワード、クレジットカード情報、パスポート情報は含まれないと確認されています。</li>
+    <li><strong>やること：</strong> 外部 SaaS（マーケティング・解析基盤）の棚卸しと、<strong>解約時のデータ完全削除および削除証明書の取得</strong>を徹底する。</li>
+  </ul>
+</blockquote>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-num crit">約944万件</div>
+    <div class="kpi-label">ピーチ：2019〜2023年データ（2025/8解約後も残存）</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num crit">5,399,986件</div>
+    <div class="kpi-label">日本経済新聞社：日経ID 流出確定（11/27）</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num crit">4,308,174件</div>
+    <div class="kpi-label">RIZAP グループ（chocoZAP 等）：ZAP ID 最終確定（11/27）</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num high">約90.9万件+</div>
+    <div class="kpi-label">集英社（約70万）· 三菱UFJ eスマート証券（約20.9万）· 三井住友信託</div>
+  </div>
+</div>
+
+<nav class="an-nav" aria-label="目次">
+  <a href="#summary">1. 概要・影響範囲</a>
+  <a href="#root-cause">2. 原因・データ保持の課題</a>
+  <a href="#timeline">3. 経緯</a>
+  <a href="#recommendations">4. PiraGo への推奨事項</a>
+  <a href="#sources">5. 参考情報</a>
+</nav>
+
+<section class="an-sec">
+<h2 id="summary">1. 概要・影響範囲</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>企業名</th><th>公表日</th><th>確認規模</th><th>対象情報・備考</th></tr></thead>
+  <tbody>
+    <tr><td><strong>ピーチ・アビエーション</strong></td><td>2026/11/26</td><td>最大延べ約944万件</td><td>氏名・生年月日・郵便番号・住所・電話・メール（2019〜2023年分）。カード・パスポート除外。<em>ユミルリンク Cuenote FC 件（11/20）とは別件。</em></td></tr>
+    <tr><td><strong>日本経済新聞社</strong></td><td>2026/11/27</td><td>5,399,986件（日経ID）</td><td>変換済みメール・電話、性別、生年月。パスワード・カード情報は含まれず。</td></tr>
+    <tr><td><strong>RIZAP グループ</strong></td><td>2026/11/27</td><td>4,308,174件（ZAP ID）</td><td>chocoZAP・RIZAP 関連（11/27 最終確定件数）。</td></tr>
+    <tr><td><strong>集英社・三菱UFJ eスマート証券・三井住友信託銀行</strong></td><td>2026/11/26</td><td>集英社 約70万件 · eスマート 約20.9万件</td><td>ジャンプキャラクターズストア、オンライン証券・銀行の顧客情報。</td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section class="an-sec">
+<h2 id="root-cause">2. 原因・契約終了後のデータ保持問題</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 165" role="img" aria-label="プレイド KARTE サプライチェーン流出構造">
+  <defs>
+    <marker id="arr-plaid-ja" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--text-muted)"/>
+    </marker>
+  </defs>
+  <rect x="10" y="25" width="165" height="86" rx="8" class="box" stroke="var(--crit)" stroke-width="1.5"/>
+  <text x="92" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--crit)">1. プレイド侵入</text>
+  <text x="92" y="72" text-anchor="middle" font-size="11.5" fill="currentColor">サーバー脆弱性＋</text>
+  <text x="92" y="88" text-anchor="middle" font-size="11.5" fill="currentColor">認証情報の窃取</text>
+
+  <line x1="175" y1="68" x2="203" y2="68" stroke="var(--text-muted)" stroke-width="1.5" marker-end="url(#arr-plaid-ja)"/>
+
+  <rect x="206" y="25" width="165" height="86" rx="8" class="box" stroke="var(--high)" stroke-width="1.5"/>
+  <text x="288" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--high)">2. データの残存</text>
+  <text x="288" y="72" text-anchor="middle" font-size="11.5" fill="currentColor">2025/8 解約後も</text>
+  <text x="288" y="88" text-anchor="middle" font-size="11.5" fill="currentColor">2019〜23年分を保持</text>
+
+  <line x1="371" y1="68" x2="399" y2="68" stroke="var(--text-muted)" stroke-width="1.5" marker-end="url(#arr-plaid-ja)"/>
+
+  <rect x="402" y="25" width="160" height="86" rx="8" class="box"/>
+  <text x="482" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">3. 複数社から流出</text>
+  <text x="482" y="72" text-anchor="middle" font-size="11.5" fill="currentColor">主要企業だけで</text>
+  <text x="482" y="88" text-anchor="middle" font-size="11.5" fill="currentColor">計1,900万件超</text>
+
+  <line x1="562" y1="68" x2="590" y2="68" stroke="var(--text-muted)" stroke-width="1.5" marker-end="url(#arr-plaid-ja)"/>
+
+  <rect x="593" y="25" width="137" height="86" rx="8" class="box" stroke="var(--crit)" stroke-width="1.5"/>
+  <text x="661" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--crit)">4. 連鎖公表</text>
+  <text x="661" y="72" text-anchor="middle" font-size="11.5" fill="currentColor">11/26〜27 に</text>
+  <text x="661" y="88" text-anchor="middle" font-size="11.5" fill="currentColor">一斉公表</text>
+
+  <text x="10" y="142" font-size="11.5" class="mut">ユミルリンク Cuenote FC 事案と同様、共通 SaaS 基盤の1点侵害が多数の国内企業へ波及しました。</text>
+</svg>
+<figcaption>プレイド「KARTE」経由のサプライチェーン流出と、解約後データ残存の構造。</figcaption>
+</figure>
+<ul>
+  <li><strong>侵害経緯：</strong>プレイドは11月13日に KARTE 基盤への不正アクセス（サーバー脆弱性と認証情報窃取）を検知しました。</li>
+  <li><strong>解約後データの残存：</strong>ピーチ・アビエーションは 2025年8月31日に KARTE 契約を終了していたものの、プレイド側の管理・運用上の不備により過去データ（2019〜2023年）が削除されず残存していました。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="timeline">3. 経緯</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>日時</th><th>主な出来事</th></tr></thead>
+  <tbody>
+    <tr><td>2026/11/13</td><td>プレイドが「KARTE」基盤への不正アクセスを検知。</td></tr>
+    <tr><td>2026/11/26</td><td>ピーチ・アビエーションが最大延べ約944万件の流出（契約終了後も残存した2019〜2023年分）を公表。集英社、三菱UFJ eスマート証券、三井住友信託銀行も影響を発表。</td></tr>
+    <tr><td>2026/11/27</td><td>日本経済新聞社が日経ID 5,399,986件、RIZAP グループが ZAP ID 4,308,174件の流出確定を公表。</td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section class="an-sec">
+<h2 id="recommendations">4. PiraGo への推奨事項</h2>
+<ol>
+  <li><strong>SaaS 解約時のオフボーディング監査：</strong>マーケティング・解析ツールを解約する際、フロントエンドのタグ削除だけでなく、ベンダー側の過去データ完全消去と削除証明書の受領を必須化する。</li>
+  <li><strong>外部ツールへの個人情報連携最小化：</strong>Web 解析・CX ツールへは匿名化 ID のみを連携し、氏名・生年月日・住所・電話番号の同期を避ける。</li>
+  <li><strong>国内顧客案件での確認：</strong>KARTE 等を利用中（または過去利用していた）の国内案件がないか棚卸しし、個人情報保護法に基づく対応要否を確認する。</li>
+</ol>
+</section>
+
+<section class="an-sec">
+<h2 id="sources">5. 参考情報</h2>
+<ul>
+  <li><a href="https://www.flypeach.com/application/files/3617/9568/1472/20261126_INFO_JP.pdf" target="_blank" rel="noopener noreferrer">ピーチ・アビエーション — プレイド「KARTE」事案のお知らせ（2026年11月26日、PDF）</a></li>
+  <li><a href="https://www.nikkei.co.jp/nikkeiinfo/news/information/1590.html" target="_blank" rel="noopener noreferrer">日本経済新聞社 — 日経ID 5,399,986件の流出確定に関するお知らせ（2026年11月27日）</a></li>
+</ul>
+</section>

@@ -3,6 +3,52 @@
 # Ghi chú `# disclosed: YYYY-MM-DD` ngay trên mỗi entry để đối chiếu cho các lần cập nhật sau.
 # `path` tính từ gốc ngôn ngữ (vi: "/", ja: "/ja/").
 
+# disclosed: 2026-11-26
+- id: sap-github-nov-2026
+  category: incident
+  month: "2026-11"
+  path: "featured/incidents/sap-github-nov-2026/incident_report/"
+  icon: "🔑"
+  accent: true
+  badge: {sev: high, text: "INCIDENT"}
+  nav: {vi: "SAP GitHub (11/2026)", ja: "SAP GitHub (11/2026)"}
+  title: {vi: "SAP GitHub \"Project Granite\" (11/2026) — Xâm nhập qua token nhân viên & xoay vòng khóa ký mã nguồn", ja: "SAP GitHub 侵害「Project Granite」（2026年11月）— 従業員トークン悪用とコード署名鍵ローテーション"}
+  date: {vi: "Công bố 2026-11-26 (Der Spiegel) · SAP xác nhận 2026-11-27 · Der Spiegel / BleepingComputer", ja: "2026年11月26日報道 · 11月27日 SAP 公式確認 · Der Spiegel / BleepingComputer"}
+  link: {vi: "Xem báo cáo sự cố →", ja: "インシデント報告を見る →"}
+  items:
+    - sev: high
+      label: {vi: "Nguyên nhân", ja: "原因"}
+      text: {vi: "Kẻ tấn công dùng token xác thực GitHub bị đánh cắp của nhân viên truy cập môi trường phát triển SAP, sao chép và có nguy cơ chỉnh sửa mã nguồn.", ja: "盗まれた従業員の GitHub 認証トークンを用いて SAP の開発環境に侵入し、ソースコードの複製・改ざんの恐れ。"}
+    - sev: med
+      label: {vi: "Ứng phó", ja: "対応"}
+      text: {vi: "SAP kích hoạt chiến dịch \"Project Granite\", hạn chế truy cập GitHub, tạm dừng quy trình phát triển tự động và xoay vòng khóa ký mã nguồn.", ja: "SAP は「Project Granite」を発動し、GitHub 制限・自動開発ワークフロー停止・コード署名鍵ローテーションを実施。"}
+    - sev: low
+      label: {vi: "Dữ liệu KH", ja: "顧客データ"}
+      text: {vi: "SAP cho biết chưa có bằng chứng dữ liệu kinh doanh của khách hàng bị truy cập (tính đến 27/11/2026).", ja: "11/27時点で顧客の業務データへのアクセス証拠は確認されていないと表明。"}
+
+# disclosed: 2026-11-26
+- id: plaid-karte-2026-11
+  category: incident
+  month: "2026-11"
+  path: "featured/incidents/plaid-karte-2026-11/incident_report/"
+  icon: "🧩"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL INCIDENT"}
+  nav: {vi: "Chuỗi cung ứng PLAID KARTE", ja: "プレイド KARTE 流出"}
+  title: {vi: "PLAID \"KARTE\" (11/2026) — Làn sóng rò rỉ >19 triệu bản ghi tại Peach (~9,44M), Nikkei (5,40M) & RIZAP (4,31M)", ja: "プレイド「KARTE」サプライチェーン流出 — ピーチ約944万件・日経540万件・RIZAP431万件が相次ぎ確定"}
+  date: {vi: "Công bố hàng loạt 26–27/11/2026 (PLAID phát hiện 13/11) · Cập nhật 2026-11-28", ja: "2026年11月26〜27日一斉公表（プレイド検知 11/13）· 11月28日時点"}
+  link: {vi: "Xem báo cáo sự cố →", ja: "インシデント報告を見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Quy mô", ja: "規模"}
+      text: {vi: "Peach Aviation (~9,44M bản ghi lũy kế), Nikkei (5.399.986 Nikkei ID), RIZAP (4.308.174 ZAP ID), Shueisha (~700K), MUFG eSmart (~209K) &amp; SMBC Trust Bank.", ja: "ピーチ（延べ約944万件）、日本経済新聞社（5,399,986件）、RIZAP（4,308,174件）、集英社（約70万件）、三菱UFJ eスマート証券（約20.9万件）等。"}
+    - sev: high
+      label: {vi: "Lỗ hổng quản trị", ja: "運用上の問題"}
+      text: {vi: "Peach đã chấm dứt hợp đồng KARTE từ 31/08/2025 nhưng dữ liệu 2019–2023 vẫn bị lưu giữ trên hệ thống PLAID do sai sót quản lý và bị rò rỉ.", ja: "ピーチは 2025/8/31 に契約終了済みだったが、プレイド側の管理不備により 2019〜2023年データが残存し流出。"}
+    - sev: low
+      label: {vi: "Khuyến cáo", ja: "推奨事項"}
+      text: {vi: "Yêu cầu xóa sạch &amp; lấy xác nhận hủy dữ liệu khi kết thúc hợp đồng SaaS; không đồng bộ PII nhạy cảm vào công cụ analytics.", ja: "SaaS 解約時の完全消去と削除証明書の取得を徹底し、解析基盤への個人情報連携を最小化。"}
+
 # disclosed: 2026-11-25
 - id: 1password-nov-2026
   category: incident
@@ -25,6 +71,52 @@
     - sev: med
       label: {vi: "Khuyến cáo", ja: "推奨事項"}
       text: {vi: "<strong>Không cần đổi Master Password</strong>; kiểm tra thông báo từ 1Password, cảnh giác phishing qua email/link mời/khôi phục và bật 2FA cứng (passkey/FIDO2) cho GitHub tổ chức.", ja: "<strong>マスターパスワード変更は不要</strong>。公式通知を確認しフィッシングに警戒するとともに、組織 GitHub のハードウェア 2FA/パスキーを徹底。"}
+
+# disclosed: 2026-11-26
+- id: sap-github-nov-2026
+  category: incident
+  month: "2026-11"
+  path: "featured/incidents/sap-github-nov-2026/incident_report/"
+  icon: "🔑"
+  accent: true
+  badge: {sev: high, text: "INCIDENT"}
+  nav: {vi: "SAP GitHub (11/2026)", ja: "SAP GitHub (11/2026)"}
+  title: {vi: "SAP GitHub \"Project Granite\" (11/2026) — Xâm nhập qua token nhân viên & xoay vòng khóa ký mã nguồn", ja: "SAP GitHub 侵害「Project Granite」（2026年11月）— 従業員トークン悪用とコード署名鍵ローテーション"}
+  date: {vi: "Công bố 2026-11-26 (Der Spiegel) · SAP xác nhận 2026-11-27 · Der Spiegel / BleepingComputer", ja: "2026年11月26日報道 · 11月27日 SAP 公式確認 · Der Spiegel / BleepingComputer"}
+  link: {vi: "Xem báo cáo sự cố →", ja: "インシデント報告を見る →"}
+  items:
+    - sev: high
+      label: {vi: "Nguyên nhân", ja: "原因"}
+      text: {vi: "Kẻ tấn công dùng token xác thực GitHub bị đánh cắp của nhân viên truy cập môi trường phát triển SAP, sao chép và có nguy cơ chỉnh sửa mã nguồn.", ja: "盗まれた従業員の GitHub 認証トークンを用いて SAP の開発環境に侵入し、ソースコードの複製・改ざんの恐れ。"}
+    - sev: med
+      label: {vi: "Ứng phó", ja: "対応"}
+      text: {vi: "SAP kích hoạt chiến dịch \"Project Granite\", hạn chế truy cập GitHub, tạm dừng quy trình phát triển tự động và xoay vòng khóa ký mã nguồn.", ja: "SAP は「Project Granite」を発動し、GitHub 制限・自動開発ワークフロー停止・コード署名鍵ローテーションを実施。"}
+    - sev: low
+      label: {vi: "Dữ liệu KH", ja: "顧客データ"}
+      text: {vi: "SAP cho biết chưa có bằng chứng dữ liệu kinh doanh của khách hàng bị truy cập (tính đến 27/11/2026).", ja: "11/27時点で顧客の業務データへのアクセス証拠は確認されていないと表明。"}
+
+# disclosed: 2026-11-26
+- id: plaid-karte-2026-11
+  category: incident
+  month: "2026-11"
+  path: "featured/incidents/plaid-karte-2026-11/incident_report/"
+  icon: "🧩"
+  accent: true
+  badge: {sev: crit, text: "CRITICAL INCIDENT"}
+  nav: {vi: "Chuỗi cung ứng PLAID KARTE", ja: "プレイド KARTE 流出"}
+  title: {vi: "PLAID \"KARTE\" (11/2026) — Làn sóng rò rỉ >19 triệu bản ghi tại Peach (~9,44M), Nikkei (5,40M) & RIZAP (4,31M)", ja: "プレイド「KARTE」サプライチェーン流出 — ピーチ約944万件・日経540万件・RIZAP431万件が相次ぎ確定"}
+  date: {vi: "Công bố hàng loạt 26–27/11/2026 (PLAID phát hiện 13/11) · Cập nhật 2026-11-28", ja: "2026年11月26〜27日一斉公表（プレイド検知 11/13）· 11月28日時点"}
+  link: {vi: "Xem báo cáo sự cố →", ja: "インシデント報告を見る →"}
+  items:
+    - sev: crit
+      label: {vi: "Quy mô", ja: "規模"}
+      text: {vi: "Peach Aviation (~9,44M bản ghi lũy kế), Nikkei (5.399.986 Nikkei ID), RIZAP (4.308.174 ZAP ID), Shueisha (~700K), MUFG eSmart (~209K) &amp; SMBC Trust Bank.", ja: "ピーチ（延べ約944万件）、日本経済新聞社（5,399,986件）、RIZAP（4,308,174件）、集英社（約70万件）、三菱UFJ eスマート証券（約20.9万件）等。"}
+    - sev: high
+      label: {vi: "Lỗ hổng quản trị", ja: "運用上の問題"}
+      text: {vi: "Peach đã chấm dứt hợp đồng KARTE từ 31/08/2025 nhưng dữ liệu 2019–2023 vẫn bị lưu giữ trên hệ thống PLAID do sai sót quản lý và bị rò rỉ.", ja: "ピーチは 2025/8/31 に契約終了済みだったが、プレイド側の管理不備により 2019〜2023年データが残存し流出。"}
+    - sev: low
+      label: {vi: "Khuyến cáo", ja: "推奨事項"}
+      text: {vi: "Yêu cầu xóa sạch &amp; lấy xác nhận hủy dữ liệu khi kết thúc hợp đồng SaaS; không đồng bộ PII nhạy cảm vào công cụ analytics.", ja: "SaaS 解約時の完全消去と削除証明書の取得を徹底し、解析基盤への個人情報連携を最小化。"}
 
 # disclosed: 2026-11-25
 - id: java-maven-supply-chain-2026-11
@@ -108,7 +200,7 @@
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
   nav: {vi: "Rò rỉ Tower / Peach / Payどん", ja: "タワレコ・ピーチ・Payどん 流出"}
   title: {vi: "Làn sóng rò rỉ dữ liệu tại Nhật — Tower Records (~11 triệu), Peach Aviation qua Ymirlink (~9 triệu) & Infcurion Wallet Station / Payどん (~251 nghìn)", ja: "国内相次ぐ情報流出 — タワーレコード（約1,100万件）、ピーチ（ユミルリンク経由 約900万件）、インフキュリオン Wallet Station / Payどん（約25万件）"}
-  date: {vi: "Công bố 20–21/11/2026 · Cập nhật đến 2026-11-25 · Payどん mở lại chiều 26/11 · Tower online vẫn đóng", ja: "2026年11月20〜21日公表 · 11月25日時点 · Payどん 11/26午後再開 · タワー通販は停止継続"}
+  date: {vi: "Công bố 20–21/11/2026 · Cập nhật đến 2026-11-28 · Payどん đã mở lại 26/11 (HAPPAY 27/11) · Tower online vẫn đóng", ja: "2026年11月20〜21日公表 · 11月28日時点 · Payどん 11/26再開済み（HAPPAY 11/27）· タワー通販は停止継続"}
   link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
   items:
     - sev: crit
@@ -369,7 +461,7 @@
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
   nav: {vi: "Sự cố Rakuten Securities", ja: "楽天証券 インシデント"}
   title: {vi: "楽天証券 (Rakuten Securities) — Xác nhận lộ ~11,98M ID & ~4,41M hồ sơ từ môi trường test", ja: "楽天証券 — テスト環境から約1,198万口座・個人情報約441万件の流出を確認"}
-  date: {vi: "Cập nhật 2026-11-25 · Báo cáo 2 (24/11) xác nhận rò rỉ · Rakuten Group hủy trái phiếu 151B JPY", ja: "2026年11月25日更新 · 第2報（11/24）で流出確定 · 楽天G 劣後債1,510億円中止"}
+  date: {vi: "Cập nhật 2026-11-28 · Hoãn cổ phiếu Mỹ 23h & Đài Loan (27/11) · Kiện tập thể >70K người (26/11)", ja: "2026年11月28日更新 · 米国株23時間・台湾株取引を延期（11/27）· 集団訴訟登録7万人超（11/26）"}
   link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
   items:
     - sev: crit
@@ -580,7 +672,7 @@
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
   nav: {vi: "Sự cố Binance", ja: "Binance インシデント"}
   title: {vi: "Binance (~6,3 tỷ USD) — Chuỗi xâm nhập phỏng vấn giả từ laptop DevOps vào dịch vụ ký ví", ja: "Binance（約63億米ドル流出）— DevOps 端末・偽装面接経由の多段階侵害"}
-  date: {vi: "Cập nhật 2026-11-25 · DOJ kiện tịch thu >1,1B USDC (>2,9B phong tỏa) · 3.930 BTC Coinjoin · ADGM 01/12", ja: "2026年11月25日更新 · DOJ 11億ドル超USDC没収訴訟（計29億ドル超凍結）· 3,930 BTC洗浄 · ADGM 12/1"}
+  date: {vi: "Cập nhật 2026-11-28 · Gỡ hoàn toàn tạm ngừng rút tiền (26/11) · 6.330 BTC Coinjoin · ADGM 01/12", ja: "2026年11月28日更新 · 出金停止を全面解除（11/26）· 6,330 BTC CoinJoin · ADGM 12/1"}
   link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
   items:
     - sev: crit
@@ -607,7 +699,7 @@
   badge: {sev: crit, text: "CRITICAL INCIDENT"}
   nav: {vi: "Sự cố GMO Onamae", ja: "GMOお名前.com インシデント"}
   title: {vi: "GMO Onamae Desktop Cloud — Chiếm quyền 26.739 VPS Windows, rò rỉ MT4/MT5", ja: "GMO お名前.com デスクトップクラウド — Windows VPS 26,739台乗っ取り・MT4/MT5情報漏えい"}
-  date: {vi: "Cập nhật 2026-11-25 · Công bố KQKD 13/11 · 1.207 tin Bounty đến 25/11", ja: "2026年11月25日更新 · 11/13決算説明 · 情報提供1,207件（11/25時点）"}
+  date: {vi: "Cập nhật 2026-11-28 · Lập Task Force Quản trị & thay CISO (27/11) · 1.219 tin Bounty", ja: "2026年11月28日更新 · ガバナンスTF設置・CISO交代（11/27）· 情報提供1,219件"}
   link: {vi: "Xem báo cáo sự cố chi tiết →", ja: "インシデント詳細レポートを見る →"}
   items:
     - sev: crit

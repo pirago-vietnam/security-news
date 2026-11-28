@@ -1,0 +1,172 @@
+---
+layout: default
+lang: ja
+image: "/featured/incidents/sap-github-nov-2026/sap-github-nov-2026-og.png"
+title: "SAP GitHub 開発基盤侵害「Project Granite」（2026年11月）— 従業員トークン悪用とコード署名鍵のローテーション"
+description: "2026年11月26〜27日公表の SAP セキュリティインシデント：窃取された従業員 GitHub 認証トークン経由で開発環境にアクセスされ、コード複製や改ざんの恐れ。SAP は Project Granite で GitHub 制限・自動処理停止・コード署名鍵ローテーションを実施。"
+category: "セキュリティインシデント"
+permalink: /ja/featured/incidents/sap-github-nov-2026/incident_report/
+---
+<style>
+  .an-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
+  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--line); color: var(--text-muted); }
+  .an-nav a:hover { color: var(--pirago-blue); border-color: var(--pirago-blue); text-decoration: none; }
+  .an-sec { margin: 0 0 40px; }
+  .an-sec h2 { font-size: 21px; margin: 28px 0 14px; scroll-margin-top: 90px; }
+  .an-sec h3 { font-size: 17px; margin: 20px 0 8px; }
+  .an-sec ul, .an-sec ol { padding-left: 22px; }
+  .an-sec li { margin: 6px 0; }
+  .an-sec .table-wrap { overflow-x: auto; margin: 14px 0 20px; }
+  .an-sec code { word-break: break-all; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 20px 0 24px; }
+  .kpi-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); }
+  .kpi-num { font-size: 20px; font-weight: 800; font-family: var(--font-mono); color: var(--pirago-navy); line-height: 1.2; margin-bottom: 4px; }
+  html[data-theme="dark"] .kpi-num { color: #5ab0e8; }
+  .kpi-num.crit { color: var(--crit); }
+  .kpi-num.high { color: var(--high); }
+  .kpi-num.low { color: var(--low); }
+  .kpi-label { font-size: 12.5px; color: var(--text-muted); line-height: 1.4; }
+
+  .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
+  .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
+  .fig .mut { fill: var(--text-muted); }
+  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
+</style>
+
+<div class="report-header">
+  <h1>SAP GitHub 開発基盤侵害「Project Granite」（2026年11月）— 従業員トークン悪用とコード署名鍵のローテーション</h1>
+  <p class="sub">発生・公開日：<strong>2026-11-26</strong>（Der Spiegel 報道）· SAP 公式確認 <strong>2026-11-27</strong> · <strong>2026-11-28</strong> 時点 · 出典：Der Spiegel、BleepingComputer · 状況：<strong>GitHub アクセス制限・開発自動化停止・コード署名鍵ローテーション実施済み、顧客データへのアクセス証拠なし</strong>。月次レポート：<a href="{{ '/ja/monthly/2026-11/' | relative_url }}">2026年11月 月次レポート</a>。</p>
+</div>
+
+<blockquote class="callout">
+  <p><strong>TL;DR（かんたん解説）：</strong> 業務ソフトウェア大手の <strong>SAP</strong> は、盗まれた従業員の認証トークンを用いて <strong>GitHub 上のソフトウェア開発環境</strong>へ不正アクセスされたことを認めました（社内緊急対応名「<em>Project Granite</em>」）。</p>
+  <ul>
+    <li><strong>何が起きた？</strong> 攻撃者が従業員の GitHub トークンを悪用してリポジトリにアクセスし、ソースコードの複製および改ざんの可能性が生じたと報じられています。</li>
+    <li><strong>原因：</strong> 従業員の GitHub 認証トークン窃取（一部報道では AI 支援ツールの関与の可能性にも言及）。</li>
+    <li><strong>現状（11/28時点）：</strong> SAP は GitHub アクセスを制限し、自動化された開発ワークフローを一時停止、コード署名鍵をローテーションしました。現時点で顧客の業務データへのアクセス証拠はないとしています。</li>
+    <li><strong>やること：</strong> SAP 製品・SDK 利用案件では公式のセキュリティ通知・署名更新を注視。社内では GitHub トークン（PAT/OAuth）の棚卸し、ハードウェア 2FA 徹底、署名鍵の分離を再確認。</li>
+  </ul>
+</blockquote>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-num high">11/26 → 11/27</div>
+    <div class="kpi-label">11/26 Der Spiegel 報道 · 11/27 SAP が公式確認</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num crit">GitHub Token</div>
+    <div class="kpi-label">侵入口：盗まれた従業員の GitHub 認証トークン</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num high">署名鍵更新</div>
+    <div class="kpi-label">自動開発ワークフロー停止＆コード署名鍵をローテーション</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num low">顧客データ無傷</div>
+    <div class="kpi-label">顧客の業務データへのアクセス証拠は確認されず</div>
+  </div>
+</div>
+
+<nav class="an-nav" aria-label="目次">
+  <a href="#summary">1. 概要・影響範囲</a>
+  <a href="#root-cause">2. 技術的原因</a>
+  <a href="#timeline">3. 経緯・対応</a>
+  <a href="#impact">4. サプライチェーンへの影響</a>
+  <a href="#recommendations">5. PiraGo への推奨事項</a>
+  <a href="#sources">6. 参考情報</a>
+</nav>
+
+<section class="an-sec">
+<h2 id="summary">1. 概要・影響範囲</h2>
+<ul>
+  <li><strong>対象：</strong>GitHub 上でホストされている <strong>SAP</strong> のソフトウェア開発環境 <span class="badge low">SAP 確認</span>。</li>
+  <li><strong>不正行為：</strong>攻撃者がソースコードの複製および改ざんを行えた可能性が報じられています <span class="badge med">報道</span>。</li>
+  <li><strong>緊急対応（Project Granite）：</strong>SAP は GitHub アクセスを制限し、自動化された開発パイプラインを一時停止したうえで、コード署名鍵（code-signing keys）のローテーションを実施しました <span class="badge med">報道</span>。</li>
+  <li><strong>顧客データ：</strong>11月27日時点で、顧客の業務データがアクセスされた証拠はないと SAP は説明しています <span class="badge low">SAP 確認</span>。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="root-cause">2. 技術的原因・メカニズム</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 165" role="img" aria-label="SAP GitHub Project Granite 侵入チェーン">
+  <defs>
+    <marker id="arr-sap-ja" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--text-muted)"/>
+    </marker>
+  </defs>
+  <rect x="10" y="25" width="160" height="86" rx="8" class="box" stroke="var(--crit)" stroke-width="1.5"/>
+  <text x="90" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--crit)">1. トークン窃取</text>
+  <text x="90" y="72" text-anchor="middle" font-size="11.5" fill="currentColor">従業員の GitHub</text>
+  <text x="90" y="88" text-anchor="middle" font-size="11.5" fill="currentColor">認証トークン流出</text>
+
+  <line x1="170" y1="68" x2="198" y2="68" stroke="var(--text-muted)" stroke-width="1.5" marker-end="url(#arr-sap-ja)"/>
+
+  <rect x="201" y="25" width="165" height="86" rx="8" class="box"/>
+  <text x="283" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">2. GitHub 侵害</text>
+  <text x="283" y="72" text-anchor="middle" font-size="11.5" fill="currentColor">コード複製および</text>
+  <text x="283" y="88" text-anchor="middle" font-size="11.5" fill="currentColor">改ざんの可能性</text>
+
+  <line x1="366" y1="68" x2="394" y2="68" stroke="var(--text-muted)" stroke-width="1.5" marker-end="url(#arr-sap-ja)"/>
+
+  <rect x="397" y="25" width="165" height="86" rx="8" class="box" stroke="var(--high)" stroke-width="1.5"/>
+  <text x="479" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--high)">3. Project Granite</text>
+  <text x="479" y="72" text-anchor="middle" font-size="11.5" fill="currentColor">GitHub 制限および</text>
+  <text x="479" y="88" text-anchor="middle" font-size="11.5" fill="currentColor">自動処理の一時停止</text>
+
+  <line x1="562" y1="68" x2="590" y2="68" stroke="var(--text-muted)" stroke-width="1.5" marker-end="url(#arr-sap-ja)"/>
+
+  <rect x="593" y="25" width="137" height="86" rx="8" class="box" stroke="var(--low)" stroke-width="1.5"/>
+  <text x="661" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--low)">4. 鍵の更新</text>
+  <text x="661" y="72" text-anchor="middle" font-size="11.5" fill="currentColor">コード署名鍵の</text>
+  <text x="661" y="88" text-anchor="middle" font-size="11.5" fill="currentColor">ローテーション・精査</text>
+
+  <text x="10" y="142" font-size="11.5" class="mut">11/28時点で攻撃者の特定や影響を受けた具体的なリポジトリ・製品一覧は公表されていません。</text>
+</svg>
+<figcaption>従業員 GitHub トークン悪用から SAP の Project Granite 封じ込めまでの流れ。</figcaption>
+</figure>
+<ul>
+  <li><strong>認証経路の悪用：</strong>公開されたソフトウェア脆弱性ではなく、従業員の GitHub 認証トークンが狙われました。前日に公表された <a href="{{ '/ja/featured/incidents/1password-nov-2026/incident_report/' | relative_url }}">1Password の従業員 GitHub 侵害（11/25）</a>と連続しており、開発者アカウント・トークンを標的とした攻撃が続いています。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="timeline">3. 経緯・復旧</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>日時</th><th>主な出来事</th><th>信頼度</th></tr></thead>
+  <tbody>
+    <tr><td>2026/11/26</td><td>独 <em>Der Spiegel</em> が、SAP が従業員トークン悪用による GitHub 開発環境への侵入を社内コードネーム「Project Granite」で調査中と報道。</td><td><span class="badge med">報道（Der Spiegel）</span></td></tr>
+    <tr><td>2026/11/27</td><td>SAP が不審な GitHub アクティビティに伴うセキュリティインシデントを公式確認。アクセス制限、開発自動化の一時停止、コード署名鍵のローテーションを実施し、顧客業務データへのアクセス証拠はないと表明。</td><td><span class="badge low">SAP 確認 / BleepingComputer</span></td></tr>
+    <tr><td>2026/11/28</td><td>コードの完全性確認と調査を継続中（影響リポジトリ数などの詳細は未公表）。</td><td><span class="badge low">継続監視</span></td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section class="an-sec">
+<h2 id="impact">4. サプライチェーンへの影響</h2>
+<ul>
+  <li><strong>ビルド・リリース改ざんリスク：</strong>開発リポジトリへの書き込み権限が奪われた場合、ビルドや署名工程への悪性コード混入リスクが生じるため、SAP は自動化停止とコード署名鍵のローテーションを優先しました。</li>
+  <li><strong>顧客データ：</strong>本番顧客環境への侵入や業務データの流出は確認されていません。</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="recommendations">5. PiraGo への推奨事項</h2>
+<ol>
+  <li><strong>長期 PAT の廃止と GitHub 権限制御：</strong>有効期限の短い Fine-grained PAT または GitHub App / OIDC へ移行し、組織メンバー全員にハードウェア 2FA（パスキー/FIDO2）を強制する。</li>
+  <li><strong>ブランチ保護と署名鍵分離：</strong>主要ブランチで必須レビュー（2名以上推奨）・force-push 禁止を有効化し、リリース署名鍵を通常の開発者権限から分離する。</li>
+  <li><strong>GitHub 監査ログ監視：</strong>非公開リポジトリの大量クローン、新規トークン/デプロイ鍵追加、<code>.github/workflows/</code> 変更をアラート対象にする。</li>
+</ol>
+</section>
+
+<section class="an-sec">
+<h2 id="sources">6. 参考情報</h2>
+<ul>
+  <li><a href="https://www.bleepingcomputer.com/news/security/sap-confirms-security-incident-after-suspicious-github-activity/" target="_blank" rel="noopener noreferrer">BleepingComputer — SAP confirms security incident after suspicious GitHub activity（2026年11月27日）</a></li>
+  <li><em>Der Spiegel</em>（2026年11月26日）—「Project Granite」に関する初回報道（BleepingComputer 経由）。</li>
+</ul>
+</section>

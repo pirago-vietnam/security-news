@@ -1,0 +1,172 @@
+---
+layout: default
+image: "/featured/incidents/sap-github-nov-2026/sap-github-nov-2026-og.png"
+title: "Sự cố SAP GitHub \"Project Granite\" (11/2026) — Xâm nhập qua token nhân viên & xoay vòng khóa ký mã nguồn"
+description: "Báo cáo sự cố bảo mật SAP (công bố 26–27/11/2026): kẻ tấn công dùng token GitHub nhân viên bị đánh cắp để sao chép và có nguy cơ chỉnh sửa mã nguồn trên môi trường phát triển GitHub; SAP kích hoạt ứng phó khẩn cấp Project Granite, tạm dừng CI/CD và xoay vòng khóa ký mã."
+category: "Sự cố an ninh"
+---
+<style>
+  .an-nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 24px; }
+  .an-nav a { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--bg-subtle); border: 1px solid var(--line); color: var(--text-muted); }
+  .an-nav a:hover { color: var(--pirago-blue); border-color: var(--pirago-blue); text-decoration: none; }
+  .an-sec { margin: 0 0 40px; }
+  .an-sec h2 { font-size: 21px; margin: 28px 0 14px; scroll-margin-top: 90px; }
+  .an-sec h3 { font-size: 17px; margin: 20px 0 8px; }
+  .an-sec ul, .an-sec ol { padding-left: 22px; }
+  .an-sec li { margin: 6px 0; }
+  .an-sec .table-wrap { overflow-x: auto; margin: 14px 0 20px; }
+  .an-sec code { word-break: break-all; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 20px 0 24px; }
+  .kpi-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); }
+  .kpi-num { font-size: 20px; font-weight: 800; font-family: var(--font-mono); color: var(--pirago-navy); line-height: 1.2; margin-bottom: 4px; }
+  html[data-theme="dark"] .kpi-num { color: #5ab0e8; }
+  .kpi-num.crit { color: var(--crit); }
+  .kpi-num.high { color: var(--high); }
+  .kpi-num.low { color: var(--low); }
+  .kpi-label { font-size: 12.5px; color: var(--text-muted); line-height: 1.4; }
+
+  .fig { margin: 16px 0 22px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .fig svg { width: 100%; height: auto; display: block; color: var(--text); font-family: inherit; }
+  .fig figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; }
+  .fig .mut { fill: var(--text-muted); }
+  .fig .box { fill: var(--bg-subtle); stroke: var(--line); }
+</style>
+
+<div class="report-header">
+  <h1>Sự cố SAP GitHub &ldquo;Project Granite&rdquo; (11/2026) — Xâm nhập qua token nhân viên &amp; xoay vòng khóa ký mã nguồn</h1>
+  <p class="sub">Xảy ra / Công bố: <strong>2026-11-26</strong> (Der Spiegel) · SAP xác nhận <strong>2026-11-27</strong> · Cập nhật đến <strong>2026-11-28</strong> · Nguồn: Der Spiegel, BleepingComputer · Trạng thái: <strong>Đã hạn chế truy cập GitHub, tạm dừng quy trình tự động &amp; xoay vòng khóa ký mã; chưa có bằng chứng lộ dữ liệu khách hàng</strong>. Bản tin tháng: <a href="{{ '/monthly/2026-11/' | relative_url }}">Báo cáo tháng 11/2026</a>.</p>
+</div>
+
+<blockquote class="callout">
+  <p><strong>TL;DR (dễ hiểu):</strong> Tập đoàn phần mềm doanh nghiệp <strong>SAP</strong> xác nhận kẻ tấn công đã xâm nhập môi trường phát triển phần mềm trên <strong>GitHub</strong> bằng token xác thực bị đánh cắp của nhân viên (chiến dịch ứng phó nội bộ mang tên <em>Project Granite</em>).</p>
+  <ul>
+    <li><strong>Chuyện gì xảy ra?</strong> Kẻ tấn công dùng token GitHub của nhân viên để truy cập kho mã nguồn, sao chép mã và có khả năng đã chỉnh sửa mã nguồn trên môi trường phát triển.</li>
+    <li><strong>Nguyên nhân:</strong> Token xác thực GitHub của nhân viên bị đánh cắp (một số báo cáo nêu khả năng có công cụ hỗ trợ AI tham gia).</li>
+    <li><strong>Hiện trạng (28/11):</strong> SAP đã khóa/thu hẹp truy cập GitHub, tạm dừng các luồng phát triển tự động và xoay vòng khóa ký mã nguồn (code-signing keys); SAP cho biết chưa thấy bằng chứng dữ liệu kinh doanh của khách hàng bị truy cập.</li>
+    <li><strong>Cần làm gì?</strong> Nếu dự án dùng sản phẩm/SDK SAP, theo dõi thông báo phát hành bản cập nhật an ninh từ SAP; nội bộ PiraGo rà soát ngay token GitHub (PAT/OAuth), bật 2FA cứng và bảo vệ khóa ký release.</li>
+  </ul>
+</blockquote>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-num high">26 → 27/11</div>
+    <div class="kpi-label">Der Spiegel đưa tin 26/11 · SAP xác nhận chính thức 27/11/2026</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num crit">GitHub Tokens</div>
+    <div class="kpi-label">Điểm xâm nhập: token xác thực GitHub của nhân viên bị đánh cắp</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num high">Code-Signing</div>
+    <div class="kpi-label">SAP tạm dừng luồng dev tự động &amp; xoay vòng khóa ký mã nguồn</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-num low">0 Dữ liệu KH</div>
+    <div class="kpi-label">Chưa có bằng chứng dữ liệu kinh doanh khách hàng bị truy cập</div>
+  </div>
+</div>
+
+<nav class="an-nav" aria-label="Mục lục">
+  <a href="#summary">1. Tóm tắt &amp; Phạm vi</a>
+  <a href="#root-cause">2. Nguyên nhân kỹ thuật</a>
+  <a href="#timeline">3. Diễn biến &amp; Khắc phục</a>
+  <a href="#impact">4. Tác động chuỗi cung ứng</a>
+  <a href="#recommendations">5. Khuyến cáo cho PiraGo</a>
+  <a href="#sources">6. Nguồn tham khảo</a>
+</nav>
+
+<section class="an-sec">
+<h2 id="summary">1. Tóm tắt &amp; Phạm vi ảnh hưởng</h2>
+<ul>
+  <li><strong>Đối tượng:</strong> Môi trường phát triển phần mềm của <strong>SAP</strong> lưu trữ trên GitHub <span class="badge low">SAP xác nhận</span>.</li>
+  <li><strong>Hoạt động trái phép:</strong> Kẻ tấn công truy cập kho mã nguồn, sao chép mã và có khả năng chỉnh sửa mã trong môi trường phát triển <span class="badge med">Báo cáo</span>.</li>
+  <li><strong>Phản ứng khẩn cấp (&ldquo;Project Granite&rdquo;):</strong> SAP giới hạn quyền truy cập GitHub, tạm dừng các quy trình tự động hóa phát triển và tiến hành xoay vòng khóa ký mã nguồn (code-signing keys) <span class="badge med">Báo cáo</span>.</li>
+  <li><strong>Dữ liệu khách hàng:</strong> SAP tuyên bố tính đến 27/11/2026 chưa có bằng chứng dữ liệu kinh doanh của khách hàng bị truy cập <span class="badge low">SAP xác nhận</span>.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="root-cause">2. Nguyên nhân kỹ thuật / Cơ chế</h2>
+<figure class="fig">
+<svg viewBox="0 0 740 165" role="img" aria-label="Chuỗi xâm nhập sự cố SAP GitHub Project Granite">
+  <defs>
+    <marker id="arr-sap-vi" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--text-muted)"/>
+    </marker>
+  </defs>
+  <rect x="10" y="25" width="160" height="86" rx="8" class="box" stroke="var(--crit)" stroke-width="1.5"/>
+  <text x="90" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--crit)">1. Đánh cắp token</text>
+  <text x="90" y="72" text-anchor="middle" font-size="11.5" fill="currentColor">Token GitHub của</text>
+  <text x="90" y="88" text-anchor="middle" font-size="11.5" fill="currentColor">nhân viên bị lộ</text>
+
+  <line x1="170" y1="68" x2="198" y2="68" stroke="var(--text-muted)" stroke-width="1.5" marker-end="url(#arr-sap-vi)"/>
+
+  <rect x="201" y="25" width="165" height="86" rx="8" class="box"/>
+  <text x="283" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">2. Truy cập GitHub</text>
+  <text x="283" y="72" text-anchor="middle" font-size="11.5" fill="currentColor">Sao chép &amp; có nguy cơ</text>
+  <text x="283" y="88" text-anchor="middle" font-size="11.5" fill="currentColor">chỉnh sửa mã nguồn</text>
+
+  <line x1="366" y1="68" x2="394" y2="68" stroke="var(--text-muted)" stroke-width="1.5" marker-end="url(#arr-sap-vi)"/>
+
+  <rect x="397" y="25" width="165" height="86" rx="8" class="box" stroke="var(--high)" stroke-width="1.5"/>
+  <text x="479" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--high)">3. Project Granite</text>
+  <text x="479" y="72" text-anchor="middle" font-size="11.5" fill="currentColor">Khóa GitHub, dừng</text>
+  <text x="479" y="88" text-anchor="middle" font-size="11.5" fill="currentColor">automation dev</text>
+
+  <line x1="562" y1="68" x2="590" y2="68" stroke="var(--text-muted)" stroke-width="1.5" marker-end="url(#arr-sap-vi)"/>
+
+  <rect x="593" y="25" width="137" height="86" rx="8" class="box" stroke="var(--low)" stroke-width="1.5"/>
+  <text x="661" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--low)">4. Xoay vòng khóa</text>
+  <text x="661" y="72" text-anchor="middle" font-size="11.5" fill="currentColor">Rotate code-signing</text>
+  <text x="661" y="88" text-anchor="middle" font-size="11.5" fill="currentColor">&amp; rà soát repo</text>
+
+  <text x="10" y="142" font-size="11.5" class="mut">Chưa rõ danh tính nhóm tấn công hay danh sách repo/sản phẩm cụ thể bị ảnh hưởng tính đến 28/11/2026.</text>
+</svg>
+<figcaption>Cơ chế xâm nhập qua token GitHub nhân viên và các bước cô lập trong chiến dịch Project Granite của SAP.</figcaption>
+</figure>
+<ul>
+  <li><strong>Điểm yếu xác thực:</strong> Kẻ tấn công sử dụng token xác thực GitHub bị đánh cắp của nhân viên thay vì khai thác lỗ hổng phần mềm công khai; một số nguồn báo chí nêu khả năng có sử dụng công cụ hỗ trợ AI trong quá trình xâm nhập (chưa được SAP xác nhận chi tiết).</li>
+  <li><strong>Xu hướng tấn công cuối tháng 11/2026:</strong> Sự cố diễn ra chỉ 1 ngày sau khi <a href="{{ '/featured/incidents/1password-nov-2026/incident_report/' | relative_url }}">1Password</a> công bố vụ chiếm tài khoản GitHub nhân viên (25/11), cho thấy các tổ chức phần mềm đang là mục tiêu trọng điểm qua tài khoản/token nhà phát triển.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="timeline">3. Diễn biến &amp; Khắc phục</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Thời điểm</th><th>Diễn biến chính</th><th>Độ tin cậy</th></tr></thead>
+  <tbody>
+    <tr><td>26/11/2026</td><td><em>Der Spiegel</em> đưa tin SAP đang điều tra vụ xâm nhập môi trường phát triển trên GitHub qua token nhân viên, với tên gọi nội bộ &ldquo;Project Granite&rdquo;.</td><td><span class="badge med">Báo chí (Der Spiegel)</span></td></tr>
+    <tr><td>27/11/2026</td><td>SAP chính thức xác nhận sự cố an ninh liên quan hoạt động đáng ngờ trên GitHub; cho biết đã giới hạn truy cập, tạm dừng quy trình tự động, xoay vòng khóa ký mã nguồn và chưa thấy bằng chứng dữ liệu kinh doanh khách hàng bị truy cập.</td><td><span class="badge low">SAP xác nhận / BleepingComputer</span></td></tr>
+    <tr><td>28/11/2026</td><td>Công tác điều tra và rà soát tính toàn vẹn mã nguồn vẫn tiếp diễn; chưa có báo cáo chi tiết về số lượng repo bị sao chép/sửa đổi.</td><td><span class="badge low">Theo dõi</span></td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section class="an-sec">
+<h2 id="impact">4. Tác động &amp; Rủi ro chuỗi cung ứng</h2>
+<ul>
+  <li><strong>Nguy cơ chèn mã độc vào build/release:</strong> Khi kẻ tấn công có quyền ghi vào repo phát triển, rủi ro lớn nhất là chèn thay đổi độc hại trước bước build hoặc ký gói phát hành — lý do SAP phải tạm dừng automation và xoay vòng code-signing keys ngay lập tức.</li>
+  <li><strong>Dữ liệu khách hàng:</strong> Chưa có dấu hiệu xâm phạm hệ thống dữ liệu sản xuất của khách hàng.</li>
+</ul>
+</section>
+
+<section class="an-sec">
+<h2 id="recommendations">5. Khuyến cáo cho PiraGo</h2>
+<ol>
+  <li><strong>Loại bỏ PAT dài hạn &amp; siết quyền GitHub:</strong> Chuyển sang fine-grained PAT có thời hạn ngắn hoặc GitHub App/OIDC; bật bắt buộc 2FA phần cứng (passkey/FIDO2) cho toàn bộ tổ chức GitHub.</li>
+  <li><strong>Bảo vệ nhánh chính &amp; ký commit:</strong> Bật branch protection (bắt buộc ≥2 reviewer cho repo lõi/CI, cấm force-push), bật ký commit/tag và tách biệt khóa ký release (code-signing) khỏi quyền của tài khoản dev thông thường.</li>
+  <li><strong>Giám sát bất thường trên GitHub Audit Log:</strong> Cảnh báo khi có clone hàng loạt repo riêng tư, tạo token/deploy key mới, hoặc thay đổi workflow <code>.github/workflows/</code>.</li>
+  <li><strong>Nếu dự án tích hợp SAP:</strong> Kiểm tra các thông báo cập nhật chữ ký/gói phần mềm chính thức từ SAP trong thời gian tới trước khi nâng cấp tự động.</li>
+</ol>
+</section>
+
+<section class="an-sec">
+<h2 id="sources">6. Nguồn tham khảo</h2>
+<ul>
+  <li><a href="https://www.bleepingcomputer.com/news/security/sap-confirms-security-incident-after-suspicious-github-activity/" target="_blank" rel="noopener noreferrer">BleepingComputer — SAP confirms security incident after suspicious GitHub activity (27/11/2026)</a></li>
+  <li><em>Der Spiegel</em> (26/11/2026) — Báo cáo ban đầu về chiến dịch ứng phó nội bộ &ldquo;Project Granite&rdquo; (dẫn lại qua BleepingComputer).</li>
+</ul>
+</section>
